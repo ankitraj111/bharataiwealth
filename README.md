@@ -1,2 +1,0 @@
-# bharataiwealth
-bharataiwealth  startup  
