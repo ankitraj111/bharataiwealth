@@ -2,7 +2,7 @@ import type React from "react"
 import type { Metadata, Viewport } from "next"
 import { Inter, Poppins, JetBrains_Mono } from "next/font/google"
 import { Analytics } from "@vercel/analytics/next"
-import { ThemeProvider } from "@/components/theme-provider"
+import { Providers } from "@/components/providers"
 import "./globals.css"
 
 const inter = Inter({
@@ -49,9 +49,9 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${inter.variable} ${poppins.variable} ${jetbrainsMono.variable} font-sans antialiased`}>
-        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem disableTransitionOnChange>
+        <Providers>
           {children}
-        </ThemeProvider>
+        </Providers>
         <Analytics />
       </body>
     </html>

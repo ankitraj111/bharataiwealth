@@ -4,27 +4,28 @@
 @custom-variant dark (&:is(.dark *));
 
 /* Premium fintech dark theme with enhanced glassmorphism and refined color palette */
+/* Premium fintech light theme by default */
 :root {
-  --background: oklch(0.11 0.015 250);
-  --foreground: oklch(0.98 0.005 250);
-  --card: oklch(0.14 0.012 250);
-  --card-foreground: oklch(0.98 0.005 250);
-  --popover: oklch(0.14 0.012 250);
-  --popover-foreground: oklch(0.98 0.005 250);
+  --background: oklch(0.99 0.005 250);
+  --foreground: oklch(0.11 0.015 250);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.11 0.015 250);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.11 0.015 250);
   --primary: oklch(0.58 0.22 260);
   --primary-foreground: oklch(0.98 0 0);
-  --secondary: oklch(0.18 0.012 250);
-  --secondary-foreground: oklch(0.92 0 0);
-  --muted: oklch(0.2 0.01 250);
-  --muted-foreground: oklch(0.6 0.005 250);
+  --secondary: oklch(0.95 0.01 250);
+  --secondary-foreground: oklch(0.11 0.015 250);
+  --muted: oklch(0.92 0.01 250);
+  --muted-foreground: oklch(0.4 0.01 250);
   --accent: oklch(0.82 0.16 85);
-  --accent-foreground: oklch(0.12 0.01 250);
+  --accent-foreground: oklch(0.11 0.015 250);
   --destructive: oklch(0.6 0.24 25);
   --destructive-foreground: oklch(0.98 0 0);
   --success: oklch(0.68 0.18 155);
   --success-foreground: oklch(0.98 0 0);
-  --border: oklch(0.22 0.015 250);
-  --input: oklch(0.18 0.012 250);
+  --border: oklch(0.9 0.015 250);
+  --input: oklch(0.9 0.015 250);
   --ring: oklch(0.58 0.22 260);
   --chart-1: oklch(0.58 0.22 260);
   --chart-2: oklch(0.82 0.16 85);
@@ -32,20 +33,20 @@
   --chart-4: oklch(0.6 0.24 25);
   --chart-5: oklch(0.65 0.15 200);
   --radius: 0.875rem;
-  --sidebar: oklch(0.12 0.015 250);
-  --sidebar-foreground: oklch(0.98 0.005 250);
+  --sidebar: oklch(0.98 0.005 250);
+  --sidebar-foreground: oklch(0.11 0.015 250);
   --sidebar-primary: oklch(0.58 0.22 260);
   --sidebar-primary-foreground: oklch(0.98 0 0);
-  --sidebar-accent: oklch(0.18 0.012 250);
-  --sidebar-accent-foreground: oklch(0.98 0 0);
-  --sidebar-border: oklch(0.2 0.015 250);
+  --sidebar-accent: oklch(0.95 0.01 250);
+  --sidebar-accent-foreground: oklch(0.11 0.015 250);
+  --sidebar-border: oklch(0.92 0.015 250);
   --sidebar-ring: oklch(0.58 0.22 260);
 
-  /* Premium glass effect variables */
-  --glass-bg: oklch(0.16 0.012 250 / 0.6);
-  --glass-border: oklch(0.3 0.015 250 / 0.3);
-  --glow-primary: oklch(0.58 0.22 260 / 0.15);
-  --glow-accent: oklch(0.82 0.16 85 / 0.1);
+  /* Premium glass effect variables for light mode */
+  --glass-bg: oklch(1 0 0 / 0.7);
+  --glass-border: oklch(0.11 0.015 250 / 0.1);
+  --glow-primary: oklch(0.58 0.22 260 / 0.1);
+  --glow-accent: oklch(0.82 0.16 85 / 0.05);
 }
 
 .dark {

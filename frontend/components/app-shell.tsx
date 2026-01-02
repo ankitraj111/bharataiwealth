@@ -1,8 +1,12 @@
 import type React from "react"
+import { useState } from "react"
 import { Sidebar } from "@/components/sidebar"
 import { Topbar } from "@/components/topbar"
+import { AssetInsightPanel } from "@/components/asset-insight-panel"
 
 export function AppShell({ children }: { children: React.ReactNode }) {
+  const [insightAsset, setInsightAsset] = useState<string | null>(null)
+
   return (
     <div className="min-h-screen bg-background">
       <Sidebar />
@@ -10,6 +14,11 @@ export function AppShell({ children }: { children: React.ReactNode }) {
         <Topbar />
         <main className="p-4 lg:p-6">{children}</main>
       </div>
+      <AssetInsightPanel
+        asset={insightAsset || "RELIANCE"}
+        isOpen={!!insightAsset}
+        onClose={() => setInsightAsset(null)}
+      />
     </div>
   )
 }

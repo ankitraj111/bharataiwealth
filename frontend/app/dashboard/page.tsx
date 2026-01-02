@@ -122,14 +122,14 @@ export default function DashboardPage() {
                     />
                     <Tooltip
                       contentStyle={{
-                        backgroundColor: "oklch(0.14 0.012 250 / 0.95)",
-                        border: "1px solid oklch(0.22 0.015 250)",
+                        backgroundColor: "var(--popover)",
+                        border: "1px solid var(--border)",
                         borderRadius: "12px",
-                        boxShadow: "0 10px 25px -5px oklch(0 0 0 / 0.3)",
+                        boxShadow: "0 10px 25px -5px oklch(0 0 0 / 0.1)",
                         backdropFilter: "blur(10px)",
                       }}
-                      labelStyle={{ color: "oklch(0.98 0 0)", fontWeight: 600, marginBottom: 8 }}
-                      itemStyle={{ color: "oklch(0.80 0 0)", fontSize: 12 }}
+                      labelStyle={{ color: "var(--foreground)", fontWeight: 600, marginBottom: 8 }}
+                      itemStyle={{ color: "var(--muted-foreground)", fontSize: 12 }}
                       formatter={(value: number) => [`₹${value.toLocaleString("en-IN")}`, ""]}
                     />
                     <Area
@@ -194,10 +194,10 @@ export default function DashboardPage() {
                     </Pie>
                     <Tooltip
                       contentStyle={{
-                        backgroundColor: "oklch(0.14 0.012 250 / 0.95)",
-                        border: "1px solid oklch(0.22 0.015 250)",
+                        backgroundColor: "var(--popover)",
+                        border: "1px solid var(--border)",
                         borderRadius: "12px",
-                        boxShadow: "0 10px 25px -5px oklch(0 0 0 / 0.3)",
+                        boxShadow: "0 10px 25px -5px oklch(0 0 0 / 0.1)",
                         backdropFilter: "blur(10px)",
                       }}
                       formatter={(value: number) => [`₹${value.toLocaleString("en-IN")}`, ""]}

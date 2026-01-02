@@ -37,6 +37,7 @@ const portfolioItems = [
   { name: "Low Risk", href: "/portfolios/low-risk", icon: TrendingUp },
   { name: "Medium Risk", href: "/portfolios/medium-risk", icon: BarChart3 },
   { name: "High Risk (Crypto)", href: "/portfolios/high-risk", icon: Zap },
+  { name: "ML Price Predictions", href: "/predictions", icon: TrendingUp },
 ]
 
 const toolsNavItems = [
@@ -72,9 +73,12 @@ export function Sidebar() {
           <Sparkles className="h-5 w-5 text-primary-foreground" />
           <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-white/20 to-transparent" />
         </div>
-        <div className="flex flex-col">
-          <span className="font-serif text-lg font-bold tracking-tight text-foreground">Bharat AI</span>
-          <span className="text-[10px] font-semibold uppercase tracking-[0.2em] text-gradient-gold">Wealth</span>
+        <div className="flex flex-col leading-none pt-1">
+          <span className="text-xl font-black tracking-tighter text-foreground uppercase">Bharat AI</span>
+          <div className="flex items-center gap-2 mt-1.5">
+            <span className="text-[9px] font-bold uppercase tracking-[0.4em] text-gradient-gold">Wealth</span>
+            <div className="h-[1px] flex-1 bg-gradient-to-r from-amber-500/40 to-transparent" />
+          </div>
         </div>
       </div>
 
