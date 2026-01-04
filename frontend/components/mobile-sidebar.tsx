@@ -56,7 +56,7 @@ export function MobileSidebar() {
           <Sparkles className="h-5 w-5 text-primary-foreground" />
         </div>
         <div className="flex flex-col">
-          <span className="font-serif text-lg font-bold text-foreground">Bharat AI</span>
+          <span className="font-serif text-lg font-black tracking-tight text-primary">Bharat AI</span>
           <span className="text-[10px] font-semibold uppercase tracking-[0.2em] text-gradient-gold">Wealth</span>
         </div>
       </div>

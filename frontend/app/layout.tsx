@@ -48,7 +48,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${inter.variable} ${poppins.variable} ${jetbrainsMono.variable} font-sans antialiased`}>
+      <body
+        className={`${inter.variable} ${poppins.variable} ${jetbrainsMono.variable} font-sans antialiased`}
+        suppressHydrationWarning
+      >
         <Providers>
           {children}
         </Providers>
@@ -57,3 +60,4 @@ export default function RootLayout({
     </html>
   )
 }
+// Triggering re-bundle to resolve chunk loading error

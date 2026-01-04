@@ -57,7 +57,7 @@ export function PortfolioView({ title, description, totalValue, totalReturn, ris
   const exportData = assets.map((asset) => ({
     Asset: asset.name,
     Type: asset.type,
-    Value: `₹${asset.value.toLocaleString()}`,
+    Value: `₹${asset.value.toLocaleString("en-IN")}`,
     "Predicted Return": `+${asset.return}%`,
     Confidence: `${asset.confidence}%`,
     Risk: asset.risk,
@@ -79,7 +79,7 @@ export function PortfolioView({ title, description, totalValue, totalReturn, ris
         <Card>
           <CardContent className="p-4">
             <p className="text-xs font-medium text-muted-foreground">Total Value</p>
-            <p className="mt-1 text-2xl font-bold text-foreground">₹{totalValue.toLocaleString()}</p>
+            <p className="mt-1 text-2xl font-bold text-foreground">₹{totalValue.toLocaleString("en-IN")}</p>
           </CardContent>
         </Card>
         <Card>
@@ -130,7 +130,7 @@ export function PortfolioView({ title, description, totalValue, totalReturn, ris
                   <TableRow key={asset.name}>
                     <TableCell className="font-medium">{asset.name}</TableCell>
                     <TableCell className="text-muted-foreground">{asset.type}</TableCell>
-                    <TableCell className="text-right">₹{asset.value.toLocaleString()}</TableCell>
+                    <TableCell className="text-right">₹{asset.value.toLocaleString("en-IN")}</TableCell>
                     <TableCell className="text-right">
                       <span className="text-success">+{asset.return}%</span>
                     </TableCell>

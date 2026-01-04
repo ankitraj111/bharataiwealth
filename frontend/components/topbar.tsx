@@ -22,7 +22,22 @@ import Link from "next/link"
 import { useAuth } from "@/context/auth-context"
 
 export function Topbar() {
-  const { logout } = useAuth()
+  const { user, logout } = useAuth()
+
+  // Fallback for avatar initials
+  const getInitials = (name: string) => {
+    return name
+      .split(" ")
+      .map((n) => n[0])
+      .join("")
+      .toUpperCase()
+      .slice(0, 2)
+  }
+
+  const userInitials = user?.name ? getInitials(user.name) : "RK"
+  const userName = user?.name?.split(" ")[0] || "Guest"
+  const fullName = user?.name || "Guest User"
+  const email = user?.email || "guest@bharatai.com"
 
   return (
     <header className="sticky top-0 z-30 flex h-[72px] items-center justify-between border-b border-border/50 bg-background/80 px-4 backdrop-blur-xl lg:px-6">
@@ -45,7 +60,7 @@ export function Topbar() {
           <Search className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground/60 transition-colors group-focus-within:text-primary" />
           <Input
             placeholder="Search transactions, assets..."
-            className="w-full h-11 bg-secondary/50 border-border/50 pl-11 pr-20 rounded-xl focus:bg-secondary/80 focus:border-primary/30 transition-premium placeholder:text-muted-foreground/50"
+            className="w-full h-11 bg-secondary/40 border-border/50 pl-11 pr-20 rounded-xl focus:bg-secondary/60 focus:border-primary/20 focus:ring-1 focus:ring-primary/10 transition-premium placeholder:text-muted-foreground/60"
           />
           <div className="absolute right-3 top-1/2 -translate-y-1/2 flex items-center gap-1 text-muted-foreground/50">
             <kbd className="flex h-6 items-center gap-1 rounded-md border border-border/50 bg-muted/50 px-2 text-[10px] font-medium">
@@ -87,8 +102,8 @@ export function Topbar() {
           </DropdownMenuTrigger>
           <DropdownMenuContent className="w-80 glass-card-elevated" align="end" forceMount>
             <DropdownMenuLabel className="flex items-center justify-between">
-              <span className="font-semibold">Notifications</span>
-              <Badge variant="secondary" className="text-[10px] bg-primary/10 text-primary border-none">3 NEW</Badge>
+              <span className="font-semibold text-foreground">Notifications</span>
+              <Badge variant="secondary" className="text-[10px] bg-primary/8 text-primary border-none font-bold">3 NEW</Badge>
             </DropdownMenuLabel>
             <DropdownMenuSeparator className="bg-border/50" />
             <div className="max-h-[300px] overflow-y-auto">
@@ -142,19 +157,19 @@ export function Topbar() {
             >
               <div className="relative">
                 <Avatar className="h-8 w-8 ring-2 ring-border/50 ring-offset-2 ring-offset-background transition-all group-hover:ring-primary/50">
-                  <AvatarImage src="/indian-professional-man.png" alt="User" />
+                  <AvatarImage src="/indian-professional-man.png" alt={userName} />
                   <AvatarFallback className="bg-gradient-to-br from-primary to-primary/80 text-primary-foreground text-xs font-semibold">
-                    RK
+                    {userInitials}
                   </AvatarFallback>
                 </Avatar>
                 <div className="absolute -bottom-0.5 -right-0.5 h-2.5 w-2.5 rounded-full border-2 border-background bg-emerald-500" />
               </div>
               <div className="hidden sm:flex flex-col items-start leading-tight">
-                <span className="text-sm font-semibold text-foreground tracking-tight">Rajesh</span>
+                <span className="text-sm font-semibold text-foreground tracking-tight">{userName}</span>
                 <div className="flex items-center gap-1.5 mt-0.5">
-                  <div className="flex items-center gap-1 px-1.5 py-0.5 rounded-full bg-amber-500/10 text-amber-500 border border-amber-500/20 text-[9px] font-bold uppercase tracking-wider">
+                  <div className="flex items-center gap-1 px-1.5 py-0.5 rounded-full bg-accent/15 text-accent border border-accent/30 text-[9px] font-bold uppercase tracking-wider">
                     <Crown className="h-2.5 w-2.5" />
-                    Premium
+                    {user?.role === 'ADMIN' ? 'Admin' : 'Premium'}
                   </div>
                 </div>
               </div>
@@ -165,15 +180,15 @@ export function Topbar() {
               <div className="flex flex-col space-y-2 p-1">
                 <div className="flex items-center gap-3">
                   <Avatar className="h-10 w-10 border border-border/50">
-                    <AvatarImage src="/indian-professional-man.png" alt="RK" />
-                    <AvatarFallback>RK</AvatarFallback>
+                    <AvatarImage src="/indian-professional-man.png" alt={fullName} />
+                    <AvatarFallback>{userInitials}</AvatarFallback>
                   </Avatar>
                   <div className="flex flex-col">
-                    <p className="text-sm font-semibold leading-none">Rajesh Kumar</p>
-                    <p className="text-xs text-muted-foreground mt-1">rajesh@bharatai.com</p>
+                    <p className="text-sm font-bold leading-none text-foreground">{fullName}</p>
+                    <p className="text-[11px] text-muted-foreground mt-1 font-medium">{email}</p>
                   </div>
                 </div>
-                <Badge variant="outline" className="w-fit bg-primary/5 text-primary border-primary/20 text-[10px] font-bold">PRO ACCOUNT</Badge>
+                <Badge variant="secondary" className="w-fit bg-accent text-accent-foreground border-none text-[10px] font-black tracking-wider px-2 py-0.5 shadow-sm">PRO ACCOUNT</Badge>
               </div>
             </DropdownMenuLabel>
             <DropdownMenuSeparator className="bg-border/50" />

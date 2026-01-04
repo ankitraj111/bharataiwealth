@@ -18,11 +18,11 @@ const spendingData = [
 ]
 
 const categoryData = [
-  { name: "Food", value: 15000, color: "oklch(0.58 0.22 260)" },
-  { name: "Travel", value: 12000, color: "oklch(0.82 0.16 85)" },
-  { name: "Shopping", value: 8000, color: "oklch(0.68 0.18 155)" },
-  { name: "Bills", value: 10000, color: "oklch(0.60 0.24 25)" },
-  { name: "Others", value: 4000, color: "oklch(0.65 0.15 200)" },
+  { name: "Food", value: 15000, color: "oklch(0.32 0.08 250)" },
+  { name: "Travel", value: 12000, color: "oklch(0.82 0.1 85)" },
+  { name: "Shopping", value: 8000, color: "oklch(0.55 0.15 150)" },
+  { name: "Bills", value: 10000, color: "oklch(0.45 0.08 200)" },
+  { name: "Others", value: 4000, color: "oklch(0.65 0.05 250)" },
 ]
 
 const sparklineData1 = [{ value: 30 }, { value: 45 }, { value: 35 }, { value: 50 }, { value: 42 }, { value: 55 }]
@@ -98,19 +98,19 @@ export default function DashboardPage() {
                   <AreaChart data={spendingData}>
                     <defs>
                       <linearGradient id="incomeGradient" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="0%" stopColor="oklch(0.58 0.22 260)" stopOpacity={0.25} />
-                        <stop offset="100%" stopColor="oklch(0.58 0.22 260)" stopOpacity={0} />
+                        <stop offset="0%" stopColor="var(--primary)" stopOpacity={0.25} />
+                        <stop offset="100%" stopColor="var(--primary)" stopOpacity={0} />
                       </linearGradient>
                       <linearGradient id="spendingGradient" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="0%" stopColor="oklch(0.82 0.16 85)" stopOpacity={0.25} />
-                        <stop offset="100%" stopColor="oklch(0.82 0.16 85)" stopOpacity={0} />
+                        <stop offset="0%" stopColor="var(--accent)" stopOpacity={0.25} />
+                        <stop offset="100%" stopColor="var(--accent)" stopOpacity={0} />
                       </linearGradient>
                     </defs>
                     <XAxis
                       dataKey="month"
                       axisLine={false}
                       tickLine={false}
-                      tick={{ fill: "oklch(0.60 0.005 250)", fontSize: 11, fontWeight: 500 }}
+                      tick={{ fill: "oklch(0.45 0.03 250)", fontSize: 11, fontWeight: 500 }}
                       dy={10}
                     />
                     <YAxis
@@ -130,21 +130,21 @@ export default function DashboardPage() {
                       }}
                       labelStyle={{ color: "var(--foreground)", fontWeight: 600, marginBottom: 8 }}
                       itemStyle={{ color: "var(--muted-foreground)", fontSize: 12 }}
-                      formatter={(value: number) => [`₹${value.toLocaleString("en-IN")}`, ""]}
+                      formatter={(value: number | string | any) => [`₹${Number(value ?? 0).toLocaleString("en-IN")}`, ""]}
                     />
                     <Area
                       type="monotone"
                       dataKey="income"
-                      stroke="oklch(0.58 0.22 260)"
-                      strokeWidth={2.5}
+                      stroke="var(--primary)"
+                      strokeWidth={3}
                       fill="url(#incomeGradient)"
                       name="Income"
                     />
                     <Area
                       type="monotone"
                       dataKey="spending"
-                      stroke="oklch(0.82 0.16 85)"
-                      strokeWidth={2.5}
+                      stroke="var(--accent)"
+                      strokeWidth={3}
                       fill="url(#spendingGradient)"
                       name="Spending"
                     />
@@ -200,7 +200,7 @@ export default function DashboardPage() {
                         boxShadow: "0 10px 25px -5px oklch(0 0 0 / 0.1)",
                         backdropFilter: "blur(10px)",
                       }}
-                      formatter={(value: number) => [`₹${value.toLocaleString("en-IN")}`, ""]}
+                      formatter={(value: number | string | any) => [`₹${Number(value ?? 0).toLocaleString("en-IN")}`, ""]}
                     />
                   </PieChart>
                 </ResponsiveContainer>

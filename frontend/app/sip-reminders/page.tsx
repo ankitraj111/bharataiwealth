@@ -205,20 +205,18 @@ export default function SIPRemindersPage() {
               {sipReminders.map((sip, index) => (
                 <Card
                   key={sip.id}
-                  className={`glass-card border-border/50 overflow-hidden animate-fade-in opacity-0 ${
-                    sip.status === "due_today" ? "border-destructive/50 shadow-lg shadow-destructive/10" : ""
-                  }`}
+                  className={`glass-card border-border/50 overflow-hidden animate-fade-in opacity-0 ${sip.status === "due_today" ? "border-destructive/50 shadow-lg shadow-destructive/10" : ""
+                    }`}
                   style={{ animationDelay: `${index * 0.08}s` }}
                 >
                   <CardContent className="p-5">
                     <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
                       <div className="flex items-center gap-4">
                         <div
-                          className={`h-12 w-12 rounded-xl flex items-center justify-center ${
-                            sip.status === "due_today"
+                          className={`h-12 w-12 rounded-xl flex items-center justify-center ${sip.status === "due_today"
                               ? "bg-destructive/10"
                               : "bg-gradient-to-br from-primary/20 to-primary/5"
-                          }`}
+                            }`}
                         >
                           <Wallet
                             className={`h-6 w-6 ${sip.status === "due_today" ? "text-destructive" : "text-primary"}`}
@@ -242,7 +240,7 @@ export default function SIPRemindersPage() {
 
                       <div className="flex items-center gap-6">
                         <div className="text-right">
-                          <p className="text-lg font-bold font-mono">INR {sip.amount.toLocaleString()}</p>
+                          <p className="text-lg font-bold font-mono">INR {sip.amount.toLocaleString("en-IN")}</p>
                           <p className="text-sm text-success font-medium">{sip.returns} CAGR</p>
                         </div>
 
@@ -262,7 +260,7 @@ export default function SIPRemindersPage() {
                         <Bell className="h-5 w-5 text-destructive" />
                         <p className="text-sm">
                           <span className="font-semibold">Reminder:</span> Your SIP payment of INR{" "}
-                          {sip.amount.toLocaleString()} is due today.
+                          {sip.amount.toLocaleString("en-IN")} is due today.
                           <a href="#" className="text-primary ml-1 underline underline-offset-2">
                             Click to pay
                           </a>

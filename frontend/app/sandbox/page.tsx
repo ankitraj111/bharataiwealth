@@ -112,14 +112,14 @@ export default function SandboxPage() {
               <Card>
                 <CardContent className="p-4">
                   <p className="text-xs font-medium text-muted-foreground">Before</p>
-                  <p className="mt-1 text-2xl font-bold text-foreground">₹{totalBefore.toLocaleString()}</p>
+                  <p className="mt-1 text-2xl font-bold text-foreground">₹{totalBefore.toLocaleString("en-IN")}</p>
                 </CardContent>
               </Card>
               <Card>
                 <CardContent className="p-4">
                   <p className="text-xs font-medium text-muted-foreground">After Simulation</p>
                   <p className={cn("mt-1 text-2xl font-bold", change >= 0 ? "text-success" : "text-destructive")}>
-                    ₹{totalAfter.toLocaleString()}
+                    ₹{totalAfter.toLocaleString("en-IN")}
                   </p>
                 </CardContent>
               </Card>
@@ -172,7 +172,7 @@ export default function SandboxPage() {
                             border: "1px solid hsl(var(--border))",
                             borderRadius: "8px",
                           }}
-                          formatter={(value: number) => [`₹${value.toLocaleString()}`, "Value"]}
+                          formatter={(value: any) => [`₹${Number(value ?? 0).toLocaleString("en-IN")}`, "Value"]}
                         />
                         <Bar dataKey="value" fill="hsl(var(--chart-1))" radius={4} />
                       </BarChart>
@@ -210,7 +210,7 @@ export default function SandboxPage() {
                             border: "1px solid hsl(var(--border))",
                             borderRadius: "8px",
                           }}
-                          formatter={(value: number) => [`₹${value.toLocaleString()}`, "Value"]}
+                          formatter={(value: any) => [`₹${Number(value ?? 0).toLocaleString("en-IN")}`, "Value"]}
                         />
                         <Bar dataKey="value" fill="hsl(var(--chart-2))" radius={4} />
                       </BarChart>

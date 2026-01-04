@@ -87,8 +87,8 @@ export default function PredictionsPage() {
     return (
         <AppShell>
             <div className="space-y-8 pb-10">
-                <div className="relative overflow-hidden rounded-2xl border border-border bg-gradient-to-br from-secondary/50 via-background to-secondary/50 dark:from-[#1a1f35] dark:via-[#0d1117] dark:to-[#1a1f35] p-6 md:p-8">
-                    <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmZmZmYiIGZpbGwtb3BhY2l0eT0iMC4wMiI+PGNpcmNsZSBjeD0iMzAiIGN5PSIzMCIgcj0iMSIvPjwvZz48L2c+PC9zdmc+')] opacity-50 dark:opacity-50 opacity-10" />
+                <div className="relative overflow-hidden rounded-2xl border border-border bg-gradient-to-br from-secondary/40 via-background to-secondary/40 p-6 md:p-8">
+                    <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmZmZmYiIGZpbGwtb3BhY2l0eT0iMC4wMiI+PGNpcmNsZSBjeD0iMzAiIGN5PSIzMCIgcj0iMSIvPjwvZz48L2c+PC9zdmc+')] opacity-20 pointer-events-none" />
 
                     <div className="relative flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
                         <div className="space-y-2">
@@ -107,7 +107,7 @@ export default function PredictionsPage() {
                             <div className="relative flex-1">
                                 <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
                                 <Input
-                                    className="h-11 w-full border-border bg-secondary/30 pl-10 transition-all focus:border-primary/50 focus:bg-secondary/50 focus:ring-0 dark:bg-white/[0.03]"
+                                    className="h-11 w-full border-border/50 bg-secondary/40 pl-10 transition-all focus:border-primary/20 focus:bg-secondary/60 focus:ring-1 focus:ring-primary/10"
                                     placeholder="Search Asset (e.g. NIFTY, RELIANCE, BTC)..."
                                     value={searchTerm}
                                     onChange={(e) => setSearchTerm(e.target.value)}
@@ -128,13 +128,13 @@ export default function PredictionsPage() {
                                     <p className="text-xs font-medium uppercase tracking-wider text-muted-foreground">Current Price</p>
                                     <div className="mt-1 flex items-baseline gap-2">
                                         <span className="text-2xl font-bold font-mono">₹18,800.00</span>
-                                        <span className="flex items-center text-xs font-medium text-emerald-400">
+                                        <span className="flex items-center text-xs font-medium text-success">
                                             <ArrowUpRight className="mr-0.5 h-3 w-3" /> +1.2%
                                         </span>
                                     </div>
                                 </div>
-                                <div className="h-10 w-10 rounded-full bg-emerald-500/10 p-2 flex items-center justify-center">
-                                    <TrendingUp className="h-5 w-5 text-emerald-500" />
+                                <div className="h-10 w-10 rounded-full bg-success/10 p-2 flex items-center justify-center">
+                                    <TrendingUp className="h-5 w-5 text-success" />
                                 </div>
                             </div>
                         </CardContent>
@@ -147,7 +147,7 @@ export default function PredictionsPage() {
                                     <p className="text-xs font-medium uppercase tracking-wider text-muted-foreground">ML Conviction</p>
                                     <div className="mt-1 flex items-baseline gap-2">
                                         <span className="text-2xl font-bold text-primary">Strong Buy</span>
-                                        <Badge variant="outline" className="ml-1 border-primary/30 bg-primary/10 text-primary">88% Conf.</Badge>
+                                        <Badge variant="secondary" className="ml-1 bg-primary/8 text-primary border-none font-bold px-2 py-0.5">88% CONF.</Badge>
                                     </div>
                                 </div>
                                 <div className="h-10 w-10 rounded-full bg-primary/10 p-2 flex items-center justify-center">
@@ -163,12 +163,12 @@ export default function PredictionsPage() {
                                 <div>
                                     <p className="text-xs font-medium uppercase tracking-wider text-muted-foreground">Risk Status</p>
                                     <div className="mt-1 flex items-baseline gap-2">
-                                        <span className="text-2xl font-bold text-amber-500">Moderate</span>
-                                        <span className="text-xs text-muted-foreground">Vol. 1.2x</span>
+                                        <span className="text-2xl font-bold text-accent">Moderate</span>
+                                        <span className="text-xs text-muted-foreground/80">Vol. 1.2x</span>
                                     </div>
                                 </div>
-                                <div className="h-10 w-10 rounded-full bg-amber-500/10 p-2 flex items-center justify-center">
-                                    <ShieldAlert className="h-5 w-5 text-amber-500" />
+                                <div className="h-10 w-10 rounded-full bg-accent/10 p-2 flex items-center justify-center">
+                                    <ShieldAlert className="h-5 w-5 text-accent" />
                                 </div>
                             </div>
                         </CardContent>
@@ -179,11 +179,11 @@ export default function PredictionsPage() {
                     <CardHeader className="border-b border-border bg-muted/20">
                         <div className="flex items-center justify-between">
                             <div>
-                                <CardTitle className="text-lg font-semibold flex items-center gap-2">
+                                <CardTitle className="text-lg font-semibold flex items-center gap-2 text-foreground">
                                     Price Forecast Trend
-                                    <Badge variant="secondary" className="text-[10px] bg-primary/10 text-primary border-none">AI POWERED</Badge>
+                                    <Badge variant="secondary" className="text-[10px] bg-primary/8 text-primary border-none font-bold">AI POWERED</Badge>
                                 </CardTitle>
-                                <CardDescription>Visualizing historical performance vs next-session predictions</CardDescription>
+                                <CardDescription className="text-muted-foreground/80">Visualizing historical performance vs next-session predictions</CardDescription>
                             </div>
                         </div>
                     </CardHeader>
@@ -193,15 +193,15 @@ export default function PredictionsPage() {
                                 <AreaChart data={predictionData}>
                                     <defs>
                                         <linearGradient id="colorPredicted" x1="0" y1="0" x2="0" y2="1">
-                                            <stop offset="5%" stopColor="#3b82f6" stopOpacity={0.3} />
-                                            <stop offset="95%" stopColor="#3b82f6" stopOpacity={0} />
+                                            <stop offset="5%" stopColor="var(--primary)" stopOpacity={0.3} />
+                                            <stop offset="95%" stopColor="var(--primary)" stopOpacity={0} />
                                         </linearGradient>
                                     </defs>
                                     <CartesianGrid strokeDasharray="3 3" stroke="currentColor" className="text-border/30" vertical={false} />
                                     <XAxis dataKey="time" axisLine={false} tickLine={false} tick={{ fill: 'currentColor', fontSize: 12 }} className="text-muted-foreground" dy={10} />
                                     <YAxis domain={['dataMin - 100', 'dataMax + 100']} axisLine={false} tickLine={false} tick={{ fill: 'currentColor', fontSize: 12 }} className="text-muted-foreground" tickFormatter={(val) => `₹${val}`} />
                                     <Tooltip contentStyle={{ backgroundColor: 'var(--card)', border: '1px solid var(--border)', borderRadius: '12px' }} itemStyle={{ color: 'var(--foreground)', fontSize: '12px' }} />
-                                    <Area type="monotone" dataKey="predicted" stroke="#3b82f6" strokeWidth={3} fillOpacity={1} fill="url(#colorPredicted)" strokeDasharray="5 5" name="Predicted" />
+                                    <Area type="monotone" dataKey="predicted" stroke="var(--primary)" strokeWidth={3} fillOpacity={1} fill="url(#colorPredicted)" strokeDasharray="5 5" name="Predicted" />
                                 </AreaChart>
                             </ResponsiveContainer>
                         </div>
@@ -215,15 +215,17 @@ export default function PredictionsPage() {
                     </h2>
                     <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
                         {models.map((model, idx) => (
-                            <Card key={idx} className="group relative overflow-hidden border-border bg-card/40 dark:bg-white/[0.02] p-5 transition-all hover:bg-secondary/40">
+                            <Card key={idx} className="group relative overflow-hidden border-border bg-card/40 p-5 transition-all hover:bg-secondary/60 hover:glass-card hover:scale-[1.02]">
                                 <div className="flex flex-col gap-3">
-                                    <Badge variant="outline" className="w-fit border-primary/20 text-primary text-[10px] uppercase font-bold">{model.name}</Badge>
+                                    <Badge variant="outline" className="w-fit border-primary/20 text-primary text-[10px] uppercase font-bold px-2">
+                                        {model.name}
+                                    </Badge>
                                     <h3 className="text-sm font-semibold text-foreground/90">{model.type}</h3>
-                                    <p className="text-xs text-muted-foreground leading-relaxed">{model.description}</p>
-                                    <div className="mt-2 space-y-2">
+                                    <p className="text-xs text-muted-foreground/80 leading-relaxed">{model.description}</p>
+                                    <div className="mt-2 space-y-2 border-t border-border/40 pt-3">
                                         <div className="flex items-center justify-between text-xs">
-                                            <span className="text-muted-foreground">Conviction:</span>
-                                            <span className="font-mono text-emerald-400 font-bold">{model.confidence}%</span>
+                                            <span className="text-muted-foreground font-medium">Conviction Score:</span>
+                                            <span className="font-mono text-primary font-bold">{model.confidence}%</span>
                                         </div>
                                     </div>
                                 </div>

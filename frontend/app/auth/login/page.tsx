@@ -71,7 +71,7 @@ export default function LoginPage() {
                     <div className="h-10 w-10 flex items-center justify-center rounded-xl bg-primary shadow-lg shadow-primary/20">
                         <Sparkles className="h-6 w-6 text-primary-foreground" />
                     </div>
-                    <span className="text-2xl font-black tracking-tighter uppercase text-foreground">Bharat AI <span className="text-gradient-gold">Wealth</span></span>
+                    <span className="text-2xl font-black tracking-tighter uppercase text-primary drop-shadow-sm">Bharat AI <span className="text-gradient-gold">Wealth</span></span>
                 </div>
 
                 <div className="relative z-10 space-y-6 max-w-lg">

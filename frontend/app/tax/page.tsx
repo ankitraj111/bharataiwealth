@@ -101,22 +101,22 @@ export default function TaxPage() {
               <Card>
                 <CardContent className="p-4">
                   <p className="text-xs font-medium text-muted-foreground">Total Deductions Claimed</p>
-                  <p className="mt-1 text-2xl font-bold text-foreground">₹{totalSaved.toLocaleString()}</p>
-                  <p className="mt-1 text-xs text-muted-foreground">of ₹{totalLimit.toLocaleString()} limit</p>
+                  <p className="mt-1 text-2xl font-bold text-foreground">₹{totalSaved.toLocaleString("en-IN")}</p>
+                  <p className="mt-1 text-xs text-muted-foreground">of ₹{totalLimit.toLocaleString("en-IN")} limit</p>
                 </CardContent>
               </Card>
               <Card>
                 <CardContent className="p-4">
                   <p className="text-xs font-medium text-muted-foreground">Tax Saved This Year</p>
                   <p className="mt-1 text-2xl font-bold text-success">
-                    ₹{Math.round(totalSaved * 0.3).toLocaleString()}
+                    ₹{Math.round(totalSaved * 0.3).toLocaleString("en-IN")}
                   </p>
                 </CardContent>
               </Card>
               <Card className="border-accent/20 bg-accent/5">
                 <CardContent className="p-4">
                   <p className="text-xs font-medium text-muted-foreground">Potential Additional Savings</p>
-                  <p className="mt-1 text-2xl font-bold text-accent">₹{potentialSavings.toLocaleString()}</p>
+                  <p className="mt-1 text-2xl font-bold text-accent">₹{potentialSavings.toLocaleString("en-IN")}</p>
                 </CardContent>
               </Card>
             </div>
@@ -137,8 +137,8 @@ export default function TaxPage() {
                           <p className="text-xs text-muted-foreground">{deduction.items.join(", ")}</p>
                         </div>
                         <div className="text-right">
-                          <span className="font-medium">₹{deduction.used.toLocaleString()}</span>
-                          <span className="text-muted-foreground"> / ₹{deduction.limit.toLocaleString()}</span>
+                          <span className="font-medium">₹{deduction.used.toLocaleString("en-IN")}</span>
+                          <span className="text-muted-foreground"> / ₹{deduction.limit.toLocaleString("en-IN")}</span>
                         </div>
                       </div>
                       <div className="flex items-center gap-3">

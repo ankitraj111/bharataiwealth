@@ -38,6 +38,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
             authService.setAuth(token, user)
             setUser(user)
             router.push('/dashboard')
+            setIsLoading(false)
         } catch (error) {
             setIsLoading(false)
             throw error

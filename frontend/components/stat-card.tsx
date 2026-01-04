@@ -2,7 +2,7 @@
 
 import { Card, CardContent } from "@/components/ui/card"
 import { cn } from "@/lib/utils"
-import { TrendingUp, TrendingDown } from "lucide-react"
+import { LucideIcon, TrendingUp, TrendingDown } from "lucide-react"
 import { Area, AreaChart, ResponsiveContainer } from "recharts"
 
 interface StatCardProps {
@@ -12,15 +12,16 @@ interface StatCardProps {
   changeLabel?: string
   data: { value: number }[]
   className?: string
+  icon?: LucideIcon
 }
 
-export function StatCard({ title, value, change, changeLabel = "vs last month", data, className }: StatCardProps) {
+export function StatCard({ title, value, change, changeLabel = "vs last month", data, className, icon: Icon }: StatCardProps) {
   const isPositive = change >= 0
 
   return (
     <Card
       className={cn(
-        "group relative overflow-hidden glass-card hover:glass-card-elevated transition-premium",
+        "group relative overflow-hidden glass-card hover:glass-card-elevated transition-premium hover:scale-[1.01]",
         className,
       )}
     >
@@ -30,7 +31,10 @@ export function StatCard({ title, value, change, changeLabel = "vs last month", 
       <CardContent className="relative p-5">
         <div className="flex items-start justify-between gap-4">
           <div className="space-y-2 flex-1">
-            <p className="text-xs font-medium uppercase tracking-wider text-muted-foreground/80">{title}</p>
+            <div className="flex items-center gap-2">
+              {Icon && <Icon className="h-3.5 w-3.5 text-primary/70" />}
+              <p className="text-xs font-medium uppercase tracking-wider text-muted-foreground/80">{title}</p>
+            </div>
             <p className="text-2xl font-bold tracking-tight text-foreground tabular-nums">{value}</p>
             <div className="flex items-center gap-1.5">
               <div
@@ -67,12 +71,12 @@ export function StatCard({ title, value, change, changeLabel = "vs last month", 
                   >
                     <stop
                       offset="0%"
-                      stopColor={isPositive ? "oklch(0.68 0.18 155)" : "oklch(0.60 0.24 25)"}
+                      stopColor={isPositive ? "oklch(0.55 0.15 150)" : "oklch(0.55 0.18 25)"}
                       stopOpacity={0.4}
                     />
                     <stop
                       offset="100%"
-                      stopColor={isPositive ? "oklch(0.68 0.18 155)" : "oklch(0.60 0.24 25)"}
+                      stopColor={isPositive ? "oklch(0.55 0.15 150)" : "oklch(0.55 0.18 25)"}
                       stopOpacity={0}
                     />
                   </linearGradient>
@@ -80,7 +84,7 @@ export function StatCard({ title, value, change, changeLabel = "vs last month", 
                 <Area
                   type="monotone"
                   dataKey="value"
-                  stroke={isPositive ? "oklch(0.68 0.18 155)" : "oklch(0.60 0.24 25)"}
+                  stroke={isPositive ? "oklch(0.55 0.15 150)" : "oklch(0.55 0.18 25)"}
                   strokeWidth={2}
                   fill={`url(#statGradient-${isPositive ? "up" : "down"}-${title})`}
                 />

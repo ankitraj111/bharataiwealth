@@ -41,11 +41,11 @@ const dailySpendData = [
 ]
 
 const categoryBreakdown = [
-  { name: "Food & Dining", value: 18500, percentage: 35, color: "#3B82F6" },
-  { name: "Travel", value: 12000, percentage: 23, color: "#FACC15" },
-  { name: "Shopping", value: 9500, percentage: 18, color: "#22C55E" },
-  { name: "Bills & Utilities", value: 8000, percentage: 15, color: "#A855F7" },
-  { name: "Entertainment", value: 4500, percentage: 9, color: "#F97316" },
+  { name: "Food & Dining", value: 18500, percentage: 35, color: "oklch(0.32 0.08 250)" },
+  { name: "Travel", value: 12000, percentage: 23, color: "oklch(0.82 0.1 85)" },
+  { name: "Shopping", value: 9500, percentage: 18, color: "oklch(0.55 0.15 150)" },
+  { name: "Bills & Utilities", value: 8000, percentage: 15, color: "oklch(0.45 0.08 200)" },
+  { name: "Entertainment", value: 4500, percentage: 9, color: "oklch(0.65 0.05 250)" },
 ]
 
 const creditDebitData = [
@@ -77,10 +77,10 @@ export default function AnalyticsPage() {
   return (
     <AppShell>
       <div className="space-y-8">
-        <div className="relative overflow-hidden rounded-2xl border border-white/[0.08] bg-gradient-to-br from-[#1a1f35] via-[#0d1117] to-[#1a1f35] p-6 md:p-8">
-          <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmZmZmYiIGZpbGwtb3BhY2l0eT0iMC4wMiI+PGNpcmNsZSBjeD0iMzAiIGN5PSIzMCIgcj0iMSIvPjwvZz48L2c+PC9zdmc+')] opacity-50" />
-          <div className="absolute -right-20 -top-20 h-64 w-64 rounded-full bg-primary/10 blur-3xl" />
-          <div className="absolute -bottom-20 -left-20 h-64 w-64 rounded-full bg-accent/10 blur-3xl" />
+        <div className="relative overflow-hidden rounded-2xl border border-border bg-gradient-to-br from-secondary/40 via-background to-secondary/40 p-6 md:p-8">
+          <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmZmZmYiIGZpbGwtb3BhY2l0eT0iMC4wMiI+PGNpcmNsZSBjeD0iMzAiIGN5PSIzMCIgcj0iMSIvPjwvZz48L2c+PC9zdmc+')] opacity-20 pointer-events-none" />
+          <div className="absolute -right-20 -top-20 h-64 w-64 rounded-full bg-primary/5 blur-3xl" />
+          <div className="absolute -bottom-20 -left-20 h-64 w-64 rounded-full bg-accent/5 blur-3xl" />
 
           <div className="relative flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
             <div className="space-y-2">
@@ -96,13 +96,13 @@ export default function AnalyticsPage() {
             </div>
 
             <div className="flex items-center gap-3">
-              <div className="flex items-center gap-2 rounded-xl border border-white/[0.08] bg-white/[0.02] px-4 py-2.5 backdrop-blur-sm">
+              <div className="flex items-center gap-2 rounded-xl border border-border/50 bg-secondary/40 px-4 py-2.5 backdrop-blur-sm">
                 <Calendar className="h-4 w-4 text-primary" />
                 <Select defaultValue="30">
                   <SelectTrigger className="h-auto w-[140px] border-0 bg-transparent p-0 text-sm font-medium shadow-none focus:ring-0">
                     <SelectValue placeholder="Select period" />
                   </SelectTrigger>
-                  <SelectContent className="border-white/[0.08] bg-[#161b22]/95 backdrop-blur-xl">
+                  <SelectContent className="border-border/50 bg-background/95 backdrop-blur-xl">
                     <SelectItem value="7">Last 7 days</SelectItem>
                     <SelectItem value="30">Last 30 days</SelectItem>
                     <SelectItem value="90">Last 3 months</SelectItem>
@@ -118,7 +118,7 @@ export default function AnalyticsPage() {
           {summaryStats.map((stat, index) => (
             <div
               key={stat.label}
-              className="group relative overflow-hidden rounded-xl border border-white/[0.08] bg-gradient-to-br from-white/[0.03] to-transparent p-5 transition-all duration-300 hover:border-white/[0.12] hover:bg-white/[0.04]"
+              className="group relative overflow-hidden rounded-xl border border-border/50 bg-card/40 p-5 transition-all duration-300 hover:border-primary/20 hover:bg-secondary/40"
               style={{ animationDelay: `${index * 100}ms` }}
             >
               <div className="absolute -right-4 -top-4 h-24 w-24 rounded-full bg-primary/5 blur-2xl transition-all duration-500 group-hover:bg-primary/10" />
@@ -128,17 +128,16 @@ export default function AnalyticsPage() {
                   <p className="font-mono text-xl font-bold tracking-tight text-foreground">{stat.value}</p>
                   {stat.change && (
                     <div
-                      className={`flex items-center gap-1 text-xs font-medium ${
-                        stat.trend === "up" ? "text-emerald-400" : "text-rose-400"
-                      }`}
+                      className={`flex items-center gap-1 text-xs font-semibold ${stat.trend === "up" ? "text-success" : "text-destructive"
+                        }`}
                     >
                       {stat.trend === "up" ? <TrendingUp className="h-3 w-3" /> : <TrendingDown className="h-3 w-3" />}
                       {stat.change} vs last week
                     </div>
                   )}
-                  {stat.subValue && <p className="text-xs text-muted-foreground">{stat.subValue}</p>}
+                  {stat.subValue && <p className="text-xs text-muted-foreground/80">{stat.subValue}</p>}
                 </div>
-                <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary/10">
+                <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary/8">
                   <stat.icon className="h-4 w-4 text-primary" />
                 </div>
               </div>
@@ -177,38 +176,38 @@ export default function AnalyticsPage() {
                   <BarChart data={dailySpendData} barCategoryGap="20%">
                     <defs>
                       <linearGradient id="barGradient" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="0%" stopColor="#3B82F6" stopOpacity={1} />
-                        <stop offset="100%" stopColor="#3B82F6" stopOpacity={0.6} />
+                        <stop offset="0%" stopColor="var(--primary)" stopOpacity={1} />
+                        <stop offset="100%" stopColor="var(--primary)" stopOpacity={0.7} />
                       </linearGradient>
                     </defs>
-                    <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" vertical={false} />
+                    <CartesianGrid strokeDasharray="3 3" stroke="oklch(0.92 0.01 250)" vertical={false} />
                     <XAxis
                       dataKey="day"
                       axisLine={false}
                       tickLine={false}
-                      tick={{ fill: "rgba(255,255,255,0.5)", fontSize: 11, fontWeight: 500 }}
+                      tick={{ fill: "oklch(0.45 0.03 250)", fontSize: 11, fontWeight: 500 }}
                       dy={10}
                     />
                     <YAxis
                       axisLine={false}
                       tickLine={false}
-                      tick={{ fill: "rgba(255,255,255,0.5)", fontSize: 11 }}
+                      tick={{ fill: "oklch(0.45 0.03 250)", fontSize: 11 }}
                       tickFormatter={(value) => `₹${value / 1000}k`}
                       dx={-10}
                     />
                     <Tooltip
-                      cursor={{ fill: "rgba(255,255,255,0.03)" }}
+                      cursor={{ fill: "var(--secondary)", opacity: 0.4 }}
                       contentStyle={{
-                        backgroundColor: "rgba(22, 27, 34, 0.95)",
-                        border: "1px solid rgba(255,255,255,0.1)",
+                        backgroundColor: "var(--popover)",
+                        border: "1px solid var(--border)",
                         borderRadius: "12px",
-                        boxShadow: "0 20px 40px -10px rgba(0,0,0,0.5)",
+                        boxShadow: "0 10px 25px -5px oklch(0 0 0 / 0.1)",
                         backdropFilter: "blur(12px)",
                       }}
-                      labelStyle={{ color: "rgba(255,255,255,0.7)", fontWeight: 600, marginBottom: 4 }}
-                      formatter={(value: number) => [
+                      labelStyle={{ color: "var(--foreground)", fontWeight: 600, marginBottom: 4 }}
+                      formatter={(value: number | undefined) => [
                         <span key="value" className="font-mono font-bold text-white">
-                          ₹{value.toLocaleString()}
+                          ₹{(value?.toLocaleString("en-IN")) ?? "0"}
                         </span>,
                         "Spent",
                       ]}
@@ -271,7 +270,7 @@ export default function AnalyticsPage() {
                           borderRadius: "12px",
                           boxShadow: "0 20px 40px -10px rgba(0,0,0,0.5)",
                         }}
-                        formatter={(value: number) => [`₹${value.toLocaleString()}`, ""]}
+                        formatter={(value: number | undefined) => [`₹${(value ?? 0).toLocaleString("en-IN")}`, ""]}
                       />
                     </PieChart>
                   </ResponsiveContainer>
@@ -293,7 +292,7 @@ export default function AnalyticsPage() {
                       </div>
                       <div className="flex items-center gap-3 text-right">
                         <span className="font-mono text-sm font-semibold text-foreground">
-                          ₹{item.value.toLocaleString()}
+                          ₹{item.value.toLocaleString("en-IN")}
                         </span>
                         <span className="w-10 rounded-md bg-white/[0.05] px-1.5 py-0.5 text-center text-xs font-medium text-muted-foreground">
                           {item.percentage}%
@@ -336,12 +335,12 @@ export default function AnalyticsPage() {
                   <BarChart data={creditDebitData} barCategoryGap="25%">
                     <defs>
                       <linearGradient id="creditGradient" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="0%" stopColor="#22C55E" stopOpacity={1} />
-                        <stop offset="100%" stopColor="#22C55E" stopOpacity={0.6} />
+                        <stop offset="0%" stopColor="oklch(0.55 0.15 150)" stopOpacity={1} />
+                        <stop offset="100%" stopColor="oklch(0.55 0.15 150)" stopOpacity={0.7} />
                       </linearGradient>
                       <linearGradient id="debitGradient" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="0%" stopColor="#EF4444" stopOpacity={1} />
-                        <stop offset="100%" stopColor="#EF4444" stopOpacity={0.6} />
+                        <stop offset="0%" stopColor="oklch(0.55 0.18 25)" stopOpacity={1} />
+                        <stop offset="100%" stopColor="oklch(0.55 0.18 25)" stopOpacity={0.7} />
                       </linearGradient>
                     </defs>
                     <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" vertical={false} />
@@ -367,8 +366,8 @@ export default function AnalyticsPage() {
                         borderRadius: "12px",
                         boxShadow: "0 20px 40px -10px rgba(0,0,0,0.5)",
                       }}
-                      formatter={(value: number, name: string) => [
-                        `₹${value.toLocaleString()}`,
+                      formatter={(value: number | undefined, name: string | undefined) => [
+                        `₹${(value ?? 0).toLocaleString("en-IN")}`,
                         name === "credit" ? "Income" : "Expense",
                       ]}
                     />
@@ -404,43 +403,42 @@ export default function AnalyticsPage() {
                   <AreaChart data={monthlyTrend}>
                     <defs>
                       <linearGradient id="trendGradient" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="0%" stopColor="#A855F7" stopOpacity={0.4} />
-                        <stop offset="50%" stopColor="#A855F7" stopOpacity={0.15} />
-                        <stop offset="100%" stopColor="#A855F7" stopOpacity={0} />
+                        <stop offset="0%" stopColor="oklch(0.65 0.08 200)" stopOpacity={0.3} />
+                        <stop offset="100%" stopColor="oklch(0.65 0.08 200)" stopOpacity={0} />
                       </linearGradient>
                     </defs>
-                    <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" vertical={false} />
+                    <CartesianGrid strokeDasharray="3 3" stroke="oklch(0.92 0.01 250)" vertical={false} />
                     <XAxis
                       dataKey="month"
                       axisLine={false}
                       tickLine={false}
-                      tick={{ fill: "rgba(255,255,255,0.5)", fontSize: 11, fontWeight: 500 }}
+                      tick={{ fill: "oklch(0.45 0.03 250)", fontSize: 11, fontWeight: 500 }}
                       dy={10}
                     />
                     <YAxis
                       axisLine={false}
                       tickLine={false}
-                      tick={{ fill: "rgba(255,255,255,0.5)", fontSize: 11 }}
+                      tick={{ fill: "oklch(0.45 0.03 250)", fontSize: 11 }}
                       tickFormatter={(value) => `₹${value / 1000}k`}
                       dx={-10}
                     />
                     <Tooltip
                       contentStyle={{
-                        backgroundColor: "rgba(22, 27, 34, 0.95)",
-                        border: "1px solid rgba(255,255,255,0.1)",
+                        backgroundColor: "var(--popover)",
+                        border: "1px solid var(--border)",
                         borderRadius: "12px",
-                        boxShadow: "0 20px 40px -10px rgba(0,0,0,0.5)",
+                        boxShadow: "0 10px 25px -5px oklch(0 0 0 / 0.1)",
+                        backdropFilter: "blur(12px)",
                       }}
-                      formatter={(value: number) => [`₹${value.toLocaleString()}`, "Spending"]}
+                      formatter={(value: number | undefined) => [`₹${(value ?? 0).toLocaleString("en-IN")}`, "Spending"]}
                     />
                     <Area
                       type="monotone"
                       dataKey="spending"
-                      stroke="#A855F7"
-                      strokeWidth={2.5}
+                      stroke="oklch(0.65 0.08 200)"
+                      strokeWidth={3}
                       fill="url(#trendGradient)"
-                      dot={{ fill: "#A855F7", strokeWidth: 0, r: 4 }}
-                      activeDot={{ fill: "#A855F7", strokeWidth: 2, stroke: "#fff", r: 6 }}
+                      dot={{ fill: "oklch(0.65 0.08 200)", r: 4 }}
                     />
                   </AreaChart>
                 </ResponsiveContainer>

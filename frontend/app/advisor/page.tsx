@@ -124,8 +124,8 @@ export default function AdvisorPage() {
                 <button
                   key={thread.id}
                   className={cn(
-                    "w-full rounded-lg p-3 text-left transition-colors hover:bg-secondary",
-                    thread.id === "1" && "bg-primary/10",
+                    "w-full rounded-lg p-3 text-left transition-colors hover:bg-secondary/80",
+                    thread.id === "1" && "bg-primary/8 border-l-2 border-primary shadow-sm",
                   )}
                 >
                   <p className="text-sm font-medium text-foreground">{thread.title}</p>
@@ -209,10 +209,10 @@ export default function AdvisorPage() {
                   key={chip.label}
                   variant="outline"
                   size="sm"
-                  className="gap-2 text-xs bg-transparent"
+                  className="gap-2 text-xs bg-secondary/30 border-primary/10 hover:bg-primary/5 hover:border-primary/30 transition-premium"
                   onClick={() => handleChipClick(chip.label)}
                 >
-                  <chip.icon className="h-3 w-3" />
+                  <chip.icon className="h-3 w-3 text-primary/70" />
                   {chip.label}
                 </Button>
               ))}

@@ -9,59 +9,71 @@ import { Badge } from "@/components/ui/badge"
 import { Progress } from "@/components/ui/progress"
 import { cn } from "@/lib/utils"
 import { Users, TrendingUp, Target, Wallet, Plus } from "lucide-react"
-
-const familyMembers = [
-  {
-    id: "you",
-    name: "Rajesh Kumar",
-    relation: "You",
-    avatar: "RK",
-    netWorth: 1250000,
-    monthlyExpense: 45000,
-    goals: [
-      { name: "Emergency Fund", target: 300000, current: 250000 },
-      { name: "House Down Payment", target: 1500000, current: 450000 },
-    ],
-  },
-  {
-    id: "father",
-    name: "Suresh Kumar",
-    relation: "Father",
-    avatar: "SK",
-    netWorth: 3500000,
-    monthlyExpense: 35000,
-    goals: [
-      { name: "Retirement Corpus", target: 5000000, current: 3500000 },
-      { name: "Medical Emergency", target: 500000, current: 500000 },
-    ],
-  },
-  {
-    id: "mother",
-    name: "Kamla Devi",
-    relation: "Mother",
-    avatar: "KD",
-    netWorth: 850000,
-    monthlyExpense: 15000,
-    goals: [
-      { name: "Gold Savings", target: 300000, current: 180000 },
-      { name: "Pilgrimage Fund", target: 100000, current: 65000 },
-    ],
-  },
-  {
-    id: "sibling",
-    name: "Priya Kumar",
-    relation: "Sister",
-    avatar: "PK",
-    netWorth: 420000,
-    monthlyExpense: 28000,
-    goals: [
-      { name: "Higher Education", target: 800000, current: 200000 },
-      { name: "Travel Fund", target: 150000, current: 50000 },
-    ],
-  },
-]
+import { useAuth } from "@/context/auth-context"
 
 export default function FamilyPage() {
+  const { user } = useAuth()
+
+  const getInitials = (name: string) => {
+    return name
+      .split(" ")
+      .map((n) => n[0])
+      .join("")
+      .toUpperCase()
+      .slice(0, 2)
+  }
+
+  const familyMembers = [
+    {
+      id: "you",
+      name: user?.name || "Rajesh Kumar",
+      relation: "You",
+      avatar: user?.name ? getInitials(user.name) : "RK",
+      netWorth: 1250000,
+      monthlyExpense: 45000,
+      goals: [
+        { name: "Emergency Fund", target: 300000, current: 250000 },
+        { name: "House Down Payment", target: 1500000, current: 450000 },
+      ],
+    },
+    {
+      id: "father",
+      name: "Suresh Kumar",
+      relation: "Father",
+      avatar: "SK",
+      netWorth: 3500000,
+      monthlyExpense: 35000,
+      goals: [
+        { name: "Retirement Corpus", target: 5000000, current: 3500000 },
+        { name: "Medical Emergency", target: 500000, current: 500000 },
+      ],
+    },
+    {
+      id: "mother",
+      name: "Kamla Devi",
+      relation: "Mother",
+      avatar: "KD",
+      netWorth: 850000,
+      monthlyExpense: 15000,
+      goals: [
+        { name: "Gold Savings", target: 300000, current: 180000 },
+        { name: "Pilgrimage Fund", target: 100000, current: 65000 },
+      ],
+    },
+    {
+      id: "sibling",
+      name: "Priya Kumar",
+      relation: "Sister",
+      avatar: "PK",
+      netWorth: 420000,
+      monthlyExpense: 28000,
+      goals: [
+        { name: "Higher Education", target: 800000, current: 200000 },
+        { name: "Travel Fund", target: 150000, current: 50000 },
+      ],
+    },
+  ]
+
   const [selectedMember, setSelectedMember] = useState(familyMembers[0])
 
   const totalFamilyNetWorth = familyMembers.reduce((sum, m) => sum + m.netWorth, 0)
@@ -108,7 +120,7 @@ export default function FamilyPage() {
                 <Wallet className="h-5 w-5 text-muted-foreground" />
                 <p className="text-xs font-medium text-muted-foreground">Monthly Expenses</p>
               </div>
-              <p className="mt-2 text-2xl font-bold text-foreground">₹{totalMonthlyExpense.toLocaleString()}</p>
+              <p className="mt-2 text-2xl font-bold text-foreground">₹{totalMonthlyExpense.toLocaleString("en-IN")}</p>
             </CardContent>
           </Card>
           <Card>
@@ -169,12 +181,12 @@ export default function FamilyPage() {
               <div className="grid grid-cols-2 gap-4">
                 <div className="rounded-lg bg-secondary p-4">
                   <p className="text-xs text-muted-foreground">Net Worth</p>
-                  <p className="mt-1 text-xl font-bold text-foreground">₹{selectedMember.netWorth.toLocaleString()}</p>
+                  <p className="mt-1 text-xl font-bold text-foreground">₹{selectedMember.netWorth.toLocaleString("en-IN")}</p>
                 </div>
                 <div className="rounded-lg bg-secondary p-4">
                   <p className="text-xs text-muted-foreground">Monthly Expense</p>
                   <p className="mt-1 text-xl font-bold text-foreground">
-                    ₹{selectedMember.monthlyExpense.toLocaleString()}
+                    ₹{selectedMember.monthlyExpense.toLocaleString("en-IN")}
                   </p>
                 </div>
               </div>
@@ -219,8 +231,8 @@ export default function FamilyPage() {
                     </div>
                     <Progress value={Math.min(percentage, 100)} className="h-2" />
                     <div className="flex items-center justify-between text-sm text-muted-foreground">
-                      <span>₹{goal.current.toLocaleString()}</span>
-                      <span>₹{goal.target.toLocaleString()}</span>
+                      <span>₹{goal.current.toLocaleString("en-IN")}</span>
+                      <span>₹{goal.target.toLocaleString("en-IN")}</span>
                     </div>
                   </div>
                 )

@@ -69,15 +69,17 @@ export function Sidebar() {
     <aside className="fixed left-0 top-0 z-40 h-screen w-[260px] border-r border-border/50 bg-sidebar/95 backdrop-blur-xl flex-col hidden lg:flex">
       {/* Logo */}
       <div className="flex h-[72px] items-center gap-3 border-b border-border/50 px-6">
-        <div className="relative flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-primary to-primary/80 shadow-lg shadow-primary/20">
-          <Sparkles className="h-5 w-5 text-primary-foreground" />
-          <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-white/20 to-transparent" />
+        <div className="relative flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-primary to-primary/80 shadow-lg shadow-primary/20 group/logo">
+          <Sparkles className="h-5 w-5 text-primary-foreground relative z-10 animate-pulse-glow" />
+          <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-white/20 to-transparent z-0" />
+          {/* Subtle gold glow behind sparkles */}
+          <div className="absolute inset-[-4px] rounded-2xl bg-accent/20 blur-xl opacity-0 group-hover/logo:opacity-100 transition-opacity duration-700" />
         </div>
         <div className="flex flex-col leading-none pt-1">
-          <span className="text-xl font-black tracking-tighter text-foreground uppercase">Bharat AI</span>
+          <span className="text-xl font-black tracking-tighter uppercase text-primary drop-shadow-sm">Bharat AI</span>
           <div className="flex items-center gap-2 mt-1.5">
-            <span className="text-[9px] font-bold uppercase tracking-[0.4em] text-gradient-gold">Wealth</span>
-            <div className="h-[1px] flex-1 bg-gradient-to-r from-amber-500/40 to-transparent" />
+            <span className="text-[9px] font-black uppercase tracking-[0.4em] text-accent">Wealth</span>
+            <div className="h-[2px] flex-1 bg-gradient-to-r from-accent to-transparent" />
           </div>
         </div>
       </div>
@@ -93,22 +95,22 @@ export function Sidebar() {
               className={cn(
                 "group relative flex items-center gap-3 rounded-xl px-3.5 py-2.5 text-sm font-medium transition-premium",
                 pathname === item.href
-                  ? "bg-primary/10 text-primary shadow-sm"
-                  : "text-muted-foreground hover:bg-secondary/80 hover:text-foreground",
+                  ? "text-primary bg-primary/8 shadow-sm"
+                  : "text-muted-foreground/90 hover:bg-secondary/80 hover:text-foreground hover:scale-[1.02] active:scale-[0.98]",
                 "animate-fade-in opacity-0",
                 `stagger-${index + 1}`,
               )}
             >
               {pathname === item.href && (
-                <div className="absolute left-0 top-1/2 h-6 w-1 -translate-y-1/2 rounded-r-full bg-primary shadow-lg shadow-primary/50" />
+                <div className="absolute left-0 top-1/2 h-5 w-[2px] -translate-y-1/2 rounded-r-full bg-primary shadow-[0_0_15px_rgba(var(--primary),0.6)]" />
               )}
               <item.icon
                 className={cn(
-                  "h-[18px] w-[18px] transition-transform duration-300",
-                  pathname === item.href ? "scale-110" : "group-hover:scale-105",
+                  "h-[18px] w-[18px] transition-transform duration-500",
+                  pathname === item.href ? "scale-110" : "group-hover:scale-110",
                 )}
               />
-              {item.name}
+              <span className="relative z-10">{item.name}</span>
             </Link>
           ))}
         </div>
@@ -117,7 +119,7 @@ export function Sidebar() {
         <div className="mt-6">
           <button
             onClick={() => setPortfolioOpen(!portfolioOpen)}
-            className="flex w-full items-center justify-between px-3.5 py-2 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground/70 hover:text-muted-foreground transition-colors"
+            className="flex w-full items-center justify-between px-3.5 py-2 text-[10px] font-bold uppercase tracking-widest text-muted-foreground/80 hover:text-primary transition-colors"
           >
             Portfolios
             <ChevronDown
@@ -137,15 +139,18 @@ export function Sidebar() {
                 className={cn(
                   "group relative flex items-center gap-3 rounded-xl px-3.5 py-2.5 text-sm font-medium transition-premium",
                   pathname === item.href
-                    ? "bg-primary/10 text-primary shadow-sm"
-                    : "text-muted-foreground hover:bg-secondary/80 hover:text-foreground",
+                    ? "text-primary bg-primary/10"
+                    : "text-muted-foreground/80 hover:bg-secondary/60 hover:text-foreground",
                 )}
               >
                 {pathname === item.href && (
-                  <div className="absolute left-0 top-1/2 h-6 w-1 -translate-y-1/2 rounded-r-full bg-primary shadow-lg shadow-primary/50" />
+                  <div className="absolute left-0 top-1/2 h-5 w-[2px] -translate-y-1/2 rounded-r-full bg-primary shadow-[0_0_12px_rgba(var(--primary),0.8)]" />
                 )}
-                <item.icon className="h-[18px] w-[18px]" />
-                {item.name}
+                <item.icon className={cn(
+                  "h-[18px] w-[18px] transition-transform duration-500",
+                  pathname === item.href ? "scale-110" : "group-hover:scale-110"
+                )} />
+                <span className="relative z-10">{item.name}</span>
               </Link>
             ))}
           </div>
@@ -164,15 +169,18 @@ export function Sidebar() {
                 className={cn(
                   "group relative flex items-center gap-3 rounded-xl px-3.5 py-2.5 text-sm font-medium transition-premium",
                   pathname === item.href
-                    ? "bg-primary/10 text-primary shadow-sm"
-                    : "text-muted-foreground hover:bg-secondary/80 hover:text-foreground",
+                    ? "text-primary bg-primary/10"
+                    : "text-muted-foreground/80 hover:bg-secondary/60 hover:text-foreground",
                 )}
               >
                 {pathname === item.href && (
-                  <div className="absolute left-0 top-1/2 h-6 w-1 -translate-y-1/2 rounded-r-full bg-primary shadow-lg shadow-primary/50" />
+                  <div className="absolute left-0 top-1/2 h-5 w-[2px] -translate-y-1/2 rounded-r-full bg-primary shadow-[0_0_12px_rgba(var(--primary),0.8)]" />
                 )}
-                <item.icon className="h-[18px] w-[18px]" />
-                {item.name}
+                <item.icon className={cn(
+                  "h-[18px] w-[18px] transition-transform duration-500",
+                  pathname === item.href ? "scale-110" : "group-hover:scale-110"
+                )} />
+                <span className="relative z-10">{item.name}</span>
               </Link>
             ))}
           </div>
@@ -201,15 +209,18 @@ export function Sidebar() {
                 className={cn(
                   "group relative flex items-center gap-3 rounded-xl px-3.5 py-2.5 text-sm font-medium transition-premium",
                   pathname === item.href
-                    ? "bg-primary/10 text-primary shadow-sm"
-                    : "text-muted-foreground hover:bg-secondary/80 hover:text-foreground",
+                    ? "text-primary bg-primary/10"
+                    : "text-muted-foreground/80 hover:bg-secondary/60 hover:text-foreground",
                 )}
               >
                 {pathname === item.href && (
-                  <div className="absolute left-0 top-1/2 h-6 w-1 -translate-y-1/2 rounded-r-full bg-primary shadow-lg shadow-primary/50" />
+                  <div className="absolute left-0 top-1/2 h-5 w-[2px] -translate-y-1/2 rounded-r-full bg-primary shadow-[0_0_12px_rgba(var(--primary),0.8)]" />
                 )}
-                <item.icon className="h-[18px] w-[18px]" />
-                {item.name}
+                <item.icon className={cn(
+                  "h-[18px] w-[18px] transition-transform duration-500",
+                  pathname === item.href ? "scale-110" : "group-hover:scale-110"
+                )} />
+                <span className="relative z-10">{item.name}</span>
               </Link>
             ))}
           </div>
@@ -226,15 +237,18 @@ export function Sidebar() {
               className={cn(
                 "group relative flex items-center gap-3 rounded-xl px-3.5 py-2.5 text-sm font-medium transition-premium",
                 pathname === item.href
-                  ? "bg-primary/10 text-primary shadow-sm"
-                  : "text-muted-foreground hover:bg-secondary/80 hover:text-foreground",
+                  ? "text-primary bg-primary/10"
+                  : "text-muted-foreground/80 hover:bg-white/5 hover:text-foreground",
               )}
             >
               {pathname === item.href && (
-                <div className="absolute left-0 top-1/2 h-6 w-1 -translate-y-1/2 rounded-r-full bg-primary shadow-lg shadow-primary/50" />
+                <div className="absolute left-0 top-1/2 h-5 w-[2px] -translate-y-1/2 rounded-r-full bg-primary shadow-[0_0_12px_rgba(var(--primary),0.8)]" />
               )}
-              <item.icon className="h-[18px] w-[18px]" />
-              {item.name}
+              <item.icon className={cn(
+                "h-[18px] w-[18px] transition-transform duration-500",
+                pathname === item.href ? "scale-110" : "group-hover:scale-110"
+              )} />
+              <span className="relative z-10">{item.name}</span>
             </Link>
           ))}
         </div>

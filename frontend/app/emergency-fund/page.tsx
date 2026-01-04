@@ -99,7 +99,7 @@ export default function EmergencyFundPage() {
                     <IndianRupee className="h-4 w-4 text-muted-foreground" />
                     Monthly Salary
                   </Label>
-                  <span className="font-mono font-semibold">INR {salary.toLocaleString()}</span>
+                  <span className="font-mono font-semibold">INR {salary.toLocaleString("en-IN")}</span>
                 </div>
                 <Slider
                   value={[salary]}
@@ -137,7 +137,7 @@ export default function EmergencyFundPage() {
                     <Home className="h-4 w-4 text-muted-foreground" />
                     Monthly Rent
                   </Label>
-                  <span className="font-mono font-semibold">INR {rent.toLocaleString()}</span>
+                  <span className="font-mono font-semibold">INR {rent.toLocaleString("en-IN")}</span>
                 </div>
                 <Slider
                   value={[rent]}
@@ -156,7 +156,7 @@ export default function EmergencyFundPage() {
                     <Car className="h-4 w-4 text-muted-foreground" />
                     Total EMIs
                   </Label>
-                  <span className="font-mono font-semibold">INR {emi.toLocaleString()}</span>
+                  <span className="font-mono font-semibold">INR {emi.toLocaleString("en-IN")}</span>
                 </div>
                 <Slider
                   value={[emi]}
@@ -228,7 +228,7 @@ export default function EmergencyFundPage() {
                         You currently have{" "}
                         <span className="font-semibold text-success">INR {formatCurrency(currentSavings)}</span>. Add{" "}
                         <span className="font-semibold text-primary">
-                          INR {Math.round(remaining / monthsToGoal).toLocaleString()}/month
+                          INR {Math.round(remaining / monthsToGoal).toLocaleString("en-IN")}/month
                         </span>{" "}
                         for <span className="font-semibold">{monthsToGoal} months</span>.
                       </>
