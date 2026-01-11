@@ -12,4 +12,7 @@ public interface PortfolioRepository extends JpaRepository<PortfolioItem, Long> 
     List<PortfolioItem> findByUser(User user);
 
     List<PortfolioItem> findByUserOrderByCurrentPriceDesc(User user);
+
+    @org.springframework.data.jpa.repository.Query("SELECT SUM(p.quantity * p.currentPrice) FROM PortfolioItem p WHERE p.user = :user")
+    java.math.BigDecimal sumTotalNetWorth(@org.springframework.data.repository.query.Param("user") User user);
 }

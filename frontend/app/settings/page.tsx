@@ -26,64 +26,64 @@ export default function SettingsPage() {
     <AppShell>
       <div className="space-y-6">
         {/* Header */}
-        <div>
-          <h1 className="font-serif text-2xl font-bold text-foreground">Settings</h1>
-          <p className="text-sm text-muted-foreground">Manage your account and preferences</p>
+        <div className="bg-muted/30 p-6 rounded-2xl border border-border/50">
+          <h1 className="text-2xl font-bold text-foreground">Settings</h1>
+          <p className="text-sm text-muted-foreground font-medium">Manage your account and preferences</p>
         </div>
 
         <div className="grid gap-6 lg:grid-cols-3">
           {/* Profile Section */}
-          <Card className="lg:col-span-2">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2 text-base font-medium">
+          <Card className="lg:col-span-2 border-border/50 shadow-sm">
+            <CardHeader className="border-b border-border/50 pb-4">
+              <CardTitle className="flex items-center gap-2 text-base font-bold uppercase tracking-widest text-primary">
                 <User className="h-5 w-5" />
                 Profile Information
               </CardTitle>
-              <CardDescription>Update your personal details</CardDescription>
+              <CardDescription className="font-medium">Update your personal details</CardDescription>
             </CardHeader>
-            <CardContent className="space-y-6">
+            <CardContent className="space-y-6 pt-6">
               {/* Avatar */}
               <div className="flex items-center gap-4">
-                <Avatar className="h-20 w-20">
+                <Avatar className="h-20 w-20 border-2 border-primary/10">
                   <AvatarImage src="/indian-professional-man.png" />
-                  <AvatarFallback className="bg-primary text-2xl text-primary-foreground">RK</AvatarFallback>
+                  <AvatarFallback className="bg-primary text-2xl text-primary-foreground font-bold">RK</AvatarFallback>
                 </Avatar>
                 <div>
-                  <Button variant="outline" className="gap-2 bg-transparent">
+                  <Button variant="outline" className="gap-2 bg-transparent border-border/50 hover:bg-muted font-bold h-9">
                     <Camera className="h-4 w-4" />
                     Change Photo
                   </Button>
-                  <p className="mt-1 text-xs text-muted-foreground">JPG, PNG. Max 2MB</p>
+                  <p className="mt-2 text-xs text-muted-foreground font-medium opacity-70">JPG, PNG. Max 2MB</p>
                 </div>
               </div>
 
-              <Separator />
+              <Separator className="bg-border/50" />
 
               {/* Form */}
-              <div className="grid gap-4 sm:grid-cols-2">
+              <div className="grid gap-6 sm:grid-cols-2">
                 <div className="space-y-2">
-                  <Label htmlFor="firstName">First Name</Label>
-                  <Input id="firstName" defaultValue="Rajesh" />
+                  <Label htmlFor="firstName" className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">First Name</Label>
+                  <Input id="firstName" defaultValue="Rajesh" className="bg-muted/50 font-bold" />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="lastName">Last Name</Label>
-                  <Input id="lastName" defaultValue="Kumar" />
+                  <Label htmlFor="lastName" className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">Last Name</Label>
+                  <Input id="lastName" defaultValue="Kumar" className="bg-muted/50 font-bold" />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="email">Email</Label>
-                  <Input id="email" type="email" defaultValue="rajesh@example.com" />
+                  <Label htmlFor="email" className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">Email</Label>
+                  <Input id="email" type="email" defaultValue="rajesh@example.com" className="bg-muted/50 font-bold" />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="phone">Phone</Label>
-                  <Input id="phone" type="tel" defaultValue="+91 98765 43210" />
+                  <Label htmlFor="phone" className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">Phone</Label>
+                  <Input id="phone" type="tel" defaultValue="+91 98765 43210" className="bg-muted/50 font-bold font-mono" />
                 </div>
                 <div className="space-y-2 sm:col-span-2">
-                  <Label htmlFor="pan">PAN Number</Label>
-                  <Input id="pan" defaultValue="ABCDE1234F" />
+                  <Label htmlFor="pan" className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">PAN Number</Label>
+                  <Input id="pan" defaultValue="ABCDE1234F" className="bg-muted/50 font-bold font-mono" />
                 </div>
               </div>
 
-              <Button className="gap-2">
+              <Button className="gap-2 shadow-sm font-bold">
                 <Check className="h-4 w-4" />
                 Save Changes
               </Button>
@@ -92,27 +92,27 @@ export default function SettingsPage() {
 
           {/* Quick Actions */}
           <div className="space-y-6">
-            <Card>
-              <CardHeader>
-                <CardTitle className="text-base font-medium">Account Actions</CardTitle>
+            <Card className="border-border/50 shadow-sm">
+              <CardHeader className="border-b border-border/50 pb-4">
+                <CardTitle className="text-base font-bold uppercase tracking-widest">Account Actions</CardTitle>
               </CardHeader>
-              <CardContent className="space-y-2">
-                <Button variant="outline" className="w-full justify-start gap-2 bg-transparent">
-                  <Shield className="h-4 w-4" />
+              <CardContent className="space-y-2 pt-4">
+                <Button variant="outline" className="w-full justify-start gap-3 bg-transparent border-border/50 hover:bg-muted font-bold py-6 rounded-xl">
+                  <Shield className="h-4 w-4 text-primary" />
                   Change Password
                 </Button>
-                <Button variant="outline" className="w-full justify-start gap-2 bg-transparent">
-                  <Smartphone className="h-4 w-4" />
+                <Button variant="outline" className="w-full justify-start gap-3 bg-transparent border-border/50 hover:bg-muted font-bold py-6 rounded-xl">
+                  <Smartphone className="h-4 w-4 text-primary" />
                   Two-Factor Auth
                 </Button>
-                <Button variant="outline" className="w-full justify-start gap-2 bg-transparent">
-                  <CreditCard className="h-4 w-4" />
+                <Button variant="outline" className="w-full justify-start gap-3 bg-transparent border-border/50 hover:bg-muted font-bold py-6 rounded-xl">
+                  <CreditCard className="h-4 w-4 text-primary" />
                   Linked Accounts
                 </Button>
-                <Separator className="my-2" />
+                <Separator className="my-2 bg-border/50" />
                 <Button
                   variant="ghost"
-                  className="w-full justify-start gap-2 text-destructive hover:bg-destructive/10 hover:text-destructive"
+                  className="w-full justify-start gap-3 text-destructive hover:bg-destructive/10 hover:text-destructive font-bold py-6 rounded-xl"
                 >
                   <LogOut className="h-4 w-4" />
                   Sign Out
@@ -123,124 +123,83 @@ export default function SettingsPage() {
         </div>
 
         {/* Notifications */}
-        <Card>
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2 text-base font-medium">
+        <Card className="border-border/50 shadow-sm">
+          <CardHeader className="border-b border-border/50 pb-4">
+            <CardTitle className="flex items-center gap-2 text-base font-bold uppercase tracking-widest text-primary">
               <Bell className="h-5 w-5" />
               Notification Preferences
             </CardTitle>
-            <CardDescription>Choose how you want to receive updates</CardDescription>
+            <CardDescription className="font-medium">Choose how you want to receive updates</CardDescription>
           </CardHeader>
-          <CardContent>
-            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-              <div className="flex items-center justify-between rounded-lg border border-border p-4">
-                <div>
-                  <p className="font-medium">Email Notifications</p>
-                  <p className="text-sm text-muted-foreground">Receive updates via email</p>
+          <CardContent className="pt-6">
+            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+              {[
+                { id: "email", label: "Email Notifications", desc: "Receive updates via email" },
+                { id: "push", label: "Push Notifications", desc: "Browser and mobile push" },
+                { id: "sms", label: "SMS Alerts", desc: "Important alerts via SMS" },
+                { id: "alerts", label: "Financial Alerts", desc: "Spending and market alerts" },
+                { id: "reports", label: "Weekly Reports", desc: "Get weekly summaries" },
+                { id: "marketing", label: "Marketing", desc: "Tips and promotions" },
+              ].map((item) => (
+                <div key={item.id} className="flex items-center justify-between rounded-xl border border-border/50 p-4 bg-muted/30 transition-all hover:border-primary/20">
+                  <div className="space-y-0.5">
+                    <p className="font-bold text-sm">{item.label}</p>
+                    <p className="text-[11px] text-muted-foreground font-medium opacity-70">{item.desc}</p>
+                  </div>
+                  <Switch
+                    checked={notifications[item.id as keyof typeof notifications]}
+                    onCheckedChange={(checked) => setNotifications({ ...notifications, [item.id]: checked })}
+                  />
                 </div>
-                <Switch
-                  checked={notifications.email}
-                  onCheckedChange={(checked) => setNotifications({ ...notifications, email: checked })}
-                />
-              </div>
-              <div className="flex items-center justify-between rounded-lg border border-border p-4">
-                <div>
-                  <p className="font-medium">Push Notifications</p>
-                  <p className="text-sm text-muted-foreground">Browser and mobile push</p>
-                </div>
-                <Switch
-                  checked={notifications.push}
-                  onCheckedChange={(checked) => setNotifications({ ...notifications, push: checked })}
-                />
-              </div>
-              <div className="flex items-center justify-between rounded-lg border border-border p-4">
-                <div>
-                  <p className="font-medium">SMS Alerts</p>
-                  <p className="text-sm text-muted-foreground">Important alerts via SMS</p>
-                </div>
-                <Switch
-                  checked={notifications.sms}
-                  onCheckedChange={(checked) => setNotifications({ ...notifications, sms: checked })}
-                />
-              </div>
-              <div className="flex items-center justify-between rounded-lg border border-border p-4">
-                <div>
-                  <p className="font-medium">Financial Alerts</p>
-                  <p className="text-sm text-muted-foreground">Spending and market alerts</p>
-                </div>
-                <Switch
-                  checked={notifications.alerts}
-                  onCheckedChange={(checked) => setNotifications({ ...notifications, alerts: checked })}
-                />
-              </div>
-              <div className="flex items-center justify-between rounded-lg border border-border p-4">
-                <div>
-                  <p className="font-medium">Weekly Reports</p>
-                  <p className="text-sm text-muted-foreground">Get weekly summaries</p>
-                </div>
-                <Switch
-                  checked={notifications.reports}
-                  onCheckedChange={(checked) => setNotifications({ ...notifications, reports: checked })}
-                />
-              </div>
-              <div className="flex items-center justify-between rounded-lg border border-border p-4">
-                <div>
-                  <p className="font-medium">Marketing</p>
-                  <p className="text-sm text-muted-foreground">Tips and promotions</p>
-                </div>
-                <Switch
-                  checked={notifications.marketing}
-                  onCheckedChange={(checked) => setNotifications({ ...notifications, marketing: checked })}
-                />
-              </div>
+              ))}
             </div>
           </CardContent>
         </Card>
 
         {/* Preferences */}
-        <Card>
-          <CardHeader>
-            <CardTitle className="text-base font-medium">App Preferences</CardTitle>
+        <Card className="border-border/50 shadow-sm">
+          <CardHeader className="border-b border-border/50 pb-4">
+            <CardTitle className="text-base font-bold uppercase tracking-widest">App Preferences</CardTitle>
           </CardHeader>
-          <CardContent>
-            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <CardContent className="pt-6">
+            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
               <div className="space-y-2">
-                <Label>Currency</Label>
+                <Label className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">Currency</Label>
                 <Select defaultValue="inr">
-                  <SelectTrigger>
+                  <SelectTrigger className="bg-muted/50 font-bold border-border/50 h-11">
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="inr">Indian Rupee (₹)</SelectItem>
-                    <SelectItem value="usd">US Dollar ($)</SelectItem>
-                    <SelectItem value="eur">Euro (€)</SelectItem>
+                    <SelectItem value="inr" className="font-medium">Indian Rupee (₹)</SelectItem>
+                    <SelectItem value="usd" className="font-medium">US Dollar ($)</SelectItem>
+                    <SelectItem value="eur" className="font-medium">Euro (€)</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
               <div className="space-y-2">
-                <Label>Language</Label>
+                <Label className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">Language</Label>
                 <Select defaultValue="en">
-                  <SelectTrigger>
+                  <SelectTrigger className="bg-muted/50 font-bold border-border/50 h-11">
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="en">English</SelectItem>
-                    <SelectItem value="hi">Hindi</SelectItem>
-                    <SelectItem value="ta">Tamil</SelectItem>
-                    <SelectItem value="te">Telugu</SelectItem>
+                    <SelectItem value="en" className="font-medium">English</SelectItem>
+                    <SelectItem value="hi" className="font-medium">Hindi</SelectItem>
+                    <SelectItem value="ta" className="font-medium">Tamil</SelectItem>
+                    <SelectItem value="te" className="font-medium">Telugu</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
               <div className="space-y-2">
-                <Label>Date Format</Label>
+                <Label className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">Date Format</Label>
                 <Select defaultValue="dd-mm-yyyy">
-                  <SelectTrigger>
+                  <SelectTrigger className="bg-muted/50 font-bold border-border/50 h-11">
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="dd-mm-yyyy">DD-MM-YYYY</SelectItem>
-                    <SelectItem value="mm-dd-yyyy">MM-DD-YYYY</SelectItem>
-                    <SelectItem value="yyyy-mm-dd">YYYY-MM-DD</SelectItem>
+                    <SelectItem value="dd-mm-yyyy" className="font-medium font-mono">DD-MM-YYYY</SelectItem>
+                    <SelectItem value="mm-dd-yyyy" className="font-medium font-mono">MM-DD-YYYY</SelectItem>
+                    <SelectItem value="yyyy-mm-dd" className="font-medium font-mono">YYYY-MM-DD</SelectItem>
                   </SelectContent>
                 </Select>
               </div>

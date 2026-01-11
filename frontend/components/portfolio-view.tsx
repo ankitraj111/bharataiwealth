@@ -1,15 +1,16 @@
 "use client"
 
-import { useState } from "react"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { useState, useMemo } from "react"
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog"
 import { Area, AreaChart, ResponsiveContainer, XAxis, YAxis, Tooltip } from "recharts"
 import { cn } from "@/lib/utils"
-import { TrendingUp, ShieldCheck, AlertTriangle, Eye, Plus } from "lucide-react"
+import { TrendingUp, ShieldCheck, AlertTriangle, Eye, Plus, Search } from "lucide-react"
 import { ExportButton } from "@/components/export-button"
+import { Input } from "@/components/ui/input"
 
 interface Asset {
   name: string
@@ -53,8 +54,17 @@ const getRiskColor = (risk: string) => {
 
 export function PortfolioView({ title, description, totalValue, totalReturn, riskLevel, assets }: PortfolioViewProps) {
   const [selectedAsset, setSelectedAsset] = useState<Asset | null>(null)
+  const [searchQuery, setSearchQuery] = useState("")
 
-  const exportData = assets.map((asset) => ({
+  const filteredAssets = useMemo(() => {
+    return assets.filter((asset) =>
+      asset.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      asset.type.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      asset.risk.toLowerCase().includes(searchQuery.toLowerCase())
+    )
+  }, [assets, searchQuery])
+
+  const exportData = filteredAssets.map((asset) => ({
     Asset: asset.name,
     Type: asset.type,
     Value: `₹${asset.value.toLocaleString("en-IN")}`,
@@ -68,8 +78,8 @@ export function PortfolioView({ title, description, totalValue, totalReturn, ris
       {/* Header */}
       <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
         <div>
-          <h1 className="font-serif text-2xl font-bold text-foreground">{title}</h1>
-          <p className="text-sm text-muted-foreground">{description}</p>
+          <h1 className="text-2xl font-bold text-foreground">{title}</h1>
+          <p className="text-sm text-muted-foreground font-medium">{description}</p>
         </div>
         <ExportButton data={exportData} filename={`bharat-ai-${title.toLowerCase().replace(/\s+/g, "-")}`} />
       </div>
@@ -108,8 +118,20 @@ export function PortfolioView({ title, description, totalValue, totalReturn, ris
 
       {/* Assets Table */}
       <Card>
-        <CardHeader>
-          <CardTitle className="text-base font-medium">Holdings</CardTitle>
+        <CardHeader className="flex flex-col sm:flex-row items-center justify-between gap-4 pb-2">
+          <div>
+            <CardTitle className="text-base font-medium">Holdings</CardTitle>
+            <CardDescription className="text-xs">Manage and analyze your current positions</CardDescription>
+          </div>
+          <div className="relative w-full sm:w-64">
+            <Search className="absolute left-3 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-muted-foreground" />
+            <Input
+              placeholder="Search assets..."
+              className="h-9 pl-9 text-xs bg-muted/20"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+            />
+          </div>
         </CardHeader>
         <CardContent>
           <div className="overflow-x-auto">
@@ -126,33 +148,41 @@ export function PortfolioView({ title, description, totalValue, totalReturn, ris
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {assets.map((asset) => (
-                  <TableRow key={asset.name}>
-                    <TableCell className="font-medium">{asset.name}</TableCell>
-                    <TableCell className="text-muted-foreground">{asset.type}</TableCell>
-                    <TableCell className="text-right">₹{asset.value.toLocaleString("en-IN")}</TableCell>
-                    <TableCell className="text-right">
-                      <span className="text-success">+{asset.return}%</span>
-                    </TableCell>
-                    <TableCell className="text-center">
-                      <div className="flex items-center justify-center gap-1">
-                        <div className="h-2 w-16 overflow-hidden rounded-full bg-secondary">
-                          <div className="h-full bg-primary" style={{ width: `${asset.confidence}%` }} />
+                {filteredAssets.length > 0 ? (
+                  filteredAssets.map((asset) => (
+                    <TableRow key={asset.name}>
+                      <TableCell className="font-medium">{asset.name}</TableCell>
+                      <TableCell className="text-muted-foreground">{asset.type}</TableCell>
+                      <TableCell className="text-right">₹{asset.value.toLocaleString("en-IN")}</TableCell>
+                      <TableCell className="text-right">
+                        <span className="text-success">+{asset.return}%</span>
+                      </TableCell>
+                      <TableCell className="text-center">
+                        <div className="flex items-center justify-center gap-1">
+                          <div className="h-2 w-16 overflow-hidden rounded-full bg-secondary">
+                            <div className="h-full bg-primary" style={{ width: `${asset.confidence}%` }} />
+                          </div>
+                          <span className="text-xs text-muted-foreground">{asset.confidence}%</span>
                         </div>
-                        <span className="text-xs text-muted-foreground">{asset.confidence}%</span>
-                      </div>
-                    </TableCell>
-                    <TableCell className="text-center">
-                      <Badge className={cn("font-normal", getRiskColor(asset.risk))}>{asset.risk}</Badge>
-                    </TableCell>
-                    <TableCell className="text-right">
-                      <Button variant="ghost" size="sm" className="gap-1" onClick={() => setSelectedAsset(asset)}>
-                        <Eye className="h-4 w-4" />
-                        View
-                      </Button>
+                      </TableCell>
+                      <TableCell className="text-center">
+                        <Badge className={cn("font-normal", getRiskColor(asset.risk))}>{asset.risk}</Badge>
+                      </TableCell>
+                      <TableCell className="text-right">
+                        <Button variant="ghost" size="sm" className="gap-1" onClick={() => setSelectedAsset(asset)}>
+                          <Eye className="h-4 w-4" />
+                          View
+                        </Button>
+                      </TableCell>
+                    </TableRow>
+                  ))
+                ) : (
+                  <TableRow>
+                    <TableCell colSpan={7} className="h-24 text-center text-muted-foreground">
+                      No assets found matching "{searchQuery}"
                     </TableCell>
                   </TableRow>
-                ))}
+                )}
               </TableBody>
             </Table>
           </div>

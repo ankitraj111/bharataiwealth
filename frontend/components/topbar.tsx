@@ -56,10 +56,21 @@ export function Topbar() {
 
       {/* Search - Enhanced */}
       <div className="hidden flex-1 md:flex md:max-w-lg">
-        <div className="relative w-full group">
+        <form
+          className="relative w-full group"
+          onSubmit={(e) => {
+            e.preventDefault();
+            const formData = new FormData(e.currentTarget);
+            const query = formData.get('search') as string;
+            if (query) {
+              window.location.href = `/predictions?search=${encodeURIComponent(query)}`;
+            }
+          }}
+        >
           <Search className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground/60 transition-colors group-focus-within:text-primary" />
           <Input
-            placeholder="Search transactions, assets..."
+            name="search"
+            placeholder="Search assets (e.g. RELIANCE.NS, BTC-USD)..."
             className="w-full h-11 bg-secondary/40 border-border/50 pl-11 pr-20 rounded-xl focus:bg-secondary/60 focus:border-primary/20 focus:ring-1 focus:ring-primary/10 transition-premium placeholder:text-muted-foreground/60"
           />
           <div className="absolute right-3 top-1/2 -translate-y-1/2 flex items-center gap-1 text-muted-foreground/50">
@@ -67,18 +78,19 @@ export function Topbar() {
               <Command className="h-3 w-3" />K
             </kbd>
           </div>
-        </div>
+        </form>
       </div>
 
+
       {/* Right Section - Enhanced */}
-      <div className="flex items-center gap-1.5">
+      <div className="flex items-center gap-2">
         {/* Voice Assistant */}
         <Button
           variant="ghost"
           size="icon"
-          className="hidden sm:flex h-10 w-10 rounded-xl hover:bg-secondary/80 transition-premium group"
+          className="hidden sm:flex h-10 w-10 rounded-xl bg-slate-100 hover:bg-slate-200 transition-all group"
         >
-          <Mic className="h-[18px] w-[18px] text-muted-foreground group-hover:text-primary transition-colors" />
+          <Mic className="h-[18px] w-[18px] text-slate-600 group-hover:text-orange-500 transition-colors" />
           <span className="sr-only">Voice assistant</span>
         </Button>
 
@@ -90,12 +102,12 @@ export function Topbar() {
             <Button
               variant="ghost"
               size="icon"
-              className="relative h-10 w-10 rounded-xl hover:bg-secondary/80 transition-premium group"
+              className="relative h-10 w-10 rounded-xl bg-slate-100 hover:bg-slate-200 transition-all group"
             >
-              <Bell className="h-[18px] w-[18px] text-muted-foreground group-hover:text-primary transition-colors" />
-              <span className="absolute right-2.5 top-2.5 flex h-2 w-2">
-                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-destructive/60 opacity-75" />
-                <span className="relative inline-flex h-2 w-2 rounded-full bg-destructive ring-2 ring-background" />
+              <Bell className="h-[18px] w-[18px] text-slate-600 group-hover:text-orange-500 transition-colors" />
+              <span className="absolute right-2 top-2 flex h-2.5 w-2.5">
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-red-500 opacity-75" />
+                <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-red-500 ring-2 ring-white" />
               </span>
               <span className="sr-only">Notifications</span>
             </Button>
@@ -146,7 +158,7 @@ export function Topbar() {
         </DropdownMenu>
 
         {/* Divider */}
-        <div className="mx-2 h-8 w-px bg-border/50 hidden sm:block" />
+        <div className="mx-2 h-8 w-px bg-slate-200 hidden sm:block" />
 
         {/* User Menu - Enhanced */}
         <DropdownMenu>

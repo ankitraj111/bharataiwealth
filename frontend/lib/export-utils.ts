@@ -62,3 +62,56 @@ export function exportToExcel(data: Record<string, unknown>[], filename: string)
   link.click()
   document.body.removeChild(link)
 }
+
+import jsPDF from "jspdf"
+import autoTable from "jspdf-autotable"
+
+export function exportToPDF(data: Record<string, unknown>[], filename: string) {
+  if (data.length === 0) return
+
+  const doc = new jsPDF()
+
+  // Add Header
+  doc.setFontSize(22)
+  doc.setTextColor(30, 41, 59) // slate-800
+  doc.text("BHARAT AI WEALTH", 14, 22)
+
+  doc.setFontSize(10)
+  doc.setTextColor(100, 116, 139) // slate-500
+  doc.text("Expense Report", 14, 30)
+  doc.text(`Generated on: ${new Date().toLocaleDateString("en-IN")}`, 14, 35)
+
+  // Separator line
+  doc.setDrawColor(226, 232, 240) // border color
+  doc.line(14, 40, 196, 40)
+
+  const headers = Object.keys(data[0])
+  const body = data.map((row) => headers.map((header) => String(row[header] ?? "")))
+
+  autoTable(doc, {
+    startY: 45,
+    head: [headers],
+    body: body,
+    theme: "striped",
+    headStyles: {
+      fillColor: [59, 130, 246], // primary blue
+      textColor: [255, 255, 255],
+      fontSize: 10,
+      fontStyle: "bold",
+    },
+    bodyStyles: {
+      fontSize: 9,
+      textColor: [30, 41, 59],
+    },
+    alternateRowStyles: {
+      fillColor: [248, 250, 252], // slate-50
+    },
+    margin: { top: 45 },
+    styles: {
+      font: "helvetica",
+      cellPadding: 3,
+    },
+  })
+
+  doc.save(`${filename}.pdf`)
+}

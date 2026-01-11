@@ -35,13 +35,13 @@ export function AssetInsightPanel({
 
     return (
         <Sheet open={isOpen} onOpenChange={(open) => !open && onClose()}>
-            <SheetContent className="w-full sm:max-w-md bg-[#0d1117]/95 backdrop-blur-2xl border-white/[0.08] text-foreground p-0 overflow-hidden flex flex-col">
-                <SheetHeader className="p-6 border-b border-white/[0.05] space-y-1">
-                    <div className="flex items-center gap-2">
-                        <SheetTitle className="text-xl font-bold font-serif">{asset}</SheetTitle>
-                        <Badge variant="outline" className="text-[10px] uppercase">{isCrypto ? "Crypto" : "Equities"}</Badge>
+            <SheetContent className="w-full sm:max-w-md bg-background border-l border-border/50 text-foreground p-0 overflow-hidden flex flex-col shadow-2xl">
+                <SheetHeader className="p-6 border-b border-border/50 space-y-1 bg-muted/30">
+                    <div className="flex items-center gap-3">
+                        <SheetTitle className="text-xl font-bold">{asset}</SheetTitle>
+                        <Badge variant="outline" className="text-[10px] font-bold uppercase tracking-widest h-5">{isCrypto ? "Crypto" : "Equities"}</Badge>
                     </div>
-                    <SheetDescription className="text-muted-foreground">Live Market Insights & AI Analysis</SheetDescription>
+                    <SheetDescription className="text-muted-foreground font-medium">Live Market Insights & AI Analysis</SheetDescription>
                 </SheetHeader>
 
                 <div className="flex-1 overflow-y-auto p-6 space-y-8 custom-scrollbar">
@@ -58,7 +58,7 @@ export function AssetInsightPanel({
                     </div>
 
                     {/* Mini Chart */}
-                    <div className="h-[180px] w-full rounded-xl bg-white/[0.02] border border-white/[0.05] p-2">
+                    <div className="h-[180px] w-full rounded-2xl bg-muted/30 border border-border/50 p-4">
                         <ResponsiveContainer width="100%" height="100%">
                             <AreaChart data={miniChartData}>
                                 <XAxis dataKey="day" hide />
@@ -122,11 +122,11 @@ export function AssetInsightPanel({
                         <div className="space-y-3">
                             {[1, 2].map((i) => (
                                 <div key={i} className="rounded-lg border border-white/[0.05] p-3 hover:bg-white/[0.01] transition-colors">
-                                    <div className="flex items-center justify-between mb-1">
-                                        <span className="text-[10px] text-muted-foreground">Economic Times • 2h ago</span>
-                                        <Badge variant="secondary" className="text-[8px] h-3 px-1 bg-emerald-500/10 text-emerald-400 border-none">Positive</Badge>
+                                    <div className="flex items-center justify-between mb-2">
+                                        <span className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">Economic Times • 2h ago</span>
+                                        <Badge variant="outline" className="text-[9px] font-bold uppercase tracking-tighter h-4 px-1 bg-emerald-500/10 text-emerald-600 border-emerald-500/20">Positive</Badge>
                                     </div>
-                                    <p className="text-[11px] font-medium leading-normal">Reliance Retail expansion plans trigger upgrades from top brokerage firms.</p>
+                                    <p className="text-[11px] font-bold leading-relaxed">{i === 1 ? "Reliance Retail expansion plans trigger upgrades from top brokerage firms." : "New strategic partnership in green energy sector expected to drive future growth."}</p>
                                 </div>
                             ))}
                         </div>
@@ -134,8 +134,8 @@ export function AssetInsightPanel({
                 </div>
 
                 {/* Action Footer */}
-                <div className="p-6 border-t border-white/[0.05] bg-white/[0.01] mt-auto">
-                    <Button className="w-full bg-primary hover:bg-primary/90 text-sm h-11">Add to Portfolio</Button>
+                <div className="p-6 border-t border-border/50 bg-muted/20 mt-auto">
+                    <Button className="w-full font-bold shadow-sm h-12 rounded-xl">Add to Portfolio</Button>
                 </div>
             </SheetContent>
         </Sheet>

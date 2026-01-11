@@ -1,54 +1,32 @@
 "use client"
 
+import { useState, useEffect } from "react"
 import { AppShell } from "@/components/app-shell"
 import { PortfolioView } from "@/components/portfolio-view"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { AlertTriangle } from "lucide-react"
+import { fetchPortfolioAssets } from "@/lib/api"
 
-const highRiskAssets = [
-  {
-    name: "Bitcoin (BTC)",
-    type: "Cryptocurrency",
-    value: 85000,
-    return: 45.2,
-    confidence: 55,
-    risk: "Very High",
-  },
-  {
-    name: "Ethereum (ETH)",
-    type: "Cryptocurrency",
-    value: 65000,
-    return: 38.5,
-    confidence: 52,
-    risk: "Very High",
-  },
-  {
-    name: "Quant Small Cap Fund",
-    type: "Small Cap",
-    value: 75000,
-    return: 28.3,
-    confidence: 62,
-    risk: "High",
-  },
-  {
-    name: "Solana (SOL)",
-    type: "Cryptocurrency",
-    value: 35000,
-    return: 52.1,
-    confidence: 48,
-    risk: "Very High",
-  },
-  {
-    name: "Nippon India Small Cap",
-    type: "Small Cap",
-    value: 55000,
-    return: 25.8,
-    confidence: 65,
-    risk: "High",
-  },
+const defaultAssets = [
+  { name: "Bitcoin (BTC)", type: "Crypto", value: 120000, return: 45.2, confidence: 55, risk: "High" },
+  { name: "Ethereum (ETH)", type: "Crypto", value: 80000, return: 38.5, confidence: 58, risk: "High" },
+  { name: "Solana (SOL)", type: "Crypto", value: 50000, return: 52.8, confidence: 48, risk: "High" },
+  { name: "Small Cap Fund", type: "Mutual Fund", value: 40000, return: 28.5, confidence: 65, risk: "High" },
+  { name: "Adani Enterprises", type: "Stock", value: 25000, return: 22.3, confidence: 52, risk: "High" },
 ]
 
 export default function HighRiskPortfolioPage() {
+  const [assets, setAssets] = useState(defaultAssets)
+
+  useEffect(() => {
+    fetchPortfolioAssets("high").then(data => {
+      if (data?.assets?.length > 0) setAssets(data.assets)
+    })
+  }, [])
+
+  const totalValue = assets.reduce((sum, asset) => sum + asset.value, 0)
+  const avgReturn = assets.length > 0 ? assets.reduce((sum, asset) => sum + asset.return, 0) / assets.length : 0
+
   return (
     <AppShell>
       <div className="space-y-4">
@@ -60,13 +38,14 @@ export default function HighRiskPortfolioPage() {
             volatile and can lose value rapidly.
           </AlertDescription>
         </Alert>
+
         <PortfolioView
           title="High Risk Portfolio (Crypto & Small Caps)"
           description="Aggressive growth with high volatility"
-          totalValue={315000}
-          totalReturn={35.8}
+          totalValue={totalValue}
+          totalReturn={parseFloat(avgReturn.toFixed(1))}
           riskLevel="High"
-          assets={highRiskAssets}
+          assets={assets}
           showCryptoWarning
         />
       </div>

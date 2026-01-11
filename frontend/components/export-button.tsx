@@ -3,7 +3,7 @@
 import { Download } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
-import { exportToCSV, exportToExcel } from "@/lib/export-utils"
+import { exportToCSV, exportToExcel, exportToPDF } from "@/lib/export-utils"
 
 interface ExportButtonProps {
   data: Record<string, unknown>[]
@@ -22,6 +22,13 @@ export function ExportButton({ data, filename, variant = "outline", size = "sm" 
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="glass-card-elevated">
+        <DropdownMenuItem
+          onClick={() => exportToPDF(data, filename)}
+          className="cursor-pointer rounded-lg transition-premium focus:bg-secondary/80 gap-2"
+        >
+          <span className="text-xs font-mono bg-primary/20 text-primary px-1.5 py-0.5 rounded">PDF</span>
+          Download PDF
+        </DropdownMenuItem>
         <DropdownMenuItem
           onClick={() => exportToCSV(data, filename)}
           className="cursor-pointer rounded-lg transition-premium focus:bg-secondary/80 gap-2"

@@ -3,125 +3,141 @@
 
 @custom-variant dark (&:is(.dark *));
 
-/* Premium fintech dark theme with enhanced glassmorphism and refined color palette */
-/* Premium fintech light theme by default */
+/* Trustworthy Institutional Theme for Bharat AI Wealth */
+/* Deep Navy Blue + Emerald Green - Conveys Trust, Stability & Growth */
+/* Light Mode - Clean, Professional & Trustworthy */
 :root {
-  --background: oklch(0.97 0.012 250);
-  /* Crisp Premium White */
-  --foreground: oklch(0.15 0.08 255);
-  /* Vibrant Deep Navy */
+  --background: oklch(0.99 0.002 250);
+  /* Cool Clean White */
+  --foreground: oklch(0.18 0.03 250);
+  /* Deep Navy Text */
   --card: oklch(1 0 0);
-  --card-foreground: oklch(0.15 0.08 255);
+  --card-foreground: oklch(0.18 0.03 250);
   --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.15 0.08 255);
-  --primary: oklch(0.28 0.14 255);
-  /* Majestic Royal Blue - Bold */
-  --primary-foreground: oklch(0.97 0.012 250);
-  --secondary: oklch(0.92 0.02 255);
-  --secondary-foreground: oklch(0.15 0.08 255);
-  --muted: oklch(0.92 0.02 255);
-  --muted-foreground: oklch(0.35 0.06 255);
-  --accent: oklch(0.72 0.18 85);
-  /* Glistening Royal Gold - Vibrant */
-  --accent-foreground: oklch(0.15 0.08 255);
-  --destructive: oklch(0.52 0.24 25);
-  /* Vibrant Danger Red */
+  --popover-foreground: oklch(0.18 0.03 250);
+  --primary: oklch(0.40 0.12 250);
+  /* Deep Navy Blue - Trust & Stability */
+  --primary-foreground: oklch(1 0 0);
+  --secondary: oklch(0.96 0.01 250);
+  /* Light Cool Gray */
+  --secondary-foreground: oklch(0.18 0.03 250);
+  --muted: oklch(0.95 0.008 250);
+  --muted-foreground: oklch(0.45 0.02 250);
+  --accent: oklch(0.55 0.15 160);
+  /* Emerald Green - Growth & Wealth */
+  --accent-foreground: oklch(1 0 0);
+  --destructive: oklch(0.55 0.20 25);
+  /* Alert Red */
   --destructive-foreground: oklch(1 0 0);
-  --success: oklch(0.55 0.22 150);
-  /* Emerald Success Green - Bold */
+  --success: oklch(0.55 0.18 155);
+  /* Rich Emerald */
   --success-foreground: oklch(1 0 0);
-  --border: oklch(0.85 0.02 255);
-  --input: oklch(0.85 0.02 255);
-  --ring: oklch(0.28 0.14 255);
+  --warning: oklch(0.72 0.15 85);
+  /* Warm Gold */
+  --warning-foreground: oklch(0.18 0.03 250);
+  --border: oklch(0.92 0.01 250);
+  --input: oklch(0.92 0.01 250);
+  --ring: oklch(0.40 0.12 250);
 
-  /* Harmonized Vibrant Bold Chart Palette */
-  --chart-1: oklch(0.28 0.14 255);
-  /* Royal Blue */
-  --chart-2: oklch(0.72 0.18 85);
-  /* Royal Gold */
-  --chart-3: oklch(0.55 0.22 150);
-  /* Emerald Green */
-  --chart-4: oklch(0.62 0.18 200);
-  /* Vibrant Cyan */
-  --chart-5: oklch(0.48 0.22 300);
-  /* Electric Purple */
+  /* Professional Chart Colors */
+  --chart-1: oklch(0.40 0.12 250);
+  /* Navy Blue */
+  --chart-2: oklch(0.55 0.18 155);
+  /* Emerald */
+  --chart-3: oklch(0.72 0.15 85);
+  /* Gold */
+  --chart-4: oklch(0.50 0.12 200);
+  /* Teal */
+  --chart-5: oklch(0.60 0.10 280);
+  /* Purple */
 
-  --radius: 0.875rem;
-  /* Premium softer corners */
+  --radius: 0.75rem;
 
-  --sidebar: oklch(1 0 0);
-  --sidebar-foreground: oklch(0.15 0.08 255);
-  --sidebar-primary: oklch(0.28 0.14 255);
+  --sidebar: oklch(0.18 0.04 250);
+  /* Deep Navy Sidebar */
+  --sidebar-foreground: oklch(0.96 0.005 250);
+  --sidebar-primary: oklch(0.55 0.15 160);
+  /* Emerald Accent */
   --sidebar-primary-foreground: oklch(1 0 0);
-  --sidebar-accent: oklch(0.95 0.015 255);
-  --sidebar-accent-foreground: oklch(0.28 0.14 255);
-  --sidebar-border: oklch(0.92 0.01 255);
-  --sidebar-ring: oklch(0.28 0.14 255);
+  --sidebar-accent: oklch(0.25 0.04 250);
+  --sidebar-accent-foreground: oklch(0.96 0.005 250);
+  --sidebar-border: oklch(0.30 0.03 250);
+  --sidebar-ring: oklch(0.55 0.15 160);
 
-  /* Premium Paper Glass variables - Refined for Bold Theme */
-  --glass-bg: oklch(1 0 0 / 0.7);
-  --glass-border: oklch(0.15 0.08 255 / 0.12);
-  --glow-primary: oklch(0.28 0.14 255 / 0.1);
-  --glow-accent: oklch(0.72 0.18 85 / 0.08);
+  /* Glass Effects - Subtle & Professional */
+  --glass-bg: oklch(1 0 0 / 0.85);
+  --glass-border: oklch(0.40 0.12 250 / 0.12);
+  --glow-primary: oklch(0.40 0.12 250 / 0.12);
+  --glow-accent: oklch(0.55 0.15 160 / 0.10);
 }
 
+/* Dark Mode - Premium & Refined */
 .dark {
-  --background: oklch(0.08 0.01 250);
-  /* Deep Midnight Base */
-  --foreground: oklch(0.98 0.005 250);
-  /* Crisp White/Off-white */
-  --card: oklch(0.14 0.03 250);
-  --card-foreground: oklch(0.98 0.005 250);
-  --popover: oklch(0.14 0.03 250);
-  --popover-foreground: oklch(0.98 0.005 250);
-  --primary: oklch(0.75 0.1 250);
-  /* Refined Primary Blue */
-  --primary-foreground: oklch(0.1 0.02 250);
-  --secondary: oklch(0.18 0.04 250);
-  --secondary-foreground: oklch(0.98 0.005 250);
-  --muted: oklch(0.18 0.03 250);
-  --muted-foreground: oklch(0.75 0.03 250);
-  /* Much more readable muted text */
-  --accent: oklch(0.85 0.1 85);
-  /* Elegant Champagne Gold */
-  --accent-foreground: oklch(0.1 0.02 250);
-  --destructive: oklch(0.45 0.15 25);
+  --background: oklch(0.13 0.02 250);
+  /* Deep Navy Dark */
+  --foreground: oklch(0.96 0.005 250);
+  /* Clean White */
+  --card: oklch(0.17 0.025 250);
+  --card-foreground: oklch(0.96 0.005 250);
+  --popover: oklch(0.17 0.025 250);
+  --popover-foreground: oklch(0.96 0.005 250);
+  --primary: oklch(0.55 0.10 250);
+  /* Bright Navy */
+  --primary-foreground: oklch(1 0 0);
+  --secondary: oklch(0.22 0.02 250);
+  --secondary-foreground: oklch(0.96 0.005 250);
+  --muted: oklch(0.22 0.015 250);
+  --muted-foreground: oklch(0.65 0.02 250);
+  --accent: oklch(0.60 0.16 160);
+  /* Bright Emerald */
+  --accent-foreground: oklch(0.13 0.02 250);
+  --destructive: oklch(0.50 0.18 25);
   --destructive-foreground: oklch(1 0 0);
-  --success: oklch(0.65 0.15 155);
-  --success-foreground: oklch(0.1 0.02 250);
-  --border: oklch(0.22 0.04 250);
-  --input: oklch(0.22 0.04 250);
-  --ring: oklch(0.75 0.1 250);
-  --chart-1: oklch(0.75 0.1 250);
-  --chart-2: oklch(0.85 0.1 85);
-  --chart-3: oklch(0.65 0.15 155);
-  --chart-4: oklch(0.45 0.15 25);
-  --chart-5: oklch(0.6 0.08 200);
-  --sidebar: oklch(0.07 0.01 250);
-  /* Ultra-Dark Sidebar */
-  --sidebar-foreground: oklch(0.98 0.005 250);
-  --sidebar-primary: oklch(0.85 0.1 85);
-  --sidebar-primary-foreground: oklch(0.08 0.02 250);
-  --sidebar-accent: oklch(0.15 0.03 250);
-  --sidebar-accent-foreground: oklch(0.98 0.005 250);
-  --sidebar-border: oklch(0.18 0.03 250);
-  --sidebar-ring: oklch(0.85 0.1 85);
-  --glass-bg: oklch(0.12 0.02 250 / 0.45);
-  --glass-border: oklch(1 0 0 / 0.06);
-  --glow-primary: oklch(0.75 0.1 250 / 0.1);
-  --glow-accent: oklch(0.85 0.1 85 / 0.08);
+  --success: oklch(0.60 0.16 155);
+  /* Bright Emerald */
+  --success-foreground: oklch(0.13 0.02 250);
+  --warning: oklch(0.75 0.14 85);
+  /* Warm Gold */
+  --warning-foreground: oklch(0.13 0.02 250);
+  --border: oklch(0.28 0.02 250);
+  --input: oklch(0.28 0.02 250);
+  --ring: oklch(0.55 0.10 250);
 
-  /* Phase 4: Midnight Studio Lighting */
-  --mesh-1: oklch(0.4 0.1 250 / 0.12);
-  --mesh-2: oklch(0.82 0.1 85 / 0.05);
-  --mesh-3: oklch(0.32 0.1 250 / 0.06);
+  --chart-1: oklch(0.55 0.10 250);
+  --chart-2: oklch(0.60 0.16 155);
+  --chart-3: oklch(0.75 0.14 85);
+  --chart-4: oklch(0.55 0.12 200);
+  --chart-5: oklch(0.65 0.10 280);
+
+  --sidebar: oklch(0.12 0.025 250);
+  --sidebar-foreground: oklch(0.96 0.005 250);
+  --sidebar-primary: oklch(0.60 0.16 160);
+  --sidebar-primary-foreground: oklch(0.12 0.025 250);
+  --sidebar-accent: oklch(0.20 0.02 250);
+  --sidebar-accent-foreground: oklch(0.96 0.005 250);
+  --sidebar-border: oklch(0.25 0.02 250);
+  --sidebar-ring: oklch(0.60 0.16 160);
+
+  --glass-bg: oklch(0.15 0.02 250 / 0.7);
+  --glass-border: oklch(0.55 0.10 250 / 0.15);
+  --glow-primary: oklch(0.55 0.10 250 / 0.15);
+  --glow-accent: oklch(0.60 0.16 160 / 0.12);
+
+  /* Mesh Gradient Colors - Subtle Navy Tones */
+  --mesh-1: oklch(0.55 0.10 250 / 0.10);
+  --mesh-2: oklch(0.60 0.16 160 / 0.08);
+  --mesh-3: oklch(0.75 0.14 85 / 0.05);
   --noise-svg: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.6' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
 }
 
 @theme inline {
-  --font-sans: "Inter", "Inter Fallback", sans-serif;
-  --font-serif: "Poppins", "Poppins Fallback", serif;
-  --font-mono: "JetBrains Mono", "Geist Mono", monospace;
+  --font-inter: "Inter", system-ui, -apple-system, blinkmacsystemfont, "Segoe UI", roboto, "Helvetica Neue", arial, sans-serif;
+  --font-poppins: "Poppins", "Inter", sans-serif;
+  --font-jetbrains-mono: "JetBrains Mono", ui-monospace, sfmono-regular, menlo, monaco, consolas, "Liberation Mono", "Courier New", monospace;
+
+  --font-sans: var(--font-inter);
+  --font-serif: var(--font-poppins);
+  --font-mono: var(--font-jetbrains-mono);
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
@@ -290,9 +306,9 @@
     padding: 1px;
     border-radius: inherit;
     background: linear-gradient(135deg,
-        oklch(0.58 0.22 260 / 0.4),
-        oklch(0.82 0.16 85 / 0.2),
-        oklch(0.22 0.015 250 / 0.3));
+        oklch(0.40 0.12 250 / 0.4),
+        oklch(0.55 0.15 160 / 0.3),
+        oklch(0.72 0.15 85 / 0.2));
     mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
     mask-composite: exclude;
     -webkit-mask-composite: xor;
@@ -300,7 +316,7 @@
   }
 
   .shimmer {
-    background: linear-gradient(90deg, oklch(0.2 0.01 250) 0%, oklch(0.25 0.01 250) 50%, oklch(0.2 0.01 250) 100%);
+    background: linear-gradient(90deg, oklch(0.2 0.02 250) 0%, oklch(0.25 0.02 250) 50%, oklch(0.2 0.02 250) 100%);
     background-size: 200% 100%;
     animation: shimmer 2s ease-in-out infinite;
   }
@@ -316,14 +332,14 @@
   }
 
   .text-gradient {
-    background: linear-gradient(135deg, oklch(0.58 0.22 260), oklch(0.82 0.16 85));
+    background: linear-gradient(135deg, oklch(0.40 0.12 250), oklch(0.55 0.15 160));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
 
   .text-gradient-gold {
-    background: linear-gradient(135deg, oklch(0.82 0.16 85), oklch(0.9 0.12 70));
+    background: linear-gradient(135deg, oklch(0.72 0.15 85), oklch(0.80 0.12 75));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;

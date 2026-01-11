@@ -33,7 +33,30 @@ public class Expense {
     @Column(nullable = false)
     private LocalDate date;
 
+    @Builder.Default
+    @Column(nullable = false)
+    private boolean isAutoSynced = false;
+
+    @Column(unique = true)
+    private String sourceTransId;
+
+    @Builder.Default
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private PaymentSource paymentSource = PaymentSource.CASH;
+
+    @Column
+    private String merchantName;
+
+    @Builder.Default
+    @Column(nullable = false)
+    private boolean isDeleted = false;
+
     public enum Category {
         FOOD, TRANSPORT, ENTERTAINMENT, BILLS, SHOPPING, HEALTH, EDUCATION, OTHER
+    }
+
+    public enum PaymentSource {
+        UPI, DEBIT_CARD, CREDIT_CARD, NET_BANKING, CASH
     }
 }

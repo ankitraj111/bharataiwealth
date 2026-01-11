@@ -12,7 +12,13 @@ import java.util.List;
 public interface ExpenseRepository extends JpaRepository<Expense, Long> {
     List<Expense> findByUser(User user);
 
-    List<Expense> findByUserOrderByDateDesc(User user);
+    List<Expense> findByUserAndIsDeletedFalseOrderByDateDesc(User user);
 
-    List<Expense> findByUserAndDateBetween(User user, LocalDate startDate, LocalDate endDate);
+    List<Expense> findByUserAndDateBetweenAndIsDeletedFalse(User user, LocalDate startDate, LocalDate endDate);
+
+    @org.springframework.data.jpa.repository.Query("SELECT SUM(e.amount) FROM Expense e WHERE e.user = :user AND e.date >= :startDate AND e.isDeleted = false")
+    java.math.BigDecimal sumMonthlyExpenses(@org.springframework.data.repository.query.Param("user") User user,
+            @org.springframework.data.repository.query.Param("startDate") LocalDate startDate);
+
+    java.util.Optional<Expense> findBySourceTransId(String sourceTransId);
 }

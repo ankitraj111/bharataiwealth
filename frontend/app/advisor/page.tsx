@@ -3,12 +3,14 @@
 import { useState, useRef, useEffect } from "react"
 import { AppShell } from "@/components/app-shell"
 import { Button } from "@/components/ui/button"
-import { Card, CardHeader, CardTitle } from "@/components/ui/card"
+import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import { cn } from "@/lib/utils"
 import { Send, Mic, Sparkles, TrendingUp, Calculator, ShieldAlert, MessageSquare } from "lucide-react"
+import { parseIntent } from "@/lib/intent-parser"
+import { fetchPrediction, fetchSentiment, fetchRebalanceSuggestions, fetchAdvisoryRecommend } from "@/lib/api"
 
 interface Message {
   id: string
@@ -53,54 +55,74 @@ export default function AdvisorPage() {
     }
   }, [messages])
 
-  const handleSend = () => {
-    if (!input.trim()) return
+  const handleSend = async (overrideInput?: string) => {
+    const textToSend = overrideInput || input
+    if (!textToSend.trim()) return
 
     const userMessage: Message = {
       id: Date.now().toString(),
       role: "user",
-      content: input,
+      content: textToSend,
       timestamp: new Date(),
     }
 
     setMessages((prev) => [...prev, userMessage])
-    setInput("")
+    if (!overrideInput) setInput("")
     setIsTyping(true)
 
-    // Simulate AI response
-    setTimeout(() => {
-      const aiResponses: Record<string, string> = {
-        "analyze spending":
-          "Based on your spending data, you spent ₹49,200 this month. Your top categories are:\n\n1. Food & Dining: ₹18,500 (37%)\n2. Travel: ₹12,000 (24%)\n3. Shopping: ₹9,500 (19%)\n\nI recommend reducing food expenses by cooking more at home. This could save you ₹5,000-7,000 monthly.",
-        "best sip for me":
-          "Based on your risk profile (Medium) and investment goals, I recommend:\n\n1. **Axis Bluechip Fund** - Large cap, stable returns\n2. **Mirae Asset Emerging Bluechip** - Large & mid cap blend\n3. **Parag Parikh Flexi Cap** - Diversified exposure\n\nStart with ₹5,000/month SIP for optimal wealth creation.",
-        "tax optimization":
-          "You can save up to ₹46,800 in taxes this year:\n\n- Section 80C: ₹1,50,000 (ELSS, PPF, LIC)\n- Section 80D: ₹25,000 (Health Insurance)\n- HRA Exemption: ₹1,80,000\n\nYou've utilized only 60% of 80C. Consider investing in ELSS funds for remaining ₹60,000.",
-        "high-risk ideas":
-          "⚠️ High-risk investments require careful consideration:\n\n1. **Bitcoin (BTC)** - Current: ₹45L, Predicted: +15% (30 days)\n2. **Ethereum (ETH)** - Current: ₹2.5L, Predicted: +12%\n3. **Small Cap Funds** - Higher volatility, potential 20-25% returns\n\nLimit high-risk to 10-15% of portfolio. Never invest emergency funds.",
-      }
+    const intent = parseIntent(textToSend)
+    let response = ""
 
-      const lowerInput = input.toLowerCase()
-      let response =
-        "I understand your question. Let me analyze your financial data and provide personalized recommendations. Based on your spending patterns and investment goals, I suggest focusing on building an emergency fund first, then gradually increasing your SIP investments."
-
-      for (const [key, value] of Object.entries(aiResponses)) {
-        if (lowerInput.includes(key)) {
-          response = value
-          break
+    try {
+      if (intent.action === "PREDICT" && intent.symbol) {
+        const data = await fetchPrediction(intent.symbol)
+        if (data) {
+          response = `Analysis for **${intent.symbol}**:\n` +
+            `- Predicted Price: ₹${data.predicted_price.toFixed(2)}\n` +
+            `- Confidence: ${(data.confidence * 100).toFixed(1)}%\n` +
+            `- Trend: ${data.trend.toUpperCase()}\n\n` +
+            `AI Insight: Based on current technical indicators, we expect a ${data.trend === 'up' ? 'bullish' : 'bearish'} move.`
+        }
+      } else if (intent.action === "SENTIMENT" && intent.symbol) {
+        const data = await fetchSentiment(intent.symbol)
+        if (data) {
+          response = `Market Sentiment for **${intent.symbol}**:\n` +
+            `- Score: ${data.score.toFixed(2)}\n` +
+            `- Label: ${data.label.toUpperCase()}\n\n` +
+            `This analysis includes recent news headlines and social media trends.`
+        }
+      } else if (intent.action === "REBALANCE") {
+        const data = await fetchRebalanceSuggestions()
+        if (data && data.suggestions) {
+          response = "Here are my rebalancing suggestions for your portfolio:\n\n" +
+            data.suggestions.map((s: any) => `- **${s.symbol}**: ${s.action} (Reason: ${s.reason})`).join("\n")
+        }
+      } else if (intent.action === "ADVISORY" && intent.symbol) {
+        const data = await fetchAdvisoryRecommend(intent.symbol)
+        if (data) {
+          response = `Recommendation for **${intent.symbol}**:\n` +
+            `- Action: **${data.action}**\n` +
+            `- Price: ₹${data.current_price}\n` +
+            `- Reasoning: ${data.reason}`
         }
       }
 
-      const aiMessage: Message = {
-        id: (Date.now() + 1).toString(),
-        role: "assistant",
-        content: response,
-        timestamp: new Date(),
+      if (!response) {
+        response = "I couldn't find specific data for that request, but generally, it's a good time to review your long-term goals. Try asking 'Predict RELIANCE' or 'Rebalance my portfolio'."
       }
+    } catch (error) {
+      response = "Sorry, I'm having trouble connecting to my brain right now. Please try again in a moment."
+    }
 
-      setMessages((prev) => [...prev, aiMessage])
-      setIsTyping(false)
-    }, 1500)
+    const aiMessage: Message = {
+      id: (Date.now() + 1).toString(),
+      role: "assistant",
+      content: response,
+      timestamp: new Date(),
+    }
+
+    setMessages((prev) => [...prev, aiMessage])
+    setIsTyping(false)
   }
 
   const handleChipClick = (label: string) => {
@@ -111,7 +133,7 @@ export default function AdvisorPage() {
     <AppShell>
       <div className="flex h-[calc(100vh-8rem)] gap-4">
         {/* Thread List - Hidden on mobile */}
-        <Card className="hidden w-64 shrink-0 lg:flex lg:flex-col">
+        <Card className="hidden w-64 shrink-0 lg:flex lg:flex-col border-border/50 shadow-sm">
           <CardHeader className="border-b border-border p-4">
             <CardTitle className="flex items-center gap-2 text-sm font-medium">
               <MessageSquare className="h-4 w-4" />
@@ -124,8 +146,8 @@ export default function AdvisorPage() {
                 <button
                   key={thread.id}
                   className={cn(
-                    "w-full rounded-lg p-3 text-left transition-colors hover:bg-secondary/80",
-                    thread.id === "1" && "bg-primary/8 border-l-2 border-primary shadow-sm",
+                    "w-full rounded-lg p-3 text-left transition-colors hover:bg-muted",
+                    thread.id === "1" && "bg-primary/5 border-l-2 border-primary",
                   )}
                 >
                   <p className="text-sm font-medium text-foreground">{thread.title}</p>
@@ -135,7 +157,7 @@ export default function AdvisorPage() {
             </div>
           </ScrollArea>
           <div className="border-t border-border p-3">
-            <Button variant="outline" className="w-full gap-2 bg-transparent">
+            <Button variant="outline" className="w-full gap-2">
               <Sparkles className="h-4 w-4" />
               New Chat
             </Button>
@@ -143,10 +165,10 @@ export default function AdvisorPage() {
         </Card>
 
         {/* Chat Area */}
-        <Card className="flex flex-1 flex-col">
+        <Card className="flex flex-1 flex-col border-border/50 shadow-sm">
           <CardHeader className="border-b border-border p-4">
             <CardTitle className="flex items-center gap-2 text-base font-medium">
-              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary/10">
+              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-muted">
                 <Sparkles className="h-4 w-4 text-primary" />
               </div>
               AI Wealth Advisor
@@ -163,11 +185,11 @@ export default function AdvisorPage() {
                 >
                   <Avatar className="h-8 w-8 shrink-0">
                     {message.role === "assistant" ? (
-                      <AvatarFallback className="bg-primary/10 text-primary">
+                      <AvatarFallback className="bg-muted text-primary">
                         <Sparkles className="h-4 w-4" />
                       </AvatarFallback>
                     ) : (
-                      <AvatarFallback className="bg-chart-1 text-chart-1-foreground">RK</AvatarFallback>
+                      <AvatarFallback className="bg-primary text-primary-foreground">RK</AvatarFallback>
                     )}
                   </Avatar>
                   <div
@@ -175,7 +197,7 @@ export default function AdvisorPage() {
                       "max-w-[80%] rounded-2xl px-4 py-3",
                       message.role === "user"
                         ? "bg-primary text-primary-foreground"
-                        : "bg-secondary text-secondary-foreground",
+                        : "bg-muted text-foreground",
                     )}
                   >
                     <p className="whitespace-pre-line text-sm">{message.content}</p>
@@ -185,11 +207,11 @@ export default function AdvisorPage() {
               {isTyping && (
                 <div className="flex gap-3">
                   <Avatar className="h-8 w-8 shrink-0">
-                    <AvatarFallback className="bg-primary/10 text-primary">
+                    <AvatarFallback className="bg-muted text-primary">
                       <Sparkles className="h-4 w-4" />
                     </AvatarFallback>
                   </Avatar>
-                  <div className="rounded-2xl bg-secondary px-4 py-3">
+                  <div className="rounded-2xl bg-muted px-4 py-3">
                     <div className="flex gap-1">
                       <span className="h-2 w-2 animate-bounce rounded-full bg-muted-foreground [animation-delay:-0.3s]" />
                       <span className="h-2 w-2 animate-bounce rounded-full bg-muted-foreground [animation-delay:-0.15s]" />
@@ -209,7 +231,7 @@ export default function AdvisorPage() {
                   key={chip.label}
                   variant="outline"
                   size="sm"
-                  className="gap-2 text-xs bg-secondary/30 border-primary/10 hover:bg-primary/5 hover:border-primary/30 transition-premium"
+                  className="gap-2 text-xs border-border/50 hover:bg-muted transition-all"
                   onClick={() => handleChipClick(chip.label)}
                 >
                   <chip.icon className="h-3 w-3 text-primary/70" />
@@ -232,7 +254,7 @@ export default function AdvisorPage() {
               <Button variant="ghost" size="icon">
                 <Mic className="h-5 w-5 text-muted-foreground" />
               </Button>
-              <Button onClick={handleSend} disabled={!input.trim()}>
+              <Button onClick={() => handleSend()} disabled={!input.trim()}>
                 <Send className="h-4 w-4" />
               </Button>
             </div>

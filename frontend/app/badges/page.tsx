@@ -25,7 +25,7 @@ const earnedBadges = [
     name: "Saver of the Month",
     description: "Saved 30% of income in March",
     icon: PiggyBank,
-    color: "from-emerald-500 to-teal-500",
+    color: "bg-emerald-500",
     earnedDate: "Mar 2024",
     rarity: "Legendary",
   },
@@ -34,7 +34,7 @@ const earnedBadges = [
     name: "SIP Champion",
     description: "Completed 12 consecutive SIPs",
     icon: TrendingUp,
-    color: "from-blue-500 to-cyan-500",
+    color: "bg-blue-500",
     earnedDate: "Feb 2024",
     rarity: "Epic",
   },
@@ -43,7 +43,7 @@ const earnedBadges = [
     name: "Budget Master",
     description: "Stayed under budget for 3 months",
     icon: Target,
-    color: "from-purple-500 to-pink-500",
+    color: "bg-purple-500",
     earnedDate: "Jan 2024",
     rarity: "Rare",
   },
@@ -52,7 +52,7 @@ const earnedBadges = [
     name: "No Zomato Week",
     description: "No food delivery for 7 days",
     icon: Flame,
-    color: "from-orange-500 to-amber-500",
+    color: "bg-orange-500",
     earnedDate: "Mar 2024",
     rarity: "Common",
   },
@@ -61,7 +61,7 @@ const earnedBadges = [
     name: "Early Bird",
     description: "Paid all bills before due date",
     icon: Zap,
-    color: "from-yellow-500 to-orange-500",
+    color: "bg-yellow-500",
     earnedDate: "Mar 2024",
     rarity: "Uncommon",
   },
@@ -70,7 +70,7 @@ const earnedBadges = [
     name: "Goal Crusher",
     description: "Completed first financial goal",
     icon: Trophy,
-    color: "from-primary to-primary/70",
+    color: "bg-primary",
     earnedDate: "Dec 2023",
     rarity: "Epic",
   },
@@ -122,11 +122,11 @@ const streaks = [
 ]
 
 const rarityColors: Record<string, string> = {
-  Common: "bg-slate-500/20 text-slate-400",
-  Uncommon: "bg-green-500/20 text-green-400",
-  Rare: "bg-blue-500/20 text-blue-400",
-  Epic: "bg-purple-500/20 text-purple-400",
-  Legendary: "bg-amber-500/20 text-amber-400",
+  Common: "bg-slate-500/10 text-slate-500 border-slate-500/20",
+  Uncommon: "bg-green-500/10 text-green-600 border-green-500/20",
+  Rare: "bg-blue-500/10 text-blue-600 border-blue-500/20",
+  Epic: "bg-purple-500/10 text-purple-600 border-purple-500/20",
+  Legendary: "bg-amber-500/10 text-amber-600 border-amber-500/20",
 }
 
 export default function BadgesPage() {
@@ -134,32 +134,31 @@ export default function BadgesPage() {
     <AppShell>
       <div className="space-y-8">
         {/* Header */}
-        <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-accent/20 via-card to-card p-8 border border-border/50">
-          <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-br from-accent/10 to-transparent rounded-full blur-3xl" />
-          <div className="absolute -bottom-10 -left-10 w-48 h-48 bg-gradient-to-tr from-primary/10 to-transparent rounded-full blur-3xl" />
-
+        <div className="relative overflow-hidden rounded-2xl bg-muted/30 p-8 border border-border/50">
           <div className="relative flex flex-col md:flex-row md:items-center md:justify-between gap-6">
-            <div>
-              <div className="flex items-center gap-3 mb-2">
-                <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-accent to-accent/80 shadow-lg shadow-accent/25">
-                  <Trophy className="h-6 w-6 text-accent-foreground" />
+            <div className="space-y-4">
+              <div className="flex items-center gap-4">
+                <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-primary text-primary-foreground shadow-sm">
+                  <Trophy className="h-6 w-6" />
                 </div>
-                <h1 className="font-serif text-3xl font-bold text-foreground">Badges & Rewards</h1>
+                <div className="space-y-0.5">
+                  <h1 className="text-3xl font-bold text-foreground">Badges & Rewards</h1>
+                  <p className="text-muted-foreground max-w-md font-medium">
+                    Earn badges for your financial achievements and build healthy money habits.
+                  </p>
+                </div>
               </div>
-              <p className="text-muted-foreground max-w-md">
-                Earn badges for your financial achievements and build healthy money habits.
-              </p>
             </div>
 
-            <div className="flex items-center gap-6">
+            <div className="flex items-center gap-8 bg-muted/50 p-6 rounded-xl border border-border/50">
               <div className="text-center">
-                <p className="text-4xl font-bold font-mono text-accent">{earnedBadges.length}</p>
-                <p className="text-sm text-muted-foreground">Badges Earned</p>
+                <p className="text-3xl font-bold font-mono text-primary">{earnedBadges.length}</p>
+                <p className="text-[10px] uppercase font-bold tracking-widest text-muted-foreground mt-1">Badges Earned</p>
               </div>
-              <div className="h-12 w-px bg-border" />
+              <div className="h-10 w-px bg-border/50" />
               <div className="text-center">
-                <p className="text-4xl font-bold font-mono text-primary">1,250</p>
-                <p className="text-sm text-muted-foreground">Total XP</p>
+                <p className="text-3xl font-bold font-mono text-primary">1,250</p>
+                <p className="text-[10px] uppercase font-bold tracking-widest text-muted-foreground mt-1">Total XP</p>
               </div>
             </div>
           </div>
@@ -168,24 +167,17 @@ export default function BadgesPage() {
         {/* Streaks */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {streaks.map((streak, index) => (
-            <Card key={index} className="glass-card border-border/50 overflow-hidden">
+            <Card key={index} className="border-border/50 overflow-hidden shadow-sm hover:border-primary/20 transition-all">
               <CardContent className="p-5">
                 <div className="flex items-center gap-4">
-                  <div className="relative">
-                    <div
-                      className={`h-14 w-14 rounded-xl bg-gradient-to-br from-secondary to-muted flex items-center justify-center`}
-                    >
-                      <streak.icon className={`h-7 w-7 ${streak.color}`} />
-                    </div>
-                    <div className="absolute -top-1 -right-1 h-6 w-6 rounded-full bg-background border-2 border-border flex items-center justify-center">
-                      <Flame className="h-3.5 w-3.5 text-orange-500" />
-                    </div>
+                  <div className="flex h-14 w-14 rounded-xl bg-muted border border-border/50 items-center justify-center">
+                    <streak.icon className={`h-7 w-7 ${streak.color}`} />
                   </div>
                   <div className="flex-1">
-                    <p className="text-sm text-muted-foreground">{streak.name}</p>
-                    <div className="flex items-baseline gap-1">
+                    <p className="text-xs font-bold uppercase tracking-wider text-muted-foreground/70">{streak.name}</p>
+                    <div className="flex items-baseline gap-1 mt-1">
                       <span className="text-3xl font-bold font-mono">{streak.current}</span>
-                      <span className="text-muted-foreground">days</span>
+                      <span className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">days</span>
                     </div>
                   </div>
                 </div>
@@ -195,36 +187,32 @@ export default function BadgesPage() {
         </div>
 
         {/* Earned Badges */}
-        <div>
-          <div className="flex items-center gap-2 mb-5">
-            <Sparkles className="h-5 w-5 text-accent" />
-            <h2 className="font-serif text-xl font-semibold">Earned Badges</h2>
+        <div className="space-y-5">
+          <div className="flex items-center gap-2">
+            <Sparkles className="h-5 w-5 text-primary" />
+            <h2 className="text-xl font-bold text-foreground">Earned Badges</h2>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-            {earnedBadges.map((badge, index) => (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {earnedBadges.map((badge) => (
               <Card
                 key={badge.id}
-                className="glass-card-elevated border-border/50 group hover:shadow-xl hover:shadow-primary/5 transition-all duration-500 animate-fade-in opacity-0"
-                style={{ animationDelay: `${index * 0.08}s` }}
+                className="border-border/50 group shadow-sm hover:border-primary/30 transition-all"
               >
                 <CardContent className="p-5">
                   <div className="flex items-start gap-4">
                     <div
-                      className={`relative h-16 w-16 rounded-2xl bg-gradient-to-br ${badge.color} flex items-center justify-center shadow-lg group-hover:scale-105 transition-transform duration-300`}
+                      className={`h-16 w-16 rounded-2xl ${badge.color} flex items-center justify-center shadow-md group-hover:scale-105 transition-transform`}
                     >
                       <badge.icon className="h-8 w-8 text-white" />
-                      <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-white/20 to-transparent" />
                     </div>
                     <div className="flex-1 min-w-0">
-                      <div className="flex items-center gap-2 mb-1">
-                        <h3 className="font-semibold truncate">{badge.name}</h3>
-                      </div>
-                      <p className="text-sm text-muted-foreground mb-2">{badge.description}</p>
+                      <h3 className="font-bold text-foreground mb-1 mt-0.5">{badge.name}</h3>
+                      <p className="text-sm text-muted-foreground mb-3 leading-tight">{badge.description}</p>
                       <div className="flex items-center gap-2">
-                        <Badge variant="secondary" className={`text-xs ${rarityColors[badge.rarity]}`}>
+                        <Badge variant="outline" className={`text-[10px] font-bold uppercase tracking-wider ${rarityColors[badge.rarity]}`}>
                           {badge.rarity}
                         </Badge>
-                        <span className="text-xs text-muted-foreground">{badge.earnedDate}</span>
+                        <span className="text-xs font-medium text-muted-foreground">{badge.earnedDate}</span>
                       </div>
                     </div>
                   </div>
@@ -235,40 +223,39 @@ export default function BadgesPage() {
         </div>
 
         {/* Locked Badges */}
-        <div>
-          <div className="flex items-center gap-2 mb-5">
+        <div className="space-y-5">
+          <div className="flex items-center gap-2">
             <Lock className="h-5 w-5 text-muted-foreground" />
-            <h2 className="font-serif text-xl font-semibold">Badges to Unlock</h2>
+            <h2 className="text-xl font-bold text-foreground">Badges to Unlock</h2>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-            {lockedBadges.map((badge, index) => (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {lockedBadges.map((badge) => (
               <Card
                 key={badge.id}
-                className="glass-card border-border/50 relative overflow-hidden animate-fade-in opacity-0"
-                style={{ animationDelay: `${index * 0.08}s` }}
+                className="border-border/50 shadow-sm opacity-80"
               >
                 <CardContent className="p-5">
                   <div className="flex items-start gap-4">
-                    <div className="relative h-16 w-16 rounded-2xl bg-secondary/50 flex items-center justify-center">
-                      <badge.icon className="h-8 w-8 text-muted-foreground/50" />
-                      <div className="absolute inset-0 rounded-2xl flex items-center justify-center bg-background/50 backdrop-blur-sm">
-                        <Lock className="h-5 w-5 text-muted-foreground" />
+                    <div className="relative h-16 w-16 rounded-2xl bg-muted border border-border/50 flex items-center justify-center">
+                      <badge.icon className="h-8 w-8 text-muted-foreground/30" />
+                      <div className="absolute inset-0 rounded-2xl flex items-center justify-center bg-background/20 backdrop-blur-[1px]">
+                        <Lock className="h-5 w-5 text-muted-foreground/40" />
                       </div>
                     </div>
                     <div className="flex-1">
-                      <div className="flex items-center gap-2 mb-1">
-                        <h3 className="font-semibold text-muted-foreground">{badge.name}</h3>
-                        <Badge variant="secondary" className={`text-xs ${rarityColors[badge.rarity]}`}>
+                      <div className="flex items-center gap-2 mb-1.5 mt-0.5">
+                        <h3 className="font-bold text-muted-foreground">{badge.name}</h3>
+                        <Badge variant="outline" className={`text-[10px] font-bold uppercase tracking-wider opacity-60 ${rarityColors[badge.rarity]}`}>
                           {badge.rarity}
                         </Badge>
                       </div>
-                      <p className="text-sm text-muted-foreground/70 mb-3">{badge.description}</p>
-                      <div className="space-y-1.5">
-                        <div className="flex justify-between text-xs">
-                          <span className="text-muted-foreground">Progress</span>
-                          <span className="font-medium">{badge.requirement}</span>
+                      <p className="text-sm text-muted-foreground/60 mb-4 leading-tight">{badge.description}</p>
+                      <div className="space-y-2">
+                        <div className="flex justify-between text-[10px] font-bold uppercase tracking-wider">
+                          <span className="text-muted-foreground/60">Progress</span>
+                          <span className="text-primary/70">{badge.requirement}</span>
                         </div>
-                        <Progress value={badge.progress} className="h-2" />
+                        <Progress value={badge.progress} className="h-1.5" />
                       </div>
                     </div>
                   </div>

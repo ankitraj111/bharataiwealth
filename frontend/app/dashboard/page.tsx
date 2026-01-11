@@ -1,13 +1,30 @@
 "use client"
 
+import { useState, useEffect, useMemo } from "react"
+import dynamic from "next/dynamic"
 import { AppShell } from "@/components/app-shell"
 import { StatCard } from "@/components/stat-card"
 import { AICoachWidget } from "@/components/ai-coach-widget"
 import { RegulatoryDisclaimer } from "@/components/regulatory-disclaimer"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Area, AreaChart, ResponsiveContainer, XAxis, YAxis, Tooltip, PieChart, Pie, Cell } from "recharts"
-import { ArrowUpRight, Wallet, PiggyBank, TrendingUp, Shield } from "lucide-react"
+import { Button } from "@/components/ui/button"
 
+// Lazy load Recharts for performance
+const ResponsiveContainer = dynamic(() => import("recharts").then(m => m.ResponsiveContainer), { ssr: false })
+const AreaChart = dynamic(() => import("recharts").then(m => m.AreaChart), { ssr: false })
+const Area = dynamic(() => import("recharts").then(m => m.Area), { ssr: false })
+const XAxis = dynamic(() => import("recharts").then(m => m.XAxis), { ssr: false })
+const YAxis = dynamic(() => import("recharts").then(m => m.YAxis), { ssr: false })
+const Tooltip = dynamic(() => import("recharts").then(m => m.Tooltip), { ssr: false })
+const PieChart = dynamic(() => import("recharts").then(m => m.PieChart), { ssr: false })
+const Pie = dynamic(() => import("recharts").then(m => m.Pie), { ssr: false })
+const Cell = dynamic(() => import("recharts").then(m => m.Cell), { ssr: false })
+import { ArrowUpRight, Wallet, PiggyBank, TrendingUp, Shield, Sparkles, ChevronRight, BarChart3, Target, AlertTriangle } from "lucide-react"
+import { KiteConnector } from "@/components/kite-connector"
+import { fetchDashboardSummary } from "@/lib/api"
+import Link from "next/link"
+
+// Move static data outside component to prevent re-creation
 const spendingData = [
   { month: "Jan", income: 85000, spending: 45000 },
   { month: "Feb", income: 88000, spending: 52000 },
@@ -18,11 +35,11 @@ const spendingData = [
 ]
 
 const categoryData = [
-  { name: "Food", value: 15000, color: "oklch(0.32 0.08 250)" },
-  { name: "Travel", value: 12000, color: "oklch(0.82 0.1 85)" },
-  { name: "Shopping", value: 8000, color: "oklch(0.55 0.15 150)" },
-  { name: "Bills", value: 10000, color: "oklch(0.45 0.08 200)" },
-  { name: "Others", value: 4000, color: "oklch(0.65 0.05 250)" },
+  { name: "Food", value: 15000, color: "#f97316" },
+  { name: "Travel", value: 12000, color: "#eab308" },
+  { name: "Shopping", value: 8000, color: "#22c55e" },
+  { name: "Bills", value: 10000, color: "#3b82f6" },
+  { name: "Others", value: 4000, color: "#a855f7" },
 ]
 
 const sparklineData1 = [{ value: 30 }, { value: 45 }, { value: 35 }, { value: 50 }, { value: 42 }, { value: 55 }]
@@ -32,62 +49,145 @@ const sparklineData4 = [{ value: 50 }, { value: 55 }, { value: 45 }, { value: 60
 
 const statIcons = [Wallet, PiggyBank, TrendingUp, Shield]
 
+// Default data for instant render
+const defaultSummary = {
+  userName: "Investor",
+  monthlyExpense: 45000,
+  totalNetWorth: 1250000,
+  portfolioGain: 12.5,
+  aiConfidence: 87
+}
+
+import { MarketTicker } from "@/components/dashboard/MarketTicker"
+import { UpcomingSIPs } from "@/components/dashboard/UpcomingSIPs"
+
+// Helper function for dynamic greeting
+function getGreeting(): string {
+  const hour = new Date().getHours()
+  if (hour < 12) return "Good Morning"
+  if (hour < 17) return "Good Afternoon"
+  return "Good Evening"
+}
+
 export default function DashboardPage() {
+  const [summary, setSummary] = useState(defaultSummary)
+  const [greeting, setGreeting] = useState("Welcome")
+
+  useEffect(() => {
+    setGreeting(getGreeting())
+    fetchDashboardSummary().then(data => {
+      if (data) setSummary(data)
+    })
+  }, [])
+
+  const quickActions = [
+    { name: "Portfolio", desc: "View holdings", href: "/portfolios/medium-risk", color: "blue", icon: Wallet },
+    { name: "Family", desc: "Manage vault", href: "/family", color: "purple", icon: Target },
+    { name: "AI Predict", desc: "Market edge", href: "/predictions", color: "orange", icon: Sparkles },
+    { name: "Support", desc: "Expert help", href: "/support", color: "green", icon: Shield },
+  ]
+
   return (
-    <AppShell>
-      <div className="space-y-8">
-        {/* Header - Enhanced */}
-        <div className="space-y-1">
-          <div className="flex items-center gap-2">
-            <h1 className="font-serif text-2xl font-bold tracking-tight text-foreground">Good Morning, Rajesh</h1>
-            <span className="animate-float">👋</span>
+    <AppShell noPadding>
+      <MarketTicker />
+      <div className="p-6 md:p-8 space-y-8">
+        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-8">
+          <div className="space-y-2">
+            <div className="flex items-center gap-3">
+              <div className="h-12 w-12 rounded-2xl bg-gradient-to-br from-primary to-orange-400 flex items-center justify-center shadow-lg shadow-primary/20 text-white font-black text-xl">
+                {summary?.userName?.[0] || "I"}
+              </div>
+              <div>
+                <h1 className="text-3xl font-black tracking-tight text-foreground">
+                  {greeting}, {summary?.userName || "Investor"}
+                </h1>
+                <p className="text-sm text-muted-foreground font-semibold flex items-center gap-2">
+                  <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
+                  Portfolio is active and growing today.
+                </p>
+              </div>
+            </div>
           </div>
-          <p className="text-sm text-muted-foreground/80">Here&apos;s your financial overview for today</p>
+
+          {/* Quick Actions Grid */}
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+            {quickActions.map((action) => (
+              <Link key={action.name} href={action.href}>
+                <div className="group h-16 w-full sm:w-32 bg-secondary/30 hover:bg-white dark:hover:bg-slate-800 border border-border/50 hover:border-primary/30 rounded-2xl p-3 px-4 flex items-center gap-3 transition-all cursor-pointer shadow-sm hover:shadow-md">
+                  <div className={`p-1.5 rounded-lg bg-${action.color}-500/10 text-${action.color}-500 group-hover:bg-${action.color}-500 group-hover:text-white transition-colors`}>
+                    <action.icon className="h-4 w-4" />
+                  </div>
+                  <div>
+                    <p className="text-xs font-black leading-none">{action.name}</p>
+                    <p className="text-[10px] text-muted-foreground mt-0.5">{action.desc}</p>
+                  </div>
+                </div>
+              </Link>
+            ))}
+          </div>
         </div>
 
-        {/* KPI Cards - Enhanced with staggered animation */}
+        {/* Portfolio Health & Key Metrics Group */}
+        <div className="grid gap-6 lg:grid-cols-3">
+          <div className="lg:col-span-2">
+            {/* Kite Integration Widget Inline */}
+            <KiteConnector />
+          </div>
+          <div className="bg-gradient-to-br from-primary/10 to-transparent border border-primary/20 rounded-[2rem] p-6 flex items-center justify-between">
+            <div className="space-y-1">
+              <p className="text-xs font-black uppercase tracking-widest text-primary">Portfolio Health</p>
+              <h3 className="text-2xl font-black">94 / 100</h3>
+              <p className="text-[11px] font-bold text-muted-foreground">Excellent condition</p>
+            </div>
+            <div className="h-16 w-16 rounded-full border-[6px] border-primary/20 border-t-primary flex items-center justify-center font-black text-primary">
+              94%
+            </div>
+          </div>
+        </div>
+
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          <div className="animate-fade-in opacity-0 stagger-1">
-            <StatCard title="Monthly Spend" value="₹49,200" change={-8.2} data={sparklineData1} icon={statIcons[0]} />
-          </div>
-          <div className="animate-fade-in opacity-0 stagger-2">
-            <StatCard
-              title="Estimated Savings"
-              value="₹48,800"
-              change={12.5}
-              data={sparklineData2}
-              icon={statIcons[1]}
-            />
-          </div>
-          <div className="animate-fade-in opacity-0 stagger-3">
-            <StatCard
-              title="Investment Value"
-              value="₹8,45,000"
-              change={5.4}
-              data={sparklineData3}
-              icon={statIcons[2]}
-            />
-          </div>
-          <div className="animate-fade-in opacity-0 stagger-4">
-            <StatCard
-              title="Risk Exposure"
-              value="Medium"
-              change={-2.1}
-              changeLabel="risk score"
-              data={sparklineData4}
-              icon={statIcons[3]}
-            />
-          </div>
+          <StatCard
+            title="Monthly Spend"
+            value={`₹${summary?.monthlyExpense?.toLocaleString("en-IN")}`}
+            change={-8.2}
+            data={sparklineData1}
+            icon={statIcons[0]}
+            color="orange"
+          />
+          <StatCard
+            title="Estimated Savings"
+            value={`₹${(85000 - (summary?.monthlyExpense || 0)).toLocaleString("en-IN")}`}
+            change={12.5}
+            data={sparklineData2}
+            icon={statIcons[1]}
+            color="green"
+          />
+          <StatCard
+            title="Investment Value"
+            value={`₹${summary?.totalNetWorth?.toLocaleString("en-IN")}`}
+            change={5.4}
+            data={sparklineData3}
+            icon={statIcons[2]}
+            color="blue"
+          />
+          <StatCard
+            title="AI Risk Score"
+            value={summary?.totalNetWorth > 500000 ? "Medium" : "Low"}
+            change={-2.1}
+            changeLabel="risk score"
+            data={sparklineData4}
+            icon={statIcons[3]}
+            color="purple"
+          />
         </div>
 
-        {/* Charts Section - Enhanced */}
         <div className="grid gap-6 lg:grid-cols-2">
-          {/* Spending vs Income Chart */}
-          <Card className="glass-card animate-fade-in opacity-0 stagger-3">
+          {/* Spending Chart */}
+          <Card className="border-border/50 shadow-sm">
             <CardHeader className="pb-2">
               <div className="flex items-center justify-between">
                 <CardTitle className="text-base font-semibold">Spending vs Income</CardTitle>
-                <button className="flex items-center gap-1 text-xs font-medium text-primary hover:underline transition-premium">
+                <button className="flex items-center gap-1 text-xs font-medium text-primary hover:underline transition-all">
                   View Details <ArrowUpRight className="h-3 w-3" />
                 </button>
               </div>
@@ -164,12 +264,12 @@ export default function DashboardPage() {
             </CardContent>
           </Card>
 
-          {/* Category Chart - Enhanced */}
-          <Card className="glass-card animate-fade-in opacity-0 stagger-4">
+          {/* Category Chart */}
+          <Card className="border-border/50 shadow-sm">
             <CardHeader className="pb-2">
               <div className="flex items-center justify-between">
                 <CardTitle className="text-base font-semibold">Spending by Category</CardTitle>
-                <button className="flex items-center gap-1 text-xs font-medium text-primary hover:underline transition-premium">
+                <button className="flex items-center gap-1 text-xs font-medium text-primary hover:underline transition-all">
                   View All <ArrowUpRight className="h-3 w-3" />
                 </button>
               </div>
@@ -220,12 +320,17 @@ export default function DashboardPage() {
           </Card>
         </div>
 
-        {/* AI Coach Widget - Enhanced */}
-        <div className="animate-fade-in opacity-0 stagger-5">
-          <AICoachWidget
-            message="You spent 40% more on food last week compared to your monthly average. Try reducing to ₹1,500 this week to stay on track with your savings goal."
-            action="Show savings plan"
-          />
+        <div className="grid gap-6 lg:grid-cols-3">
+          <div className="lg:col-span-1">
+            <UpcomingSIPs />
+          </div>
+          <div className="lg:col-span-2">
+            {/* AI Coach Widget */}
+            <AICoachWidget
+              message="You spent 40% more on food last week compared to your monthly average. Try reducing to ₹1,500 this week to stay on track with your savings goal."
+              action="Show savings plan"
+            />
+          </div>
         </div>
 
         {/* Regulatory Disclaimer */}

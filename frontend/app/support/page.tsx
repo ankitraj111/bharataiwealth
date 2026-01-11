@@ -89,19 +89,18 @@ export default function SupportPage() {
     <AppShell>
       <div className="space-y-8">
         {/* Header */}
-        <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-primary/20 via-primary/10 to-transparent p-8">
-          <div className="absolute top-0 right-0 w-64 h-64 bg-primary/10 rounded-full blur-3xl" />
+        <div className="relative overflow-hidden rounded-2xl bg-muted/30 p-8 border border-border/50">
           <div className="relative">
             <div className="flex items-center gap-3 mb-4">
-              <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-primary/20 shadow-lg">
-                <HelpCircle className="h-6 w-6 text-primary" />
+              <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-primary text-primary-foreground shadow-sm">
+                <HelpCircle className="h-6 w-6" />
               </div>
-              <Badge variant="secondary" className="bg-primary/20 text-primary">
+              <Badge variant="outline" className="bg-primary/5 text-primary border-primary/20 text-[10px] font-bold uppercase tracking-widest h-6">
                 24/7 Support
               </Badge>
             </div>
-            <h1 className="font-serif text-3xl font-bold text-foreground mb-2">Help & Support</h1>
-            <p className="text-muted-foreground max-w-xl">
+            <h1 className="text-3xl font-bold text-foreground mb-2">Help & Support</h1>
+            <p className="text-muted-foreground max-w-xl font-medium">
               Koi sawaal hai? Hum yahan hain aapki madad ke liye. FAQ dekhen, documentation padhein, ya humse directly
               contact karein.
             </p>
@@ -115,7 +114,7 @@ export default function SupportPage() {
             placeholder="Apna sawaal search karein..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="h-14 pl-12 pr-4 text-lg rounded-xl bg-secondary/50 border-border/50 focus:border-primary/50"
+            className="h-14 pl-12 pr-4 text-sm font-bold rounded-xl bg-muted/50 border-border/50 focus:border-primary/50 shadow-sm transition-all"
           />
         </div>
 
@@ -124,14 +123,14 @@ export default function SupportPage() {
           {quickLinks.map((link) => (
             <Card
               key={link.title}
-              className="group cursor-pointer hover:border-primary/50 transition-all duration-300 hover:shadow-lg hover:shadow-primary/5"
+              className="group cursor-pointer border-border/50 hover:border-primary/30 transition-all shadow-sm"
             >
               <CardContent className="p-4 flex items-center justify-between">
                 <div className="flex items-center gap-3">
-                  <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-secondary group-hover:bg-primary/20 transition-colors">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-muted border border-border/50 group-hover:bg-primary/5 transition-colors">
                     <link.icon className="h-5 w-5 text-muted-foreground group-hover:text-primary transition-colors" />
                   </div>
-                  <span className="font-medium">{link.title}</span>
+                  <span className="font-bold text-sm">{link.title}</span>
                 </div>
                 <ExternalLink className="h-4 w-4 text-muted-foreground group-hover:text-primary transition-colors" />
               </CardContent>
@@ -143,27 +142,32 @@ export default function SupportPage() {
         <div className="grid gap-6 lg:grid-cols-3">
           {/* FAQ Section */}
           <div className="lg:col-span-2 space-y-4">
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
+            <Card className="border-border/50 shadow-sm">
+              <CardHeader className="border-b border-border/50 pb-4">
+                <CardTitle className="flex items-center gap-2 text-base font-bold uppercase tracking-widest">
                   <MessageCircle className="h-5 w-5 text-primary" />
                   Frequently Asked Questions
                 </CardTitle>
-                <CardDescription>Common questions ke answers</CardDescription>
+                <CardDescription className="font-medium">Common questions ke answers</CardDescription>
               </CardHeader>
-              <CardContent>
+              <CardContent className="pt-4">
                 <Accordion type="single" collapsible className="w-full">
                   {filteredFaqs.map((faq, index) => (
-                    <AccordionItem key={index} value={`item-${index}`}>
-                      <AccordionTrigger className="text-left hover:text-primary">{faq.question}</AccordionTrigger>
-                      <AccordionContent className="text-muted-foreground">{faq.answer}</AccordionContent>
+                    <AccordionItem key={index} value={`item-${index}`} className="border-border/50">
+                      <AccordionTrigger className="text-left font-bold text-sm py-4 hover:text-primary transition-colors no-underline hover:no-underline">
+                        {faq.question}
+                      </AccordionTrigger>
+                      <AccordionContent className="text-muted-foreground font-medium leading-relaxed pb-4">
+                        {faq.answer}
+                      </AccordionContent>
                     </AccordionItem>
                   ))}
                 </Accordion>
                 {filteredFaqs.length === 0 && (
-                  <div className="text-center py-8 text-muted-foreground">
-                    <HelpCircle className="h-12 w-12 mx-auto mb-3 opacity-50" />
-                    <p>Koi result nahi mila. Neeche contact form se apna sawaal bhejein.</p>
+                  <div className="text-center py-12 text-muted-foreground">
+                    <HelpCircle className="h-12 w-12 mx-auto mb-4 opacity-20" />
+                    <p className="font-bold">Koi result nahi mila.</p>
+                    <p className="text-sm">Neeche contact form se apna sawaal bhejein.</p>
                   </div>
                 )}
               </CardContent>
@@ -173,57 +177,49 @@ export default function SupportPage() {
           {/* Contact & Info */}
           <div className="space-y-4">
             {/* Contact Info */}
-            <Card>
-              <CardHeader>
-                <CardTitle className="text-base">Contact Us</CardTitle>
+            <Card className="border-border/50 shadow-sm">
+              <CardHeader className="border-b border-border/50 pb-4">
+                <CardTitle className="text-base font-bold uppercase tracking-widest text-primary">Contact Us</CardTitle>
               </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="flex items-center gap-3 p-3 rounded-lg bg-secondary/50">
-                  <Mail className="h-5 w-5 text-primary" />
-                  <div>
-                    <p className="text-sm font-medium">Email</p>
-                    <p className="text-xs text-muted-foreground">support@bharatawealth.in</p>
+              <CardContent className="space-y-3 pt-4">
+                {[
+                  { icon: Mail, label: "Email", value: "support@bharatawealth.in" },
+                  { icon: Phone, label: "Phone", value: "1800-123-4567 (Toll Free)" },
+                  { icon: MessageCircle, label: "Live Chat", value: "Mon-Sat, 9 AM - 9 PM IST" },
+                ].map((item, idx) => (
+                  <div key={idx} className="flex items-center gap-4 p-4 rounded-xl bg-muted/50 border border-border/50 transition-all hover:border-primary/20">
+                    <div className="h-10 w-10 rounded-xl bg-background border border-border/50 flex items-center justify-center shrink-0">
+                      <item.icon className="h-5 w-5 text-primary" />
+                    </div>
+                    <div>
+                      <p className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">{item.label}</p>
+                      <p className="text-sm font-bold text-foreground mt-0.5">{item.value}</p>
+                    </div>
                   </div>
-                </div>
-                <div className="flex items-center gap-3 p-3 rounded-lg bg-secondary/50">
-                  <Phone className="h-5 w-5 text-primary" />
-                  <div>
-                    <p className="text-sm font-medium">Phone</p>
-                    <p className="text-xs text-muted-foreground">1800-123-4567 (Toll Free)</p>
-                  </div>
-                </div>
-                <div className="flex items-center gap-3 p-3 rounded-lg bg-secondary/50">
-                  <MessageCircle className="h-5 w-5 text-primary" />
-                  <div>
-                    <p className="text-sm font-medium">Live Chat</p>
-                    <p className="text-xs text-muted-foreground">Mon-Sat, 9 AM - 9 PM IST</p>
-                  </div>
-                </div>
+                ))}
               </CardContent>
             </Card>
 
             {/* Regulatory Info */}
-            <Card className="border-chart-2/30 bg-chart-2/5">
-              <CardHeader>
-                <CardTitle className="text-base flex items-center gap-2">
-                  <Shield className="h-5 w-5 text-chart-2" />
-                  Regulatory Information
+            <Card className="border-success/20 bg-success/5 shadow-sm">
+              <CardHeader className="border-b border-success/10 pb-4">
+                <CardTitle className="text-base font-bold uppercase tracking-widest flex items-center gap-2 text-success">
+                  <Shield className="h-5 w-5" />
+                  Regulatory Info
                 </CardTitle>
               </CardHeader>
-              <CardContent className="space-y-3 text-sm">
-                <div className="flex items-start gap-2">
-                  <CheckCircle2 className="h-4 w-4 text-success mt-0.5" />
-                  <p className="text-muted-foreground">SEBI Registered Investment Advisor (INA000012345)</p>
-                </div>
-                <div className="flex items-start gap-2">
-                  <CheckCircle2 className="h-4 w-4 text-success mt-0.5" />
-                  <p className="text-muted-foreground">RBI Compliant Data Security</p>
-                </div>
-                <div className="flex items-start gap-2">
-                  <CheckCircle2 className="h-4 w-4 text-success mt-0.5" />
-                  <p className="text-muted-foreground">ISO 27001 Certified</p>
-                </div>
-                <p className="text-xs text-muted-foreground pt-2 border-t border-border/50">
+              <CardContent className="space-y-4 pt-4">
+                {[
+                  "SEBI Registered RIA (INA000012345)",
+                  "RBI Compliant Data Security",
+                  "ISO 27001 Certified",
+                ].map((info, idx) => (
+                  <div key={idx} className="flex items-start gap-3">
+                    <CheckCircle2 className="h-4 w-4 text-success mt-0.5 shrink-0" />
+                    <p className="text-xs font-bold text-success/80">{info}</p>
+                  </div>
+                ))}
+                <p className="text-[10px] text-muted-foreground pt-3 border-t border-success/10 font-medium leading-relaxed opacity-70">
                   Investment advice is for informational purposes. Past performance does not guarantee future results.
                   Please read all scheme related documents carefully.
                 </p>
@@ -231,21 +227,21 @@ export default function SupportPage() {
             </Card>
 
             {/* AI Support */}
-            <Card className="border-primary/30 bg-gradient-to-br from-primary/10 to-transparent">
-              <CardContent className="p-4">
-                <div className="flex items-center gap-3 mb-3">
-                  <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary/20">
-                    <Sparkles className="h-5 w-5 text-primary" />
+            <Card className="border-primary/20 bg-primary/5 shadow-sm overflow-hidden group">
+              <CardContent className="p-5">
+                <div className="flex items-center gap-4 mb-4">
+                  <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-primary text-primary-foreground shadow-md transition-transform group-hover:scale-110">
+                    <Sparkles className="h-6 w-6" />
                   </div>
                   <div>
-                    <p className="font-medium">AI Support Assistant</p>
-                    <p className="text-xs text-muted-foreground">Instant answers 24/7</p>
+                    <p className="font-bold text-foreground tracking-tight">AI Support Assistant</p>
+                    <p className="text-[10px] font-bold uppercase tracking-widest text-primary/70">Instant answers 24/7</p>
                   </div>
                 </div>
-                <Button className="w-full gap-2">
+                <Button className="w-full gap-2 font-bold shadow-sm py-6 rounded-xl group/btn">
                   <MessageCircle className="h-4 w-4" />
                   Chat with AI
-                  <ChevronRight className="h-4 w-4" />
+                  <ChevronRight className="h-4 w-4 group-hover/btn:translate-x-1 transition-transform" />
                 </Button>
               </CardContent>
             </Card>
@@ -253,33 +249,33 @@ export default function SupportPage() {
         </div>
 
         {/* Contact Form */}
-        <Card>
-          <CardHeader>
-            <CardTitle>Send us a Message</CardTitle>
-            <CardDescription>
+        <Card className="border-border/50 shadow-sm">
+          <CardHeader className="border-b border-border/50 pb-4">
+            <CardTitle className="text-xl font-bold">Send us a Message</CardTitle>
+            <CardDescription className="font-medium">
               Koi specific sawaal hai? Humein message karein aur hum 24 hours mein reply karenge.
             </CardDescription>
           </CardHeader>
-          <CardContent>
-            <form className="grid gap-4 sm:grid-cols-2">
+          <CardContent className="pt-6">
+            <form className="grid gap-6 sm:grid-cols-2">
               <div className="grid gap-2">
-                <Label htmlFor="name">Name</Label>
-                <Input id="name" placeholder="Aapka naam" />
+                <Label htmlFor="name" className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">Name</Label>
+                <Input id="name" placeholder="Aapka naam" className="bg-muted/50 font-bold" />
               </div>
               <div className="grid gap-2">
-                <Label htmlFor="email">Email</Label>
-                <Input id="email" type="email" placeholder="aapka@email.com" />
+                <Label htmlFor="email" className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">Email</Label>
+                <Input id="email" type="email" placeholder="aapka@email.com" className="bg-muted/50 font-bold" />
               </div>
               <div className="grid gap-2 sm:col-span-2">
-                <Label htmlFor="subject">Subject</Label>
-                <Input id="subject" placeholder="Aapka sawaal kya hai?" />
+                <Label htmlFor="subject" className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">Subject</Label>
+                <Input id="subject" placeholder="Aapka sawaal kya hai?" className="bg-muted/50 font-bold" />
               </div>
               <div className="grid gap-2 sm:col-span-2">
-                <Label htmlFor="message">Message</Label>
-                <Textarea id="message" placeholder="Detail mein batayein..." className="min-h-[120px]" />
+                <Label htmlFor="message" className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">Message</Label>
+                <Textarea id="message" placeholder="Detail mein batayein..." className="min-h-[120px] bg-muted/50 font-bold" />
               </div>
               <div className="sm:col-span-2">
-                <Button type="submit" className="gap-2">
+                <Button type="submit" className="gap-2 font-bold shadow-sm px-8 py-6 rounded-xl">
                   <Mail className="h-4 w-4" />
                   Send Message
                 </Button>
