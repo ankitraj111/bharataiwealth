@@ -76,7 +76,7 @@ export function StatsCounter() {
     return (
         <section ref={ref} className="py-20 relative overflow-hidden">
             {/* Background */}
-            <div className="absolute inset-0 bg-gradient-to-r from-slate-900 via-blue-900 to-slate-900" />
+            <div className="absolute inset-0 bg-gradient-to-br from-slate-900 via-[#0a192f] to-[#040c16]" />
 
             {/* Decorative Elements */}
             <div className="absolute inset-0 opacity-30" style={{

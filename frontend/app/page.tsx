@@ -21,6 +21,8 @@ const FinalCTA = dynamic(() => import("@/components/landing/FinalCTA").then(m =>
 const Footer = dynamic(() => import("@/components/landing/Footer").then(m => m.Footer))
 const Chatbot = dynamic(() => import("@/components/landing/Chatbot").then(m => m.Chatbot))
 const BackToTop = dynamic(() => import("@/components/landing/BackToTop").then(m => m.BackToTop))
+const TrustedBy = dynamic(() => import("@/components/landing/TrustedBy").then(m => m.TrustedBy))
+const TestimonialsMarquee = dynamic(() => import("@/components/landing/TestimonialsMarquee").then(m => m.TestimonialsMarquee))
 
 export default function LandingPage() {
     return (
@@ -31,6 +33,9 @@ export default function LandingPage() {
             <div className="flex flex-col">
                 {/* 1️⃣ Hero Section */}
                 <Hero />
+
+                {/* 1.1️⃣ Trusted By Section - Logos & Compliance */}
+                <TrustedBy />
 
                 {/* 2️⃣ Value Proposition - 4 key benefits */}
                 <ValueProposition />
@@ -49,6 +54,9 @@ export default function LandingPage() {
 
                 {/* 7️⃣ Social Proof - Testimonials + Stats */}
                 <SocialProof />
+
+                {/* 7.1️⃣ Testimonials Marquee - Real user reviews */}
+                <TestimonialsMarquee />
 
                 {/* 8️⃣ How It Works - 3 steps */}
                 <HowItWorks />
