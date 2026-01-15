@@ -10,7 +10,7 @@ import type { NextRequest } from 'next/server'
 const protectedRoutes = ['/dashboard', '/predictions', '/analytics', '/advisor', '/portfolios', '/expenses', '/family', '/goals', '/emergency-fund', '/sandbox', '/tax', '/settings']
 const authRoutes = ['/auth/login', '/auth/signup']
 
-export function proxy(request: NextRequest) {
+export function middleware(request: NextRequest) {
     const token = request.cookies.get('bharat_auth_token')?.value
     const { pathname } = request.nextUrl
 

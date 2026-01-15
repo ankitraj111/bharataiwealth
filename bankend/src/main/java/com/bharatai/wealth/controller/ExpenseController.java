@@ -21,6 +21,7 @@ public class ExpenseController {
     private final UserRepository userRepository;
 
     @GetMapping
+    @org.springframework.cache.annotation.Cacheable(value = "expenses", key = "#authentication.name")
     public ResponseEntity<List<Expense>> getExpenses(Authentication authentication) {
         User user = userRepository.findByEmail(authentication.getName())
                 .orElseThrow(() -> new RuntimeException("User not found"));
@@ -28,6 +29,8 @@ public class ExpenseController {
     }
 
     @PostMapping
+    @org.springframework.cache.annotation.CacheEvict(value = { "expenses",
+            "dashboardSummary" }, key = "#authentication.name")
     public ResponseEntity<Expense> addExpense(@RequestBody Expense expense, Authentication authentication) {
         User user = userRepository.findByEmail(authentication.getName())
                 .orElseThrow(() -> new RuntimeException("User not found"));
@@ -36,6 +39,8 @@ public class ExpenseController {
     }
 
     @PatchMapping("/{id}")
+    @org.springframework.cache.annotation.CacheEvict(value = { "expenses",
+            "dashboardSummary" }, key = "#authentication.name")
     public ResponseEntity<Expense> updateExpense(
             @PathVariable Long id,
             @RequestBody java.util.Map<String, Object> updates,
@@ -68,6 +73,8 @@ public class ExpenseController {
     }
 
     @DeleteMapping("/{id}")
+    @org.springframework.cache.annotation.CacheEvict(value = { "expenses",
+            "dashboardSummary" }, key = "#authentication.name")
     public ResponseEntity<Void> deleteExpense(
             @PathVariable Long id,
             Authentication authentication) {

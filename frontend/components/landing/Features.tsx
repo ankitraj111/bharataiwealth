@@ -121,14 +121,11 @@ const itemVariants = {
 
 export function Features() {
     return (
-        <section id="features" className="py-24 relative overflow-hidden">
+        <section id="features" className="py-24 relative overflow-hidden bg-white">
             {/* Background */}
-            <div className="absolute inset-0 bg-gradient-to-b from-white via-slate-50 to-white dark:from-slate-900 dark:via-slate-950 dark:to-slate-900" />
+            <div className="absolute inset-0 bg-gradient-to-b from-white via-slate-50 to-white" />
 
-            {/* Decorative Elements */}
-            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-500 via-purple-500 to-orange-500" />
-
-            <div className="container mx-auto px-6 relative z-10">
+            <div className="w-full px-6 md:px-12 lg:px-20 xl:px-32 relative z-10">
                 {/* Section Header */}
                 <motion.div
                     className="text-center max-w-3xl mx-auto mb-16"
@@ -138,23 +135,21 @@ export function Features() {
                     transition={{ duration: 0.6 }}
                 >
                     <motion.span
-                        className="inline-block px-4 py-2 rounded-full text-sm font-semibold bg-gradient-to-r from-purple-100 to-orange-100 dark:from-purple-900/40 dark:to-orange-900/40 text-purple-700 dark:text-purple-300 mb-6"
+                        className="inline-block px-4 py-2 rounded-full text-xs font-bold bg-slate-100 text-slate-500 border border-slate-200 mb-6 uppercase tracking-[0.2em]"
                         initial={{ opacity: 0, scale: 0.9 }}
                         whileInView={{ opacity: 1, scale: 1 }}
                         viewport={{ once: true }}
                     >
                         Powerful Features
                     </motion.span>
-                    <h2 className="text-4xl md:text-5xl font-bold mb-6">
-                        <span className="bg-gradient-to-r from-slate-900 to-slate-700 dark:from-white dark:to-slate-200 bg-clip-text text-transparent">
-                            Everything You Need,
-                        </span>
+                    <h2 className="text-4xl md:text-5xl font-black mb-6 text-slate-900 tracking-tight">
+                        Everything You Need,
                         <br />
-                        <span className="bg-gradient-to-r from-purple-600 via-pink-500 to-orange-500 dark:from-purple-400 dark:via-pink-400 dark:to-orange-400 bg-clip-text text-transparent">
+                        <span className="bg-gradient-to-r from-purple-600 via-pink-500 to-orange-500 bg-clip-text text-transparent">
                             All in One Place
                         </span>
                     </h2>
-                    <p className="text-lg text-slate-600 dark:text-slate-400">
+                    <p className="text-lg text-slate-600 font-medium">
                         Advanced AI tools designed specifically for Indian investors.
                     </p>
                 </motion.div>
@@ -174,7 +169,7 @@ export function Features() {
                             whileHover={{ y: -6, scale: 1.02 }}
                             className="group relative"
                         >
-                            <div className="h-full p-6 rounded-2xl bg-white/80 dark:bg-slate-800/60 backdrop-blur-sm border border-slate-200/60 dark:border-slate-700/60 shadow-lg shadow-slate-200/30 dark:shadow-none transition-all duration-300 hover:shadow-xl">
+                            <div className="h-full p-6 rounded-[2rem] bg-white border border-slate-100 shadow-xl shadow-slate-200/40 transition-all duration-300 hover:shadow-2xl hover:border-blue-100">
                                 {/* Icon */}
                                 <motion.div
                                     className={`w-14 h-14 rounded-xl bg-gradient-to-br ${feature.bgGradient} flex items-center justify-center mb-5 group-hover:scale-110 transition-transform duration-300`}
@@ -200,10 +195,10 @@ export function Features() {
                                 </motion.div>
 
                                 {/* Content */}
-                                <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-2">
+                                <h3 className="text-lg font-black text-slate-900 mb-2">
                                     {feature.title}
                                 </h3>
-                                <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+                                <p className="text-sm text-slate-600 font-medium leading-relaxed">
                                     {feature.description}
                                 </p>
 

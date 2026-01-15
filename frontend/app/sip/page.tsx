@@ -53,6 +53,7 @@ interface SIPResult {
 export default function SIPPlannerPage() {
     const [monthlyAmount, setMonthlyAmount] = useState(10000)
     const [goalYears, setGoalYears] = useState(10)
+    const [expectedReturn, setExpectedReturn] = useState(12)
     const [riskLevel, setRiskLevel] = useState<"low" | "medium" | "high">("medium")
     const [loading, setLoading] = useState(false)
     const [result, setResult] = useState<SIPResult | null>(null)
@@ -107,6 +108,108 @@ export default function SIPPlannerPage() {
                         </div>
                     </div>
                 </div>
+
+                {/* Instant SIP Calculator */}
+                <Card className="border-2 border-primary/30 bg-gradient-to-br from-primary/5 to-accent/5">
+                    <CardHeader>
+                        <CardTitle className="flex items-center gap-2 text-lg font-bold">
+                            <Calculator className="h-5 w-5 text-primary" />
+                            Quick SIP Calculator
+                            <Badge className="ml-2 bg-primary/20 text-primary text-[10px]">Instant Results</Badge>
+                        </CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                        <div className="grid md:grid-cols-4 gap-6">
+                            <div className="space-y-2">
+                                <Label className="text-xs font-bold uppercase tracking-wider text-muted-foreground">Monthly SIP (₹)</Label>
+                                <Input
+                                    type="number"
+                                    value={monthlyAmount}
+                                    onChange={(e) => setMonthlyAmount(Number(e.target.value) || 500)}
+                                    className="text-lg font-bold bg-background"
+                                    min={500}
+                                />
+                            </div>
+                            <div className="space-y-2">
+                                <Label className="text-xs font-bold uppercase tracking-wider text-muted-foreground">Expected Return (%)</Label>
+                                <Input
+                                    type="number"
+                                    value={expectedReturn}
+                                    onChange={(e) => setExpectedReturn(Number(e.target.value) || 12)}
+                                    className="text-lg font-bold bg-background"
+                                    min={1}
+                                    max={30}
+                                />
+                            </div>
+                            <div className="space-y-2">
+                                <Label className="text-xs font-bold uppercase tracking-wider text-muted-foreground">Time Period (Years)</Label>
+                                <Input
+                                    type="number"
+                                    value={goalYears}
+                                    onChange={(e) => setGoalYears(Number(e.target.value) || 1)}
+                                    className="text-lg font-bold bg-background"
+                                    min={1}
+                                    max={40}
+                                />
+                            </div>
+                            <div className="space-y-2">
+                                <Label className="text-xs font-bold uppercase tracking-wider text-primary">Maturity Amount</Label>
+                                <div className="h-[42px] flex items-center px-4 rounded-lg bg-primary/10 border-2 border-primary/30">
+                                    <span className="text-xl font-black text-primary tabular-nums">
+                                        {(() => {
+                                            const monthlyRate = expectedReturn / 12 / 100
+                                            const months = goalYears * 12
+                                            const futureValue = monthlyAmount * (((Math.pow(1 + monthlyRate, months) - 1) / monthlyRate) * (1 + monthlyRate))
+                                            if (futureValue >= 10000000) return `₹${(futureValue / 10000000).toFixed(2)} Cr`
+                                            if (futureValue >= 100000) return `₹${(futureValue / 100000).toFixed(2)} L`
+                                            return `₹${Math.round(futureValue).toLocaleString("en-IN")}`
+                                        })()}
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Summary Cards */}
+                        <div className="grid grid-cols-3 gap-4 mt-6">
+                            <div className="p-4 rounded-xl bg-background border border-border">
+                                <p className="text-xs text-muted-foreground mb-1">Total Investment</p>
+                                <p className="text-lg font-bold tabular-nums">
+                                    {(() => {
+                                        const total = monthlyAmount * goalYears * 12
+                                        if (total >= 100000) return `₹${(total / 100000).toFixed(2)} L`
+                                        return `₹${total.toLocaleString("en-IN")}`
+                                    })()}
+                                </p>
+                            </div>
+                            <div className="p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/30">
+                                <p className="text-xs text-muted-foreground mb-1">Wealth Gain</p>
+                                <p className="text-lg font-bold text-emerald-600 tabular-nums">
+                                    {(() => {
+                                        const monthlyRate = expectedReturn / 12 / 100
+                                        const months = goalYears * 12
+                                        const futureValue = monthlyAmount * (((Math.pow(1 + monthlyRate, months) - 1) / monthlyRate) * (1 + monthlyRate))
+                                        const invested = monthlyAmount * months
+                                        const gain = futureValue - invested
+                                        if (gain >= 100000) return `+₹${(gain / 100000).toFixed(2)} L`
+                                        return `+₹${Math.round(gain).toLocaleString("en-IN")}`
+                                    })()}
+                                </p>
+                            </div>
+                            <div className="p-4 rounded-xl bg-blue-500/10 border border-blue-500/30">
+                                <p className="text-xs text-muted-foreground mb-1">Returns Multiple</p>
+                                <p className="text-lg font-bold text-blue-600 tabular-nums">
+                                    {(() => {
+                                        const monthlyRate = expectedReturn / 12 / 100
+                                        const months = goalYears * 12
+                                        const futureValue = monthlyAmount * (((Math.pow(1 + monthlyRate, months) - 1) / monthlyRate) * (1 + monthlyRate))
+                                        const invested = monthlyAmount * months
+                                        return `${(futureValue / invested).toFixed(2)}x`
+                                    })()}
+                                </p>
+                            </div>
+                        </div>
+                    </CardContent>
+                </Card>
 
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
                     {/* Input Form */}

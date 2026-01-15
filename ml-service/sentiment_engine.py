@@ -1,4 +1,5 @@
 import requests
+from functools import lru_cache
 import pandas as pd
 import numpy as np
 from datetime import datetime, timedelta
@@ -111,6 +112,7 @@ class SentimentEngine:
         
         return scores
 
+    @lru_cache(maxsize=128)
     def analyze_symbol(self, symbol):
         """End-to-end sentiment analysis for a symbol."""
         # 1. Check cache

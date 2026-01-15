@@ -38,6 +38,7 @@ const mainNavItems = [
 
 // Portfolio Section
 const portfolioItems = [
+  { name: "Portfolio Management", href: "/portfolio", icon: Wallet, color: "text-blue-600" },
   { name: "Low Risk", href: "/portfolios/low-risk", icon: TrendingUp, color: "text-emerald-600" },
   { name: "Medium Risk", href: "/portfolios/medium-risk", icon: BarChart3, color: "text-amber-600" },
   { name: "High Risk (Crypto)", href: "/portfolios/high-risk", icon: Zap, color: "text-red-600" },
@@ -125,7 +126,7 @@ export function Sidebar() {
             </span>
             <ChevronDown className={cn("h-3 w-3 transition-transform", portfolioOpen && "rotate-180")} />
           </button>
-          <div className={cn("mt-1 space-y-0.5 overflow-hidden transition-all", portfolioOpen ? "max-h-[200px]" : "max-h-0")}>
+          <div className={cn("mt-1 space-y-0.5 overflow-hidden transition-all", portfolioOpen ? "max-h-[250px]" : "max-h-0")}>
             {portfolioItems.map((item) => (
               <Link
                 key={item.href}

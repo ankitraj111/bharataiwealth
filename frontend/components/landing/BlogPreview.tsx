@@ -36,11 +36,11 @@ const blogPosts = [
 
 export function BlogPreview() {
     return (
-        <section id="blog" className="py-24 relative overflow-hidden">
+        <section id="blog" className="py-24 relative overflow-hidden bg-white">
             {/* Background */}
-            <div className="absolute inset-0 bg-gradient-to-b from-slate-50 via-white to-slate-50 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950" />
+            <div className="absolute inset-0 bg-gradient-to-b from-white via-slate-50/50 to-white" />
 
-            <div className="container mx-auto px-6 relative z-10">
+            <div className="w-full px-6 md:px-12 lg:px-20 xl:px-32 relative z-10">
                 {/* Header */}
                 <motion.div
                     className="flex flex-col md:flex-row items-center justify-between mb-12"
@@ -50,25 +50,23 @@ export function BlogPreview() {
                 >
                     <div className="text-center md:text-left mb-6 md:mb-0">
                         <motion.span
-                            className="inline-block px-4 py-2 rounded-full text-sm font-semibold bg-gradient-to-r from-cyan-100 to-blue-100 dark:from-cyan-900/40 dark:to-blue-900/40 text-cyan-700 dark:text-cyan-300 mb-4"
+                            className="inline-block px-4 py-2 rounded-full text-xs font-bold bg-slate-100 text-slate-500 border border-slate-200 mb-6 uppercase tracking-[0.2em]"
                             initial={{ opacity: 0, scale: 0.9 }}
                             whileInView={{ opacity: 1, scale: 1 }}
                             viewport={{ once: true }}
                         >
                             From Our Blog
                         </motion.span>
-                        <h2 className="text-4xl md:text-5xl font-bold">
-                            <span className="bg-gradient-to-r from-slate-900 to-slate-700 dark:from-white dark:to-slate-200 bg-clip-text text-transparent">
-                                Latest
-                            </span>{" "}
-                            <span className="bg-gradient-to-r from-cyan-600 to-blue-500 dark:from-cyan-400 dark:to-blue-400 bg-clip-text text-transparent">
+                        <h2 className="text-4xl md:text-5xl font-black text-slate-900 tracking-tight">
+                            Latest{" "}
+                            <span className="bg-gradient-to-r from-cyan-600 to-blue-500 bg-clip-text text-transparent">
                                 Insights
                             </span>
                         </h2>
                     </div>
                     <Link
                         href="/blog"
-                        className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-semibold hover:bg-slate-800 dark:hover:bg-slate-100 transition-colors"
+                        className="inline-flex items-center gap-2 px-6 py-3 rounded-2xl bg-slate-100 text-slate-900 font-black uppercase tracking-widest text-xs hover:bg-slate-200 transition-all border border-slate-200 shadow-sm"
                     >
                         View All Posts
                         <ArrowRight className="w-4 h-4" />
@@ -88,7 +86,7 @@ export function BlogPreview() {
                             className="group cursor-pointer"
                         >
                             <Link href="/blog">
-                                <div className="h-full rounded-3xl bg-white dark:bg-slate-800/60 border border-slate-200/60 dark:border-slate-700/60 shadow-xl overflow-hidden transition-all duration-300 hover:shadow-2xl">
+                                <div className="h-full rounded-[2.5rem] bg-white border border-slate-100 shadow-xl shadow-slate-200/40 overflow-hidden transition-all duration-300 hover:shadow-2xl hover:border-blue-100">
                                     {/* Image Placeholder */}
                                     <div className={`h-48 bg-gradient-to-br ${post.gradient} flex items-center justify-center relative overflow-hidden`}>
                                         <span className="text-7xl">{post.image}</span>
@@ -99,27 +97,27 @@ export function BlogPreview() {
                                     {/* Content */}
                                     <div className="p-6">
                                         {/* Category */}
-                                        <span className={`inline-block px-3 py-1 text-xs font-semibold rounded-full bg-gradient-to-r ${post.gradient} text-white mb-4`}>
+                                        <span className={`inline-block px-3 py-1 text-[10px] font-black rounded-full bg-slate-50 border border-slate-100 text-slate-400 uppercase tracking-wider mb-4 group-hover:bg-gradient-to-r group-hover:${post.gradient} group-hover:text-white group-hover:border-transparent transition-all`}>
                                             {post.category}
                                         </span>
 
                                         {/* Title */}
-                                        <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-3 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors line-clamp-2">
+                                        <h3 className="text-xl font-black text-slate-900 mb-3 group-hover:text-blue-600 transition-colors line-clamp-2 leading-tight">
                                             {post.title}
                                         </h3>
 
                                         {/* Excerpt */}
-                                        <p className="text-sm text-slate-600 dark:text-slate-400 mb-4 line-clamp-2">
+                                        <p className="text-sm text-slate-600 font-medium mb-6 line-clamp-2 leading-relaxed">
                                             {post.excerpt}
                                         </p>
 
                                         {/* Meta */}
-                                        <div className="flex items-center gap-4 text-xs text-slate-500 dark:text-slate-400">
-                                            <span className="flex items-center gap-1">
+                                        <div className="flex items-center gap-4 text-[10px] font-bold text-slate-400 uppercase tracking-widest pt-4 border-t border-slate-50">
+                                            <span className="flex items-center gap-1.5">
                                                 <Calendar className="w-3.5 h-3.5" />
                                                 {post.date}
                                             </span>
-                                            <span className="flex items-center gap-1">
+                                            <span className="flex items-center gap-1.5">
                                                 <Clock className="w-3.5 h-3.5" />
                                                 {post.readTime}
                                             </span>

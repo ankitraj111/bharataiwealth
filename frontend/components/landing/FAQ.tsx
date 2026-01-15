@@ -43,11 +43,11 @@ export function FAQ() {
     const [openIndex, setOpenIndex] = useState<number | null>(0)
 
     return (
-        <section id="faq" className="py-24 relative overflow-hidden">
+        <section id="faq" className="py-24 relative overflow-hidden bg-white">
             {/* Background */}
-            <div className="absolute inset-0 bg-gradient-to-b from-slate-50 via-white to-slate-50 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950" />
+            <div className="absolute inset-0 bg-gradient-to-b from-white via-slate-50 to-white" />
 
-            <div className="container mx-auto px-6 relative z-10">
+            <div className="w-full px-6 md:px-12 lg:px-20 xl:px-32 relative z-10">
                 {/* Header */}
                 <motion.div
                     className="text-center max-w-3xl mx-auto mb-16"
@@ -56,23 +56,21 @@ export function FAQ() {
                     viewport={{ once: true }}
                 >
                     <motion.div
-                        className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-amber-100 to-orange-100 dark:from-amber-900/40 dark:to-orange-900/40 mb-6"
+                        className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-orange-50 border border-orange-100 mb-6"
                         initial={{ opacity: 0, scale: 0.9 }}
                         whileInView={{ opacity: 1, scale: 1 }}
                         viewport={{ once: true }}
                     >
-                        <HelpCircle className="w-4 h-4 text-amber-600 dark:text-amber-400" />
-                        <span className="text-sm font-semibold text-amber-700 dark:text-amber-300">Got Questions?</span>
+                        <HelpCircle className="w-4 h-4 text-orange-600" />
+                        <span className="text-xs font-bold text-orange-600 uppercase tracking-widest">Got Questions?</span>
                     </motion.div>
-                    <h2 className="text-4xl md:text-5xl font-bold mb-6">
-                        <span className="bg-gradient-to-r from-slate-900 to-slate-700 dark:from-white dark:to-slate-200 bg-clip-text text-transparent">
-                            Frequently Asked
-                        </span>{" "}
-                        <span className="bg-gradient-to-r from-amber-600 to-orange-500 dark:from-amber-400 dark:to-orange-400 bg-clip-text text-transparent">
+                    <h2 className="text-4xl md:text-5xl font-black text-slate-900 mb-6 tracking-tight">
+                        Frequently Asked{" "}
+                        <span className="bg-gradient-to-r from-orange-600 to-amber-500 bg-clip-text text-transparent">
                             Questions
                         </span>
                     </h2>
-                    <p className="text-lg text-slate-600 dark:text-slate-400">
+                    <p className="text-lg text-slate-600 font-medium">
                         Everything you need to know about Bharat AI Wealth.
                     </p>
                 </motion.div>
@@ -87,12 +85,12 @@ export function FAQ() {
                             viewport={{ once: true }}
                             transition={{ delay: index * 0.05 }}
                         >
-                            <div className="rounded-2xl bg-white dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 shadow-sm overflow-hidden">
+                            <div className="rounded-[2rem] bg-white border border-slate-100 shadow-xl shadow-slate-200/40 overflow-hidden transition-all duration-300 hover:border-orange-100">
                                 <button
                                     onClick={() => setOpenIndex(openIndex === index ? null : index)}
                                     className="w-full px-6 py-5 flex items-center justify-between text-left hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors"
                                 >
-                                    <span className="font-semibold text-slate-900 dark:text-white pr-4">
+                                    <span className="font-black text-slate-900 pr-4">
                                         {faq.question}
                                     </span>
                                     <motion.div
@@ -110,7 +108,7 @@ export function FAQ() {
                                             exit={{ height: 0, opacity: 0 }}
                                             transition={{ duration: 0.2 }}
                                         >
-                                            <div className="px-6 pb-5 text-slate-600 dark:text-slate-400 leading-relaxed border-t border-slate-100 dark:border-slate-700/50 pt-4">
+                                            <div className="px-6 pb-6 text-slate-600 font-medium leading-relaxed border-t border-slate-50 pt-4">
                                                 {faq.answer}
                                             </div>
                                         </motion.div>
@@ -128,7 +126,7 @@ export function FAQ() {
                     whileInView={{ opacity: 1 }}
                     viewport={{ once: true }}
                 >
-                    <p className="text-slate-600 dark:text-slate-400 mb-4">
+                    <p className="text-slate-500 font-bold uppercase tracking-widest text-xs mb-6">
                         Still have questions?
                     </p>
                     <a

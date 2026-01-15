@@ -167,38 +167,40 @@ async def get_portfolio_assets(risk_level: str = Query(..., description="Risk le
     """
     try:
         symbols = PORTFOLIO_SYMBOLS.get(risk_level.lower(), [])
-        assets = []
-        for symbol in symbols:
+        
+        async def fetch_asset_data(symbol):
             # Handle special cases for mock data if needed (some symbols might not be real)
             real_symbol = symbol if ".NS" in symbol or "-USD" in symbol else f"{symbol}.NS"
-            
             try:
+                # Mock async behavior for engine/advisory if they aren't async (for demonstration, keeping it simple)
+                # In a real app, these should be async calls to DB/External APIs
                 prediction = engine.predict(real_symbol)
                 price = advisory_engine.get_current_price(real_symbol)
                 
-                # Fallback if price fetch fails
                 if not price:
                     price = 1000.0
-                
-                assets.append({
+                    
+                return {
                     "name": symbol.replace(".NS", "").replace("-USD", ""),
                     "type": "Stock" if ".NS" in real_symbol else "Cryptocurrency" if "-USD" in real_symbol else "Mixed",
                     "value": round(float(price) * 10, 2),
                     "return": round(((prediction.get("prediction", 0) - price) / price * 100), 1) if prediction.get("prediction") else 5.0,
                     "confidence": int(prediction.get("confidence", 0.7) * 100),
                     "risk": prediction.get("risk", "Medium").capitalize()
-                })
+                }
             except:
-                # Default for failed fetches
-                assets.append({
+                return {
                     "name": symbol,
                     "type": "Asset",
                     "value": 50000,
                     "return": 8.0,
                     "confidence": 75,
                     "risk": risk_level.capitalize()
-                })
-        return {"assets": assets, "risk_level": risk_level}
+                }
+
+        import asyncio
+        assets = await asyncio.gather(*[fetch_asset_data(s) for s in symbols])
+        return {"assets": list(assets), "risk_level": risk_level}
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 

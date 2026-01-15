@@ -29,22 +29,22 @@ export function Navbar() {
     return (
         <>
             <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled
-                ? "bg-white/90 dark:bg-slate-950/90 backdrop-blur-xl shadow-lg shadow-slate-200/20 dark:shadow-none border-b border-slate-200/50 dark:border-slate-800/50"
+                ? "bg-white/90 backdrop-blur-xl shadow-lg shadow-slate-200/20 border-b border-slate-100"
                 : "bg-transparent"
                 }`}>
-                <div className="container mx-auto px-6">
+                <div className="w-full px-6 md:px-12 lg:px-20 xl:px-32">
                     <div className="h-18 flex items-center justify-between py-4">
                         {/* Logo */}
                         <Link href="/" className="flex items-center gap-3 group">
                             <motion.div
-                                className="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-600 to-orange-500 flex items-center justify-center shadow-lg shadow-blue-500/20"
+                                className="w-12 h-12 rounded-[1rem] bg-gradient-to-br from-blue-600 to-blue-800 flex items-center justify-center shadow-lg shadow-blue-500/10"
                                 whileHover={{ scale: 1.05, rotate: 5 }}
                                 whileTap={{ scale: 0.95 }}
                             >
-                                <span className="text-white font-bold text-lg">B</span>
+                                <span className="text-white font-black text-xl">B</span>
                             </motion.div>
-                            <span className="text-xl font-bold bg-gradient-to-r from-slate-900 to-slate-700 dark:from-white dark:to-slate-300 bg-clip-text text-transparent">
-                                Bharat AI Wealth
+                            <span className="text-2xl font-black text-slate-900 tracking-tight">
+                                Bharat <span className="text-blue-600 italic">AI Wealth</span>
                             </span>
                         </Link>
 
@@ -54,7 +54,7 @@ export function Navbar() {
                                 <Link
                                     key={link.name}
                                     href={link.href}
-                                    className="text-sm font-medium text-slate-600 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+                                    className="text-[11px] font-black uppercase tracking-[0.2em] text-slate-500 hover:text-blue-600 transition-colors"
                                 >
                                     {link.name}
                                 </Link>
@@ -67,15 +67,15 @@ export function Navbar() {
                             <Link href="/auth/login">
                                 <Button
                                     variant="ghost"
-                                    className="font-medium text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white"
+                                    className="text-[11px] font-black uppercase tracking-[0.2em] text-slate-500 hover:text-slate-900 hover:bg-slate-50"
                                 >
                                     Login
                                 </Button>
                             </Link>
                             <Link href="/dashboard">
-                                <Button className="font-semibold bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white shadow-lg shadow-blue-500/25 rounded-xl">
+                                <Button className="h-12 px-8 text-[11px] font-black uppercase tracking-[0.2em] bg-blue-600 hover:bg-blue-700 text-white shadow-xl shadow-blue-500/20 rounded-[1rem] transition-all hover:scale-[1.03]">
                                     Get Started
-                                    <ChevronRight className="w-4 h-4 ml-1" />
+                                    <ChevronRight className="w-4 h-4 ml-2" />
                                 </Button>
                             </Link>
                         </div>

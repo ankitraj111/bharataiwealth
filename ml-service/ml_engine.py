@@ -1,4 +1,5 @@
 from feature_pipeline import FeaturePipeline
+from functools import lru_cache
 import yfinance as yf
 import pandas as pd
 import numpy as np
@@ -32,6 +33,7 @@ class MLEngine:
         except Exception as e:
             print(f"Error loading models: {e}")
 
+    @lru_cache(maxsize=128)
     def predict(self, symbol: str):
         """Main prediction orchestration."""
         try:

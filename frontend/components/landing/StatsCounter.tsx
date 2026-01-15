@@ -74,17 +74,17 @@ export function StatsCounter() {
     const isInView = useInView(ref, { once: true })
 
     return (
-        <section ref={ref} className="py-20 relative overflow-hidden">
+        <section ref={ref} className="py-24 relative overflow-hidden bg-white">
             {/* Background */}
-            <div className="absolute inset-0 bg-gradient-to-br from-slate-900 via-[#0a192f] to-[#040c16]" />
+            <div className="absolute inset-0 bg-gradient-to-b from-white via-slate-50 to-white" />
 
             {/* Decorative Elements */}
-            <div className="absolute inset-0 opacity-30" style={{
-                backgroundImage: 'radial-gradient(circle at 2px 2px, rgba(255,255,255,0.15) 1px, transparent 0)',
+            <div className="absolute inset-0 opacity-40" style={{
+                backgroundImage: 'radial-gradient(circle at 2px 2px, rgba(0,0,0,0.05) 1px, transparent 0)',
                 backgroundSize: '40px 40px'
             }} />
 
-            <div className="container mx-auto px-6 relative z-10">
+            <div className="w-full px-6 md:px-12 lg:px-20 xl:px-32 relative z-10">
                 <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
                     {stats.map((stat, index) => (
                         <motion.div
@@ -104,12 +104,12 @@ export function StatsCounter() {
                             </motion.div>
 
                             {/* Value */}
-                            <div className="text-4xl md:text-5xl font-bold text-white mb-2">
+                            <div className="text-4xl md:text-5xl font-black text-slate-900 mb-2">
                                 <AnimatedCounter value={stat.value} suffix={stat.suffix} inView={isInView} />
                             </div>
 
                             {/* Label */}
-                            <p className="text-sm text-white/70 font-medium">
+                            <p className="text-xs font-bold text-slate-500 uppercase tracking-widest">
                                 {stat.label}
                             </p>
                         </motion.div>

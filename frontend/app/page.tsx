@@ -13,7 +13,7 @@ const AppPreview = dynamic(() => import("@/components/landing/AppPreview").then(
 const SocialProof = dynamic(() => import("@/components/landing/SocialProof").then(m => m.SocialProof))
 const HowItWorks = dynamic(() => import("@/components/landing/HowItWorks").then(m => m.HowItWorks))
 const Pricing = dynamic(() => import("@/components/landing/Pricing").then(m => m.Pricing))
-const Team = dynamic(() => import("@/components/landing/Team").then(m => m.Team))
+const ScientificInvesting = dynamic(() => import("@/components/landing/ScientificInvesting").then(m => m.ScientificInvesting))
 const FAQ = dynamic(() => import("@/components/landing/FAQ").then(m => m.FAQ))
 const BlogPreview = dynamic(() => import("@/components/landing/BlogPreview").then(m => m.BlogPreview))
 const SecurityTrust = dynamic(() => import("@/components/landing/SecurityTrust").then(m => m.SecurityTrust))
@@ -64,8 +64,8 @@ export default function LandingPage() {
                 {/* 9️⃣ Pricing - 3 tiers */}
                 <Pricing />
 
-                {/* 🔟 Team - Meet the experts */}
-                <Team />
+                {/* 🔟 Scientific Investing - The science of wealth */}
+                <ScientificInvesting />
 
                 {/* 1️⃣1️⃣ FAQ - Common questions */}
                 <FAQ />

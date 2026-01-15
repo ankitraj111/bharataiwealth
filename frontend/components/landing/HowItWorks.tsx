@@ -35,11 +35,11 @@ const steps = [
 
 export function HowItWorks() {
     return (
-        <section id="how-it-works" className="py-24 relative overflow-hidden">
+        <section id="how-it-works" className="py-24 relative overflow-hidden bg-white">
             {/* Background */}
-            <div className="absolute inset-0 bg-gradient-to-b from-white via-slate-50 to-white dark:from-slate-900 dark:via-slate-950 dark:to-slate-900" />
+            <div className="absolute inset-0 bg-gradient-to-b from-white via-slate-50 to-white" />
 
-            <div className="container mx-auto px-6 relative z-10">
+            <div className="w-full px-6 md:px-12 lg:px-20 xl:px-32 relative z-10">
                 {/* Section Header */}
                 <motion.div
                     className="text-center max-w-3xl mx-auto mb-20"
@@ -49,22 +49,20 @@ export function HowItWorks() {
                     transition={{ duration: 0.6 }}
                 >
                     <motion.span
-                        className="inline-block px-4 py-2 rounded-full text-sm font-semibold bg-gradient-to-r from-blue-100 to-cyan-100 dark:from-blue-900/40 dark:to-cyan-900/40 text-blue-700 dark:text-blue-300 mb-6"
+                        className="inline-block px-4 py-2 rounded-full text-xs font-bold bg-slate-100 text-slate-500 border border-slate-200 mb-6 uppercase tracking-[0.2em]"
                         initial={{ opacity: 0, scale: 0.9 }}
                         whileInView={{ opacity: 1, scale: 1 }}
                         viewport={{ once: true }}
                     >
                         Simple Process
                     </motion.span>
-                    <h2 className="text-4xl md:text-5xl font-bold mb-6">
-                        <span className="bg-gradient-to-r from-slate-900 to-slate-700 dark:from-white dark:to-slate-200 bg-clip-text text-transparent">
-                            How It
-                        </span>{" "}
-                        <span className="bg-gradient-to-r from-blue-600 to-cyan-500 dark:from-blue-400 dark:to-cyan-400 bg-clip-text text-transparent">
+                    <h2 className="text-4xl md:text-5xl font-black text-slate-900 mb-6 tracking-tight">
+                        How It{" "}
+                        <span className="bg-gradient-to-r from-blue-600 to-cyan-500 bg-clip-text text-transparent">
                             Works
                         </span>
                     </h2>
-                    <p className="text-lg text-slate-600 dark:text-slate-400">
+                    <p className="text-lg text-slate-600 font-medium">
                         Get started in minutes with our simple 3-step process.
                     </p>
                 </motion.div>
@@ -97,35 +95,35 @@ export function HowItWorks() {
 
                             <motion.div
                                 whileHover={{ y: -8 }}
-                                className="h-full p-8 rounded-3xl bg-white/80 dark:bg-slate-800/60 backdrop-blur-sm border border-slate-200/60 dark:border-slate-700/60 shadow-xl shadow-slate-200/30 dark:shadow-none text-center transition-all duration-300"
+                                className="h-full p-8 rounded-[2rem] bg-white border border-slate-100 shadow-xl shadow-slate-200/40 text-center transition-all duration-300"
                             >
                                 {/* Step Number */}
-                                <div className={`inline-flex items-center justify-center w-20 h-20 rounded-2xl bg-gradient-to-br ${step.bgGradient} mb-6 relative`}>
-                                    <span className={`text-3xl font-bold bg-gradient-to-r ${step.gradient} bg-clip-text text-transparent`}>
+                                <div className={`inline-flex items-center justify-center w-20 h-20 rounded-[1.5rem] bg-slate-50 border border-slate-100 mb-6 relative`}>
+                                    <span className={`text-4xl font-black bg-gradient-to-r ${step.gradient} bg-clip-text text-transparent`}>
                                         {step.number}
                                     </span>
                                     {/* Pulse Ring */}
                                     <motion.div
-                                        className={`absolute inset-0 rounded-2xl bg-gradient-to-br ${step.gradient} opacity-20`}
-                                        animate={{ scale: [1, 1.1, 1], opacity: [0.2, 0.3, 0.2] }}
+                                        className={`absolute inset-0 rounded-[1.5rem] bg-gradient-to-br ${step.gradient} opacity-5`}
+                                        animate={{ scale: [1, 1.1, 1], opacity: [0.1, 0.2, 0.1] }}
                                         transition={{ duration: 2, repeat: Infinity }}
                                     />
                                 </div>
 
                                 {/* Title with Optional Badge */}
                                 <div className="flex items-center justify-center gap-2 mb-4">
-                                    <h3 className="text-xl font-bold text-slate-900 dark:text-white">
+                                    <h3 className="text-xl font-black text-slate-900">
                                         {step.title}
                                     </h3>
                                     {step.optional && (
-                                        <span className="px-2 py-0.5 text-xs font-semibold rounded-full bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-400">
+                                        <span className="px-2 py-0.5 text-[10px] font-bold rounded-full bg-blue-50 text-blue-600 uppercase tracking-wider">
                                             Optional
                                         </span>
                                     )}
                                 </div>
 
                                 {/* Description */}
-                                <p className="text-slate-600 dark:text-slate-400 leading-relaxed">
+                                <p className="text-slate-600 font-medium leading-relaxed">
                                     {step.description}
                                 </p>
 

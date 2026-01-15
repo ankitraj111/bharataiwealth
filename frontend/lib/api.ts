@@ -1,6 +1,17 @@
 export const ML_SERVICE_URL = process.env.NEXT_PUBLIC_ML_SERVICE_URL || "http://localhost:8000";
 const BACKEND_URL = "/api"; // Leverage Next.js rewrites for CORS-free backend calls
 
+export const fetcher = async (url: string) => {
+    const token = typeof window !== 'undefined' ? localStorage.getItem("token") : null;
+    const headers: any = {};
+    if (token) {
+        headers["Authorization"] = `Bearer ${token}`;
+    }
+    const response = await fetch(url, { headers });
+    if (!response.ok) throw new Error("Failed to fetch data");
+    return response.json();
+};
+
 // Simple in-memory cache
 const apiCache: { [key: string]: { data: any, timestamp: number } } = {};
 const CACHE_DURATION = 5 * 60 * 1000; // 5 minutes
@@ -208,10 +219,57 @@ export async function calculateSIPPlan(monthlyAmount: number, goalYears: number,
                 risk: risk
             })
         });
-        return response.ok ? await response.json() : null;
+        if (response.ok) {
+            return await response.json();
+        }
     } catch (error) {
-        return null;
+        // API unavailable - fall through to local calculation
     }
+
+    // Fallback: Local SIP calculation when API is unavailable
+    const riskReturns = { low: 8, medium: 12, high: 16 };
+    const expectedCAGR = riskReturns[risk as keyof typeof riskReturns] || 12;
+    const months = goalYears * 12;
+    const monthlyRate = expectedCAGR / 12 / 100;
+
+    // SIP Future Value formula: P × (((1 + r)^n - 1) / r) × (1 + r)
+    const futureValue = monthlyAmount * (((Math.pow(1 + monthlyRate, months) - 1) / monthlyRate) * (1 + monthlyRate));
+    const totalInvested = monthlyAmount * months;
+
+    // Generate recommended funds based on risk
+    const fundsByRisk = {
+        low: [
+            { scheme_code: "119597", scheme_name: "SBI Bluechip Fund - Direct", category: "Large Cap", allocation_percent: 40, expected_cagr: 10 },
+            { scheme_code: "120503", scheme_name: "HDFC Corporate Bond Fund", category: "Debt", allocation_percent: 35, expected_cagr: 7 },
+            { scheme_code: "118989", scheme_name: "Axis Liquid Fund - Direct", category: "Liquid", allocation_percent: 25, expected_cagr: 6 },
+        ],
+        medium: [
+            { scheme_code: "120466", scheme_name: "Parag Parikh Flexi Cap Fund", category: "Flexi Cap", allocation_percent: 35, expected_cagr: 15 },
+            { scheme_code: "118834", scheme_name: "Axis Midcap Fund - Direct", category: "Mid Cap", allocation_percent: 30, expected_cagr: 14 },
+            { scheme_code: "119597", scheme_name: "SBI Bluechip Fund - Direct", category: "Large Cap", allocation_percent: 35, expected_cagr: 10 },
+        ],
+        high: [
+            { scheme_code: "125354", scheme_name: "SBI Small Cap Fund - Direct", category: "Small Cap", allocation_percent: 40, expected_cagr: 18 },
+            { scheme_code: "118834", scheme_name: "Axis Midcap Fund - Direct", category: "Mid Cap", allocation_percent: 35, expected_cagr: 14 },
+            { scheme_code: "120466", scheme_name: "Parag Parikh Flexi Cap Fund", category: "Flexi Cap", allocation_percent: 25, expected_cagr: 15 },
+        ]
+    };
+
+    return {
+        sip_plan: {
+            monthly_amount: monthlyAmount,
+            duration_months: months,
+            duration_years: goalYears,
+            risk_level: risk,
+            total_invested: totalInvested
+        },
+        recommended_funds: fundsByRisk[risk as keyof typeof fundsByRisk] || fundsByRisk.medium,
+        projection: {
+            expected: { corpus: Math.round(futureValue), cagr: expectedCAGR },
+            best_case: { corpus: Math.round(futureValue * 1.25), cagr: expectedCAGR + 4 },
+            worst_case: { corpus: Math.round(futureValue * 0.7), cagr: expectedCAGR - 5 }
+        }
+    };
 }
 
 export async function fetchGoalBasedFunds(goal?: string) {

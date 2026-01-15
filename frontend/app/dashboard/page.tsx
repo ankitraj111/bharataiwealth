@@ -21,7 +21,8 @@ const Pie = dynamic(() => import("recharts").then(m => m.Pie), { ssr: false })
 const Cell = dynamic(() => import("recharts").then(m => m.Cell), { ssr: false })
 import { ArrowUpRight, Wallet, PiggyBank, TrendingUp, Shield, Sparkles, ChevronRight, BarChart3, Target, AlertTriangle } from "lucide-react"
 import { KiteConnector } from "@/components/kite-connector"
-import { fetchDashboardSummary } from "@/lib/api"
+import { fetchDashboardSummary, fetcher } from "@/lib/api"
+import useSWR from "swr"
 import Link from "next/link"
 
 // Move static data outside component to prevent re-creation
@@ -70,14 +71,19 @@ function getGreeting(): string {
 }
 
 export default function DashboardPage() {
-  const [summary, setSummary] = useState(defaultSummary)
   const [greeting, setGreeting] = useState("Welcome")
+
+  const { data: summaryData, error } = useSWR("/api/dashboard/summary", fetcher, {
+    fallbackData: defaultSummary,
+    revalidateOnFocus: false,
+    refreshInterval: 30000,
+  })
+
+  // Merge summaryData with defaultSummary if needed, but fallbackData handles it
+  const summary = summaryData || defaultSummary
 
   useEffect(() => {
     setGreeting(getGreeting())
-    fetchDashboardSummary().then(data => {
-      if (data) setSummary(data)
-    })
   }, [])
 
   const quickActions = [

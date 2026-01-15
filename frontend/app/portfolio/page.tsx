@@ -26,7 +26,16 @@ import {
     Brain,
     Shield,
     X,
-    Sparkles
+    Sparkles,
+    Activity,
+    Eye,
+    Calendar,
+    Clock,
+    IndianRupee,
+    Star,
+    Zap,
+    Target,
+    Repeat
 } from "lucide-react"
 import { PieChart as RechartsPie, Pie, Cell, ResponsiveContainer, LineChart as RechartsLine, Line, XAxis, YAxis, Tooltip, AreaChart, Area } from "recharts"
 
@@ -82,6 +91,149 @@ const rebalanceSuggestions = {
     underweight: { category: "Debt", current: 15, target: 25, action: "Increase allocation" },
 }
 
+// NEW DATA FOR ENHANCED SECTIONS
+const marketData = [
+    { name: "NIFTY 50", value: "22,147.50", change: 1.24, trending: true },
+    { name: "SENSEX", value: "72,831.94", change: 1.18, trending: true },
+    { name: "GOLD", value: "₹71,250/10g", change: 0.45, trending: true },
+    { name: "USD/INR", value: "₹83.12", change: -0.08, trending: false },
+]
+
+const watchlistData = [
+    { symbol: "BHARTIARTL", name: "Bharti Airtel", price: 1245, change: 2.3 },
+    { symbol: "ICICIBANK", name: "ICICI Bank", price: 1089, change: 1.8 },
+    { symbol: "LT", name: "Larsen & Toubro", price: 3420, change: -0.5 },
+    { symbol: "ASIANPAINT", name: "Asian Paints", price: 2890, change: 0.9 },
+]
+
+const sipData = [
+    { name: "Axis Bluechip Fund", amount: 10000, nextDate: "15 Jan 2026", status: "Active" },
+    { name: "HDFC Mid-Cap Opp", amount: 5000, nextDate: "20 Jan 2026", status: "Active" },
+    { name: "SBI Small Cap", amount: 3000, nextDate: "10 Jan 2026", status: "Active" },
+]
+
+const dividendData = [
+    { stock: "TCS", exDate: "18 Jan 2026", amount: "₹75/share", totalExpected: "₹1,875" },
+    { stock: "INFY", exDate: "25 Jan 2026", amount: "₹18/share", totalExpected: "₹540" },
+    { stock: "RELIANCE", exDate: "05 Feb 2026", amount: "₹9/share", totalExpected: "₹450" },
+]
+
+const transactionsData = [
+    { date: "10 Jan 2026", asset: "TATAMOTORS", type: "BUY", qty: 25, price: 710, total: 17750 },
+    { date: "08 Jan 2026", asset: "ETH", type: "BUY", qty: 1, price: 210000, total: 210000 },
+    { date: "05 Jan 2026", asset: "HDFC", type: "SELL", qty: 10, price: 1520, total: 15200 },
+    { date: "02 Jan 2026", asset: "Axis Bluechip", type: "SIP", qty: 50, price: 48, total: 2400 },
+    { date: "28 Dec 2025", asset: "RELIANCE", type: "BUY", qty: 10, price: 2650, total: 26500 },
+]
+
+// ============================================
+// PORTFOLIO HEALTH SCORE COMPONENT
+// ============================================
+function PortfolioHealthScore({ score }: { score: number }) {
+    const [animatedScore, setAnimatedScore] = useState(0)
+
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            setAnimatedScore(score)
+        }, 300)
+        return () => clearTimeout(timer)
+    }, [score])
+
+    const getScoreColor = (s: number) => {
+        if (s >= 80) return "#16A34A"
+        if (s >= 60) return "#FF8C00"
+        return "#f43f5e"
+    }
+
+    const getScoreLabel = (s: number) => {
+        if (s >= 80) return "Excellent"
+        if (s >= 60) return "Good"
+        if (s >= 40) return "Fair"
+        return "Needs Attention"
+    }
+
+    const circumference = 2 * Math.PI * 45
+    const strokeDashoffset = circumference - (animatedScore / 100) * circumference
+
+    return (
+        <Card className="border-2 border-border/50 bg-gradient-to-br from-background to-muted/20">
+            <CardHeader className="pb-2">
+                <CardTitle className="text-base font-bold flex items-center gap-2">
+                    <Activity className="h-4 w-4 text-[#0A66C2]" />
+                    Portfolio Health Score
+                    <Badge variant="secondary" className="ml-auto text-[10px] bg-[#0A66C2]/10 text-[#0A66C2]">
+                        <Brain className="h-3 w-3 mr-1" />AI Powered
+                    </Badge>
+                </CardTitle>
+            </CardHeader>
+            <CardContent>
+                <div className="flex items-center gap-6">
+                    {/* Circular Gauge */}
+                    <div className="relative">
+                        <svg className="w-28 h-28 -rotate-90">
+                            <circle
+                                cx="56"
+                                cy="56"
+                                r="45"
+                                stroke="currentColor"
+                                strokeWidth="10"
+                                fill="transparent"
+                                className="text-muted/30"
+                            />
+                            <circle
+                                cx="56"
+                                cy="56"
+                                r="45"
+                                stroke={getScoreColor(animatedScore)}
+                                strokeWidth="10"
+                                fill="transparent"
+                                strokeLinecap="round"
+                                strokeDasharray={circumference}
+                                strokeDashoffset={strokeDashoffset}
+                                style={{ transition: "stroke-dashoffset 1s ease-out" }}
+                            />
+                        </svg>
+                        <div className="absolute inset-0 flex flex-col items-center justify-center">
+                            <span className="text-2xl font-black" style={{ color: getScoreColor(animatedScore) }}>
+                                {animatedScore}
+                            </span>
+                            <span className="text-[10px] text-muted-foreground font-medium">out of 100</span>
+                        </div>
+                    </div>
+
+                    {/* Score Breakdown */}
+                    <div className="flex-1 space-y-2">
+                        <p className="text-sm font-bold" style={{ color: getScoreColor(score) }}>
+                            {getScoreLabel(score)}
+                        </p>
+                        <div className="space-y-1.5">
+                            {[
+                                { label: "Diversification", value: 85 },
+                                { label: "Risk Balance", value: 72 },
+                                { label: "Growth Potential", value: 78 },
+                            ].map((metric) => (
+                                <div key={metric.label} className="flex items-center gap-2">
+                                    <span className="text-xs text-muted-foreground w-24">{metric.label}</span>
+                                    <div className="flex-1 h-1.5 bg-muted/30 rounded-full overflow-hidden">
+                                        <div
+                                            className="h-full rounded-full transition-all duration-1000"
+                                            style={{
+                                                width: `${metric.value}%`,
+                                                backgroundColor: getScoreColor(metric.value)
+                                            }}
+                                        />
+                                    </div>
+                                    <span className="text-xs font-bold w-8">{metric.value}%</span>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </div>
+            </CardContent>
+        </Card>
+    )
+}
+
 // ============================================
 // MAIN PORTFOLIO PAGE
 // ============================================
@@ -110,23 +262,44 @@ export default function PortfolioPage() {
             <div className="space-y-6">
 
                 {/* ========== 1. HEADER ========== */}
-                <div className="space-y-2">
+                <div className="space-y-2 animate-fade-in">
                     <h1 className="text-2xl md:text-3xl font-bold text-foreground">My Portfolio</h1>
                     <p className="text-muted-foreground">Track your wealth across stocks, crypto, and mutual funds.</p>
                 </div>
 
+                {/* ========== NEW: MARKETS SUMMARY ========== */}
+                <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 animate-fade-in stagger-1">
+                    {marketData.map((market, i) => (
+                        <Card key={i} className="border border-border/50 bg-gradient-to-br from-background to-muted/10">
+                            <CardContent className="p-3">
+                                <div className="flex items-center justify-between">
+                                    <div>
+                                        <p className="text-[10px] font-medium text-muted-foreground uppercase tracking-wider">{market.name}</p>
+                                        <p className="text-lg font-bold text-foreground tabular-nums">{market.value}</p>
+                                    </div>
+                                    <div className={`flex items-center gap-1 px-2 py-1 rounded-full text-xs font-bold ${market.change >= 0 ? "bg-emerald-500/10 text-emerald-500" : "bg-red-500/10 text-red-500"
+                                        }`}>
+                                        {market.change >= 0 ? <ArrowUpRight className="h-3 w-3" /> : <ArrowDownRight className="h-3 w-3" />}
+                                        {market.change >= 0 ? "+" : ""}{market.change}%
+                                    </div>
+                                </div>
+                            </CardContent>
+                        </Card>
+                    ))}
+                </div>
+
                 {/* Total Stats Cards */}
-                <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+                <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 animate-fade-in stagger-2">
                     <Card className="border-2 border-border/50">
                         <CardContent className="p-4">
                             <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider mb-1">Total Invested</p>
-                            <p className="text-2xl font-bold text-foreground">₹{(totalInvested / 100000).toFixed(1)}L</p>
+                            <p className="text-2xl font-bold text-foreground tabular-nums">₹{(totalInvested / 100000).toFixed(1)}L</p>
                         </CardContent>
                     </Card>
                     <Card className="border-2 border-border/50">
                         <CardContent className="p-4">
                             <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider mb-1">Current Value</p>
-                            <p className="text-2xl font-bold text-foreground">₹{(currentValue / 100000).toFixed(1)}L</p>
+                            <p className="text-2xl font-bold text-foreground tabular-nums">₹{(currentValue / 100000).toFixed(1)}L</p>
                         </CardContent>
                     </Card>
                     <Card className={`border-2 ${isProfit ? "border-emerald-500/30 bg-emerald-500/5" : "border-red-500/30 bg-red-500/5"}`}>
@@ -134,7 +307,7 @@ export default function PortfolioPage() {
                             <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider mb-1">Gain/Loss %</p>
                             <div className="flex items-center gap-2">
                                 {isProfit ? <TrendingUp className="h-5 w-5 text-emerald-500" /> : <TrendingDown className="h-5 w-5 text-red-500" />}
-                                <p className={`text-2xl font-bold ${isProfit ? "text-emerald-500" : "text-red-500"}`}>
+                                <p className={`text-2xl font-bold tabular-nums ${isProfit ? "text-emerald-500" : "text-red-500"}`}>
                                     {isProfit ? "+" : ""}{profitPercent}%
                                 </p>
                             </div>
@@ -143,15 +316,20 @@ export default function PortfolioPage() {
                     <Card className={`border-2 ${isProfit ? "border-emerald-500/30 bg-emerald-500/5" : "border-red-500/30 bg-red-500/5"}`}>
                         <CardContent className="p-4">
                             <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider mb-1">Net Profit</p>
-                            <p className={`text-2xl font-bold ${isProfit ? "text-emerald-500" : "text-red-500"}`}>
+                            <p className={`text-2xl font-bold tabular-nums ${isProfit ? "text-emerald-500" : "text-red-500"}`}>
                                 {isProfit ? "+" : ""}₹{(profit / 1000).toFixed(0)}K
                             </p>
                         </CardContent>
                     </Card>
                 </div>
 
+                {/* ========== NEW: PORTFOLIO HEALTH SCORE ========== */}
+                <div className="animate-fade-in stagger-3">
+                    <PortfolioHealthScore score={78} />
+                </div>
+
                 {/* ========== 2. ASSET BREAKDOWN TABS ========== */}
-                <Card className="border-2 border-border/50">
+                <Card className="border-2 border-border/50 animate-fade-in stagger-4">
                     <CardHeader className="pb-2">
                         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
                             <CardTitle className="text-lg font-bold">Holdings</CardTitle>
@@ -277,6 +455,162 @@ export default function PortfolioPage() {
                     </Card>
                 </div>
 
+                {/* ========== NEW: WATCHLIST QUICK VIEW ========== */}
+                <Card className="border-2 border-border/50">
+                    <CardHeader className="pb-2">
+                        <div className="flex items-center justify-between">
+                            <CardTitle className="text-base font-bold flex items-center gap-2">
+                                <Star className="h-4 w-4 text-[#FF8C00]" />
+                                Watchlist
+                            </CardTitle>
+                            <Button variant="ghost" size="sm" className="text-xs text-[#0A66C2]">
+                                <Eye className="h-3 w-3 mr-1" />View All
+                            </Button>
+                        </div>
+                    </CardHeader>
+                    <CardContent>
+                        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-3">
+                            {watchlistData.map((stock, i) => (
+                                <div key={i} className="p-3 rounded-xl border border-border bg-muted/20 hover:bg-muted/40 transition-all group">
+                                    <div className="flex items-center justify-between mb-2">
+                                        <p className="font-bold text-sm">{stock.symbol}</p>
+                                        <div className={`flex items-center gap-0.5 text-xs font-bold ${stock.change >= 0 ? "text-emerald-500" : "text-red-500"}`}>
+                                            {stock.change >= 0 ? <ArrowUpRight className="h-3 w-3" /> : <ArrowDownRight className="h-3 w-3" />}
+                                            {stock.change >= 0 ? "+" : ""}{stock.change}%
+                                        </div>
+                                    </div>
+                                    <p className="text-xs text-muted-foreground truncate mb-2">{stock.name}</p>
+                                    <div className="flex items-center justify-between">
+                                        <p className="font-bold tabular-nums">₹{stock.price.toLocaleString()}</p>
+                                        <Button size="sm" variant="ghost" className="h-6 px-2 text-[10px] opacity-0 group-hover:opacity-100 transition-opacity bg-[#0A66C2] text-white hover:bg-[#0855a1]">
+                                            <Plus className="h-3 w-3 mr-1" />Add
+                                        </Button>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </CardContent>
+                </Card>
+
+                {/* ========== NEW: SIP TRACKER & DIVIDEND CALENDAR ========== */}
+                <div className="grid lg:grid-cols-2 gap-6">
+                    {/* SIP Tracker */}
+                    <Card className="border-2 border-[#0A66C2]/30 bg-[#0A66C2]/5">
+                        <CardHeader className="pb-2">
+                            <CardTitle className="text-base font-bold flex items-center gap-2">
+                                <Repeat className="h-4 w-4 text-[#0A66C2]" />
+                                SIP Tracker
+                                <Badge className="ml-auto bg-[#0A66C2] text-white text-[10px]">{sipData.length} Active</Badge>
+                            </CardTitle>
+                        </CardHeader>
+                        <CardContent>
+                            <div className="space-y-3">
+                                {sipData.map((sip, i) => (
+                                    <div key={i} className="flex items-center justify-between p-3 bg-background rounded-xl border border-border">
+                                        <div>
+                                            <p className="font-bold text-sm">{sip.name}</p>
+                                            <div className="flex items-center gap-2 mt-1">
+                                                <Clock className="h-3 w-3 text-muted-foreground" />
+                                                <span className="text-xs text-muted-foreground">Next: {sip.nextDate}</span>
+                                            </div>
+                                        </div>
+                                        <div className="text-right">
+                                            <p className="font-bold text-[#0A66C2] tabular-nums">₹{sip.amount.toLocaleString()}</p>
+                                            <Badge variant="secondary" className="text-[10px] bg-emerald-500/10 text-emerald-500">{sip.status}</Badge>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                            <div className="mt-4 p-3 bg-[#0A66C2]/10 rounded-xl flex items-center justify-between">
+                                <span className="text-sm font-medium">Total Monthly SIP</span>
+                                <span className="text-lg font-bold text-[#0A66C2] tabular-nums">₹{sipData.reduce((sum, s) => sum + s.amount, 0).toLocaleString()}</span>
+                            </div>
+                        </CardContent>
+                    </Card>
+
+                    {/* Dividend Calendar */}
+                    <Card className="border-2 border-[#16A34A]/30 bg-[#16A34A]/5">
+                        <CardHeader className="pb-2">
+                            <CardTitle className="text-base font-bold flex items-center gap-2">
+                                <Calendar className="h-4 w-4 text-[#16A34A]" />
+                                Upcoming Dividends
+                            </CardTitle>
+                        </CardHeader>
+                        <CardContent>
+                            <div className="space-y-3">
+                                {dividendData.map((div, i) => (
+                                    <div key={i} className="flex items-center justify-between p-3 bg-background rounded-xl border border-border">
+                                        <div>
+                                            <p className="font-bold text-sm">{div.stock}</p>
+                                            <div className="flex items-center gap-2 mt-1">
+                                                <Calendar className="h-3 w-3 text-muted-foreground" />
+                                                <span className="text-xs text-muted-foreground">Ex-Date: {div.exDate}</span>
+                                            </div>
+                                        </div>
+                                        <div className="text-right">
+                                            <p className="text-xs text-muted-foreground">{div.amount}</p>
+                                            <p className="font-bold text-[#16A34A] tabular-nums">{div.totalExpected}</p>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                            <div className="mt-4 p-3 bg-[#16A34A]/10 rounded-xl flex items-center justify-between">
+                                <span className="text-sm font-medium">Expected Total</span>
+                                <span className="text-lg font-bold text-[#16A34A] tabular-nums">₹2,865</span>
+                            </div>
+                        </CardContent>
+                    </Card>
+                </div>
+
+                {/* ========== NEW: RECENT TRANSACTIONS ========== */}
+                <Card className="border-2 border-border/50">
+                    <CardHeader className="pb-2">
+                        <div className="flex items-center justify-between">
+                            <CardTitle className="text-base font-bold flex items-center gap-2">
+                                <Zap className="h-4 w-4 text-[#FF8C00]" />
+                                Recent Transactions
+                            </CardTitle>
+                            <Button variant="ghost" size="sm" className="text-xs text-[#0A66C2]">
+                                View All
+                            </Button>
+                        </div>
+                    </CardHeader>
+                    <CardContent>
+                        <div className="overflow-x-auto">
+                            <table className="w-full">
+                                <thead className="bg-muted/50">
+                                    <tr className="text-xs uppercase text-muted-foreground">
+                                        <th className="text-left p-3 font-medium">Date</th>
+                                        <th className="text-left p-3 font-medium">Asset</th>
+                                        <th className="text-center p-3 font-medium">Type</th>
+                                        <th className="text-right p-3 font-medium hidden sm:table-cell">Qty</th>
+                                        <th className="text-right p-3 font-medium hidden sm:table-cell">Price</th>
+                                        <th className="text-right p-3 font-medium">Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody className="divide-y divide-border">
+                                    {transactionsData.map((tx, i) => (
+                                        <tr key={i} className="hover:bg-muted/30 transition-colors">
+                                            <td className="p-3 text-sm text-muted-foreground">{tx.date}</td>
+                                            <td className="p-3 font-bold text-sm">{tx.asset}</td>
+                                            <td className="p-3 text-center">
+                                                <Badge className={
+                                                    tx.type === "BUY" ? "bg-emerald-500" :
+                                                        tx.type === "SELL" ? "bg-red-500" :
+                                                            "bg-[#0A66C2]"
+                                                }>{tx.type}</Badge>
+                                            </td>
+                                            <td className="p-3 text-right font-mono text-sm hidden sm:table-cell">{tx.qty}</td>
+                                            <td className="p-3 text-right font-mono text-sm hidden sm:table-cell">₹{tx.price.toLocaleString()}</td>
+                                            <td className="p-3 text-right font-bold tabular-nums">₹{tx.total.toLocaleString()}</td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        </div>
+                    </CardContent>
+                </Card>
+
                 {/* ========== 4. RISK BUCKET SUMMARY ========== */}
                 <Card className="border-2 border-border/50">
                     <CardHeader>
@@ -318,7 +652,7 @@ export default function PortfolioPage() {
                             {aiInsights.map((insight, i) => (
                                 <div key={i} className="flex items-start gap-3 p-3 bg-background rounded-xl border border-border">
                                     <div className={`p-2 rounded-lg ${insight.type === "BUY" ? "bg-emerald-500/10" :
-                                            insight.type === "SELL" ? "bg-red-500/10" : "bg-gray-500/10"
+                                        insight.type === "SELL" ? "bg-red-500/10" : "bg-gray-500/10"
                                         }`}>
                                         {insight.type === "BUY" ? (
                                             <ArrowUpRight className="h-4 w-4 text-emerald-500" />

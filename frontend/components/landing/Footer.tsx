@@ -41,55 +41,59 @@ export function Footer() {
     ]
 
     return (
-        <footer className="relative bg-slate-900 dark:bg-slate-950 text-white overflow-hidden">
+        <footer className="relative bg-white text-slate-900 overflow-hidden">
             {/* Gradient Top Border */}
-            <div className="h-1 bg-gradient-to-r from-blue-500 via-purple-500 to-orange-500" />
+            <div className="h-px bg-slate-200" />
 
             {/* Main Footer */}
-            <div className="container mx-auto px-6 py-16">
+            <div className="w-full px-6 md:px-12 lg:px-20 xl:px-32 py-20 relative z-10">
                 <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-12">
                     {/* Brand Column */}
                     <div className="col-span-2">
                         <Link href="/" className="inline-block mb-6">
                             <div className="flex items-center gap-3">
-                                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-500 to-orange-500 flex items-center justify-center">
-                                    <span className="text-white font-bold text-lg">B</span>
+                                <div className="w-12 h-12 rounded-[1rem] bg-gradient-to-br from-blue-600 to-blue-800 flex items-center justify-center shadow-lg">
+                                    <span className="text-white font-black text-xl">B</span>
                                 </div>
-                                <span className="text-xl font-bold bg-gradient-to-r from-white to-slate-300 bg-clip-text text-transparent">
-                                    Bharat AI Wealth
+                                <span className="text-2xl font-black text-slate-900 tracking-tight">
+                                    Bharat <span className="text-blue-600 italic">AI Wealth</span>
                                 </span>
                             </div>
                         </Link>
-                        <p className="text-slate-400 text-sm leading-relaxed mb-6 max-w-xs">
-                            India&apos;s Next-Gen AI Financial Advisor. Smart investment insights, risk analysis, and personalized advice.
+                        <p className="text-slate-500 text-sm font-medium leading-relaxed mb-8 max-w-xs">
+                            India&apos;s Next-Gen AI Financial Advisor. Smart investment insights, risk analysis, and institutional-grade personalized advice.
                         </p>
 
                         {/* Contact Info */}
-                        <div className="space-y-3">
-                            <div className="flex items-center gap-3 text-slate-400 text-sm">
-                                <Mail className="w-4 h-4 text-blue-400" />
-                                <a href="mailto:hello@bharataiwealth.com" className="hover:text-white transition-colors">
+                        <div className="space-y-4">
+                            <div className="flex items-center gap-3 text-slate-500 text-sm font-bold">
+                                <div className="w-8 h-8 rounded-lg bg-blue-50 flex items-center justify-center">
+                                    <Mail className="w-4 h-4 text-blue-600" />
+                                </div>
+                                <a href="mailto:hello@bharataiwealth.com" className="hover:text-blue-600 transition-colors">
                                     hello@bharataiwealth.com
                                 </a>
                             </div>
-                            <div className="flex items-center gap-3 text-slate-400 text-sm">
-                                <MapPin className="w-4 h-4 text-orange-400" />
+                            <div className="flex items-center gap-3 text-slate-500 text-sm font-bold">
+                                <div className="w-8 h-8 rounded-lg bg-orange-50 flex items-center justify-center">
+                                    <MapPin className="w-4 h-4 text-orange-600" />
+                                </div>
                                 <span>Bangalore, India</span>
                             </div>
                         </div>
 
                         {/* Social Links */}
-                        <div className="flex gap-3 mt-6">
+                        <div className="flex gap-4 mt-8">
                             {socialLinks.map((social, i) => (
                                 <motion.a
                                     key={i}
                                     href={social.href}
                                     aria-label={social.label}
-                                    whileHover={{ scale: 1.1 }}
+                                    whileHover={{ y: -4, scale: 1.1 }}
                                     whileTap={{ scale: 0.95 }}
-                                    className="w-10 h-10 rounded-xl bg-slate-800 hover:bg-slate-700 flex items-center justify-center transition-colors"
+                                    className="w-10 h-10 rounded-xl bg-slate-50 border border-slate-100 flex items-center justify-center transition-all hover:bg-white hover:shadow-xl hover:shadow-slate-200"
                                 >
-                                    <social.icon className="w-5 h-5 text-slate-400" />
+                                    <social.icon className="w-5 h-5 text-slate-400 hover:text-blue-600 transition-colors" />
                                 </motion.a>
                             ))}
                         </div>
@@ -98,15 +102,15 @@ export function Footer() {
                     {/* Link Columns */}
                     {Object.entries(footerLinks).map(([category, links]) => (
                         <div key={category}>
-                            <h4 className="text-sm font-bold uppercase tracking-wider text-white mb-4">
+                            <h4 className="text-xs font-black uppercase tracking-[0.2em] text-slate-900 mb-6">
                                 {category}
                             </h4>
-                            <ul className="space-y-3">
+                            <ul className="space-y-4">
                                 {links.map((link) => (
                                     <li key={link.name}>
                                         <Link
                                             href={link.href}
-                                            className="text-sm text-slate-400 hover:text-white transition-colors"
+                                            className="text-sm text-slate-500 font-bold hover:text-blue-600 transition-colors"
                                         >
                                             {link.name}
                                         </Link>
@@ -119,14 +123,14 @@ export function Footer() {
             </div>
 
             {/* Bottom Bar */}
-            <div className="border-t border-slate-800">
-                <div className="container mx-auto px-6 py-6">
-                    <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-                        <p className="text-sm text-slate-500">
+            <div className="border-t border-slate-100 bg-slate-50/50">
+                <div className="w-full px-6 md:px-12 lg:px-20 xl:px-32 py-8">
+                    <div className="flex flex-col md:flex-row items-center justify-between gap-6">
+                        <p className="text-xs font-bold text-slate-400 uppercase tracking-widest">
                             © {currentYear} Bharat AI Wealth. All rights reserved.
                         </p>
-                        <div className="flex items-center gap-2 text-sm">
-                            <span className="text-slate-500">Made with</span>
+                        <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-slate-400">
+                            <span>Made with</span>
                             <motion.span
                                 animate={{ scale: [1, 1.2, 1] }}
                                 transition={{ duration: 1, repeat: Infinity }}
@@ -134,9 +138,9 @@ export function Footer() {
                             >
                                 ❤️
                             </motion.span>
-                            <span className="text-slate-500">in</span>
-                            <span className="text-2xl">🇮🇳</span>
-                            <span className="font-semibold bg-gradient-to-r from-orange-400 via-white to-green-400 bg-clip-text text-transparent">
+                            <span>in</span>
+                            <span className="text-2xl mr-1">🇮🇳</span>
+                            <span className="bg-gradient-to-r from-orange-500 via-slate-400 to-green-500 bg-clip-text text-transparent">
                                 India
                             </span>
                         </div>

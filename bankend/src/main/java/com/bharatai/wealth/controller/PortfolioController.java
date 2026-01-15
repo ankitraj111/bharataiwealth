@@ -21,6 +21,7 @@ public class PortfolioController {
     private final UserRepository userRepository;
 
     @GetMapping
+    @org.springframework.cache.annotation.Cacheable(value = "portfolio", key = "#authentication.name")
     public ResponseEntity<List<PortfolioItem>> getPortfolio(Authentication authentication) {
         User user = userRepository.findByEmail(authentication.getName())
                 .orElseThrow(() -> new RuntimeException("User not found"));
@@ -28,6 +29,8 @@ public class PortfolioController {
     }
 
     @PostMapping
+    @org.springframework.cache.annotation.CacheEvict(value = { "portfolio",
+            "dashboardSummary" }, key = "#authentication.name")
     public ResponseEntity<PortfolioItem> addPortfolioItem(@RequestBody PortfolioItem item,
             Authentication authentication) {
         User user = userRepository.findByEmail(authentication.getName())

@@ -21,6 +21,7 @@ public class DashboardController {
     private final UserRepository userRepository;
 
     @GetMapping("/summary")
+    @org.springframework.cache.annotation.Cacheable(value = "dashboardSummary", key = "#authentication.name")
     public ResponseEntity<Map<String, Object>> getSummary(
             org.springframework.security.core.Authentication authentication) {
         com.bharatai.wealth.model.User user = userRepository.findByEmail(authentication.getName())
