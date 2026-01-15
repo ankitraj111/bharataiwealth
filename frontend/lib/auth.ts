@@ -5,6 +5,8 @@ export interface User {
     role: string;
 }
 
+import { BACKEND_URL } from './api';
+
 export const authService = {
     getUser: (): User | null => {
         if (typeof window === 'undefined') return null;
@@ -34,7 +36,7 @@ export const authService = {
     },
 
     login: async (email: string, password: string): Promise<{ token: string; user: User }> => {
-        const response = await fetch('/api/auth/login', {
+        const response = await fetch(`${BACKEND_URL}/auth/login`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -43,15 +45,23 @@ export const authService = {
         });
 
         if (!response.ok) {
-            const errorData = await response.json().catch(() => ({}));
-            throw new Error(errorData.message || 'Login failed');
+            let errorMessage = 'Login failed';
+            try {
+                const errorData = await response.json();
+                errorMessage = errorData.message || errorData.error || errorMessage;
+            } catch (e) {
+                // If not JSON, try text
+                const text = await response.text().catch(() => '');
+                if (text) errorMessage = text;
+            }
+            throw new Error(errorMessage);
         }
 
         return response.json();
     },
 
     register: async (name: string, email: string, password: string): Promise<{ token: string; user: User }> => {
-        const response = await fetch('/api/auth/register', {
+        const response = await fetch(`${BACKEND_URL}/auth/register`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -60,8 +70,16 @@ export const authService = {
         });
 
         if (!response.ok) {
-            const errorData = await response.json().catch(() => ({}));
-            throw new Error(errorData.message || 'Registration failed');
+            let errorMessage = 'Registration failed';
+            try {
+                const errorData = await response.json();
+                errorMessage = errorData.message || errorData.error || errorMessage;
+            } catch (e) {
+                // If not JSON, try text
+                const text = await response.text().catch(() => '');
+                if (text) errorMessage = text;
+            }
+            throw new Error(errorMessage);
         }
 
         return response.json();

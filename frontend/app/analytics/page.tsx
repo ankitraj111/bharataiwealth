@@ -30,6 +30,7 @@ import {
 } from "lucide-react"
 import { authService } from "@/lib/auth"
 import { toast } from "sonner"
+import { BACKEND_URL } from "@/lib/api"
 import { DatePickerWithRange } from "@/components/date-range-picker"
 import { DateRange } from "react-day-picker"
 import { isWithinInterval, parseISO, subDays } from "date-fns"
@@ -56,7 +57,7 @@ export default function AnalyticsPage() {
   const fetchExpenses = useCallback(async () => {
     setIsLoading(true)
     try {
-      const response = await fetch("/api/expenses", {
+      const response = await fetch(`${BACKEND_URL}/expenses`, {
         headers: {
           "Authorization": `Bearer ${authService.getToken()}`
         }

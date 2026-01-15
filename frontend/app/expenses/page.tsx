@@ -25,6 +25,7 @@ import { ExportButton } from "@/components/export-button"
 import { Progress } from "@/components/ui/progress"
 import { authService } from "@/lib/auth"
 import { toast } from "sonner"
+import { BACKEND_URL } from "@/lib/api"
 import { DatePickerWithRange } from "@/components/date-range-picker"
 import { DateRange } from "react-day-picker"
 import { isWithinInterval, parseISO, subDays } from "date-fns"
@@ -87,7 +88,7 @@ export default function ExpensesPage() {
   const fetchExpenses = useCallback(async () => {
     setIsLoading(true)
     try {
-      const response = await fetch("/api/expenses", {
+      const response = await fetch(`${BACKEND_URL}/expenses`, {
         headers: {
           "Authorization": `Bearer ${authService.getToken()}`
         }
@@ -109,7 +110,7 @@ export default function ExpensesPage() {
 
   const handleUpdateExpense = async (id: number, updates: Partial<Expense>) => {
     try {
-      const response = await fetch(`/api/expenses/${id}`, {
+      const response = await fetch(`${BACKEND_URL}/expenses/${id}`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
@@ -132,7 +133,7 @@ export default function ExpensesPage() {
     if (!confirm("Are you sure you want to delete this expense? It will be removed from your dashboard.")) return;
 
     try {
-      const response = await fetch(`/api/expenses/${id}`, {
+      const response = await fetch(`${BACKEND_URL}/expenses/${id}`, {
         method: "DELETE",
         headers: {
           "Authorization": `Bearer ${authService.getToken()}`
@@ -182,7 +183,7 @@ export default function ExpensesPage() {
     }, 200)
 
     try {
-      const connectResp = await fetch("/api/bank-connections/connect", {
+      const connectResp = await fetch(`${BACKEND_URL}/bank-connections/connect`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

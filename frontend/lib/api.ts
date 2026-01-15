@@ -1,5 +1,8 @@
 export const ML_SERVICE_URL = process.env.NEXT_PUBLIC_ML_SERVICE_URL || "http://localhost:8000";
-const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:8080/api";
+export const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL ||
+    (typeof window !== 'undefined' && window.location.hostname !== 'localhost'
+        ? "https://bharataiwealth-backend.onrender.com/api"
+        : "http://localhost:8080/api");
 
 export const fetcher = async (url: string) => {
     const token = typeof window !== 'undefined' ? localStorage.getItem("token") : null;

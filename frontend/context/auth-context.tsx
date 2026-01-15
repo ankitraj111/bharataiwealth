@@ -3,6 +3,7 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react'
 import { useRouter } from 'next/navigation'
 import { authService, User } from '@/lib/auth'
+import { BACKEND_URL } from '@/lib/api'
 
 interface AuthContextType {
     user: User | null
@@ -28,8 +29,24 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         if (savedUser && token) {
             setUser(savedUser)
         }
+
+        // Client-side route protection for static export
+        const pathname = window.location.pathname
+        const protectedRoutes = ['/dashboard', '/predictions', '/analytics', '/advisor', '/portfolios', '/expenses', '/family', '/goals', '/emergency-fund', '/sandbox', '/tax', '/settings']
+        const authRoutes = ['/auth/login', '/auth/signup']
+
+        // If user is logged in and trying to access auth pages, redirect to dashboard
+        if (token && authRoutes.some(route => pathname.includes(route))) {
+            router.push('/dashboard')
+        }
+
+        // If user is NOT logged in and trying to access protected pages, redirect to login
+        if (!token && protectedRoutes.some(route => pathname.includes(route))) {
+            router.push('/auth/login')
+        }
+
         setIsLoading(false)
-    }, [])
+    }, [router])
 
     const login = async (email: string, password: string) => {
         setIsLoading(true)

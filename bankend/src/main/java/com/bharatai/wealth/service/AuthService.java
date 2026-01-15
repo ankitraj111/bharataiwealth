@@ -13,74 +13,77 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 
 @Service
 @RequiredArgsConstructor
 public class AuthService implements UserDetailsService {
 
-    private final UserRepository userRepository;
-    private final PasswordEncoder passwordEncoder;
-    private final JwtService jwtService;
-    private final AuthenticationManager authenticationManager;
+        private final UserRepository userRepository;
+        private final PasswordEncoder passwordEncoder;
+        private final JwtService jwtService;
+        private final AuthenticationManager authenticationManager;
 
-    @Override
-    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        User user = userRepository.findByEmail(email)
-                .orElseThrow(() -> new UsernameNotFoundException("User not found with email: " + email));
+        @Override
+        public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+                User user = userRepository.findByEmail(email)
+                                .orElseThrow(() -> new UsernameNotFoundException(
+                                                "User not found with email: " + email));
 
-        return new org.springframework.security.core.userdetails.User(
-                user.getEmail(),
-                user.getPassword(),
-                new ArrayList<>());
-    }
-
-    public AuthDTO.AuthResponse register(AuthDTO.RegisterRequest request) {
-        if (userRepository.existsByEmail(request.getEmail())) {
-            throw new RuntimeException("Email already exists");
+                return new org.springframework.security.core.userdetails.User(
+                                user.getEmail(),
+                                user.getPassword(),
+                                new ArrayList<>());
         }
 
-        User user = User.builder()
-                .name(request.getName())
-                .email(request.getEmail())
-                .password(passwordEncoder.encode(request.getPassword()))
-                .role(User.Role.USER)
-                .build();
+        @Transactional
+        public AuthDTO.AuthResponse register(AuthDTO.RegisterRequest request) {
+                if (userRepository.existsByEmail(request.getEmail())) {
+                        throw new RuntimeException("Email already exists");
+                }
 
-        userRepository.save(user);
+                User user = User.builder()
+                                .name(request.getName())
+                                .email(request.getEmail())
+                                .password(passwordEncoder.encode(request.getPassword()))
+                                .role(User.Role.USER)
+                                .build();
 
-        UserDetails userDetails = loadUserByUsername(user.getEmail());
-        String token = jwtService.generateToken(userDetails);
+                userRepository.save(user);
 
-        return AuthDTO.AuthResponse.builder()
-                .token(token)
-                .user(AuthDTO.UserDTO.builder()
-                        .id(user.getId())
-                        .name(user.getName())
-                        .email(user.getEmail())
-                        .role(user.getRole().name())
-                        .build())
-                .build();
-    }
+                UserDetails userDetails = loadUserByUsername(user.getEmail());
+                String token = jwtService.generateToken(userDetails);
 
-    public AuthDTO.AuthResponse login(AuthDTO.LoginRequest request) {
-        authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
+                return AuthDTO.AuthResponse.builder()
+                                .token(token)
+                                .user(AuthDTO.UserDTO.builder()
+                                                .id(user.getId())
+                                                .name(user.getName())
+                                                .email(user.getEmail())
+                                                .role(user.getRole().name())
+                                                .build())
+                                .build();
+        }
 
-        User user = userRepository.findByEmail(request.getEmail())
-                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+        public AuthDTO.AuthResponse login(AuthDTO.LoginRequest request) {
+                authenticationManager.authenticate(
+                                new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
 
-        UserDetails userDetails = loadUserByUsername(user.getEmail());
-        String token = jwtService.generateToken(userDetails);
+                User user = userRepository.findByEmail(request.getEmail())
+                                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
 
-        return AuthDTO.AuthResponse.builder()
-                .token(token)
-                .user(AuthDTO.UserDTO.builder()
-                        .id(user.getId())
-                        .name(user.getName())
-                        .email(user.getEmail())
-                        .role(user.getRole().name())
-                        .build())
-                .build();
-    }
+                UserDetails userDetails = loadUserByUsername(user.getEmail());
+                String token = jwtService.generateToken(userDetails);
+
+                return AuthDTO.AuthResponse.builder()
+                                .token(token)
+                                .user(AuthDTO.UserDTO.builder()
+                                                .id(user.getId())
+                                                .name(user.getName())
+                                                .email(user.getEmail())
+                                                .role(user.getRole().name())
+                                                .build())
+                                .build();
+        }
 }

@@ -21,7 +21,7 @@ const Pie = dynamic(() => import("recharts").then(m => m.Pie), { ssr: false })
 const Cell = dynamic(() => import("recharts").then(m => m.Cell), { ssr: false })
 import { ArrowUpRight, Wallet, PiggyBank, TrendingUp, Shield, Sparkles, ChevronRight, BarChart3, Target, AlertTriangle } from "lucide-react"
 import { KiteConnector } from "@/components/kite-connector"
-import { fetchDashboardSummary, fetcher } from "@/lib/api"
+import { fetchDashboardSummary, fetcher, BACKEND_URL } from "@/lib/api"
 import useSWR from "swr"
 import Link from "next/link"
 
@@ -73,7 +73,7 @@ function getGreeting(): string {
 export default function DashboardPage() {
   const [greeting, setGreeting] = useState("Welcome")
 
-  const { data: summaryData, error } = useSWR("/api/dashboard/summary", fetcher, {
+  const { data: summaryData, error } = useSWR(`${BACKEND_URL}/dashboard/summary`, fetcher, {
     fallbackData: defaultSummary,
     revalidateOnFocus: false,
     refreshInterval: 30000,
