@@ -1,7 +1,7 @@
 # Bharat AI Wealth
 
-🚀 **Live Site (GitHub Pages):** [ankitraj111.github.io/bharataiwealth](https://ankitraj111.github.io/bharataiwealth)
-💻 **GitHub Repo:** [github.com/ankitraj111/bharataiwealth](https://github.com/ankitraj111/bharataiwealth)
+🚀 **Live on GitHub Pages:** [ankitraj111.github.io/bharataiwealth](https://ankitraj111.github.io/bharataiwealth)
+💻 **Source Code:** [github.com/ankitraj111/bharataiwealth](https://github.com/ankitraj111/bharataiwealth)
 
-AI-powered wealth management platform for India.
+AI-powered wealth management platform for India. This project is hosted entirely on GitHub.
 
