@@ -1,5 +1,5 @@
 export const ML_SERVICE_URL = process.env.NEXT_PUBLIC_ML_SERVICE_URL || "http://localhost:8000";
-const BACKEND_URL = "/api"; // Leverage Next.js rewrites for CORS-free backend calls
+const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:8080/api";
 
 export const fetcher = async (url: string) => {
     const token = typeof window !== 'undefined' ? localStorage.getItem("token") : null;
