@@ -58,13 +58,13 @@ const values = [
 
 const team = [
     {
-        name: "Rahul Verma",
+        name: "Ankit Raj",
         role: "Founder & CEO",
-        bio: "Ex-Goldman Sachs quant with 10+ years in algorithmic trading. IIT Delhi, MBA from ISB.",
+        bio: "DRDO Intern with strong experience in quantitative analysis and algorithmic trading strategies. B.Tech student at GGSIPU, Delhi, with a focus on AI-driven financial systems and market risk analysis.",
         gradient: "from-blue-500 to-purple-600"
     },
     {
-        name: "Priya Menon",
+        name: "Ritika Saxena",
         role: "CTO",
         bio: "Former ML Lead at Google. Built recommendation systems serving 100M+ users. PhD in AI from Stanford.",
         gradient: "from-purple-500 to-pink-500"
@@ -449,45 +449,6 @@ export default function AboutPage() {
                             </motion.div>
                         </div>
                     </div>
-
-                    {/* CTA Section */}
-                    <motion.div
-                        initial={{ opacity: 0, scale: 0.95 }}
-                        whileInView={{ opacity: 1, scale: 1 }}
-                        viewport={{ once: true }}
-                        className="p-12 md:p-20 rounded-[4rem] bg-gradient-to-br from-blue-600 to-purple-700 dark:from-blue-700 dark:to-purple-900 text-white text-center relative overflow-hidden shadow-2xl"
-                    >
-                        <div className="relative z-10">
-                            <h2 className="text-4xl md:text-6xl font-black mb-6">
-                                Join Our Journey
-                            </h2>
-                            <p className="text-xl text-white/90 mb-10 max-w-2xl mx-auto">
-                                Be part of India's AI-powered wealth management revolution
-                            </p>
-                            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                                <motion.a
-                                    href="/dashboard"
-                                    whileHover={{ scale: 1.05 }}
-                                    whileTap={{ scale: 0.95 }}
-                                    className="px-10 py-5 rounded-full bg-white text-blue-600 font-bold text-lg shadow-2xl inline-flex items-center justify-center gap-2"
-                                >
-                                    Start Free Trial
-                                    <Rocket className="w-5 h-5" />
-                                </motion.a>
-                                <motion.a
-                                    href="/contact"
-                                    whileHover={{ scale: 1.05 }}
-                                    whileTap={{ scale: 0.95 }}
-                                    className="px-10 py-5 rounded-full bg-white/10 backdrop-blur text-white font-bold text-lg border-2 border-white/20 inline-flex items-center justify-center gap-2"
-                                >
-                                    Contact Us
-                                    <Users className="w-5 h-5" />
-                                </motion.a>
-                            </div>
-                        </div>
-                        <Globe className="absolute top-10 right-10 w-32 h-32 text-white/10 animate-pulse" />
-                        <Sparkles className="absolute bottom-10 left-10 w-24 h-24 text-white/10 animate-pulse" />
-                    </motion.div>
                 </div>
             </div>
 
