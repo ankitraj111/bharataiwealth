@@ -39,6 +39,7 @@ jobs:
         run: npm run build
         working-directory: frontend
         env:
+          GITHUB_PAGES: "true"
           NEXT_PUBLIC_ML_SERVICE_URL: "https://your-ml-service.onrender.com" 
           NEXT_PUBLIC_BACKEND_URL: "https://bharataiwealth-backend.onrender.com/api" 
 
