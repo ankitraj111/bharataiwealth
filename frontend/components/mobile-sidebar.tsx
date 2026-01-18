@@ -49,34 +49,34 @@ export function MobileSidebar() {
   const pathname = usePathname()
 
   return (
-    <div className="flex h-full flex-col bg-sidebar">
+    <div className="flex h-full flex-col bg-background">
       {/* Logo */}
-      <div className="flex h-16 items-center gap-3 border-b border-border px-6">
-        <div className="relative flex h-9 w-9 items-center justify-center rounded-lg bg-gradient-to-br from-primary to-primary/80 shadow-lg shadow-primary/20">
-          <Sparkles className="h-5 w-5 text-primary-foreground" />
+      <div className="flex h-16 items-center gap-2.5 border-b border-border px-4 bg-gradient-to-r from-primary/10 to-primary/5">
+        <div className="relative flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-primary to-primary/80 shadow-md shadow-primary/20">
+          <Sparkles className="h-4 w-4 text-primary-foreground" />
         </div>
         <div className="flex flex-col">
-          <span className="font-serif text-lg font-black tracking-tight text-primary">Bharat AI</span>
-          <span className="text-[10px] font-semibold uppercase tracking-[0.2em] text-gradient-gold">Wealth</span>
+          <span className="font-serif text-base font-black tracking-tight text-foreground">Bharat AI</span>
+          <span className="text-[9px] font-semibold uppercase tracking-[0.15em] text-primary">Wealth</span>
         </div>
       </div>
 
       {/* Navigation */}
-      <nav className="flex-1 overflow-y-auto px-3 py-4">
-        <div className="space-y-1">
+      <nav className="flex-1 overflow-y-auto px-2 py-3">
+        <div className="space-y-0.5">
           {allNavItems.map((item) => (
             <Link
               key={item.href}
               href={item.href}
               className={cn(
-                "flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-premium",
+                "flex items-center gap-2.5 rounded-lg px-3 py-2 text-sm font-medium transition-all",
                 pathname === item.href
-                  ? "bg-primary/10 text-primary shadow-sm"
+                  ? "bg-primary/10 text-primary shadow-sm border border-primary/20"
                   : "text-muted-foreground hover:bg-secondary/80 hover:text-foreground",
               )}
             >
-              <item.icon className="h-[18px] w-[18px]" />
-              {item.name}
+              <item.icon className="h-4 w-4 flex-shrink-0" />
+              <span className="truncate">{item.name}</span>
             </Link>
           ))}
         </div>

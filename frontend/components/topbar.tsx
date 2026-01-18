@@ -44,7 +44,7 @@ export function Topbar() {
       {/* Mobile Menu */}
       <Sheet>
         <SheetTrigger asChild>
-          <Button variant="ghost" size="icon" className="lg:hidden hover:bg-secondary/80 transition-premium">
+          <Button variant="ghost" size="icon" className="lg:hidden hover:bg-secondary/80 transition-premium h-10 w-10 rounded-xl">
             <Menu className="h-5 w-5" />
             <span className="sr-only">Toggle menu</span>
           </Button>
