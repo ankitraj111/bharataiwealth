@@ -13,7 +13,7 @@ import {
   DropdownMenuGroup,
 } from "@/components/ui/dropdown-menu"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
+import { Sheet, SheetContent, SheetTrigger, SheetTitle } from "@/components/ui/sheet"
 import { MobileSidebar } from "./mobile-sidebar"
 import { ThemeToggle } from "./theme-toggle"
 import { Badge } from "@/components/ui/badge"
@@ -50,6 +50,7 @@ export function Topbar() {
           </Button>
         </SheetTrigger>
         <SheetContent side="left" className="w-[260px] p-0 border-r-border/50">
+          <SheetTitle className="sr-only">Navigation Menu</SheetTitle>
           <MobileSidebar />
         </SheetContent>
       </Sheet>
