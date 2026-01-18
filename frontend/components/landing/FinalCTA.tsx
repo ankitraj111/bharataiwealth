@@ -1,27 +1,11 @@
 "use client"
 
-import { useState } from "react"
 import Link from "next/link"
 import { motion } from "framer-motion"
 import { Button } from "@/components/ui/button"
-import { ArrowRight, Sparkles, CheckCircle2, Loader2 } from "lucide-react"
+import { ArrowRight, Sparkles } from "lucide-react"
 
 export function FinalCTA() {
-    const [email, setEmail] = useState("")
-    const [isSubmitting, setIsSubmitting] = useState(false)
-    const [isSubmitted, setIsSubmitted] = useState(false)
-
-    const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault()
-        if (!email) return
-
-        setIsSubmitting(true)
-        // Simulate API call
-        await new Promise(resolve => setTimeout(resolve, 1500))
-        setIsSubmitting(false)
-        setIsSubmitted(true)
-        setEmail("")
-    }
 
     return (
         <section className="py-24 relative overflow-hidden bg-white dark:bg-slate-900">
@@ -89,7 +73,7 @@ export function FinalCTA() {
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
                             transition={{ delay: 0.3 }}
-                            className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-12"
+                            className="flex flex-col sm:flex-row items-center justify-center gap-4"
                         >
                             <Button
                                 asChild
@@ -105,54 +89,6 @@ export function FinalCTA() {
                                     </motion.div>
                                 </Link>
                             </Button>
-                        </motion.div>
-
-                        {/* Email Form */}
-                        <motion.div
-                            initial={{ opacity: 0, y: 20 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ delay: 0.4 }}
-                            className="max-w-md mx-auto"
-                        >
-                            <p className="text-white/70 text-sm mb-4">Or join early access for exclusive features</p>
-
-                            {!isSubmitted ? (
-                                <form onSubmit={handleSubmit} className="flex gap-3">
-                                    <input
-                                        type="email"
-                                        value={email}
-                                        onChange={(e) => setEmail(e.target.value)}
-                                        placeholder="Enter your email"
-                                        className="flex-1 h-14 px-6 rounded-2xl bg-white/10 dark:bg-white/5 backdrop-blur-md border border-white/20 dark:border-white/10 text-white placeholder:text-white/40 dark:placeholder:text-white/30 focus:outline-none focus:ring-2 focus:ring-white/50 dark:focus:ring-white/30 transition-all"
-                                        required
-                                    />
-                                    <Button
-                                        type="submit"
-                                        disabled={isSubmitting}
-                                        className="h-14 px-8 font-black bg-sky-400 hover:bg-sky-300 dark:bg-sky-500 dark:hover:bg-sky-400 text-slate-900 dark:text-slate-950 rounded-2xl transition-all uppercase tracking-widest text-xs"
-                                    >
-                                        {isSubmitting ? (
-                                            <Loader2 className="w-5 h-5 animate-spin" />
-                                        ) : (
-                                            "Join Waitlist"
-                                        )}
-                                    </Button>
-                                </form>
-                            ) : (
-                                <motion.div
-                                    initial={{ opacity: 0, scale: 0.9 }}
-                                    animate={{ opacity: 1, scale: 1 }}
-                                    className="flex items-center justify-center gap-2 p-4 rounded-xl bg-white/20 dark:bg-white/10 backdrop-blur-sm border border-white/30 dark:border-white/20"
-                                >
-                                    <CheckCircle2 className="w-5 h-5 text-emerald-300 dark:text-emerald-200" />
-                                    <span className="text-white font-medium">Thanks! We&apos;ll be in touch soon.</span>
-                                </motion.div>
-                            )}
-
-                            <p className="text-white/50 dark:text-white/40 text-xs mt-4">
-                                No spam, ever. We respect your privacy.
-                            </p>
                         </motion.div>
                     </div>
                 </div>
