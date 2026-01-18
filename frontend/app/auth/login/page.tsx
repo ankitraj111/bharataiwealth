@@ -1,12 +1,12 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import * as z from "zod"
-import { Eye, EyeOff, Lock, Mail, Sparkles, Loader2, Chrome, Smartphone } from "lucide-react"
+import { Eye, EyeOff, Lock, Mail, Sparkles, Loader2, Chrome, Smartphone, Info } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import {
@@ -31,8 +31,18 @@ const loginSchema = z.object({
 export default function LoginPage() {
     const [showPassword, setShowPassword] = useState(false)
     const [error, setError] = useState<string | null>(null)
+    const [isStaticSite, setIsStaticSite] = useState(false)
     const { login, demoLogin, isLoading } = useAuth()
     const router = useRouter()
+
+    useEffect(() => {
+        // Check if running on GitHub Pages
+        if (typeof window !== 'undefined') {
+            const isGitHubPages = window.location.hostname.includes('github.io') || 
+                                 window.location.pathname.includes('/bharataiwealth')
+            setIsStaticSite(isGitHubPages)
+        }
+    }, [])
 
     const form = useForm<z.infer<typeof loginSchema>>({
         resolver: zodResolver(loginSchema),
@@ -106,6 +116,18 @@ export default function LoginPage() {
                         <h2 className="text-3xl font-black tracking-tighter text-foreground uppercase">Welcome Back</h2>
                         <p className="text-muted-foreground font-medium">Please enter your details to access your wealth.</p>
                     </div>
+
+                    {isStaticSite && (
+                        <div className="p-4 rounded-xl bg-primary/10 border border-primary/20 text-primary text-sm font-semibold flex items-start gap-3">
+                            <Info className="h-5 w-5 mt-0.5 flex-shrink-0" />
+                            <div>
+                                <p className="font-bold mb-1">Demo Mode Active</p>
+                                <p className="text-xs font-normal opacity-90">
+                                    You're viewing the static demo. Enter any email and password (min 6 chars) to explore the platform.
+                                </p>
+                            </div>
+                        </div>
+                    )}
 
                     {error && (
                         <div className="p-4 rounded-xl bg-destructive/10 border border-destructive/20 text-destructive text-sm font-semibold flex items-center gap-3 animate-shake">
