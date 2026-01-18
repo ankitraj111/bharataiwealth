@@ -22,27 +22,45 @@ import {
   Mail,
   Sparkles,
   HelpCircle,
+  PiggyBank,
+  Coins,
 } from "lucide-react"
 
 const allNavItems = [
-  { name: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
-  { name: "Expenses", href: "/expenses", icon: Receipt },
-  { name: "Analytics", href: "/analytics", icon: BarChart3 },
-  { name: "AI Advisor", href: "/advisor", icon: MessageSquareText },
-  { name: "Low Risk", href: "/portfolios/low-risk", icon: TrendingUp },
-  { name: "Medium Risk", href: "/portfolios/medium-risk", icon: BarChart3 },
-  { name: "High Risk", href: "/portfolios/high-risk", icon: Zap },
-  { name: "Goal Tracker", href: "/goals", icon: Target },
-  { name: "Emergency Fund", href: "/emergency-fund", icon: Shield },
-  { name: "Sandbox", href: "/sandbox", icon: FlaskConical },
-  { name: "Tax & Insurance", href: "/tax", icon: Calculator },
-  { name: "Family", href: "/family", icon: Users },
-  { name: "Badges", href: "/badges", icon: Trophy },
-  { name: "SIP Reminders", href: "/sip-reminders", icon: Wallet },
-  { name: "Email Digest", href: "/digest", icon: Mail },
-  { name: "Alerts", href: "/alerts", icon: Bell },
-  { name: "Help & Support", href: "/support", icon: HelpCircle },
-  { name: "Settings", href: "/settings", icon: Settings },
+  // Main Features
+  { name: "Dashboard", href: "/dashboard", icon: LayoutDashboard, section: "main" },
+  { name: "Expenses", href: "/expenses", icon: Receipt, section: "main" },
+  { name: "Analytics", href: "/analytics", icon: BarChart3, section: "main" },
+  { name: "AI Advisor", href: "/advisor", icon: MessageSquareText, section: "main" },
+  
+  // Portfolio Management
+  { name: "Portfolio", href: "/portfolio", icon: Wallet, section: "portfolio" },
+  { name: "Low Risk", href: "/portfolios/low-risk", icon: TrendingUp, section: "portfolio" },
+  { name: "Medium Risk", href: "/portfolios/medium-risk", icon: BarChart3, section: "portfolio" },
+  { name: "High Risk", href: "/portfolios/high-risk", icon: Zap, section: "portfolio" },
+  { name: "Predictions", href: "/predictions", icon: TrendingUp, section: "portfolio" },
+  
+  // Mutual Funds
+  { name: "MF Explorer", href: "/mf", icon: Coins, section: "mf" },
+  { name: "SIP Planner", href: "/sip", icon: PiggyBank, section: "mf" },
+  { name: "Goal Funds", href: "/goals-mf", icon: Target, section: "mf" },
+  
+  // Tools
+  { name: "Goal Tracker", href: "/goals", icon: Target, section: "tools" },
+  { name: "Emergency Fund", href: "/emergency-fund", icon: Shield, section: "tools" },
+  { name: "Sandbox", href: "/sandbox", icon: FlaskConical, section: "tools" },
+  { name: "Tax & Insurance", href: "/tax", icon: Calculator, section: "tools" },
+  { name: "Family", href: "/family", icon: Users, section: "tools" },
+  
+  // Engagement
+  { name: "Badges", href: "/badges", icon: Trophy, section: "engagement" },
+  { name: "SIP Reminders", href: "/sip-reminders", icon: Wallet, section: "engagement" },
+  { name: "Email Digest", href: "/digest", icon: Mail, section: "engagement" },
+  
+  // Bottom
+  { name: "Alerts", href: "/alerts", icon: Bell, section: "bottom" },
+  { name: "Support", href: "/support", icon: HelpCircle, section: "bottom" },
+  { name: "Settings", href: "/settings", icon: Settings, section: "bottom" },
 ]
 
 export function MobileSidebar() {
@@ -51,7 +69,7 @@ export function MobileSidebar() {
   return (
     <div className="flex h-full flex-col bg-background">
       {/* Logo */}
-      <div className="flex h-16 items-center gap-2.5 border-b border-border px-4 bg-gradient-to-r from-primary/10 to-primary/5">
+      <div className="flex h-14 items-center gap-2.5 border-b border-border px-4 bg-gradient-to-r from-primary/10 to-primary/5">
         <div className="relative flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-primary to-primary/80 shadow-md shadow-primary/20">
           <Sparkles className="h-4 w-4 text-primary-foreground" />
         </div>
