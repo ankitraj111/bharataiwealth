@@ -15,6 +15,43 @@ export const fetcher = async (url: string) => {
     return response.json();
 };
 
+// Safe fetch wrapper that handles errors gracefully
+export async function safeFetch(url: string, options?: RequestInit): Promise<any> {
+    try {
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 10000); // 10s timeout
+
+        const response = await fetch(url, {
+            ...options,
+            signal: controller.signal,
+        });
+
+        clearTimeout(timeoutId);
+
+        if (!response.ok) {
+            // Silently return null for non-critical errors
+            if (response.status === 404 || response.status === 401) {
+                return null;
+            }
+            console.warn(`API Error [${response.status}]: ${url}`);
+            return null;
+        }
+
+        return await response.json();
+    } catch (error: any) {
+        // Silently handle network errors - backend might be unavailable
+        if (error.name === 'AbortError' || 
+            error.message?.includes('fetch') || 
+            error.message?.includes('Failed to fetch') ||
+            error.message?.includes('NetworkError')) {
+            console.warn(`Backend unavailable: ${url}`);
+            return null;
+        }
+        console.error(`Fetch error: ${url}`, error);
+        return null;
+    }
+}
+
 // Simple in-memory cache
 const apiCache: { [key: string]: { data: any, timestamp: number } } = {};
 const CACHE_DURATION = 5 * 60 * 1000; // 5 minutes
@@ -25,28 +62,11 @@ export async function fetchWithCache(url: string, options?: any) {
         return apiCache[url].data;
     }
 
-    try {
-        const response = await fetch(url, options);
-        if (!response.ok) {
-            // Only log non-404 errors to reduce console noise
-            if (response.status !== 404) {
-                console.warn(`API Error [${response.status}]: ${url}`);
-            }
-            return null;
-        }
-        const data = await response.json();
+    const data = await safeFetch(url, options);
+    if (data !== null) {
         apiCache[url] = { data, timestamp: now };
-        return data;
-    } catch (error: any) {
-        // Silently handle network errors for external services (ML service, etc.)
-        // These are expected when services are unavailable
-        if (url.includes(':8000')) {
-            // ML service not running - this is expected in some environments
-            return null;
-        }
-        console.warn(`Network Error: ${url}`, error?.message || error);
-        return null;
     }
+    return data;
 }
 
 export async function fetchPrediction(symbol: string) {
@@ -88,19 +108,12 @@ export async function fetchDashboardSummary() {
     const token = typeof window !== 'undefined' ? localStorage.getItem("token") : null;
     if (!token) return getMockDashboardData();
 
-    try {
-        const response = await fetch(`${BACKEND_URL}/dashboard/summary`, {
-            headers: { "Authorization": `Bearer ${token}` }
-        });
-        if (!response.ok) {
-            // Silently fallback to mock data for auth errors
-            return getMockDashboardData();
-        }
-        return await response.json();
-    } catch (error) {
-        // Network error - return mock data
-        return getMockDashboardData();
-    }
+    const data = await safeFetch(`${BACKEND_URL}/dashboard/summary`, {
+        headers: { "Authorization": `Bearer ${token}` }
+    });
+
+    // Fallback to mock data if backend unavailable
+    return data || getMockDashboardData();
 }
 
 function getMockDashboardData() {
@@ -124,33 +137,29 @@ export async function fetchAdvisoryRecommend(symbol: string) {
 export async function fetchGoals() {
     const token = typeof window !== 'undefined' ? localStorage.getItem("token") : null;
     if (!token) return [];
-    return fetchWithCache(`${BACKEND_URL}/goals`, {
+    const data = await fetchWithCache(`${BACKEND_URL}/goals`, {
         headers: { "Authorization": `Bearer ${token}` }
-    }).then(data => data || []);
+    });
+    return data || [];
 }
 
 export async function addGoal(goal: any) {
     const token = typeof window !== 'undefined' ? localStorage.getItem("token") : null;
     if (!token) return null;
-    try {
-        const response = await fetch(`${BACKEND_URL}/goals`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": `Bearer ${token}`
-            },
-            body: JSON.stringify(goal)
-        });
-        return response.ok ? await response.json() : null;
-    } catch (error) {
-        return null;
-    }
+    return await safeFetch(`${BACKEND_URL}/goals`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`
+        },
+        body: JSON.stringify(goal)
+    });
 }
 
 export async function fetchTaxEstimate() {
     const token = typeof window !== 'undefined' ? localStorage.getItem("token") : null;
     if (!token) return null;
-    return fetchWithCache(`${BACKEND_URL}/tax/estimate`, {
+    return await fetchWithCache(`${BACKEND_URL}/tax/estimate`, {
         headers: { "Authorization": `Bearer ${token}` }
     });
 }
@@ -158,7 +167,7 @@ export async function fetchTaxEstimate() {
 export async function fetchEmergencyFund() {
     const token = typeof window !== 'undefined' ? localStorage.getItem("token") : null;
     if (!token) return null;
-    return fetchWithCache(`${BACKEND_URL}/emergency-fund`, {
+    return await fetchWithCache(`${BACKEND_URL}/emergency-fund`, {
         headers: { "Authorization": `Bearer ${token}` }
     });
 }
@@ -166,33 +175,30 @@ export async function fetchEmergencyFund() {
 export async function fetchFamily() {
     const token = typeof window !== 'undefined' ? localStorage.getItem("token") : null;
     if (!token) return [];
-    return fetchWithCache(`${BACKEND_URL}/family`, {
+    const data = await fetchWithCache(`${BACKEND_URL}/family`, {
         headers: { "Authorization": `Bearer ${token}` }
-    }).then(data => data || []);
+    });
+    return data || [];
 }
 
 export async function fetchAlerts() {
     const token = typeof window !== 'undefined' ? localStorage.getItem("token") : null;
     if (!token) return [];
-    return fetchWithCache(`${BACKEND_URL}/alerts`, {
+    const data = await fetchWithCache(`${BACKEND_URL}/alerts`, {
         headers: { "Authorization": `Bearer ${token}` }
-    }).then(data => data || []);
+    });
+    return data || [];
 }
 
 export async function updateEmergencyFund(fund: any) {
-    try {
-        const response = await fetch(`${BACKEND_URL}/emergency-fund`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": `Bearer ${localStorage.getItem("token")}`
-            },
-            body: JSON.stringify(fund)
-        });
-        return response.ok ? await response.json() : null;
-    } catch (error) {
-        return null;
-    }
+    return await safeFetch(`${BACKEND_URL}/emergency-fund`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${localStorage.getItem("token")}`
+        },
+        body: JSON.stringify(fund)
+    });
 }
 
 export async function fetchMutualFundList(category?: string, risk?: string) {
