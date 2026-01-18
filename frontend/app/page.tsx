@@ -8,22 +8,18 @@ import { Hero } from "@/components/landing/Hero"
 const ValueProposition = dynamic(() => import("@/components/landing/ValueProposition").then(m => m.ValueProposition))
 const StatsCounter = dynamic(() => import("@/components/landing/StatsCounter").then(m => m.StatsCounter))
 const ProblemSolution = dynamic(() => import("@/components/landing/ProblemSolution").then(m => m.ProblemSolution))
-const Features = dynamic(() => import("@/components/landing/Features").then(m => m.Features))
 const AppPreview = dynamic(() => import("@/components/landing/AppPreview").then(m => m.AppPreview))
 const SocialProof = dynamic(() => import("@/components/landing/SocialProof").then(m => m.SocialProof))
 const HowItWorks = dynamic(() => import("@/components/landing/HowItWorks").then(m => m.HowItWorks))
-const Pricing = dynamic(() => import("@/components/landing/Pricing").then(m => m.Pricing))
 const ScientificInvesting = dynamic(() => import("@/components/landing/ScientificInvesting").then(m => m.ScientificInvesting))
 const FAQ = dynamic(() => import("@/components/landing/FAQ").then(m => m.FAQ))
 const BlogPreview = dynamic(() => import("@/components/landing/BlogPreview").then(m => m.BlogPreview))
 const SecurityTrust = dynamic(() => import("@/components/landing/SecurityTrust").then(m => m.SecurityTrust))
-const FinalCTA = dynamic(() => import("@/components/landing/FinalCTA").then(m => m.FinalCTA))
 const Footer = dynamic(() => import("@/components/landing/Footer").then(m => m.Footer))
 const Chatbot = dynamic(() => import("@/components/landing/Chatbot").then(m => m.Chatbot))
 const BackToTop = dynamic(() => import("@/components/landing/BackToTop").then(m => m.BackToTop))
 const TrustedBy = dynamic(() => import("@/components/landing/TrustedBy").then(m => m.TrustedBy))
 const TestimonialsMarquee = dynamic(() => import("@/components/landing/TestimonialsMarquee").then(m => m.TestimonialsMarquee))
-const AICapabilities = dynamic(() => import("@/components/landing/AICapabilities").then(m => m.AICapabilities))
 const WhyChooseUs = dynamic(() => import("@/components/landing/WhyChooseUs").then(m => m.WhyChooseUs))
 const SuccessStories = dynamic(() => import("@/components/landing/SuccessStories").then(m => m.SuccessStories))
 const LiveMarketData = dynamic(() => import("@/components/landing/LiveMarketData").then(m => m.LiveMarketData))
@@ -53,13 +49,7 @@ export default function LandingPage() {
                 {/* 4️⃣ Problem → Solution Block */}
                 <ProblemSolution />
 
-                {/* 5️⃣ Features Showcase - 7 features with icons */}
-                <Features />
-
-                {/* 5.1️⃣ AI Capabilities - What AI can do */}
-                <AICapabilities />
-
-                {/* 5.2️⃣ Why Choose Us - Key differentiators */}
+                {/* 5️⃣ Why Choose Us - Key differentiators */}
                 <WhyChooseUs />
 
                 {/* 6️⃣ App Preview - Device mockups */}
@@ -77,10 +67,7 @@ export default function LandingPage() {
                 {/* 8️⃣ How It Works - 3 steps */}
                 <HowItWorks />
 
-                {/* 9️⃣ Pricing - 3 tiers */}
-                <Pricing />
-
-                {/* 🔟 Scientific Investing - The science of wealth */}
+                {/* 9️⃣ Scientific Investing - The science of wealth */}
                 <ScientificInvesting />
 
                 {/* 1️⃣1️⃣ FAQ - Common questions */}
@@ -92,10 +79,7 @@ export default function LandingPage() {
                 {/* 1️⃣3️⃣ Security & Trust */}
                 <SecurityTrust />
 
-                {/* 1️⃣4️⃣ Call to Action - Lead form */}
-                <FinalCTA />
-
-                {/* 1️⃣5️⃣ Footer */}
+                {/* 1️⃣4️⃣ Footer */}
                 <Footer />
             </div>
 

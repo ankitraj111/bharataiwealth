@@ -1,7 +1,8 @@
 "use client"
 
 import { motion } from "framer-motion"
-import { Smartphone, Monitor, TrendingUp, PieChart, Bell, BarChart3 } from "lucide-react"
+import { Smartphone, Monitor, TrendingUp, PieChart, Bell, BarChart3, Sparkles } from "lucide-react"
+import Image from "next/image"
 
 export function AppPreview() {
     const features = [
@@ -12,27 +13,40 @@ export function AppPreview() {
     ]
 
     return (
-        <section className="py-24 relative overflow-hidden bg-white dark:bg-slate-900">
-            {/* Background */}
-            <div className="absolute inset-0 bg-gradient-to-b from-white dark:from-slate-900 via-slate-50 dark:via-slate-800 to-white dark:to-slate-900" />
-
-            {/* Subtle Grid Pattern */}
-            <div className="absolute inset-0 opacity-[0.03] dark:opacity-[0.02]" style={{
-                backgroundImage: 'linear-gradient(rgba(0,0,0,1) 1px, transparent 1px), linear-gradient(90deg, rgba(0,0,0,1) 1px, transparent 1px)',
-                backgroundSize: '60px 60px'
-            }} />
-
-            {/* Floating Orbs */}
-            <motion.div
-                className="absolute top-20 left-20 w-72 h-72 bg-blue-500/5 rounded-full blur-3xl"
-                animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.5, 0.3] }}
-                transition={{ duration: 6, repeat: Infinity }}
+        <section className="py-32 relative overflow-hidden bg-gradient-to-b from-white via-slate-50 to-white dark:from-slate-900 dark:via-slate-800 dark:to-slate-900">
+            {/* Animated Background Gradient */}
+            <motion.div 
+                className="absolute inset-0 opacity-30"
+                animate={{ 
+                    background: [
+                        'radial-gradient(circle at 20% 50%, rgba(59, 130, 246, 0.1) 0%, transparent 50%)',
+                        'radial-gradient(circle at 80% 50%, rgba(168, 85, 247, 0.1) 0%, transparent 50%)',
+                        'radial-gradient(circle at 20% 50%, rgba(59, 130, 246, 0.1) 0%, transparent 50%)'
+                    ]
+                }}
+                transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
             />
-            <motion.div
-                className="absolute bottom-20 right-20 w-80 h-80 bg-purple-500/5 rounded-full blur-3xl"
-                animate={{ scale: [1, 1.3, 1], opacity: [0.2, 0.4, 0.2] }}
-                transition={{ duration: 8, repeat: Infinity, delay: 1 }}
-            />
+
+            {/* Floating Particles */}
+            {[...Array(6)].map((_, i) => (
+                <motion.div
+                    key={i}
+                    className="absolute w-2 h-2 bg-blue-400/20 rounded-full"
+                    style={{
+                        left: `${20 + i * 15}%`,
+                        top: `${30 + (i % 3) * 20}%`
+                    }}
+                    animate={{
+                        y: [0, -30, 0],
+                        opacity: [0.2, 0.5, 0.2]
+                    }}
+                    transition={{
+                        duration: 3 + i,
+                        repeat: Infinity,
+                        delay: i * 0.5
+                    }}
+                />
+            ))}
 
             <div className="w-full px-6 md:px-12 lg:px-20 xl:px-32 relative z-10">
                 <div className="grid lg:grid-cols-2 gap-16 items-center">
@@ -44,53 +58,69 @@ export function AppPreview() {
                         className="text-center lg:text-left"
                     >
                         <motion.div
-                            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 mb-6"
+                            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-gradient-to-r from-blue-50 to-purple-50 dark:from-blue-950/30 dark:to-purple-950/30 border border-blue-200 dark:border-blue-800 mb-8 shadow-sm"
                             initial={{ opacity: 0, y: 20 }}
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
                         >
-                            <Smartphone className="w-4 h-4 text-blue-600 dark:text-blue-400" />
-                            <span className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest">Available on All Devices</span>
+                            <Sparkles className="w-4 h-4 text-blue-600 dark:text-blue-400" />
+                            <span className="text-xs font-bold text-blue-700 dark:text-blue-300 uppercase tracking-widest">Available on All Devices</span>
                         </motion.div>
 
-                        <h2 className="text-4xl md:text-5xl font-black text-slate-900 dark:text-white mb-6 leading-tight tracking-tight">
+                        <h2 className="text-5xl md:text-6xl lg:text-7xl font-black text-slate-900 dark:text-white mb-8 leading-[1.1] tracking-tight">
                             Beautiful on{" "}
-                            <span className="bg-gradient-to-r from-blue-600 via-purple-600 to-orange-500 dark:from-blue-400 dark:via-purple-400 dark:to-orange-400 bg-clip-text text-transparent">
-                                Every Screen
+                            <span className="relative inline-block">
+                                <span className="bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 dark:from-blue-400 dark:via-purple-400 dark:to-pink-400 bg-clip-text text-transparent">
+                                    Every Screen
+                                </span>
+                                <motion.div
+                                    className="absolute -bottom-2 left-0 right-0 h-3 bg-gradient-to-r from-blue-400/30 via-purple-400/30 to-pink-400/30 blur-sm"
+                                    animate={{ scaleX: [0.8, 1, 0.8] }}
+                                    transition={{ duration: 3, repeat: Infinity }}
+                                />
                             </span>
                         </h2>
 
-                        <p className="text-lg text-slate-600 dark:text-slate-300 mb-10 max-w-lg mx-auto lg:mx-0 font-medium leading-relaxed">
-                            Access your AI-powered insights anywhere. Our responsive design ensures a seamless experience on desktop, tablet, and mobile.
+                        <p className="text-xl text-slate-600 dark:text-slate-300 mb-12 max-w-xl mx-auto lg:mx-0 leading-relaxed">
+                            Access your AI-powered insights anywhere. Our responsive design ensures a <span className="font-semibold text-slate-900 dark:text-white">seamless experience</span> on desktop, tablet, and mobile.
                         </p>
 
                         {/* Feature Pills */}
-                        <div className="flex flex-wrap gap-4 justify-center lg:justify-start">
+                        <div className="flex flex-wrap gap-3 justify-center lg:justify-start mb-12">
                             {features.map((feature, i) => (
                                 <motion.div
                                     key={i}
-                                    initial={{ opacity: 0, y: 20 }}
-                                    whileInView={{ opacity: 1, y: 0 }}
+                                    initial={{ opacity: 0, scale: 0.8 }}
+                                    whileInView={{ opacity: 1, scale: 1 }}
                                     viewport={{ once: true }}
-                                    transition={{ delay: i * 0.1 }}
-                                    className="flex items-center gap-2 px-4 py-2 rounded-full bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700 shadow-sm"
+                                    transition={{ delay: i * 0.1, type: "spring" }}
+                                    whileHover={{ scale: 1.05, y: -2 }}
+                                    className="flex items-center gap-2.5 px-5 py-3 rounded-2xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-lg hover:shadow-xl transition-shadow"
                                 >
-                                    <feature.icon className={`w-4 h-4 ${feature.color}`} />
-                                    <span className="text-sm font-bold text-slate-700 dark:text-slate-300">{feature.label}</span>
+                                    <div className={`p-1.5 rounded-lg bg-gradient-to-br ${feature.color === 'text-blue-500' ? 'from-blue-100 to-blue-200 dark:from-blue-900/30 dark:to-blue-800/30' : feature.color === 'text-purple-500' ? 'from-purple-100 to-purple-200 dark:from-purple-900/30 dark:to-purple-800/30' : feature.color === 'text-orange-500' ? 'from-orange-100 to-orange-200 dark:from-orange-900/30 dark:to-orange-800/30' : 'from-emerald-100 to-emerald-200 dark:from-emerald-900/30 dark:to-emerald-800/30'}`}>
+                                        <feature.icon className={`w-4 h-4 ${feature.color}`} />
+                                    </div>
+                                    <span className="text-sm font-bold text-slate-700 dark:text-slate-200">{feature.label}</span>
                                 </motion.div>
                             ))}
                         </div>
 
                         {/* Device Icons */}
-                        <div className="flex items-center gap-6 mt-10 justify-center lg:justify-start">
-                            <div className="flex items-center gap-2 text-slate-400 dark:text-slate-500">
-                                <Monitor className="w-6 h-6" />
-                                <span className="text-sm font-bold uppercase tracking-wider">Desktop</span>
-                            </div>
-                            <div className="flex items-center gap-2 text-slate-400 dark:text-slate-500">
-                                <Smartphone className="w-5 h-5" />
-                                <span className="text-sm font-bold uppercase tracking-wider">Mobile</span>
-                            </div>
+                        <div className="flex items-center gap-8 justify-center lg:justify-start">
+                            <motion.div 
+                                className="flex items-center gap-3 px-4 py-2 rounded-xl bg-slate-100 dark:bg-slate-800"
+                                whileHover={{ scale: 1.05 }}
+                            >
+                                <Monitor className="w-5 h-5 text-blue-600 dark:text-blue-400" />
+                                <span className="text-sm font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider">Desktop</span>
+                            </motion.div>
+                            <motion.div 
+                                className="flex items-center gap-3 px-4 py-2 rounded-xl bg-slate-100 dark:bg-slate-800"
+                                whileHover={{ scale: 1.05 }}
+                            >
+                                <Smartphone className="w-5 h-5 text-purple-600 dark:text-purple-400" />
+                                <span className="text-sm font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider">Mobile</span>
+                            </motion.div>
                         </div>
                     </motion.div>
 
@@ -103,70 +133,49 @@ export function AppPreview() {
                     >
                         {/* Desktop Mockup */}
                         <motion.div
-                            className="relative z-10 bg-slate-100 rounded-[2rem] p-4 shadow-2xl border border-white"
-                            whileHover={{ y: -5 }}
+                            className="relative z-10 bg-gradient-to-br from-slate-200 to-slate-300 dark:from-slate-700 dark:to-slate-800 rounded-[2.5rem] p-5 shadow-2xl border-2 border-white/50 dark:border-slate-600"
+                            whileHover={{ y: -8, rotateY: 2 }}
+                            transition={{ type: "spring", stiffness: 300 }}
                         >
-                            <div className="bg-white rounded-[1.5rem] p-4 shadow-inner border border-slate-100">
+                            <div className="bg-white dark:bg-slate-900 rounded-[2rem] p-5 shadow-2xl border border-slate-200 dark:border-slate-700">
                                 {/* Browser Bar */}
-                                <div className="flex items-center gap-2 mb-4 border-b border-slate-50 pb-4">
-                                    <div className="flex gap-1.5">
-                                        <div className="w-3 h-3 rounded-full bg-slate-200" />
-                                        <div className="w-3 h-3 rounded-full bg-slate-200" />
-                                        <div className="w-3 h-3 rounded-full bg-slate-200" />
+                                <div className="flex items-center gap-3 mb-5 border-b border-slate-100 dark:border-slate-800 pb-4">
+                                    <div className="flex gap-2">
+                                        <motion.div 
+                                            className="w-3 h-3 rounded-full bg-red-500"
+                                            whileHover={{ scale: 1.2 }}
+                                        />
+                                        <motion.div 
+                                            className="w-3 h-3 rounded-full bg-yellow-500"
+                                            whileHover={{ scale: 1.2 }}
+                                        />
+                                        <motion.div 
+                                            className="w-3 h-3 rounded-full bg-green-500"
+                                            whileHover={{ scale: 1.2 }}
+                                        />
                                     </div>
-                                    <div className="flex-1 h-6 bg-slate-50 rounded-lg mx-2" />
+                                    <div className="flex-1 h-7 bg-slate-100 dark:bg-slate-800 rounded-lg mx-3 flex items-center px-3">
+                                        <div className="w-3 h-3 rounded-full bg-slate-300 dark:bg-slate-600 mr-2" />
+                                        <div className="h-2 flex-1 bg-slate-200 dark:bg-slate-700 rounded" />
+                                    </div>
                                 </div>
 
-                                {/* App Content Preview */}
-                                <div className="bg-slate-50/50 rounded-xl p-6 space-y-4">
-                                    {/* Header */}
-                                    <div className="flex items-center justify-between">
-                                        <div className="flex items-center gap-3">
-                                            <div className="w-10 h-10 rounded-xl bg-gradient-to-r from-blue-500 to-purple-500 shadow-md" />
-                                            <div>
-                                                <div className="h-4 w-24 bg-slate-200 rounded mb-1" />
-                                                <div className="h-3 w-16 bg-slate-100 rounded" />
-                                            </div>
-                                        </div>
-                                        <div className="flex gap-2">
-                                            <div className="w-8 h-8 rounded-lg bg-white border border-slate-100 shadow-sm" />
-                                            <div className="w-8 h-8 rounded-lg bg-white border border-slate-100 shadow-sm" />
-                                        </div>
-                                    </div>
-
-                                    {/* Portfolio Card */}
-                                    <div className="bg-white rounded-[1.5rem] p-5 border border-slate-100 shadow-sm">
-                                        <div className="flex items-center justify-between mb-3">
-                                            <div className="h-4 w-20 bg-slate-100 rounded" />
-                                            <div className="h-5 w-16 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center text-[10px] font-bold">● Live</div>
-                                        </div>
-                                        <div className="h-8 w-32 bg-slate-100 rounded mb-4" />
-                                        <div className="flex gap-1.5 h-24 items-end">
-                                            {[40, 55, 45, 60, 50, 70, 65].map((h, i) => (
-                                                <motion.div
-                                                    key={i}
-                                                    className="flex-1 rounded-t-sm bg-gradient-to-t from-blue-500 to-blue-400"
-                                                    initial={{ height: 0 }}
-                                                    whileInView={{ height: `${h}%` }}
-                                                    viewport={{ once: true }}
-                                                    transition={{ delay: 0.5 + i * 0.1 }}
-                                                />
-                                            ))}
-                                        </div>
-                                    </div>
-
-                                    {/* Stats Row */}
-                                    <div className="grid grid-cols-3 gap-3">
-                                        {[
-                                            { color: 'from-blue-500 to-blue-600' },
-                                            { color: 'from-purple-500 to-purple-600' },
-                                            { color: 'from-orange-500 to-orange-600' }
-                                        ].map((stat, i) => (
-                                            <div key={i} className="bg-white rounded-xl p-3 border border-slate-100 shadow-sm">
-                                                <div className={`h-1 w-6 rounded-full bg-gradient-to-r ${stat.color} mb-2`} />
-                                                <div className="h-3 w-10 bg-slate-100 rounded" />
-                                            </div>
-                                        ))}
+                                {/* App Content Preview - Real Dashboard Iframe */}
+                                <div className="bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-800 dark:to-slate-900 rounded-2xl overflow-hidden">
+                                    <div className="relative w-full h-[350px]">
+                                        <iframe 
+                                            src="/dashboard" 
+                                            className="absolute inset-0 w-full h-full border-0 pointer-events-none scale-75 origin-top-left"
+                                            style={{ 
+                                                width: '133.33%', 
+                                                height: '133.33%',
+                                                transform: 'scale(0.75)',
+                                                transformOrigin: 'top left'
+                                            }}
+                                            title="Dashboard Preview"
+                                        />
+                                        {/* Overlay to prevent interaction */}
+                                        <div className="absolute inset-0 bg-transparent pointer-events-auto" />
                                     </div>
                                 </div>
                             </div>
@@ -174,29 +183,29 @@ export function AppPreview() {
 
                         {/* Mobile Mockup (Floating) */}
                         <motion.div
-                            className="absolute -bottom-10 -right-6 w-32 md:w-44 bg-slate-100 rounded-[2.5rem] p-3 shadow-2xl z-20 border border-white"
+                            className="absolute -bottom-10 -right-6 w-32 md:w-44 bg-gradient-to-br from-slate-200 to-slate-300 dark:from-slate-700 dark:to-slate-800 rounded-[2.5rem] p-3 shadow-2xl z-20 border-2 border-white/50 dark:border-slate-600"
                             animate={{ y: [0, -10, 0] }}
                             transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
                         >
-                            <div className="bg-white rounded-[2rem] p-2 shadow-inner border border-slate-100">
+                            <div className="bg-white dark:bg-slate-900 rounded-[2rem] p-2 shadow-inner border border-slate-100 dark:border-slate-800">
                                 {/* Phone Notch */}
-                                <div className="w-10 h-1.5 bg-slate-100 rounded-full mx-auto mb-3" />
+                                <div className="w-10 h-1.5 bg-slate-200 dark:bg-slate-700 rounded-full mx-auto mb-3" />
 
-                                {/* App Content */}
-                                <div className="bg-slate-50/50 rounded-[1.5rem] p-3 space-y-3">
-                                    <div className="h-3 w-12 bg-slate-200 rounded" />
-                                    <div className="h-6 w-20 bg-slate-100 rounded" />
-                                    <div className="flex gap-1 h-16 items-end">
-                                        {[35, 50, 40, 55, 45].map((h, i) => (
-                                            <motion.div
-                                                key={i}
-                                                className="flex-1 rounded-t-sm bg-gradient-to-t from-purple-500 to-purple-400"
-                                                initial={{ height: 0 }}
-                                                whileInView={{ height: `${h}%` }}
-                                                viewport={{ once: true }}
-                                                transition={{ delay: 0.8 + i * 0.1 }}
-                                            />
-                                        ))}
+                                {/* App Content - Dashboard Preview */}
+                                <div className="bg-slate-50/50 dark:bg-slate-800/50 rounded-[1.5rem] overflow-hidden">
+                                    <div className="relative w-full h-24">
+                                        <iframe 
+                                            src="/dashboard" 
+                                            className="absolute inset-0 w-full h-full border-0 pointer-events-none"
+                                            style={{ 
+                                                width: '400%', 
+                                                height: '400%',
+                                                transform: 'scale(0.25)',
+                                                transformOrigin: 'top left'
+                                            }}
+                                            title="Mobile Dashboard Preview"
+                                        />
+                                        <div className="absolute inset-0 bg-transparent pointer-events-auto" />
                                     </div>
                                 </div>
                             </div>

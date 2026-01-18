@@ -206,12 +206,12 @@ export default function DashboardPage() {
                   <AreaChart data={spendingData}>
                     <defs>
                       <linearGradient id="incomeGradient" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="0%" stopColor="var(--primary)" stopOpacity={0.25} />
-                        <stop offset="100%" stopColor="var(--primary)" stopOpacity={0} />
+                        <stop offset="0%" stopColor="#3b82f6" stopOpacity={0.3} />
+                        <stop offset="100%" stopColor="#3b82f6" stopOpacity={0.05} />
                       </linearGradient>
                       <linearGradient id="spendingGradient" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="0%" stopColor="var(--accent)" stopOpacity={0.25} />
-                        <stop offset="100%" stopColor="var(--accent)" stopOpacity={0} />
+                        <stop offset="0%" stopColor="#f97316" stopOpacity={0.3} />
+                        <stop offset="100%" stopColor="#f97316" stopOpacity={0.05} />
                       </linearGradient>
                     </defs>
                     <XAxis
@@ -243,7 +243,7 @@ export default function DashboardPage() {
                     <Area
                       type="monotone"
                       dataKey="income"
-                      stroke="var(--primary)"
+                      stroke="#3b82f6"
                       strokeWidth={3}
                       fill="url(#incomeGradient)"
                       name="Income"
@@ -251,7 +251,7 @@ export default function DashboardPage() {
                     <Area
                       type="monotone"
                       dataKey="spending"
-                      stroke="var(--accent)"
+                      stroke="#f97316"
                       strokeWidth={3}
                       fill="url(#spendingGradient)"
                       name="Spending"

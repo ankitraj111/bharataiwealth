@@ -4,7 +4,6 @@ import { motion } from "framer-motion"
 
 // Trusted by logos - Major Indian companies and institutions
 const trustedLogos = [
-    { name: "IIT", subtitle: "Alumni" },
     { name: "SEBI", subtitle: "Registered" },
     { name: "RBI", subtitle: "Compliant" },
     { name: "AWS", subtitle: "Secured" },
@@ -16,17 +15,6 @@ export function TrustedBy() {
     return (
         <section className="py-12 bg-white dark:bg-slate-800 border-y border-slate-100 dark:border-slate-700 relative overflow-hidden">
             <div className="w-full px-6 md:px-12 lg:px-20 xl:px-32 relative z-10">
-                <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    className="text-center mb-10"
-                >
-                    <p className="text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-[0.2em]">
-                        Trusted by 50,000+ Indian Investors
-                    </p>
-                </motion.div>
-
                 <div className="flex flex-wrap justify-center items-center gap-8 md:gap-12">
                     {trustedLogos.map((logo, index) => (
                         <motion.div

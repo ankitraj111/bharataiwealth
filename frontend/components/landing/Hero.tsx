@@ -36,26 +36,6 @@ export function Hero() {
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.8 }}
                     >
-                        {/* Trust Badge */}
-                        <motion.div
-                            initial={{ opacity: 0, scale: 0.9 }}
-                            animate={{ opacity: 1, scale: 1 }}
-                            transition={{ delay: 0.2 }}
-                            className="inline-flex items-center gap-2 sm:gap-3 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-sm"
-                        >
-                            <div className="flex -space-x-2">
-                                {['bg-blue-500', 'bg-purple-500', 'bg-orange-500'].map((color, i) => (
-                                    <div key={i} className={`w-5 h-5 sm:w-6 sm:h-6 rounded-full ${color} border-2 border-white dark:border-slate-900 flex items-center justify-center text-[7px] sm:text-[8px] font-semibold text-white`}>
-                                        {['R', 'A', 'K'][i]}
-                                    </div>
-                                ))}
-                            </div>
-                            <span className="text-xs sm:text-sm text-slate-600 dark:text-slate-300">
-                                <span className="font-semibold text-slate-900 dark:text-white">10,000+</span> Indians trust us
-                            </span>
-                            <Sparkles className="w-3 h-3 sm:w-4 sm:h-4 text-amber-400" />
-                        </motion.div>
-
                         {/* Main Headline */}
                         <motion.div
                             initial={{ opacity: 0, y: 20 }}
@@ -64,11 +44,11 @@ export function Hero() {
                         >
                             <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-5xl xl:text-6xl font-semibold tracking-tight leading-[1.15]">
                                 <span className="text-slate-900 dark:text-white">
-                                    Smart Wealth Management{' '}
+                                    Aage badho Bharat,
                                 </span>
                                 <br />
                                 <span className="text-blue-600 dark:text-blue-400">
-                                    for India
+                                    AI Wealth ke saath
                                 </span>
                             </h1>
                         </motion.div>
@@ -150,7 +130,7 @@ export function Hero() {
                             animate={{ y: [0, -8, 0] }}
                             transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
                         >
-                            {/* Header Row */}
+                            {/* Header Row - AI Portfolio with NIFTY 50 Badge */}
                             <div className="flex items-center justify-between mb-6 sm:mb-8">
                                 <div className="flex items-center gap-2 sm:gap-3">
                                     <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center shadow-lg shadow-blue-500/30">
@@ -162,11 +142,17 @@ export function Hero() {
                                     </div>
                                 </div>
                                 <motion.div
-                                    className="px-3 sm:px-4 py-1.5 sm:py-2 rounded-full bg-emerald-100 dark:bg-emerald-900/30 border border-emerald-200 dark:border-emerald-800"
-                                    animate={{ scale: [1, 1.05, 1] }}
+                                    className="flex items-center gap-2 px-3 py-2 rounded-xl bg-emerald-500/10 dark:bg-emerald-900/30 border border-emerald-500/20 dark:border-emerald-800"
+                                    animate={{ scale: [1, 1.02, 1] }}
                                     transition={{ duration: 2, repeat: Infinity }}
                                 >
-                                    <span className="text-emerald-600 dark:text-emerald-400 text-xs sm:text-sm font-semibold">● Live</span>
+                                    <div className="w-8 h-8 rounded-full bg-emerald-500 flex items-center justify-center">
+                                        <TrendingUp className="w-4 h-4 text-white" />
+                                    </div>
+                                    <div>
+                                        <p className="text-slate-900 dark:text-white text-xs font-bold">NIFTY 50</p>
+                                        <p className="text-emerald-600 dark:text-emerald-400 text-xs font-semibold">+1.24%</p>
+                                    </div>
                                 </motion.div>
                             </div>
 
@@ -241,23 +227,7 @@ export function Hero() {
 
                         {/* Floating Mini Cards - Hidden on mobile */}
                         <motion.div
-                            className="absolute -left-4 top-1/4 p-3 sm:p-4 rounded-xl sm:rounded-2xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-xl z-20 hidden lg:block"
-                            animate={{ y: [0, -10, 0] }}
-                            transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-                        >
-                            <div className="flex items-center gap-2">
-                                <div className="w-8 h-8 rounded-full bg-emerald-500 flex items-center justify-center">
-                                    <TrendingUp className="w-4 h-4 text-white" />
-                                </div>
-                                <div>
-                                    <p className="text-slate-900 dark:text-white text-xs font-semibold">NIFTY 50</p>
-                                    <p className="text-emerald-600 dark:text-emerald-400 text-[10px] font-semibold">+1.24%</p>
-                                </div>
-                            </div>
-                        </motion.div>
-
-                        <motion.div
-                            className="absolute -right-4 bottom-1/4 p-3 rounded-xl bg-gradient-to-r from-orange-500 to-amber-500 shadow-xl shadow-orange-500/30 z-20 hidden lg:block"
+                            className="absolute -right-4 bottom-2 p-3 rounded-xl bg-gradient-to-r from-orange-500 to-amber-500 shadow-xl shadow-orange-500/30 z-20 hidden lg:block"
                             animate={{ y: [0, 8, 0] }}
                             transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: 1 }}
                         >

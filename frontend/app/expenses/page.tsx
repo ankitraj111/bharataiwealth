@@ -88,17 +88,31 @@ export default function ExpensesPage() {
   const fetchExpenses = useCallback(async () => {
     setIsLoading(true)
     try {
+      const token = authService.getToken()
+      if (!token) {
+        console.log("No auth token found")
+        setIsLoading(false)
+        return
+      }
+
       const response = await fetch(`${BACKEND_URL}/expenses`, {
         headers: {
-          "Authorization": `Bearer ${authService.getToken()}`
+          "Authorization": `Bearer ${token}`,
+          "Content-Type": "application/json"
         }
       })
+      
       if (response.ok) {
-        setExpenses(await response.json())
+        const data = await response.json()
+        setExpenses(data)
+      } else {
+        console.error("Failed to fetch expenses:", response.status)
+        // Don't show error toast on initial load, just log it
       }
     } catch (error) {
       console.error("Failed to fetch expenses:", error)
-      toast.error("Failed to load expenses")
+      // Set empty array instead of showing error
+      setExpenses([])
     } finally {
       setIsLoading(false)
     }

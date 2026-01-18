@@ -4,52 +4,163 @@ export const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL ||
         ? "https://bharataiwealth-backend.onrender.com/api"
         : "http://localhost:8080/api");
 
-export const fetcher = async (url: string) => {
-    const token = typeof window !== 'undefined' ? localStorage.getItem("token") : null;
-    const headers: any = {};
-    if (token) {
-        headers["Authorization"] = `Bearer ${token}`;
-    }
-    const response = await fetch(url, { headers });
-    if (!response.ok) throw new Error("Failed to fetch data");
-    return response.json();
-};
+// Enhanced fetcher with retry logic and better error handling
+export const fetcher = async (url: string, retries = 2): Promise<any> => {
+    for (let attempt = 0; attempt <= retries; attempt++) {
+        try {
+            const token = typeof window !== 'undefined' ? localStorage.getItem("token") : null;
+            const headers: any = {
+                'Content-Type': 'application/json',
+            };
+            
+            if (token) {
+                headers["Authorization"] = `Bearer ${token}`;
+            }
 
-// Safe fetch wrapper that handles errors gracefully
-export async function safeFetch(url: string, options?: RequestInit): Promise<any> {
-    try {
-        const controller = new AbortController();
-        const timeoutId = setTimeout(() => controller.abort(), 10000); // 10s timeout
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), 15000); // 15s timeout
 
-        const response = await fetch(url, {
-            ...options,
-            signal: controller.signal,
-        });
+            const response = await fetch(url, { 
+                headers,
+                signal: controller.signal,
+                cache: 'no-store'
+            });
 
-        clearTimeout(timeoutId);
+            clearTimeout(timeoutId);
 
-        if (!response.ok) {
-            // Silently return null for non-critical errors
-            if (response.status === 404 || response.status === 401) {
+            if (!response.ok) {
+                // Handle specific HTTP errors
+                if (response.status === 401) {
+                    // Unauthorized - clear token and redirect to login
+                    if (typeof window !== 'undefined') {
+                        localStorage.removeItem('token');
+                        window.location.href = '/auth/login';
+                    }
+                    return null;
+                }
+                
+                if (response.status === 404) {
+                    console.warn(`Resource not found: ${url}`);
+                    return null;
+                }
+
+                if (response.status >= 500 && attempt < retries) {
+                    // Server error - retry
+                    console.warn(`Server error (${response.status}), retrying... (${attempt + 1}/${retries})`);
+                    await new Promise(resolve => setTimeout(resolve, 1000 * (attempt + 1))); // Exponential backoff
+                    continue;
+                }
+
+                console.error(`API Error [${response.status}]: ${url}`);
                 return null;
             }
-            console.warn(`API Error [${response.status}]: ${url}`);
-            return null;
-        }
 
-        return await response.json();
-    } catch (error: any) {
-        // Silently handle network errors - backend might be unavailable
-        if (error.name === 'AbortError' || 
-            error.message?.includes('fetch') || 
-            error.message?.includes('Failed to fetch') ||
-            error.message?.includes('NetworkError')) {
-            console.warn(`Backend unavailable: ${url}`);
+            const data = await response.json();
+            return data;
+
+        } catch (error: any) {
+            // Handle network errors
+            if (error.name === 'AbortError') {
+                console.warn(`Request timeout: ${url}`);
+                if (attempt < retries) {
+                    await new Promise(resolve => setTimeout(resolve, 1000 * (attempt + 1)));
+                    continue;
+                }
+                return null;
+            }
+
+            if (error.message?.includes('fetch') || 
+                error.message?.includes('Failed to fetch') ||
+                error.message?.includes('NetworkError')) {
+                console.warn(`Network error: ${url} (attempt ${attempt + 1}/${retries + 1})`);
+                if (attempt < retries) {
+                    await new Promise(resolve => setTimeout(resolve, 1000 * (attempt + 1)));
+                    continue;
+                }
+                return null;
+            }
+
+            console.error(`Unexpected error: ${url}`, error);
             return null;
         }
-        console.error(`Fetch error: ${url}`, error);
-        return null;
     }
+    
+    return null;
+};
+
+// Safe fetch wrapper that handles errors gracefully with retry logic
+export async function safeFetch(url: string, options?: RequestInit, retries = 2): Promise<any> {
+    for (let attempt = 0; attempt <= retries; attempt++) {
+        try {
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), 15000); // 15s timeout
+
+            const response = await fetch(url, {
+                ...options,
+                signal: controller.signal,
+                headers: {
+                    'Content-Type': 'application/json',
+                    ...options?.headers,
+                }
+            });
+
+            clearTimeout(timeoutId);
+
+            if (!response.ok) {
+                // Handle specific status codes
+                if (response.status === 401) {
+                    // Unauthorized
+                    if (typeof window !== 'undefined') {
+                        localStorage.removeItem('token');
+                        window.location.href = '/auth/login';
+                    }
+                    return null;
+                }
+
+                if (response.status === 404) {
+                    console.warn(`Resource not found: ${url}`);
+                    return null;
+                }
+
+                if (response.status >= 500 && attempt < retries) {
+                    console.warn(`Server error, retrying... (${attempt + 1}/${retries})`);
+                    await new Promise(resolve => setTimeout(resolve, 1000 * (attempt + 1)));
+                    continue;
+                }
+
+                console.warn(`API Error [${response.status}]: ${url}`);
+                return null;
+            }
+
+            return await response.json();
+
+        } catch (error: any) {
+            if (error.name === 'AbortError') {
+                console.warn(`Request timeout: ${url}`);
+                if (attempt < retries) {
+                    await new Promise(resolve => setTimeout(resolve, 1000 * (attempt + 1)));
+                    continue;
+                }
+                return null;
+            }
+
+            if (error.message?.includes('fetch') || 
+                error.message?.includes('Failed to fetch') ||
+                error.message?.includes('NetworkError')) {
+                console.warn(`Network error: ${url} (attempt ${attempt + 1}/${retries + 1})`);
+                if (attempt < retries) {
+                    await new Promise(resolve => setTimeout(resolve, 1000 * (attempt + 1)));
+                    continue;
+                }
+                return null;
+            }
+
+            console.error(`Fetch error: ${url}`, error);
+            return null;
+        }
+    }
+    
+    return null;
 }
 
 // Simple in-memory cache

@@ -102,17 +102,17 @@ const featureGroups = [
 
 export default function FeaturesPage() {
     return (
-        <main className="min-h-screen bg-slate-950 selection:bg-primary selection:text-white">
+        <main className="min-h-screen bg-white dark:bg-slate-950 selection:bg-primary selection:text-white">
             <Navbar />
 
-            <div className="pt-32 pb-24">
+            <div className="pt-32 pb-24 bg-gradient-to-b from-slate-50 via-white to-slate-50 dark:from-slate-900 dark:via-slate-950 dark:to-slate-900">
                 <div className="container mx-auto px-6">
                     {/* Hero Section */}
                     <div className="text-center max-w-4xl mx-auto mb-20">
                         <motion.div
                             initial={{ opacity: 0, scale: 0.9 }}
                             animate={{ opacity: 1, scale: 1 }}
-                            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 text-white/70 text-sm font-medium mb-8"
+                            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 text-slate-600 dark:text-white/70 text-sm font-medium mb-8"
                         >
                             <Sparkles className="w-4 h-4 text-orange-500" />
                             <span>Explore Unlimited Possibilities</span>
@@ -122,10 +122,10 @@ export default function FeaturesPage() {
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.6 }}
-                            className="text-5xl md:text-7xl font-black text-white mb-8 tracking-tight"
+                            className="text-5xl md:text-7xl font-black text-slate-900 dark:text-white mb-8 tracking-tight"
                         >
                             Intelligent Features for the <br />
-                            <span className="bg-gradient-to-r from-orange-500 via-white to-green-500 bg-clip-text text-transparent">
+                            <span className="bg-gradient-to-r from-orange-500 via-purple-500 to-blue-500 bg-clip-text text-transparent">
                                 Modern Indian Investor
                             </span>
                         </motion.h1>
@@ -134,7 +134,7 @@ export default function FeaturesPage() {
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.6, delay: 0.1 }}
-                            className="text-xl text-slate-400 leading-relaxed"
+                            className="text-xl text-slate-600 dark:text-slate-400 leading-relaxed"
                         >
                             From AI-powered price forecasting to automated tax optimization, <br className="hidden md:block" />
                             Bharat AI Wealth provides the most advanced toolkit in Indian fintech.
@@ -147,11 +147,11 @@ export default function FeaturesPage() {
                             <div key={groupIndex} className="relative">
                                 {/* Group Header */}
                                 <div className="flex items-center gap-4 mb-12">
-                                    <div className={`p-3 rounded-2xl bg-white/5 border border-white/10 ${group.color}`}>
+                                    <div className={`p-3 rounded-2xl bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 ${group.color}`}>
                                         <group.icon className="w-6 h-6" />
                                     </div>
-                                    <h2 className="text-3xl font-bold text-white tracking-tight italic uppercase opacity-80">{group.category}</h2>
-                                    <div className="flex-1 h-px bg-gradient-to-r from-white/10 to-transparent" />
+                                    <h2 className="text-3xl font-bold text-slate-900 dark:text-white tracking-tight italic uppercase opacity-80">{group.category}</h2>
+                                    <div className="flex-1 h-px bg-gradient-to-r from-slate-300 dark:from-white/10 to-transparent" />
                                 </div>
 
                                 {/* Features Row */}
@@ -166,22 +166,22 @@ export default function FeaturesPage() {
                                             whileHover={{ y: -8 }}
                                             className="group relative h-full"
                                         >
-                                            <div className="h-full p-8 rounded-3xl bg-white/[0.03] border border-white/[0.08] backdrop-blur-md hover:bg-white/[0.06] transition-all duration-500">
+                                            <div className="h-full p-8 rounded-3xl bg-white dark:bg-white/[0.03] border border-slate-200 dark:border-white/[0.08] backdrop-blur-md hover:shadow-xl dark:hover:bg-white/[0.06] transition-all duration-500">
                                                 {/* Icon */}
-                                                <div className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${feature.gradient} flex items-center justify-center mb-6 shadow-xl shadow-black/40`}>
+                                                <div className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${feature.gradient} flex items-center justify-center mb-6 shadow-xl`}>
                                                     <feature.icon className="w-7 h-7 text-white" />
                                                 </div>
 
                                                 {/* Content */}
-                                                <h3 className="text-2xl font-bold text-white mb-4 group-hover:text-orange-400 transition-colors">
+                                                <h3 className="text-2xl font-bold text-slate-900 dark:text-white mb-4 group-hover:text-orange-500 dark:group-hover:text-orange-400 transition-colors">
                                                     {feature.title}
                                                 </h3>
-                                                <p className="text-slate-400 leading-relaxed text-lg">
+                                                <p className="text-slate-600 dark:text-slate-400 leading-relaxed text-lg">
                                                     {feature.description}
                                                 </p>
 
                                                 {/* Background Decoration */}
-                                                <div className="absolute -bottom-2 -right-2 w-24 h-24 bg-gradient-to-br from-white/10 to-transparent rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity" />
+                                                <div className="absolute -bottom-2 -right-2 w-24 h-24 bg-gradient-to-br from-orange-500/10 dark:from-white/10 to-transparent rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity" />
                                             </div>
                                         </motion.div>
                                     ))}
@@ -194,14 +194,14 @@ export default function FeaturesPage() {
                     <div className="mt-40 grid md:grid-cols-3 gap-8">
                         <motion.div
                             whileHover={{ scale: 1.02 }}
-                            className="md:col-span-2 p-10 rounded-[3rem] bg-gradient-to-br from-blue-600 to-indigo-900 border border-white/10 shadow-2xl relative overflow-hidden group"
+                            className="md:col-span-2 p-10 rounded-[3rem] bg-gradient-to-br from-blue-600 to-indigo-900 dark:from-blue-700 dark:to-indigo-950 border border-blue-400/20 shadow-2xl relative overflow-hidden group"
                         >
                             <div className="relative z-10">
                                 <h3 className="text-4xl font-black text-white mb-4">Sentiment Engine 2.0</h3>
-                                <p className="text-white/80 text-xl max-w-lg mb-8">
+                                <p className="text-white/90 text-xl max-w-lg mb-8">
                                     Our AI scans thousands of news sources and social media threads to give you a real-time "Confidence Score" for your favorite stocks.
                                 </p>
-                                <div className="flex gap-4">
+                                <div className="flex flex-wrap gap-4">
                                     <div className="px-5 py-3 rounded-full bg-white/20 backdrop-blur font-bold text-white">🔥 Bullish Sentiment</div>
                                     <div className="px-5 py-3 rounded-full bg-white/20 backdrop-blur font-bold text-white">92% Precision</div>
                                 </div>
@@ -211,19 +211,19 @@ export default function FeaturesPage() {
 
                         <motion.div
                             whileHover={{ scale: 1.02 }}
-                            className="p-10 rounded-[3rem] bg-gradient-to-br from-orange-500 to-red-700 border border-white/10 shadow-2xl flex flex-col justify-between"
+                            className="p-10 rounded-[3rem] bg-gradient-to-br from-orange-500 to-red-700 dark:from-orange-600 dark:to-red-800 border border-orange-400/20 shadow-2xl flex flex-col justify-between"
                         >
                             <div>
                                 <Zap className="w-12 h-12 text-white mb-6" />
                                 <h3 className="text-3xl font-bold text-white mb-4">Real-Time Sync</h3>
-                                <p className="text-white/80">Connect Zerodha & Groww to see all assets in one place with zero latency.</p>
+                                <p className="text-white/90">Connect Zerodha & Groww to see all assets in one place with zero latency.</p>
                             </div>
                             <div className="mt-8 pt-8 border-t border-white/20">
-                                <div className="text-sm font-medium text-white/60 mb-2 uppercase tracking-widest">Active Bridges</div>
+                                <div className="text-sm font-medium text-white/70 mb-2 uppercase tracking-widest">Active Bridges</div>
                                 <div className="flex gap-2">
-                                    <div className="w-8 h-8 rounded bg-white/10" />
-                                    <div className="w-8 h-8 rounded bg-white/10" />
-                                    <div className="w-8 h-8 rounded bg-white/10" />
+                                    <div className="w-8 h-8 rounded bg-white/20" />
+                                    <div className="w-8 h-8 rounded bg-white/20" />
+                                    <div className="w-8 h-8 rounded bg-white/20" />
                                 </div>
                             </div>
                         </motion.div>
@@ -233,7 +233,7 @@ export default function FeaturesPage() {
                     <motion.div
                         initial={{ opacity: 0, scale: 0.95 }}
                         whileInView={{ opacity: 1, scale: 1 }}
-                        className="mt-40 p-12 md:p-20 rounded-[4rem] bg-white text-slate-950 text-center relative overflow-hidden"
+                        className="mt-40 p-12 md:p-20 rounded-[4rem] bg-gradient-to-br from-orange-500 to-red-600 dark:from-slate-800 dark:to-slate-900 text-white text-center relative overflow-hidden shadow-2xl"
                     >
                         <h2 className="text-4xl md:text-6xl font-black mb-8 relative z-10">
                             Ready to supercharge <br /> your wealth?
@@ -241,11 +241,11 @@ export default function FeaturesPage() {
                         <motion.button
                             whileHover={{ scale: 1.05 }}
                             whileTap={{ scale: 0.95 }}
-                            className="bg-orange-600 text-white px-10 py-5 rounded-full text-xl font-bold shadow-2xl shadow-orange-500/40 relative z-10"
+                            className="bg-white dark:bg-orange-600 text-orange-600 dark:text-white px-10 py-5 rounded-full text-xl font-bold shadow-2xl relative z-10"
                         >
                             Explore Now
                         </motion.button>
-                        <Globe className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[150%] h-[150%] text-slate-100/50 -z-0 animate-spin-slow" />
+                        <Globe className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[150%] h-[150%] text-white/10 dark:text-white/5 -z-0" />
                     </motion.div>
                 </div>
             </div>
