@@ -39,6 +39,7 @@ export const viewport: Viewport = {
   initialScale: 1,
   maximumScale: 5,
   userScalable: true,
+  viewportFit: "cover", // For mobile notches
 }
 
 export default function RootLayout({
