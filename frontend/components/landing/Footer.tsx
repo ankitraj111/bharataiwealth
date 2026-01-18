@@ -41,9 +41,9 @@ export function Footer() {
     ]
 
     return (
-        <footer className="relative bg-white text-slate-900 overflow-hidden">
+        <footer className="relative bg-white dark:bg-slate-900 text-slate-900 dark:text-white overflow-hidden">
             {/* Gradient Top Border */}
-            <div className="h-px bg-slate-200" />
+            <div className="h-px bg-slate-200 dark:bg-slate-700" />
 
             {/* Main Footer */}
             <div className="w-full px-6 md:px-12 lg:px-20 xl:px-32 py-20 relative z-10">
@@ -55,28 +55,28 @@ export function Footer() {
                                 <div className="w-12 h-12 rounded-[1rem] bg-gradient-to-br from-blue-600 to-blue-800 flex items-center justify-center shadow-lg">
                                     <span className="text-white font-black text-xl">B</span>
                                 </div>
-                                <span className="text-2xl font-black text-slate-900 tracking-tight">
-                                    Bharat <span className="text-blue-600 italic">AI Wealth</span>
+                                <span className="text-2xl font-black text-slate-900 dark:text-white tracking-tight">
+                                    Bharat <span className="text-blue-600 dark:text-blue-400 italic">AI Wealth</span>
                                 </span>
                             </div>
                         </Link>
-                        <p className="text-slate-500 text-sm font-medium leading-relaxed mb-8 max-w-xs">
+                        <p className="text-slate-500 dark:text-slate-400 text-sm font-medium leading-relaxed mb-8 max-w-xs">
                             India&apos;s Next-Gen AI Financial Advisor. Smart investment insights, risk analysis, and institutional-grade personalized advice.
                         </p>
 
                         {/* Contact Info */}
                         <div className="space-y-4">
-                            <div className="flex items-center gap-3 text-slate-500 text-sm font-bold">
-                                <div className="w-8 h-8 rounded-lg bg-blue-50 flex items-center justify-center">
-                                    <Mail className="w-4 h-4 text-blue-600" />
+                            <div className="flex items-center gap-3 text-slate-500 dark:text-slate-400 text-sm font-bold">
+                                <div className="w-8 h-8 rounded-lg bg-blue-50 dark:bg-blue-900/30 flex items-center justify-center">
+                                    <Mail className="w-4 h-4 text-blue-600 dark:text-blue-400" />
                                 </div>
-                                <a href="mailto:hello@bharataiwealth.com" className="hover:text-blue-600 transition-colors">
+                                <a href="mailto:hello@bharataiwealth.com" className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
                                     hello@bharataiwealth.com
                                 </a>
                             </div>
-                            <div className="flex items-center gap-3 text-slate-500 text-sm font-bold">
-                                <div className="w-8 h-8 rounded-lg bg-orange-50 flex items-center justify-center">
-                                    <MapPin className="w-4 h-4 text-orange-600" />
+                            <div className="flex items-center gap-3 text-slate-500 dark:text-slate-400 text-sm font-bold">
+                                <div className="w-8 h-8 rounded-lg bg-orange-50 dark:bg-orange-900/30 flex items-center justify-center">
+                                    <MapPin className="w-4 h-4 text-orange-600 dark:text-orange-400" />
                                 </div>
                                 <span>Bangalore, India</span>
                             </div>
@@ -91,9 +91,9 @@ export function Footer() {
                                     aria-label={social.label}
                                     whileHover={{ y: -4, scale: 1.1 }}
                                     whileTap={{ scale: 0.95 }}
-                                    className="w-10 h-10 rounded-xl bg-slate-50 border border-slate-100 flex items-center justify-center transition-all hover:bg-white hover:shadow-xl hover:shadow-slate-200"
+                                    className="w-10 h-10 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 flex items-center justify-center transition-all hover:bg-white dark:hover:bg-slate-700 hover:shadow-xl hover:shadow-slate-200 dark:hover:shadow-slate-900"
                                 >
-                                    <social.icon className="w-5 h-5 text-slate-400 hover:text-blue-600 transition-colors" />
+                                    <social.icon className="w-5 h-5 text-slate-400 dark:text-slate-500 hover:text-blue-600 dark:hover:text-blue-400 transition-colors" />
                                 </motion.a>
                             ))}
                         </div>
@@ -102,7 +102,7 @@ export function Footer() {
                     {/* Link Columns */}
                     {Object.entries(footerLinks).map(([category, links]) => (
                         <div key={category}>
-                            <h4 className="text-xs font-black uppercase tracking-[0.2em] text-slate-900 mb-6">
+                            <h4 className="text-xs font-black uppercase tracking-[0.2em] text-slate-900 dark:text-white mb-6">
                                 {category}
                             </h4>
                             <ul className="space-y-4">
@@ -110,7 +110,7 @@ export function Footer() {
                                     <li key={link.name}>
                                         <Link
                                             href={link.href}
-                                            className="text-sm text-slate-500 font-bold hover:text-blue-600 transition-colors"
+                                            className="text-sm text-slate-500 dark:text-slate-400 font-bold hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
                                         >
                                             {link.name}
                                         </Link>
@@ -123,13 +123,13 @@ export function Footer() {
             </div>
 
             {/* Bottom Bar */}
-            <div className="border-t border-slate-100 bg-slate-50/50">
+            <div className="border-t border-slate-100 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800/50">
                 <div className="w-full px-6 md:px-12 lg:px-20 xl:px-32 py-8">
                     <div className="flex flex-col md:flex-row items-center justify-between gap-6">
-                        <p className="text-xs font-bold text-slate-400 uppercase tracking-widest">
+                        <p className="text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest">
                             © {currentYear} Bharat AI Wealth. All rights reserved.
                         </p>
-                        <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-slate-400">
+                        <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-slate-400 dark:text-slate-500">
                             <span>Made with</span>
                             <motion.span
                                 animate={{ scale: [1, 1.2, 1] }}

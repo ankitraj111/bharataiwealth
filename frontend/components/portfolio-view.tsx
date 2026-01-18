@@ -85,31 +85,31 @@ export function PortfolioView({ title, description, totalValue, totalReturn, ris
       </div>
 
       {/* Summary Cards */}
-      <div className="grid gap-4 sm:grid-cols-3">
-        <Card>
-          <CardContent className="p-4">
-            <p className="text-xs font-medium text-muted-foreground">Total Value</p>
-            <p className="mt-1 text-2xl font-bold text-foreground">₹{totalValue.toLocaleString("en-IN")}</p>
+      <div className="grid gap-6 sm:grid-cols-3">
+        <Card className="glass-card border-blue-500/20 bg-blue-500/5">
+          <CardContent className="p-6">
+            <p className="text-[10px] font-black text-blue-600 uppercase tracking-widest mb-2">Total Value</p>
+            <p className="text-3xl font-black text-foreground tracking-tighter">₹{totalValue.toLocaleString("en-IN")}</p>
           </CardContent>
         </Card>
-        <Card>
-          <CardContent className="p-4">
-            <p className="text-xs font-medium text-muted-foreground">Expected Return</p>
-            <div className="mt-1 flex items-center gap-2">
-              <p className="text-2xl font-bold text-success">+{totalReturn}%</p>
-              <TrendingUp className="h-5 w-5 text-success" />
+        <Card className="glass-card border-emerald-500/20 bg-emerald-500/5">
+          <CardContent className="p-6">
+            <p className="text-[10px] font-black text-emerald-600 uppercase tracking-widest mb-2">Expected Return</p>
+            <div className="flex items-center gap-2">
+              <p className="text-3xl font-black text-emerald-600 tracking-tighter">+{totalReturn}%</p>
+              <TrendingUp className="h-6 w-6 text-emerald-600" />
             </div>
           </CardContent>
         </Card>
-        <Card>
-          <CardContent className="p-4">
-            <p className="text-xs font-medium text-muted-foreground">Risk Level</p>
-            <div className="mt-1 flex items-center gap-2">
-              <Badge className={cn("text-sm", getRiskColor(riskLevel))}>{riskLevel}</Badge>
+        <Card className="glass-card border-amber-500/20 bg-amber-500/5">
+          <CardContent className="p-6">
+            <p className="text-[10px] font-black text-amber-600 uppercase tracking-widest mb-2">Risk Profile</p>
+            <div className="flex items-center gap-2">
+              <Badge className={cn("text-[10px] font-black uppercase border-none", getRiskColor(riskLevel))}>{riskLevel}</Badge>
               {riskLevel === "Low" || riskLevel === "Very Low" ? (
-                <ShieldCheck className="h-5 w-5 text-success" />
+                <ShieldCheck className="h-6 w-6 text-emerald-500" />
               ) : (
-                <AlertTriangle className="h-5 w-5 text-chart-2" />
+                <AlertTriangle className="h-6 w-6 text-amber-500" />
               )}
             </div>
           </CardContent>

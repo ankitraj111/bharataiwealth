@@ -45,9 +45,9 @@ export function PortfolioPhilosophy() {
                     viewport={defaultViewport}
                     variants={scrollReveal}
                 >
-                    <h2 className="text-4xl md:text-5xl font-bold tracking-tight">Portfolio Philosophy</h2>
-                    <p className="text-lg text-muted-foreground">
-                        A mature approach to wealth creation, tailored for your risk appetite.
+                    <h2 className="text-4xl md:text-6xl font-black tracking-tighter uppercase">Strategic Wealth Tiers</h2>
+                    <p className="text-lg text-muted-foreground font-medium uppercase tracking-widest opacity-80">
+                        Tailored risk-adjusted architectures for every stage of your growth.
                     </p>
                 </motion.div>
 

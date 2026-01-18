@@ -47,15 +47,15 @@ const itemVariants = {
     visible: {
         opacity: 1,
         y: 0,
-        transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] }
+        transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] as const }
     }
 }
 
 export function ValueProposition() {
     return (
-        <section className="py-24 relative overflow-hidden bg-white">
+        <section className="py-24 relative overflow-hidden bg-white dark:bg-slate-900">
             {/* Subtle Background */}
-            <div className="absolute inset-0 bg-gradient-to-b from-white via-slate-50/50 to-white" />
+            <div className="absolute inset-0 bg-gradient-to-b from-white dark:from-slate-900 via-slate-50/50 dark:via-slate-800/50 to-white dark:to-slate-900" />
 
             <div className="w-full px-6 md:px-12 lg:px-20 xl:px-32 relative z-10">
                 {/* Section Header */}
@@ -67,21 +67,21 @@ export function ValueProposition() {
                     transition={{ duration: 0.6 }}
                 >
                     <motion.span
-                        className="inline-block px-4 py-2 rounded-full text-xs font-bold bg-slate-100 text-slate-500 border border-slate-200 mb-6 uppercase tracking-[0.2em]"
+                        className="inline-block px-4 py-2 rounded-full text-xs font-bold bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 border border-slate-200 dark:border-slate-700 mb-6 uppercase tracking-[0.2em]"
                         initial={{ opacity: 0, scale: 0.9 }}
                         whileInView={{ opacity: 1, scale: 1 }}
                         viewport={{ once: true }}
                     >
                         Why Choose Us
                     </motion.span>
-                    <h2 className="text-4xl md:text-5xl font-black mb-6 text-slate-900 tracking-tight">
+                    <h2 className="text-4xl md:text-5xl font-black mb-6 text-slate-900 dark:text-white tracking-tight">
                         Everything You Need to
                         <br />
                         <span className="bg-gradient-to-r from-blue-600 via-purple-600 to-orange-500 bg-clip-text text-transparent">
                             Grow Your Wealth
                         </span>
                     </h2>
-                    <p className="text-lg text-slate-600 max-w-2xl mx-auto leading-relaxed font-medium">
+                    <p className="text-lg text-slate-600 dark:text-slate-300 max-w-2xl mx-auto leading-relaxed font-medium">
                         Our AI-powered platform gives you institutional-grade tools that were once only available to the elite.
                     </p>
                 </motion.div>
@@ -101,7 +101,7 @@ export function ValueProposition() {
                             whileHover={{ y: -8, scale: 1.02 }}
                             className="group relative"
                         >
-                            <div className="h-full p-8 rounded-[2rem] bg-white border border-slate-100 shadow-xl shadow-slate-200/40 transition-all duration-300 hover:shadow-2xl hover:shadow-blue-500/10 hover:border-blue-100">
+                            <div className="h-full p-8 rounded-[2rem] bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700 shadow-xl shadow-slate-200/40 dark:shadow-slate-900/40 transition-all duration-300 hover:shadow-2xl hover:shadow-blue-500/10 dark:hover:shadow-blue-900/20 hover:border-blue-100 dark:hover:border-blue-800">
                                 {/* Icon */}
                                 <motion.div
                                     className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${benefit.bgGradient} flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300`}
@@ -119,10 +119,10 @@ export function ValueProposition() {
                                 </motion.div>
 
                                 {/* Content */}
-                                <h3 className="text-xl font-black text-slate-900 mb-3">
+                                <h3 className="text-xl font-black text-slate-900 dark:text-white mb-3">
                                     {benefit.title}
                                 </h3>
-                                <p className="text-slate-600 leading-relaxed font-medium">
+                                <p className="text-slate-600 dark:text-slate-300 leading-relaxed font-medium">
                                     {benefit.description}
                                 </p>
 

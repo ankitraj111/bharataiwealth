@@ -1,14 +1,9 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  output: 'export',
-  basePath: '/bharataiwealth',
-  assetPrefix: '/bharataiwealth',
-  typescript: {
-    ignoreBuildErrors: true,
-  },
-  images: {
-    unoptimized: true,
-  },
+  // Commented out for local development
+  // output: 'export',
+  // basePath: '/bharataiwealth',
+  // assetPrefix: '/bharataiwealth',
 }
 
 export default nextConfig

@@ -81,9 +81,9 @@ export function Sidebar() {
   const [engagementOpen, setEngagementOpen] = useState(false)
 
   return (
-    <aside className="fixed left-0 top-0 z-40 h-screen w-[260px] border-r border-slate-200 bg-white flex-col hidden lg:flex shadow-sm">
+    <aside className="fixed left-0 top-0 z-40 h-screen w-[260px] border-r border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 flex-col hidden lg:flex shadow-sm">
       {/* Logo Section */}
-      <div className="flex h-[72px] items-center gap-3 px-5 border-b border-slate-100 bg-gradient-to-r from-orange-500 to-orange-600">
+      <div className="flex h-[72px] items-center gap-3 px-5 border-b border-slate-100 dark:border-slate-800 bg-gradient-to-r from-orange-500 to-orange-600 dark:from-orange-600 dark:to-orange-700">
         <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-white/20 backdrop-blur">
           <Sparkles className="h-5 w-5 text-white" />
         </div>
@@ -104,8 +104,8 @@ export function Sidebar() {
               className={cn(
                 "flex items-center gap-3 rounded-lg px-3 py-2 text-[13px] font-medium transition-colors",
                 pathname === item.href
-                  ? "bg-orange-50 text-orange-700 border border-orange-200"
-                  : "text-slate-600 hover:bg-slate-50 hover:text-slate-900",
+                  ? "bg-orange-50 dark:bg-orange-900/30 text-orange-700 dark:text-orange-400 border border-orange-200 dark:border-orange-800"
+                  : "text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white",
               )}
             >
               <item.icon className="h-4 w-4" />
@@ -118,7 +118,7 @@ export function Sidebar() {
         <div className="mb-5">
           <button
             onClick={() => setPortfolioOpen(!portfolioOpen)}
-            className="flex w-full items-center justify-between px-3 py-2 text-xs font-bold uppercase tracking-wider text-emerald-700 bg-emerald-50 rounded-lg mx-1"
+            className="flex w-full items-center justify-between px-3 py-2 text-xs font-bold uppercase tracking-wider text-emerald-700 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-900/30 rounded-lg mx-1"
           >
             <span className="flex items-center gap-2">
               <TrendingUp className="h-4 w-4" />
@@ -134,8 +134,8 @@ export function Sidebar() {
                 className={cn(
                   "flex items-center gap-3 rounded-lg px-3 py-2 text-[13px] font-medium transition-colors",
                   pathname === item.href
-                    ? "bg-emerald-50 text-emerald-700 border border-emerald-200"
-                    : "text-slate-600 hover:bg-slate-50 hover:text-slate-900",
+                    ? "bg-emerald-50 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-800"
+                    : "text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white",
                 )}
               >
                 <item.icon className={cn("h-4 w-4", item.color)} />
@@ -147,7 +147,7 @@ export function Sidebar() {
 
         {/* Mutual Funds Section */}
         <div className="mb-5">
-          <p className="px-3 py-2 text-xs font-bold uppercase tracking-wider text-amber-700 flex items-center gap-2 bg-amber-50 rounded-lg mx-1">
+          <p className="px-3 py-2 text-xs font-bold uppercase tracking-wider text-amber-700 dark:text-amber-400 flex items-center gap-2 bg-amber-50 dark:bg-amber-900/30 rounded-lg mx-1">
             <Coins className="h-4 w-4" />
             Mutual Funds
           </p>
@@ -159,8 +159,8 @@ export function Sidebar() {
                 className={cn(
                   "flex items-center gap-3 rounded-lg px-3 py-2 text-[13px] font-medium transition-colors",
                   pathname === item.href
-                    ? "bg-amber-50 text-amber-700 border border-amber-200"
-                    : "text-slate-600 hover:bg-slate-50 hover:text-slate-900",
+                    ? "bg-amber-50 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400 border border-amber-200 dark:border-amber-800"
+                    : "text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white",
                 )}
               >
                 <item.icon className={cn("h-4 w-4", item.color)} />
@@ -172,7 +172,7 @@ export function Sidebar() {
 
         {/* Tools Section */}
         <div className="mb-5">
-          <p className="px-3 py-2 text-xs font-bold uppercase tracking-wider text-blue-700 flex items-center gap-2 bg-blue-50 rounded-lg mx-1">
+          <p className="px-3 py-2 text-xs font-bold uppercase tracking-wider text-blue-700 dark:text-blue-400 flex items-center gap-2 bg-blue-50 dark:bg-blue-900/30 rounded-lg mx-1">
             <FlaskConical className="h-4 w-4" />
             Tools
           </p>
@@ -184,8 +184,8 @@ export function Sidebar() {
                 className={cn(
                   "flex items-center gap-3 rounded-lg px-3 py-2 text-[13px] font-medium transition-colors",
                   pathname === item.href
-                    ? "bg-blue-50 text-blue-700 border border-blue-200"
-                    : "text-slate-600 hover:bg-slate-50 hover:text-slate-900",
+                    ? "bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400 border border-blue-200 dark:border-blue-800"
+                    : "text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white",
                 )}
               >
                 <item.icon className={cn("h-4 w-4", item.color)} />
@@ -199,7 +199,7 @@ export function Sidebar() {
         <div className="mb-5">
           <button
             onClick={() => setEngagementOpen(!engagementOpen)}
-            className="flex w-full items-center justify-between px-3 py-2 text-xs font-bold uppercase tracking-wider text-purple-700 bg-purple-50 rounded-lg mx-1"
+            className="flex w-full items-center justify-between px-3 py-2 text-xs font-bold uppercase tracking-wider text-purple-700 dark:text-purple-400 bg-purple-50 dark:bg-purple-900/30 rounded-lg mx-1"
           >
             <span className="flex items-center gap-2">
               <Trophy className="h-4 w-4" />
@@ -215,8 +215,8 @@ export function Sidebar() {
                 className={cn(
                   "flex items-center gap-3 rounded-lg px-3 py-2 text-[13px] font-medium transition-colors",
                   pathname === item.href
-                    ? "bg-purple-50 text-purple-700 border border-purple-200"
-                    : "text-slate-600 hover:bg-slate-50 hover:text-slate-900",
+                    ? "bg-purple-50 dark:bg-purple-900/30 text-purple-700 dark:text-purple-400 border border-purple-200 dark:border-purple-800"
+                    : "text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white",
                 )}
               >
                 <item.icon className={cn("h-4 w-4", item.color)} />
@@ -228,15 +228,15 @@ export function Sidebar() {
       </nav>
 
       {/* Bottom Section */}
-      <div className="px-3 py-3 space-y-0.5 border-t border-slate-100 bg-slate-50/50">
+      <div className="px-3 py-3 space-y-0.5 border-t border-slate-100 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800/50">
         {bottomNavItems.map((item, i) => (
           <Link
             key={item.href}
             href={item.href}
-            className="flex items-center gap-3 rounded-lg px-3 py-2 text-[13px] font-medium text-slate-600 hover:bg-white hover:text-slate-900 transition-colors"
+            className="flex items-center gap-3 rounded-lg px-3 py-2 text-[13px] font-medium text-slate-600 dark:text-slate-300 hover:bg-white dark:hover:bg-slate-700 hover:text-slate-900 dark:hover:text-white transition-colors"
           >
             {i === bottomNavItems.length - 1 ? (
-              <div className="h-6 w-6 rounded-full bg-gradient-to-br from-orange-500 to-orange-600 flex items-center justify-center text-white text-[10px] font-bold shadow-sm">N</div>
+              <div className="h-6 w-6 rounded-full bg-gradient-to-br from-orange-500 to-orange-600 dark:from-orange-600 dark:to-orange-700 flex items-center justify-center text-white text-[10px] font-bold shadow-sm">N</div>
             ) : (
               <item.icon className={cn("h-4 w-4", item.color)} />
             )}

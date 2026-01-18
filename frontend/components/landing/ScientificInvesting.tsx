@@ -36,9 +36,9 @@ export function ScientificInvesting() {
     ]
 
     return (
-        <section className="py-24 bg-white relative overflow-hidden">
+        <section className="py-24 bg-white dark:bg-slate-900 relative overflow-hidden">
             {/* Subtle background pattern */}
-            <div className="absolute inset-0 opacity-[0.03] pointer-events-none"
+            <div className="absolute inset-0 opacity-[0.03] dark:opacity-[0.05] pointer-events-none"
                 style={{ backgroundImage: 'radial-gradient(#000 0.5px, transparent 0.5px)', backgroundSize: '24px 24px' }} />
 
             <div className="w-full px-6 md:px-12 lg:px-20 xl:px-32 relative z-10">
@@ -50,14 +50,14 @@ export function ScientificInvesting() {
                             whileInView={{ opacity: 1, x: 0 }}
                             viewport={{ once: true }}
                         >
-                            <span className="inline-block px-4 py-2 rounded-full text-xs font-bold bg-slate-100 text-slate-500 border border-slate-200 mb-6 uppercase tracking-[0.2em]">
+                            <span className="inline-block px-4 py-2 rounded-full text-xs font-bold bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 border border-slate-200 dark:border-slate-700 mb-6 uppercase tracking-[0.2em]">
                                 The Science of Wealth
                             </span>
-                            <h2 className="text-4xl md:text-5xl font-black text-slate-900 leading-[1.1] tracking-tight">
+                            <h2 className="text-4xl md:text-5xl font-black text-slate-900 dark:text-white leading-[1.1] tracking-tight">
                                 Investing is an Art.<br />
-                                <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent italic">Wealth Creation</span> is a Science.
+                                <span className="bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-400 dark:to-purple-400 bg-clip-text text-transparent italic">Wealth Creation</span> is a Science.
                             </h2>
-                            <p className="text-lg text-slate-600 mt-6 max-w-xl leading-relaxed font-medium">
+                            <p className="text-lg text-slate-600 dark:text-slate-300 mt-6 max-w-xl leading-relaxed font-medium">
                                 Bharat AI Wealth leverages proprietary machine learning kernels to remove human bias from the investment process, delivering a systematic approach to long-term compounding.
                             </p>
                         </motion.div>
@@ -70,13 +70,13 @@ export function ScientificInvesting() {
                                     whileInView={{ opacity: 1, y: 0 }}
                                     viewport={{ once: true }}
                                     transition={{ delay: idx * 0.1 }}
-                                    className="p-5 rounded-2xl border border-slate-100 bg-slate-50/50 hover:bg-white hover:shadow-xl hover:shadow-slate-200/50 transition-all group"
+                                    className="p-5 rounded-2xl border border-slate-100 dark:border-slate-700 bg-slate-50/50 dark:bg-slate-800/50 hover:bg-white dark:hover:bg-slate-800 hover:shadow-xl hover:shadow-slate-200/50 dark:hover:shadow-slate-900/50 transition-all group"
                                 >
-                                    <div className={`w-12 h-12 rounded-xl ${feature.bg} ${feature.color} flex items-center justify-center mb-4 group-hover:scale-110 transition-transform shadow-sm`}>
+                                    <div className={`w-12 h-12 rounded-xl ${feature.bg} dark:bg-slate-700 ${feature.color} dark:text-blue-400 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform shadow-sm`}>
                                         <feature.icon size={24} />
                                     </div>
-                                    <h3 className="font-black text-slate-900 mb-2">{feature.title}</h3>
-                                    <p className="text-sm text-slate-500 leading-relaxed font-medium">
+                                    <h3 className="font-black text-slate-900 dark:text-white mb-2">{feature.title}</h3>
+                                    <p className="text-sm text-slate-500 dark:text-slate-400 leading-relaxed font-medium">
                                         {feature.desc}
                                     </p>
                                 </motion.div>
@@ -93,15 +93,15 @@ export function ScientificInvesting() {
                             className="relative"
                         >
                             {/* Decorative Glow */}
-                            <div className="absolute -inset-4 bg-gradient-to-tr from-primary/10 to-purple-500/10 blur-3xl opacity-50" />
+                            <div className="absolute -inset-4 bg-gradient-to-tr from-primary/10 to-purple-500/10 blur-3xl opacity-50 dark:opacity-30" />
 
-                            <div className="relative bg-white rounded-[2.5rem] p-8 md:p-12 shadow-[0_32px_80px_-20px_rgba(0,0,0,0.08)] border border-slate-100">
+                            <div className="relative bg-white dark:bg-slate-800 rounded-[2.5rem] p-8 md:p-12 shadow-[0_32px_80px_-20px_rgba(0,0,0,0.08)] dark:shadow-[0_32px_80px_-20px_rgba(0,0,0,0.3)] border border-slate-100 dark:border-slate-700">
                                 <div className="flex items-center justify-between mb-10">
                                     <div>
-                                        <p className="text-sm font-bold text-slate-400 uppercase tracking-widest">Performance Alpha</p>
-                                        <h3 className="text-3xl font-black text-slate-900 mt-1">+24.80%</h3>
+                                        <p className="text-sm font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest">Performance Alpha</p>
+                                        <h3 className="text-3xl font-black text-slate-900 dark:text-white mt-1">+24.80%</h3>
                                     </div>
-                                    <div className="px-3 py-1 bg-emerald-100 text-emerald-600 rounded-full text-xs font-bold flex items-center gap-1">
+                                    <div className="px-3 py-1 bg-emerald-100 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400 rounded-full text-xs font-bold flex items-center gap-1">
                                         <TrendingUp size={12} />
                                         Beat Index
                                     </div>
@@ -121,38 +121,38 @@ export function ScientificInvesting() {
                                     ))}
                                 </div>
 
-                                <div className="grid grid-cols-3 gap-6 pt-10 border-t border-slate-50">
+                                <div className="grid grid-cols-3 gap-6 pt-10 border-t border-slate-50 dark:border-slate-700">
                                     <div>
-                                        <p className="text-xs font-bold text-slate-400 uppercase">Diversification</p>
-                                        <p className="text-lg font-black text-slate-900">Optimal</p>
+                                        <p className="text-xs font-bold text-slate-400 dark:text-slate-500 uppercase">Diversification</p>
+                                        <p className="text-lg font-black text-slate-900 dark:text-white">Optimal</p>
                                     </div>
                                     <div>
-                                        <p className="text-xs font-bold text-slate-400 uppercase">Risk Level</p>
-                                        <p className="text-lg font-black text-slate-900">Balanced</p>
+                                        <p className="text-xs font-bold text-slate-400 dark:text-slate-500 uppercase">Risk Level</p>
+                                        <p className="text-lg font-black text-slate-900 dark:text-white">Balanced</p>
                                     </div>
                                     <div>
-                                        <p className="text-xs font-bold text-slate-400 uppercase">AI Confidence</p>
-                                        <p className="text-lg font-black text-slate-900 text-primary">94.2%</p>
+                                        <p className="text-xs font-bold text-slate-400 dark:text-slate-500 uppercase">AI Confidence</p>
+                                        <p className="text-lg font-black text-slate-900 dark:text-white text-primary dark:text-blue-400">94.2%</p>
                                     </div>
                                 </div>
 
                                 {/* Floating Badge */}
                                 <motion.div
-                                    className="absolute -top-6 -right-6 bg-slate-900 text-white p-6 rounded-3xl shadow-2xl hidden md:block"
+                                    className="absolute -top-6 -right-6 bg-slate-900 dark:bg-slate-700 text-white p-6 rounded-3xl shadow-2xl hidden md:block"
                                     animate={{ y: [0, -10, 0] }}
                                     transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
                                 >
-                                    <PieChart className="text-primary mb-2" size={32} />
-                                    <p className="text-xs font-bold text-slate-400">Strategy</p>
+                                    <PieChart className="text-primary dark:text-blue-400 mb-2" size={32} />
+                                    <p className="text-xs font-bold text-slate-400 dark:text-slate-500">Strategy</p>
                                     <p className="text-sm font-black">Multi-Factor</p>
                                 </motion.div>
                             </div>
 
                             {/* Institutional Partner Logos (Dummy) */}
                             <div className="mt-12 flex flex-wrap items-center justify-center gap-8 opacity-40 grayscale group-hover:grayscale-0 transition-all duration-700">
-                                <span className="text-[10px] font-black uppercase tracking-widest text-slate-400 w-full text-center mb-2">Powered by Data From</span>
+                                <span className="text-[10px] font-black uppercase tracking-widest text-slate-400 dark:text-slate-500 w-full text-center mb-2">Powered by Data From</span>
                                 {["NSE", "BSE", "Bloomberg", "Reuters", "Chainlink"].map((partner) => (
-                                    <span key={partner} className="text-lg font-black tracking-tighter text-slate-800">{partner}</span>
+                                    <span key={partner} className="text-lg font-black tracking-tighter text-slate-800 dark:text-slate-300">{partner}</span>
                                 ))}
                             </div>
                         </motion.div>

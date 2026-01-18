@@ -9,7 +9,8 @@ import { Label } from "@/components/ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Badge } from "@/components/ui/badge"
 import { Bar, BarChart, ResponsiveContainer, XAxis, YAxis, Tooltip } from "recharts"
-import { FlaskConical, Play, TrendingDown, TrendingUp, AlertTriangle, Lightbulb } from "lucide-react"
+import { AlertTriangle, Lightbulb, FlaskConical, Play, TrendingDown, TrendingUp } from "lucide-react"
+import { Progress } from "@/components/ui/progress"
 import { cn } from "@/lib/utils"
 
 const scenarios = [
@@ -53,7 +54,7 @@ export default function SandboxPage() {
       <div className="space-y-6">
         {/* Header */}
         <div className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-purple-500 via-fuchsia-500 to-pink-500 p-8 shadow-lg">
-          <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-10" />
+          <div className="absolute inset-0 bg-grid-pattern opacity-10" />
           <div className="relative flex items-center gap-4">
             <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-white/20 backdrop-blur-sm shadow-lg">
               <FlaskConical className="h-7 w-7 text-white" />
@@ -165,7 +166,7 @@ export default function SandboxPage() {
                           axisLine={false}
                           tickLine={false}
                           tick={{ fill: "hsl(var(--muted-foreground))", fontSize: 10, fontWeight: 700 }}
-                          tickFormatter={(value) => `₹${value / 1000}k`}
+                          tickFormatter={(value: any) => `₹${Number(value || 0) / 1000}k`}
                         />
                         <YAxis
                           type="category"
@@ -205,7 +206,7 @@ export default function SandboxPage() {
                           axisLine={false}
                           tickLine={false}
                           tick={{ fill: "hsl(var(--muted-foreground))", fontSize: 10, fontWeight: 700 }}
-                          tickFormatter={(value) => `₹${value / 1000}k`}
+                          tickFormatter={(value: any) => `₹${Number(value || 0) / 1000}k`}
                         />
                         <YAxis
                           type="category"

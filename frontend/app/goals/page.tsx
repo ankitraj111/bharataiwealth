@@ -109,7 +109,7 @@ export default function GoalsPage() {
       <div className="space-y-8">
         {/* Header */}
         <div className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-emerald-500 via-teal-500 to-cyan-500 p-8 shadow-lg">
-          <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-10" />
+          <div className="absolute inset-0 bg-grid-pattern opacity-10" />
           <div className="relative flex flex-col md:flex-row md:items-center md:justify-between gap-6">
             <div className="space-y-4">
               <div className="flex items-center gap-4">

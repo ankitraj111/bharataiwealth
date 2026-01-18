@@ -35,9 +35,9 @@ const steps = [
 
 export function HowItWorks() {
     return (
-        <section id="how-it-works" className="py-24 relative overflow-hidden bg-white">
+        <section id="how-it-works" className="py-24 relative overflow-hidden bg-white dark:bg-slate-900">
             {/* Background */}
-            <div className="absolute inset-0 bg-gradient-to-b from-white via-slate-50 to-white" />
+            <div className="absolute inset-0 bg-gradient-to-b from-white dark:from-slate-900 via-slate-50 dark:via-slate-800 to-white dark:to-slate-900" />
 
             <div className="w-full px-6 md:px-12 lg:px-20 xl:px-32 relative z-10">
                 {/* Section Header */}
@@ -49,20 +49,20 @@ export function HowItWorks() {
                     transition={{ duration: 0.6 }}
                 >
                     <motion.span
-                        className="inline-block px-4 py-2 rounded-full text-xs font-bold bg-slate-100 text-slate-500 border border-slate-200 mb-6 uppercase tracking-[0.2em]"
+                        className="inline-block px-4 py-2 rounded-full text-xs font-bold bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 border border-slate-200 dark:border-slate-700 mb-6 uppercase tracking-[0.2em]"
                         initial={{ opacity: 0, scale: 0.9 }}
                         whileInView={{ opacity: 1, scale: 1 }}
                         viewport={{ once: true }}
                     >
                         Simple Process
                     </motion.span>
-                    <h2 className="text-4xl md:text-5xl font-black text-slate-900 mb-6 tracking-tight">
+                    <h2 className="text-4xl md:text-5xl font-black text-slate-900 dark:text-white mb-6 tracking-tight">
                         How It{" "}
-                        <span className="bg-gradient-to-r from-blue-600 to-cyan-500 bg-clip-text text-transparent">
+                        <span className="bg-gradient-to-r from-blue-600 to-cyan-500 dark:from-blue-400 dark:to-cyan-400 bg-clip-text text-transparent">
                             Works
                         </span>
                     </h2>
-                    <p className="text-lg text-slate-600 font-medium">
+                    <p className="text-lg text-slate-600 dark:text-slate-300 font-medium">
                         Get started in minutes with our simple 3-step process.
                     </p>
                 </motion.div>
@@ -70,7 +70,7 @@ export function HowItWorks() {
                 {/* Steps */}
                 <div className="grid lg:grid-cols-3 gap-8 relative">
                     {/* Connection Line (Desktop) */}
-                    <div className="hidden lg:block absolute top-32 left-[20%] right-[20%] h-0.5 bg-gradient-to-r from-blue-500 via-purple-500 to-emerald-500 opacity-30" />
+                    <div className="hidden lg:block absolute top-32 left-[20%] right-[20%] h-0.5 bg-gradient-to-r from-blue-500 via-purple-500 to-emerald-500 opacity-30 dark:opacity-20" />
 
                     {steps.map((step, index) => (
                         <motion.div
@@ -95,16 +95,16 @@ export function HowItWorks() {
 
                             <motion.div
                                 whileHover={{ y: -8 }}
-                                className="h-full p-8 rounded-[2rem] bg-white border border-slate-100 shadow-xl shadow-slate-200/40 text-center transition-all duration-300"
+                                className="h-full p-8 rounded-[2rem] bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700 shadow-xl shadow-slate-200/40 dark:shadow-slate-900/40 text-center transition-all duration-300"
                             >
                                 {/* Step Number */}
-                                <div className={`inline-flex items-center justify-center w-20 h-20 rounded-[1.5rem] bg-slate-50 border border-slate-100 mb-6 relative`}>
+                                <div className={`inline-flex items-center justify-center w-20 h-20 rounded-[1.5rem] bg-slate-50 dark:bg-slate-700 border border-slate-100 dark:border-slate-600 mb-6 relative`}>
                                     <span className={`text-4xl font-black bg-gradient-to-r ${step.gradient} bg-clip-text text-transparent`}>
                                         {step.number}
                                     </span>
                                     {/* Pulse Ring */}
                                     <motion.div
-                                        className={`absolute inset-0 rounded-[1.5rem] bg-gradient-to-br ${step.gradient} opacity-5`}
+                                        className={`absolute inset-0 rounded-[1.5rem] bg-gradient-to-br ${step.gradient} opacity-5 dark:opacity-10`}
                                         animate={{ scale: [1, 1.1, 1], opacity: [0.1, 0.2, 0.1] }}
                                         transition={{ duration: 2, repeat: Infinity }}
                                     />
@@ -112,18 +112,18 @@ export function HowItWorks() {
 
                                 {/* Title with Optional Badge */}
                                 <div className="flex items-center justify-center gap-2 mb-4">
-                                    <h3 className="text-xl font-black text-slate-900">
+                                    <h3 className="text-xl font-black text-slate-900 dark:text-white">
                                         {step.title}
                                     </h3>
                                     {step.optional && (
-                                        <span className="px-2 py-0.5 text-[10px] font-bold rounded-full bg-blue-50 text-blue-600 uppercase tracking-wider">
+                                        <span className="px-2 py-0.5 text-[10px] font-bold rounded-full bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 uppercase tracking-wider">
                                             Optional
                                         </span>
                                     )}
                                 </div>
 
                                 {/* Description */}
-                                <p className="text-slate-600 font-medium leading-relaxed">
+                                <p className="text-slate-600 dark:text-slate-300 font-medium leading-relaxed">
                                     {step.description}
                                 </p>
 

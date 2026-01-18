@@ -24,11 +24,11 @@ export function FinalCTA() {
     }
 
     return (
-        <section className="py-24 relative overflow-hidden bg-white">
+        <section className="py-24 relative overflow-hidden bg-white dark:bg-slate-900">
             <div className="w-full px-6 md:px-12 lg:px-20 xl:px-32 relative z-10">
-                <div className="relative rounded-[3rem] overflow-hidden p-12 md:p-20 shadow-2xl shadow-blue-500/20">
+                <div className="relative rounded-[3rem] overflow-hidden p-12 md:p-20 shadow-2xl shadow-blue-500/20 dark:shadow-blue-900/20">
                     {/* Vibrant Background Card */}
-                    <div className="absolute inset-0 bg-gradient-to-br from-blue-600 via-blue-700 to-purple-800" />
+                    <div className="absolute inset-0 bg-gradient-to-br from-blue-600 via-blue-700 to-purple-800 dark:from-blue-700 dark:via-blue-800 dark:to-purple-900" />
 
                     {/* Animated Orbs */}
                     <motion.div
@@ -54,9 +54,9 @@ export function FinalCTA() {
                             initial={{ opacity: 0, y: 20 }}
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
-                            className="inline-flex items-center gap-2 px-6 py-2 rounded-full bg-white/10 backdrop-blur-md border border-white/20 mb-10"
+                            className="inline-flex items-center gap-2 px-6 py-2 rounded-full bg-white/10 dark:bg-white/5 backdrop-blur-md border border-white/20 dark:border-white/10 mb-10"
                         >
-                            <Sparkles className="w-4 h-4 text-sky-300" />
+                            <Sparkles className="w-4 h-4 text-sky-300 dark:text-sky-200" />
                             <span className="text-xs font-black text-white uppercase tracking-[0.2em]">Start Your Wealth Journey</span>
                         </motion.div>
 
@@ -70,7 +70,7 @@ export function FinalCTA() {
                         >
                             Ready to Transform
                             <br />
-                            Your <span className="italic bg-gradient-to-r from-sky-300 to-indigo-200 bg-clip-text text-transparent">Wealth Journey?</span>
+                            Your <span className="italic bg-gradient-to-r from-sky-300 to-indigo-200 dark:from-sky-200 dark:to-indigo-100 bg-clip-text text-transparent">Wealth Journey?</span>
                         </motion.h2>
 
                         <motion.p
@@ -78,7 +78,7 @@ export function FinalCTA() {
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
                             transition={{ delay: 0.2 }}
-                            className="text-xl text-sky-100/80 mb-12 max-w-2xl mx-auto font-medium"
+                            className="text-xl text-sky-100/80 dark:text-sky-100/70 mb-12 max-w-2xl mx-auto font-medium"
                         >
                             Join thousands of smart Indian investors using AI to grow their wealth confidently with institutional-grade insights.
                         </motion.p>
@@ -124,13 +124,13 @@ export function FinalCTA() {
                                         value={email}
                                         onChange={(e) => setEmail(e.target.value)}
                                         placeholder="Enter your email"
-                                        className="flex-1 h-14 px-6 rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 text-white placeholder:text-white/40 focus:outline-none focus:ring-2 focus:ring-white/50 transition-all"
+                                        className="flex-1 h-14 px-6 rounded-2xl bg-white/10 dark:bg-white/5 backdrop-blur-md border border-white/20 dark:border-white/10 text-white placeholder:text-white/40 dark:placeholder:text-white/30 focus:outline-none focus:ring-2 focus:ring-white/50 dark:focus:ring-white/30 transition-all"
                                         required
                                     />
                                     <Button
                                         type="submit"
                                         disabled={isSubmitting}
-                                        className="h-14 px-8 font-black bg-sky-400 hover:bg-sky-300 text-slate-900 rounded-2xl transition-all uppercase tracking-widest text-xs"
+                                        className="h-14 px-8 font-black bg-sky-400 hover:bg-sky-300 dark:bg-sky-500 dark:hover:bg-sky-400 text-slate-900 dark:text-slate-950 rounded-2xl transition-all uppercase tracking-widest text-xs"
                                     >
                                         {isSubmitting ? (
                                             <Loader2 className="w-5 h-5 animate-spin" />
@@ -143,14 +143,14 @@ export function FinalCTA() {
                                 <motion.div
                                     initial={{ opacity: 0, scale: 0.9 }}
                                     animate={{ opacity: 1, scale: 1 }}
-                                    className="flex items-center justify-center gap-2 p-4 rounded-xl bg-white/20 backdrop-blur-sm border border-white/30"
+                                    className="flex items-center justify-center gap-2 p-4 rounded-xl bg-white/20 dark:bg-white/10 backdrop-blur-sm border border-white/30 dark:border-white/20"
                                 >
-                                    <CheckCircle2 className="w-5 h-5 text-emerald-300" />
+                                    <CheckCircle2 className="w-5 h-5 text-emerald-300 dark:text-emerald-200" />
                                     <span className="text-white font-medium">Thanks! We&apos;ll be in touch soon.</span>
                                 </motion.div>
                             )}
 
-                            <p className="text-white/50 text-xs mt-4">
+                            <p className="text-white/50 dark:text-white/40 text-xs mt-4">
                                 No spam, ever. We respect your privacy.
                             </p>
                         </motion.div>

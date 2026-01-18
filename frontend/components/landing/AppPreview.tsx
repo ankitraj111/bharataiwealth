@@ -12,12 +12,12 @@ export function AppPreview() {
     ]
 
     return (
-        <section className="py-24 relative overflow-hidden bg-white">
+        <section className="py-24 relative overflow-hidden bg-white dark:bg-slate-900">
             {/* Background */}
-            <div className="absolute inset-0 bg-gradient-to-b from-white via-slate-50 to-white" />
+            <div className="absolute inset-0 bg-gradient-to-b from-white dark:from-slate-900 via-slate-50 dark:via-slate-800 to-white dark:to-slate-900" />
 
             {/* Subtle Grid Pattern */}
-            <div className="absolute inset-0 opacity-[0.03]" style={{
+            <div className="absolute inset-0 opacity-[0.03] dark:opacity-[0.02]" style={{
                 backgroundImage: 'linear-gradient(rgba(0,0,0,1) 1px, transparent 1px), linear-gradient(90deg, rgba(0,0,0,1) 1px, transparent 1px)',
                 backgroundSize: '60px 60px'
             }} />
@@ -44,23 +44,23 @@ export function AppPreview() {
                         className="text-center lg:text-left"
                     >
                         <motion.div
-                            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-slate-100 border border-slate-200 mb-6"
+                            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 mb-6"
                             initial={{ opacity: 0, y: 20 }}
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
                         >
-                            <Smartphone className="w-4 h-4 text-blue-600" />
-                            <span className="text-xs font-bold text-slate-500 uppercase tracking-widest">Available on All Devices</span>
+                            <Smartphone className="w-4 h-4 text-blue-600 dark:text-blue-400" />
+                            <span className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest">Available on All Devices</span>
                         </motion.div>
 
-                        <h2 className="text-4xl md:text-5xl font-black text-slate-900 mb-6 leading-tight tracking-tight">
+                        <h2 className="text-4xl md:text-5xl font-black text-slate-900 dark:text-white mb-6 leading-tight tracking-tight">
                             Beautiful on{" "}
-                            <span className="bg-gradient-to-r from-blue-600 via-purple-600 to-orange-500 bg-clip-text text-transparent">
+                            <span className="bg-gradient-to-r from-blue-600 via-purple-600 to-orange-500 dark:from-blue-400 dark:via-purple-400 dark:to-orange-400 bg-clip-text text-transparent">
                                 Every Screen
                             </span>
                         </h2>
 
-                        <p className="text-lg text-slate-600 mb-10 max-w-lg mx-auto lg:mx-0 font-medium leading-relaxed">
+                        <p className="text-lg text-slate-600 dark:text-slate-300 mb-10 max-w-lg mx-auto lg:mx-0 font-medium leading-relaxed">
                             Access your AI-powered insights anywhere. Our responsive design ensures a seamless experience on desktop, tablet, and mobile.
                         </p>
 
@@ -73,21 +73,21 @@ export function AppPreview() {
                                     whileInView={{ opacity: 1, y: 0 }}
                                     viewport={{ once: true }}
                                     transition={{ delay: i * 0.1 }}
-                                    className="flex items-center gap-2 px-4 py-2 rounded-full bg-white border border-slate-100 shadow-sm"
+                                    className="flex items-center gap-2 px-4 py-2 rounded-full bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700 shadow-sm"
                                 >
                                     <feature.icon className={`w-4 h-4 ${feature.color}`} />
-                                    <span className="text-sm font-bold text-slate-700">{feature.label}</span>
+                                    <span className="text-sm font-bold text-slate-700 dark:text-slate-300">{feature.label}</span>
                                 </motion.div>
                             ))}
                         </div>
 
                         {/* Device Icons */}
                         <div className="flex items-center gap-6 mt-10 justify-center lg:justify-start">
-                            <div className="flex items-center gap-2 text-slate-400">
+                            <div className="flex items-center gap-2 text-slate-400 dark:text-slate-500">
                                 <Monitor className="w-6 h-6" />
                                 <span className="text-sm font-bold uppercase tracking-wider">Desktop</span>
                             </div>
-                            <div className="flex items-center gap-2 text-slate-400">
+                            <div className="flex items-center gap-2 text-slate-400 dark:text-slate-500">
                                 <Smartphone className="w-5 h-5" />
                                 <span className="text-sm font-bold uppercase tracking-wider">Mobile</span>
                             </div>

@@ -1,0 +1,3 @@
+:HL["/bharataiwealth/_next/static/chunks/15901dbdec823f69.css","style"]
+:HL["/bharataiwealth/_next/static/chunks/f69c896d0f1aea3e.css","style"]
+0:{"buildId":"7WSAPLFffPNN_PZnIsRWL","tree":{"name":"","paramType":null,"paramKey":"","hasRuntimePrefetch":false,"slots":{"children":{"name":"/_not-found","paramType":null,"paramKey":"/_not-found","hasRuntimePrefetch":false,"slots":{"children":{"name":"__PAGE__","paramType":null,"paramKey":"__PAGE__","hasRuntimePrefetch":false,"slots":null,"isRootLayout":false}},"isRootLayout":false}},"isRootLayout":true},"staleTime":300}

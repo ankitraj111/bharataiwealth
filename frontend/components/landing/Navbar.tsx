@@ -29,7 +29,7 @@ export function Navbar() {
     return (
         <>
             <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled
-                ? "bg-white/90 backdrop-blur-xl shadow-lg shadow-slate-200/20 border-b border-slate-100"
+                ? "bg-white/90 dark:bg-slate-900/90 backdrop-blur-xl shadow-lg shadow-slate-200/20 dark:shadow-slate-900/20 border-b border-slate-100 dark:border-slate-800"
                 : "bg-transparent"
                 }`}>
                 <div className="w-full px-6 md:px-12 lg:px-20 xl:px-32">
@@ -43,8 +43,8 @@ export function Navbar() {
                             >
                                 <span className="text-white font-black text-xl">B</span>
                             </motion.div>
-                            <span className="text-2xl font-black text-slate-900 tracking-tight">
-                                Bharat <span className="text-blue-600 italic">AI Wealth</span>
+                            <span className="text-2xl font-black text-slate-900 dark:text-white tracking-tight">
+                                Bharat <span className="text-blue-600 dark:text-blue-400 italic">AI Wealth</span>
                             </span>
                         </Link>
 
@@ -54,7 +54,7 @@ export function Navbar() {
                                 <Link
                                     key={link.name}
                                     href={link.href}
-                                    className="text-[11px] font-black uppercase tracking-[0.2em] text-slate-500 hover:text-blue-600 transition-colors"
+                                    className="text-[11px] font-black uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
                                 >
                                     {link.name}
                                 </Link>
@@ -67,7 +67,7 @@ export function Navbar() {
                             <Link href="/auth/login">
                                 <Button
                                     variant="ghost"
-                                    className="text-[11px] font-black uppercase tracking-[0.2em] text-slate-500 hover:text-slate-900 hover:bg-slate-50"
+                                    className="text-[11px] font-black uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-50 dark:hover:bg-slate-800"
                                 >
                                     Login
                                 </Button>

@@ -23,6 +23,10 @@ const Chatbot = dynamic(() => import("@/components/landing/Chatbot").then(m => m
 const BackToTop = dynamic(() => import("@/components/landing/BackToTop").then(m => m.BackToTop))
 const TrustedBy = dynamic(() => import("@/components/landing/TrustedBy").then(m => m.TrustedBy))
 const TestimonialsMarquee = dynamic(() => import("@/components/landing/TestimonialsMarquee").then(m => m.TestimonialsMarquee))
+const AICapabilities = dynamic(() => import("@/components/landing/AICapabilities").then(m => m.AICapabilities))
+const WhyChooseUs = dynamic(() => import("@/components/landing/WhyChooseUs").then(m => m.WhyChooseUs))
+const SuccessStories = dynamic(() => import("@/components/landing/SuccessStories").then(m => m.SuccessStories))
+const LiveMarketData = dynamic(() => import("@/components/landing/LiveMarketData").then(m => m.LiveMarketData))
 
 export default function LandingPage() {
     return (
@@ -43,11 +47,20 @@ export default function LandingPage() {
                 {/* 3️⃣ Stats Counter - Animated numbers */}
                 <StatsCounter />
 
+                {/* 3.1️⃣ Live Market Data - Real-time updates */}
+                <LiveMarketData />
+
                 {/* 4️⃣ Problem → Solution Block */}
                 <ProblemSolution />
 
                 {/* 5️⃣ Features Showcase - 7 features with icons */}
                 <Features />
+
+                {/* 5.1️⃣ AI Capabilities - What AI can do */}
+                <AICapabilities />
+
+                {/* 5.2️⃣ Why Choose Us - Key differentiators */}
+                <WhyChooseUs />
 
                 {/* 6️⃣ App Preview - Device mockups */}
                 <AppPreview />
@@ -57,6 +70,9 @@ export default function LandingPage() {
 
                 {/* 7.1️⃣ Testimonials Marquee - Real user reviews */}
                 <TestimonialsMarquee />
+
+                {/* 7.2️⃣ Success Stories - User case studies */}
+                <SuccessStories />
 
                 {/* 8️⃣ How It Works - 3 steps */}
                 <HowItWorks />

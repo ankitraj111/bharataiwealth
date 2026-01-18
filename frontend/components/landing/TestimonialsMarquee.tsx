@@ -52,7 +52,7 @@ export function TestimonialsMarquee() {
     const duplicatedTestimonials = [...testimonials, ...testimonials]
 
     return (
-        <section className="py-24 bg-white relative overflow-hidden">
+        <section className="py-24 bg-white dark:bg-slate-800 relative overflow-hidden">
             <div className="w-full px-6 md:px-12 lg:px-20 xl:px-32 mb-12">
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
@@ -60,13 +60,13 @@ export function TestimonialsMarquee() {
                     viewport={{ once: true }}
                     className="text-center"
                 >
-                    <h2 className="text-4xl md:text-5xl font-black text-slate-900 mb-6 tracking-tight">
+                    <h2 className="text-4xl md:text-5xl font-black text-slate-900 dark:text-white mb-6 tracking-tight">
                         Loved by{" "}
                         <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
                             Indian Investors
                         </span>
                     </h2>
-                    <p className="text-lg text-slate-600 font-medium">
+                    <p className="text-lg text-slate-600 dark:text-slate-300 font-medium">
                         Join thousands of happy users who are growing their wealth with us.
                     </p>
                 </motion.div>
@@ -75,9 +75,9 @@ export function TestimonialsMarquee() {
             {/* Marquee Container */}
             <div className="relative">
                 {/* Gradient Fade Left */}
-                <div className="absolute left-0 top-0 bottom-0 w-48 bg-gradient-to-r from-white to-transparent z-10" />
+                <div className="absolute left-0 top-0 bottom-0 w-48 bg-gradient-to-r from-white dark:from-slate-800 to-transparent z-10" />
                 {/* Gradient Fade Right */}
-                <div className="absolute right-0 top-0 bottom-0 w-48 bg-gradient-to-l from-white to-transparent z-10" />
+                <div className="absolute right-0 top-0 bottom-0 w-48 bg-gradient-to-l from-white dark:from-slate-800 to-transparent z-10" />
 
                 <motion.div
                     className="flex gap-6"
@@ -93,14 +93,14 @@ export function TestimonialsMarquee() {
                     {duplicatedTestimonials.map((testimonial, index) => (
                         <motion.div
                             key={index}
-                            className="flex-shrink-0 w-96 p-8 rounded-[2rem] bg-white border border-slate-100 shadow-xl shadow-slate-200/40"
+                            className="flex-shrink-0 w-96 p-8 rounded-[2rem] bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-700 shadow-xl shadow-slate-200/40 dark:shadow-slate-900/40"
                             whileHover={{ y: -8, transition: { duration: 0.3 } }}
                         >
                             {/* Quote Icon */}
-                            <Quote className="w-8 h-8 text-blue-500/20 mb-4" />
+                            <Quote className="w-8 h-8 text-blue-500/20 dark:text-blue-400/20 mb-4" />
 
                             {/* Content */}
-                            <p className="text-slate-600 font-medium leading-relaxed mb-6 italic">
+                            <p className="text-slate-600 dark:text-slate-300 font-medium leading-relaxed mb-6 italic">
                                 &ldquo;{testimonial.content}&rdquo;
                             </p>
 
@@ -117,10 +117,10 @@ export function TestimonialsMarquee() {
                                     {testimonial.avatar}
                                 </div>
                                 <div>
-                                    <p className="font-black text-slate-900">
+                                    <p className="font-black text-slate-900 dark:text-white">
                                         {testimonial.name}
                                     </p>
-                                    <p className="text-[10px] font-bold text-slate-400 uppercase tracking-[0.2em]">
+                                    <p className="text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-[0.2em]">
                                         {testimonial.role}
                                     </p>
                                 </div>

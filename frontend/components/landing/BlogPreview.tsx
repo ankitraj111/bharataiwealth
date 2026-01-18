@@ -36,9 +36,9 @@ const blogPosts = [
 
 export function BlogPreview() {
     return (
-        <section id="blog" className="py-24 relative overflow-hidden bg-white">
+        <section id="blog" className="py-24 relative overflow-hidden bg-white dark:bg-slate-900">
             {/* Background */}
-            <div className="absolute inset-0 bg-gradient-to-b from-white via-slate-50/50 to-white" />
+            <div className="absolute inset-0 bg-gradient-to-b from-white dark:from-slate-900 via-slate-50/50 dark:via-slate-800/50 to-white dark:to-slate-900" />
 
             <div className="w-full px-6 md:px-12 lg:px-20 xl:px-32 relative z-10">
                 {/* Header */}
@@ -50,23 +50,23 @@ export function BlogPreview() {
                 >
                     <div className="text-center md:text-left mb-6 md:mb-0">
                         <motion.span
-                            className="inline-block px-4 py-2 rounded-full text-xs font-bold bg-slate-100 text-slate-500 border border-slate-200 mb-6 uppercase tracking-[0.2em]"
+                            className="inline-block px-4 py-2 rounded-full text-xs font-bold bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 border border-slate-200 dark:border-slate-700 mb-6 uppercase tracking-[0.2em]"
                             initial={{ opacity: 0, scale: 0.9 }}
                             whileInView={{ opacity: 1, scale: 1 }}
                             viewport={{ once: true }}
                         >
                             From Our Blog
                         </motion.span>
-                        <h2 className="text-4xl md:text-5xl font-black text-slate-900 tracking-tight">
+                        <h2 className="text-4xl md:text-5xl font-black text-slate-900 dark:text-white tracking-tight">
                             Latest{" "}
-                            <span className="bg-gradient-to-r from-cyan-600 to-blue-500 bg-clip-text text-transparent">
+                            <span className="bg-gradient-to-r from-cyan-600 to-blue-500 dark:from-cyan-400 dark:to-blue-400 bg-clip-text text-transparent">
                                 Insights
                             </span>
                         </h2>
                     </div>
                     <Link
                         href="/blog"
-                        className="inline-flex items-center gap-2 px-6 py-3 rounded-2xl bg-slate-100 text-slate-900 font-black uppercase tracking-widest text-xs hover:bg-slate-200 transition-all border border-slate-200 shadow-sm"
+                        className="inline-flex items-center gap-2 px-6 py-3 rounded-2xl bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white font-black uppercase tracking-widest text-xs hover:bg-slate-200 dark:hover:bg-slate-700 transition-all border border-slate-200 dark:border-slate-700 shadow-sm"
                     >
                         View All Posts
                         <ArrowRight className="w-4 h-4" />
@@ -86,7 +86,7 @@ export function BlogPreview() {
                             className="group cursor-pointer"
                         >
                             <Link href="/blog">
-                                <div className="h-full rounded-[2.5rem] bg-white border border-slate-100 shadow-xl shadow-slate-200/40 overflow-hidden transition-all duration-300 hover:shadow-2xl hover:border-blue-100">
+                                <div className="h-full rounded-[2.5rem] bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700 shadow-xl shadow-slate-200/40 dark:shadow-slate-900/40 overflow-hidden transition-all duration-300 hover:shadow-2xl hover:border-blue-100 dark:hover:border-blue-800">
                                     {/* Image Placeholder */}
                                     <div className={`h-48 bg-gradient-to-br ${post.gradient} flex items-center justify-center relative overflow-hidden`}>
                                         <span className="text-7xl">{post.image}</span>

@@ -5,9 +5,9 @@ import { AlertTriangle, Sparkles, ArrowRight } from "lucide-react"
 
 export function ProblemSolution() {
     return (
-        <section className="py-24 relative overflow-hidden bg-white">
+        <section className="py-24 relative overflow-hidden bg-white dark:bg-slate-900">
             {/* Background Gradient */}
-            <div className="absolute inset-0 bg-gradient-to-b from-white via-slate-50 to-white" />
+            <div className="absolute inset-0 bg-gradient-to-b from-white dark:from-slate-900 via-slate-50 dark:via-slate-800 to-white dark:to-slate-900" />
 
             {/* Animated Orbs */}
             <motion.div
@@ -31,16 +31,16 @@ export function ProblemSolution() {
                         transition={{ duration: 0.6 }}
                         className="relative"
                     >
-                        <div className="p-8 md:p-10 rounded-[2.5rem] bg-slate-50 border border-slate-100 shadow-xl">
+                        <div className="p-8 md:p-10 rounded-[2.5rem] bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 shadow-xl">
                             {/* Problem Badge */}
-                            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-red-500/20 border border-red-500/30 mb-6">
-                                <AlertTriangle className="w-4 h-4 text-red-400" />
-                                <span className="text-sm font-semibold text-red-400">The Problem</span>
+                            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-red-500/20 dark:bg-red-900/30 border border-red-500/30 dark:border-red-800/50 mb-6">
+                                <AlertTriangle className="w-4 h-4 text-red-400 dark:text-red-500" />
+                                <span className="text-sm font-semibold text-red-400 dark:text-red-500">The Problem</span>
                             </div>
 
-                            <h3 className="text-3xl md:text-4xl font-black text-slate-900 mb-6 leading-tight">
+                            <h3 className="text-3xl md:text-4xl font-black text-slate-900 dark:text-white mb-6 leading-tight">
                                 Indians waste time{" "}
-                                <span className="text-red-500">guessing</span>{" "}
+                                <span className="text-red-500 dark:text-red-400">guessing</span>{" "}
                                 where to invest
                             </h3>
 
@@ -59,8 +59,8 @@ export function ProblemSolution() {
                                         transition={{ delay: i * 0.1 }}
                                         className="flex items-center gap-3"
                                     >
-                                        <div className="w-2 h-2 rounded-full bg-red-500" />
-                                        <p className="text-slate-600 font-medium">{problem}</p>
+                                        <div className="w-2 h-2 rounded-full bg-red-500 dark:bg-red-400" />
+                                        <p className="text-slate-600 dark:text-slate-300 font-medium">{problem}</p>
                                     </motion.div>
                                 ))}
                             </div>
@@ -88,16 +88,16 @@ export function ProblemSolution() {
                         transition={{ duration: 0.6, delay: 0.2 }}
                         className="relative"
                     >
-                        <div className="p-8 md:p-10 rounded-[2.5rem] bg-white border border-blue-100 shadow-2xl shadow-blue-500/10">
+                        <div className="p-8 md:p-10 rounded-[2.5rem] bg-white dark:bg-slate-800 border border-blue-100 dark:border-blue-900/30 shadow-2xl shadow-blue-500/10 dark:shadow-blue-900/10">
                             {/* Solution Badge */}
-                            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-500/20 border border-emerald-500/30 mb-6">
-                                <Sparkles className="w-4 h-4 text-emerald-400" />
-                                <span className="text-sm font-semibold text-emerald-400">Our Solution</span>
+                            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-500/20 dark:bg-emerald-900/30 border border-emerald-500/30 dark:border-emerald-800/50 mb-6">
+                                <Sparkles className="w-4 h-4 text-emerald-400 dark:text-emerald-500" />
+                                <span className="text-sm font-semibold text-emerald-400 dark:text-emerald-500">Our Solution</span>
                             </div>
 
-                            <h3 className="text-3xl md:text-4xl font-black text-slate-900 mb-6 leading-tight">
+                            <h3 className="text-3xl md:text-4xl font-black text-slate-900 dark:text-white mb-6 leading-tight">
                                 AI that{" "}
-                                <span className="bg-gradient-to-r from-emerald-600 to-blue-600 bg-clip-text text-transparent">
+                                <span className="bg-gradient-to-r from-emerald-600 to-blue-600 dark:from-emerald-400 dark:to-blue-400 bg-clip-text text-transparent">
                                     understands
                                 </span>{" "}
                                 and guides you
@@ -118,14 +118,14 @@ export function ProblemSolution() {
                                         transition={{ delay: 0.3 + i * 0.1 }}
                                         className="flex items-center gap-3"
                                     >
-                                        <div className="w-2 h-2 rounded-full bg-blue-500" />
-                                        <p className="text-slate-600 font-medium">{solution.text}</p>
+                                        <div className="w-2 h-2 rounded-full bg-blue-500 dark:bg-blue-400" />
+                                        <p className="text-slate-600 dark:text-slate-300 font-medium">{solution.text}</p>
                                     </motion.div>
                                 ))}
                             </div>
 
                             {/* Glow Effect */}
-                            <div className="absolute -bottom-4 -right-4 w-32 h-32 bg-emerald-500/20 rounded-full blur-2xl" />
+                            <div className="absolute -bottom-4 -right-4 w-32 h-32 bg-emerald-500/20 dark:bg-emerald-500/10 rounded-full blur-2xl" />
                         </div>
                     </motion.div>
                 </div>

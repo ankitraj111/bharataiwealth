@@ -1,6 +1,7 @@
 "use client"
 
 import { useState, useEffect } from "react"
+import { motion, AnimatePresence } from "framer-motion"
 import { AppShell } from "@/components/app-shell"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
@@ -25,19 +26,23 @@ import {
     BarChart3,
     Brain,
     Shield,
+    ShieldAlert,
     X,
     Sparkles,
-    Activity,
-    Eye,
-    Calendar,
     Clock,
-    IndianRupee,
-    Star,
-    Zap,
     Target,
-    Repeat
+    Star,
+    Eye,
+    Repeat,
+    Activity,
+    Calendar,
+    IndianRupee,
+    Zap,
+    ShieldCheck,
+    ArrowRight
 } from "lucide-react"
 import { PieChart as RechartsPie, Pie, Cell, ResponsiveContainer, LineChart as RechartsLine, Line, XAxis, YAxis, Tooltip, AreaChart, Area } from "recharts"
+import { staggerContainer, scrollReveal } from "@/lib/animation-variants"
 
 // ============================================
 // DUMMY DATA
@@ -77,9 +82,9 @@ const trendData = Array.from({ length: 30 }, (_, i) => ({
 }))
 
 const aiInsights = [
-    { type: "BUY", asset: "TATAMOTORS", reason: "Strong momentum, AI confidence 87%", risk: "Medium" },
-    { type: "SELL", asset: "HDFC", reason: "Weakening fundamentals, stop-loss triggered", risk: "High" },
-    { type: "HOLD", asset: "TCS", reason: "Stable position, wait for earnings", risk: "Low" },
+    { type: "BUY", asset: "TATAMOTORS", reason: "Relative Strength Index shows bullish divergence. Momentum building.", confidence: 92, timeframe: "Short-term" },
+    { type: "SELL", asset: "HDFC BANK", reason: "Sectoral weakness detected. Higher volatility expected near resistance.", confidence: 78, timeframe: "Intraday" },
+    { type: "ACCUMULATE", asset: "RELIANCE", reason: "Value zone identified. Long-term accumulation recommended at these levels.", confidence: 85, timeframe: "Long-term" },
 ]
 
 const stopLossAlerts = [
@@ -135,95 +140,124 @@ function PortfolioHealthScore({ score }: { score: number }) {
     useEffect(() => {
         const timer = setTimeout(() => {
             setAnimatedScore(score)
-        }, 300)
+        }, 500)
         return () => clearTimeout(timer)
     }, [score])
 
     const getScoreColor = (s: number) => {
-        if (s >= 80) return "#16A34A"
-        if (s >= 60) return "#FF8C00"
-        return "#f43f5e"
+        if (s >= 80) return "text-emerald-500"
+        if (s >= 60) return "text-amber-500"
+        return "text-rose-500"
+    }
+
+    const getScoreBg = (s: number) => {
+        if (s >= 80) return "bg-emerald-500/10"
+        if (s >= 60) return "bg-amber-500/10"
+        return "bg-rose-500/10"
+    }
+
+    const getScoreStroke = (s: number) => {
+        if (s >= 80) return "hsl(var(--emerald-500))"
+        if (s >= 60) return "hsl(var(--amber-500))"
+        return "hsl(var(--rose-500))"
     }
 
     const getScoreLabel = (s: number) => {
-        if (s >= 80) return "Excellent"
-        if (s >= 60) return "Good"
-        if (s >= 40) return "Fair"
-        return "Needs Attention"
+        if (s >= 80) return "Optimal Performance"
+        if (s >= 60) return "Good Diversity"
+        if (s >= 40) return "Needs Balancing"
+        return "High Risk Exposure"
     }
 
-    const circumference = 2 * Math.PI * 45
+    const circumference = 2 * Math.PI * 40
     const strokeDashoffset = circumference - (animatedScore / 100) * circumference
 
     return (
-        <Card className="border-2 border-border/50 bg-gradient-to-br from-background to-muted/20">
-            <CardHeader className="pb-2">
-                <CardTitle className="text-base font-bold flex items-center gap-2">
-                    <Activity className="h-4 w-4 text-[#0A66C2]" />
-                    Portfolio Health Score
-                    <Badge variant="secondary" className="ml-auto text-[10px] bg-[#0A66C2]/10 text-[#0A66C2]">
-                        <Brain className="h-3 w-3 mr-1" />AI Powered
+        <Card className="glass-card overflow-hidden group hover:border-[#0A66C2]/30 transition-all duration-500">
+            <CardHeader className="pb-2 border-b border-border/10 bg-muted/5">
+                <CardTitle className="text-base font-bold flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                        <Activity className="h-4 w-4 text-[#0A66C2]" />
+                        Portfolio Health Index
+                    </div>
+                    <Badge variant="outline" className="border-[#0A66C2]/30 text-[#0A66C2] bg-[#0A66C2]/5">
+                        <Sparkles className="h-3 w-3 mr-1 animate-pulse" />
+                        AI Verified
                     </Badge>
                 </CardTitle>
             </CardHeader>
-            <CardContent>
-                <div className="flex items-center gap-6">
+            <CardContent className="pt-6">
+                <div className="flex flex-col md:flex-row items-center gap-8">
                     {/* Circular Gauge */}
-                    <div className="relative">
-                        <svg className="w-28 h-28 -rotate-90">
+                    <div className="relative group/gauge">
+                        <div className="absolute inset-0 bg-[#0A66C2]/20 blur-3xl rounded-full opacity-0 group-hover/gauge:opacity-100 transition-opacity duration-700" />
+                        <svg className="w-32 h-32 -rotate-90 relative z-10">
                             <circle
-                                cx="56"
-                                cy="56"
-                                r="45"
+                                cx="64"
+                                cy="64"
+                                r="40"
                                 stroke="currentColor"
-                                strokeWidth="10"
+                                strokeWidth="8"
                                 fill="transparent"
-                                className="text-muted/30"
+                                className="text-muted/10"
                             />
-                            <circle
-                                cx="56"
-                                cy="56"
-                                r="45"
-                                stroke={getScoreColor(animatedScore)}
-                                strokeWidth="10"
+                            <motion.circle
+                                cx="64"
+                                cy="64"
+                                r="40"
+                                stroke="currentColor"
+                                strokeWidth="8"
                                 fill="transparent"
                                 strokeLinecap="round"
                                 strokeDasharray={circumference}
-                                strokeDashoffset={strokeDashoffset}
-                                style={{ transition: "stroke-dashoffset 1s ease-out" }}
+                                initial={{ strokeDashoffset: circumference }}
+                                animate={{ strokeDashoffset }}
+                                transition={{ duration: 1.5, ease: "easeOut" }}
+                                className={getScoreColor(score)}
                             />
                         </svg>
-                        <div className="absolute inset-0 flex flex-col items-center justify-center">
-                            <span className="text-2xl font-black" style={{ color: getScoreColor(animatedScore) }}>
+                        <div className="absolute inset-0 flex flex-col items-center justify-center z-10">
+                            <motion.span
+                                initial={{ opacity: 0, scale: 0.5 }}
+                                animate={{ opacity: 1, scale: 1 }}
+                                className={`text-3xl font-black ${getScoreColor(score)}`}
+                            >
                                 {animatedScore}
-                            </span>
-                            <span className="text-[10px] text-muted-foreground font-medium">out of 100</span>
+                            </motion.span>
+                            <span className="text-[10px] text-muted-foreground uppercase font-bold tracking-tighter">Score</span>
                         </div>
                     </div>
 
                     {/* Score Breakdown */}
-                    <div className="flex-1 space-y-2">
-                        <p className="text-sm font-bold" style={{ color: getScoreColor(score) }}>
-                            {getScoreLabel(score)}
-                        </p>
-                        <div className="space-y-1.5">
+                    <div className="flex-1 w-full space-y-4">
+                        <div>
+                            <p className={`text-lg font-bold mb-1 ${getScoreColor(score)}`}>
+                                {getScoreLabel(score)}
+                            </p>
+                            <p className="text-xs text-muted-foreground leading-relaxed">
+                                Your portfolio is currently {score}% optimized for long-term wealth creation according to our AI models.
+                            </p>
+                        </div>
+                        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                             {[
-                                { label: "Diversification", value: 85 },
-                                { label: "Risk Balance", value: 72 },
-                                { label: "Growth Potential", value: 78 },
+                                { label: "Diversification", value: 85, icon: PieChart },
+                                { label: "Volatility Control", value: 72, icon: ShieldCheck },
+                                { label: "Yield Yield", value: 78, icon: TrendingUp },
                             ].map((metric) => (
-                                <div key={metric.label} className="flex items-center gap-2">
-                                    <span className="text-xs text-muted-foreground w-24">{metric.label}</span>
-                                    <div className="flex-1 h-1.5 bg-muted/30 rounded-full overflow-hidden">
-                                        <div
-                                            className="h-full rounded-full transition-all duration-1000"
-                                            style={{
-                                                width: `${metric.value}%`,
-                                                backgroundColor: getScoreColor(metric.value)
-                                            }}
+                                <div key={metric.label} className="p-3 rounded-xl bg-muted/30 border border-border/50 group-hover:border-[#0A66C2]/20 transition-all">
+                                    <div className="flex items-center justify-between mb-2">
+                                        <metric.icon className="h-3 w-3 text-[#0A66C2]" />
+                                        <span className="text-[10px] font-bold text-[#0A66C2]">{metric.value}%</span>
+                                    </div>
+                                    <p className="text-[10px] uppercase font-bold text-muted-foreground tracking-wider mb-2">{metric.label}</p>
+                                    <div className="h-1 bg-background rounded-full overflow-hidden">
+                                        <motion.div
+                                            initial={{ width: 0 }}
+                                            animate={{ width: `${metric.value}%` }}
+                                            transition={{ duration: 1, delay: 0.5 }}
+                                            className="h-full bg-[#0A66C2] rounded-full"
                                         />
                                     </div>
-                                    <span className="text-xs font-bold w-8">{metric.value}%</span>
                                 </div>
                             ))}
                         </div>
@@ -259,565 +293,742 @@ export default function PortfolioPage() {
 
     return (
         <AppShell>
-            <div className="space-y-6">
+            <motion.div
+                initial="hidden"
+                animate="visible"
+                variants={staggerContainer}
+                className="space-y-10 pb-20"
+            >
+                {/* ========== 1. HEADER SECTION ========== */}
+                <motion.div variants={scrollReveal} className="flex flex-col md:flex-row md:items-end justify-between gap-6">
+                    <div className="space-y-2">
+                        <div className="flex items-center gap-3">
+                            <div className="h-12 w-12 rounded-2xl bg-[#0A66C2]/10 flex items-center justify-center border border-[#0A66C2]/20 shadow-lg shadow-[#0A66C2]/10">
+                                <Wallet className="h-6 w-6 text-[#0A66C2]" />
+                            </div>
+                            <div>
+                                <h1 className="text-3xl font-extrabold tracking-tight text-foreground sm:text-4xl">
+                                    Your <span className="text-[#0A66C2]">Portfolio</span>
+                                </h1>
+                                <p className="text-muted-foreground flex items-center gap-2">
+                                    <Sparkles className="h-3 w-3 text-amber-500" /> Complete Portfolio Overview
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="flex flex-wrap gap-3">
+                        <Button
+                            onClick={() => setShowAddModal(true)}
+                            className="rounded-xl bg-[#0A66C2] hover:bg-[#0855a1] text-white shadow-lg shadow-[#0A66C2]/20 transition-all hover:scale-[1.02] active:scale-[0.98]"
+                        >
+                            <Plus className="h-4 w-4 mr-2" /> Add New Asset
+                        </Button>
+                        <Button variant="outline" className="rounded-xl border-border/50 bg-background/50 backdrop-blur-sm hover:bg-muted/50 transition-all">
+                            <Download className="h-4 w-4 mr-2" /> Export Report
+                        </Button>
+                    </div>
+                </motion.div>
 
-                {/* ========== 1. HEADER ========== */}
-                <div className="space-y-2 animate-fade-in">
-                    <h1 className="text-2xl md:text-3xl font-bold text-foreground">My Portfolio</h1>
-                    <p className="text-muted-foreground">Track your wealth across stocks, crypto, and mutual funds.</p>
-                </div>
-
-                {/* ========== NEW: MARKETS SUMMARY ========== */}
-                <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 animate-fade-in stagger-1">
+                {/* ========== 2. MARKET PULSE ========== */}
+                <motion.div variants={scrollReveal} className="grid grid-cols-2 lg:grid-cols-4 gap-4">
                     {marketData.map((market, i) => (
-                        <Card key={i} className="border border-border/50 bg-gradient-to-br from-background to-muted/10">
-                            <CardContent className="p-3">
-                                <div className="flex items-center justify-between">
-                                    <div>
-                                        <p className="text-[10px] font-medium text-muted-foreground uppercase tracking-wider">{market.name}</p>
-                                        <p className="text-lg font-bold text-foreground tabular-nums">{market.value}</p>
+                        <div key={i} className="glass-card p-4 flex items-center justify-between group hover:border-[#0A66C2]/30 transition-all">
+                            <div className="space-y-1">
+                                <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider">{market.name}</p>
+                                <p className="text-lg font-bold tabular-nums">{market.value}</p>
+                            </div>
+                            <div className={`flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-bold ${market.change >= 0 ? "bg-emerald-500/10 text-emerald-500" : "bg-rose-500/10 text-rose-500"
+                                }`}>
+                                {market.change >= 0 ? <ArrowUpRight className="h-3 w-3" /> : <ArrowDownRight className="h-3 w-3" />}
+                                {market.change >= 0 ? "+" : ""}{market.change}%
+                            </div>
+                        </div>
+                    ))}
+                </motion.div>
+
+                {/* ========== 3. CORE ANALYTICS GRID (TOP) ========== */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                    {[
+                        { label: "Total Invested", value: `₹${(totalInvested / 100000).toFixed(2)}L`, icon: IndianRupee, color: "text-blue-500", bg: "bg-blue-500/10" },
+                        { label: "Current Portfolio Value", value: `₹${(currentValue / 100000).toFixed(2)}L`, icon: TrendingUp, color: "text-[#0A66C2]", bg: "bg-[#0A66C2]/10" },
+                        { label: "Net Gain/Loss", value: `₹${(profit / 1000).toFixed(1)}K`, icon: Zap, color: isProfit ? "text-emerald-500" : "text-rose-500", bg: isProfit ? "bg-emerald-500/10" : "bg-rose-500/10", suffix: `${isProfit ? "+" : ""}${profitPercent}%` },
+                        { label: "Monthly AI Yield", value: "₹42,500", icon: Sparkles, color: "text-amber-500", bg: "bg-amber-500/10" },
+                    ].map((stat, i) => (
+                        <motion.div key={i} variants={scrollReveal}>
+                            <Card className="glass-card group hover:border-[#0A66C2]/30 transition-all relative overflow-hidden">
+                                <CardContent className="p-6">
+                                    <div className="flex items-start justify-between">
+                                        <div className="space-y-1">
+                                            <p className="text-xs font-bold text-muted-foreground uppercase tracking-widest">{stat.label}</p>
+                                            <div className="flex items-center gap-3">
+                                                <p className="text-2xl font-black tabular-nums">{stat.value}</p>
+                                                {stat.suffix && (
+                                                    <Badge className={isProfit ? "bg-emerald-500/10 text-emerald-500 border-none px-1" : "bg-rose-500/10 text-rose-500 border-none px-1"}>
+                                                        {stat.suffix}
+                                                    </Badge>
+                                                )}
+                                            </div>
+                                        </div>
+                                        <div className={`p-3 rounded-2xl ${stat.bg} ${stat.color} group-hover:scale-110 group-hover:rotate-6 transition-all duration-500`}>
+                                            <stat.icon className="h-5 w-5" />
+                                        </div>
                                     </div>
-                                    <div className={`flex items-center gap-1 px-2 py-1 rounded-full text-xs font-bold ${market.change >= 0 ? "bg-emerald-500/10 text-emerald-500" : "bg-red-500/10 text-red-500"
-                                        }`}>
-                                        {market.change >= 0 ? <ArrowUpRight className="h-3 w-3" /> : <ArrowDownRight className="h-3 w-3" />}
-                                        {market.change >= 0 ? "+" : ""}{market.change}%
+                                    {/* Decorative background element */}
+                                    <div className="absolute -right-4 -bottom-4 opacity-5 group-hover:opacity-10 transition-opacity">
+                                        <stat.icon className="h-24 w-24" />
                                     </div>
-                                </div>
-                            </CardContent>
-                        </Card>
+                                </CardContent>
+                            </Card>
+                        </motion.div>
                     ))}
                 </div>
 
-                {/* Total Stats Cards */}
-                <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 animate-fade-in stagger-2">
-                    <Card className="border-2 border-border/50">
-                        <CardContent className="p-4">
-                            <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider mb-1">Total Invested</p>
-                            <p className="text-2xl font-bold text-foreground tabular-nums">₹{(totalInvested / 100000).toFixed(1)}L</p>
-                        </CardContent>
-                    </Card>
-                    <Card className="border-2 border-border/50">
-                        <CardContent className="p-4">
-                            <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider mb-1">Current Value</p>
-                            <p className="text-2xl font-bold text-foreground tabular-nums">₹{(currentValue / 100000).toFixed(1)}L</p>
-                        </CardContent>
-                    </Card>
-                    <Card className={`border-2 ${isProfit ? "border-emerald-500/30 bg-emerald-500/5" : "border-red-500/30 bg-red-500/5"}`}>
-                        <CardContent className="p-4">
-                            <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider mb-1">Gain/Loss %</p>
-                            <div className="flex items-center gap-2">
-                                {isProfit ? <TrendingUp className="h-5 w-5 text-emerald-500" /> : <TrendingDown className="h-5 w-5 text-red-500" />}
-                                <p className={`text-2xl font-bold tabular-nums ${isProfit ? "text-emerald-500" : "text-red-500"}`}>
-                                    {isProfit ? "+" : ""}{profitPercent}%
-                                </p>
-                            </div>
-                        </CardContent>
-                    </Card>
-                    <Card className={`border-2 ${isProfit ? "border-emerald-500/30 bg-emerald-500/5" : "border-red-500/30 bg-red-500/5"}`}>
-                        <CardContent className="p-4">
-                            <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider mb-1">Net Profit</p>
-                            <p className={`text-2xl font-bold tabular-nums ${isProfit ? "text-emerald-500" : "text-red-500"}`}>
-                                {isProfit ? "+" : ""}₹{(profit / 1000).toFixed(0)}K
-                            </p>
-                        </CardContent>
-                    </Card>
-                </div>
+                {/* ========== 4. CORE ANALYTICS GRID (MIDDLE) ========== */}
+                <div className="grid lg:grid-cols-3 gap-8">
+                    {/* Left Column: Health & Momentum */}
+                    <div className="lg:col-span-2 space-y-8">
+                        <motion.div variants={scrollReveal}>
+                            <PortfolioHealthScore score={78} />
+                        </motion.div>
 
-                {/* ========== NEW: PORTFOLIO HEALTH SCORE ========== */}
-                <div className="animate-fade-in stagger-3">
-                    <PortfolioHealthScore score={78} />
-                </div>
-
-                {/* ========== 2. ASSET BREAKDOWN TABS ========== */}
-                <Card className="border-2 border-border/50 animate-fade-in stagger-4">
-                    <CardHeader className="pb-2">
-                        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-                            <CardTitle className="text-lg font-bold">Holdings</CardTitle>
-                            <div className="flex gap-2">
-                                {(["stocks", "mf", "crypto"] as const).map((tab) => (
-                                    <Button
-                                        key={tab}
-                                        variant={activeTab === tab ? "default" : "outline"}
-                                        size="sm"
-                                        onClick={() => setActiveTab(tab)}
-                                        className={activeTab === tab ? "bg-[#0A66C2] hover:bg-[#0855a1]" : ""}
-                                    >
-                                        {tab === "stocks" ? "Stocks" : tab === "mf" ? "Mutual Funds" : "Crypto"}
-                                    </Button>
-                                ))}
-                            </div>
-                        </div>
-                    </CardHeader>
-                    <CardContent className="p-0">
-                        <div className="overflow-x-auto">
-                            <table className="w-full">
-                                <thead className="bg-muted/50">
-                                    <tr className="text-xs uppercase text-muted-foreground">
-                                        <th className="text-left p-4 font-medium">Asset</th>
-                                        <th className="text-right p-4 font-medium hidden sm:table-cell">Qty/Units</th>
-                                        <th className="text-right p-4 font-medium hidden md:table-cell">Avg Price</th>
-                                        <th className="text-right p-4 font-medium">Current</th>
-                                        <th className="text-right p-4 font-medium">P/L %</th>
-                                    </tr>
-                                </thead>
-                                <tbody className="divide-y divide-border">
-                                    {currentData.map((asset, i) => (
-                                        <tr key={i} className="hover:bg-muted/30 transition-colors">
-                                            <td className="p-4">
-                                                <div>
-                                                    <p className="font-bold text-foreground">{asset.symbol}</p>
-                                                    <p className="text-xs text-muted-foreground truncate max-w-[150px]">{asset.name}</p>
-                                                    <Badge variant="secondary" className="text-[10px] mt-1">{asset.category}</Badge>
-                                                </div>
-                                            </td>
-                                            <td className="text-right p-4 font-mono hidden sm:table-cell">
-                                                {"qty" in asset ? asset.qty : asset.units}
-                                            </td>
-                                            <td className="text-right p-4 font-mono hidden md:table-cell">
-                                                ₹{"avgPrice" in asset ? asset.avgPrice.toLocaleString() : asset.avgNav.toLocaleString()}
-                                            </td>
-                                            <td className="text-right p-4 font-mono font-bold">
-                                                ₹{"currentPrice" in asset ? asset.currentPrice.toLocaleString() : asset.currentNav.toLocaleString()}
-                                            </td>
-                                            <td className="text-right p-4">
-                                                <div className={`inline-flex items-center gap-1 px-2 py-1 rounded-full text-sm font-bold ${asset.change >= 0 ? "bg-emerald-500/10 text-emerald-500" : "bg-red-500/10 text-red-500"
-                                                    }`}>
-                                                    {asset.change >= 0 ? <ArrowUpRight className="h-3 w-3" /> : <ArrowDownRight className="h-3 w-3" />}
-                                                    {asset.change >= 0 ? "+" : ""}{asset.change}%
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    ))}
-                                </tbody>
-                            </table>
-                        </div>
-                    </CardContent>
-                </Card>
-
-                {/* ========== 3. CHARTS BLOCK ========== */}
-                <div className="grid lg:grid-cols-2 gap-6">
-                    {/* Pie Chart */}
-                    <Card className="border-2 border-border/50">
-                        <CardHeader>
-                            <CardTitle className="text-base font-bold flex items-center gap-2">
-                                <PieChart className="h-4 w-4 text-[#0A66C2]" />
-                                Asset Allocation
-                            </CardTitle>
-                        </CardHeader>
-                        <CardContent>
-                            <div className="h-[250px]">
-                                <ResponsiveContainer width="100%" height="100%">
-                                    <RechartsPie>
-                                        <Pie data={pieData} cx="50%" cy="50%" innerRadius={60} outerRadius={100} dataKey="value" paddingAngle={2}>
-                                            {pieData.map((entry, i) => <Cell key={i} fill={entry.color} />)}
-                                        </Pie>
-                                        <Tooltip />
-                                    </RechartsPie>
-                                </ResponsiveContainer>
-                            </div>
-                            <div className="flex flex-wrap justify-center gap-4 mt-4">
-                                {pieData.map((item, i) => (
-                                    <div key={i} className="flex items-center gap-2">
-                                        <div className="h-3 w-3 rounded-full" style={{ backgroundColor: item.color }} />
-                                        <span className="text-xs text-muted-foreground">{item.name} ({item.value}%)</span>
+                        <motion.div variants={scrollReveal}>
+                            <Card className="glass-card">
+                                <CardHeader className="flex flex-row items-center justify-between pb-2">
+                                    <CardTitle className="text-base font-bold flex items-center gap-2">
+                                        <Activity className="h-4 w-4 text-[#0A66C2]" />
+                                        Portfolio Value Momentum (30D)
+                                    </CardTitle>
+                                    <div className="flex items-center gap-2 text-[10px] text-muted-foreground font-bold">
+                                        <div className="h-2 w-2 rounded-full bg-[#0A66C2]" /> AI TRENDING POSITIVE
                                     </div>
-                                ))}
-                            </div>
-                        </CardContent>
-                    </Card>
-
-                    {/* Line Chart */}
-                    <Card className="border-2 border-border/50">
-                        <CardHeader>
-                            <CardTitle className="text-base font-bold flex items-center gap-2">
-                                <LineChart className="h-4 w-4 text-[#FF8C00]" />
-                                Portfolio Trend (30 Days)
-                            </CardTitle>
-                        </CardHeader>
-                        <CardContent>
-                            <div className="h-[250px]">
-                                <ResponsiveContainer width="100%" height="100%">
-                                    <AreaChart data={trendData}>
-                                        <defs>
-                                            <linearGradient id="trendGradient" x1="0" y1="0" x2="0" y2="1">
-                                                <stop offset="0%" stopColor="#0A66C2" stopOpacity={0.3} />
-                                                <stop offset="100%" stopColor="#0A66C2" stopOpacity={0} />
-                                            </linearGradient>
-                                        </defs>
-                                        <XAxis dataKey="day" tick={{ fontSize: 10 }} />
-                                        <YAxis tick={{ fontSize: 10 }} tickFormatter={(v) => `${(v / 100000).toFixed(0)}L`} />
-                                        <Tooltip formatter={(v: number) => `₹${(v / 100000).toFixed(2)}L`} />
-                                        <Area type="monotone" dataKey="value" stroke="#0A66C2" strokeWidth={2} fill="url(#trendGradient)" />
-                                    </AreaChart>
-                                </ResponsiveContainer>
-                            </div>
-                        </CardContent>
-                    </Card>
-                </div>
-
-                {/* ========== NEW: WATCHLIST QUICK VIEW ========== */}
-                <Card className="border-2 border-border/50">
-                    <CardHeader className="pb-2">
-                        <div className="flex items-center justify-between">
-                            <CardTitle className="text-base font-bold flex items-center gap-2">
-                                <Star className="h-4 w-4 text-[#FF8C00]" />
-                                Watchlist
-                            </CardTitle>
-                            <Button variant="ghost" size="sm" className="text-xs text-[#0A66C2]">
-                                <Eye className="h-3 w-3 mr-1" />View All
-                            </Button>
-                        </div>
-                    </CardHeader>
-                    <CardContent>
-                        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-3">
-                            {watchlistData.map((stock, i) => (
-                                <div key={i} className="p-3 rounded-xl border border-border bg-muted/20 hover:bg-muted/40 transition-all group">
-                                    <div className="flex items-center justify-between mb-2">
-                                        <p className="font-bold text-sm">{stock.symbol}</p>
-                                        <div className={`flex items-center gap-0.5 text-xs font-bold ${stock.change >= 0 ? "text-emerald-500" : "text-red-500"}`}>
-                                            {stock.change >= 0 ? <ArrowUpRight className="h-3 w-3" /> : <ArrowDownRight className="h-3 w-3" />}
-                                            {stock.change >= 0 ? "+" : ""}{stock.change}%
-                                        </div>
+                                </CardHeader>
+                                <CardContent>
+                                    <div className="h-[280px] w-full mt-4">
+                                        <ResponsiveContainer width="100%" height="100%">
+                                            <AreaChart data={trendData}>
+                                                <defs>
+                                                    <linearGradient id="mainTrend" x1="0" y1="0" x2="0" y2="1">
+                                                        <stop offset="0%" stopColor="#0A66C2" stopOpacity={0.2} />
+                                                        <stop offset="100%" stopColor="#0A66C2" stopOpacity={0} />
+                                                    </linearGradient>
+                                                </defs>
+                                                <XAxis
+                                                    dataKey="day"
+                                                    axisLine={false}
+                                                    tickLine={false}
+                                                    tick={{ fontSize: 10, fill: 'hsl(var(--muted-foreground))' }}
+                                                />
+                                                <YAxis
+                                                    axisLine={false}
+                                                    tickLine={false}
+                                                    tick={{ fontSize: 10, fill: 'hsl(var(--muted-foreground))' }}
+                                                    tickFormatter={(v) => `₹${(Number(v) / 100000).toFixed(0)}L`}
+                                                />
+                                                <Tooltip
+                                                    cursor={{ stroke: '#0855a1', strokeWidth: 1, strokeDasharray: '4 4' }}
+                                                    contentStyle={{
+                                                        backgroundColor: 'rgba(var(--background), 0.8)',
+                                                        borderRadius: '12px',
+                                                        border: '1px solid rgba(var(--border), 0.3)',
+                                                        backdropFilter: 'blur(8px)'
+                                                    }}
+                                                    formatter={(v: any) => [`₹${(Number(v) / 100000).toFixed(2)}L`, 'Portfolio Value']}
+                                                />
+                                                <Area
+                                                    type="monotone"
+                                                    dataKey="value"
+                                                    stroke="#0A66C2"
+                                                    strokeWidth={3}
+                                                    fill="url(#mainTrend)"
+                                                    animationDuration={2000}
+                                                />
+                                            </AreaChart>
+                                        </ResponsiveContainer>
                                     </div>
-                                    <p className="text-xs text-muted-foreground truncate mb-2">{stock.name}</p>
-                                    <div className="flex items-center justify-between">
-                                        <p className="font-bold tabular-nums">₹{stock.price.toLocaleString()}</p>
-                                        <Button size="sm" variant="ghost" className="h-6 px-2 text-[10px] opacity-0 group-hover:opacity-100 transition-opacity bg-[#0A66C2] text-white hover:bg-[#0855a1]">
-                                            <Plus className="h-3 w-3 mr-1" />Add
-                                        </Button>
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
-                    </CardContent>
-                </Card>
+                                </CardContent>
+                            </Card>
+                        </motion.div>
+                    </div>
 
-                {/* ========== NEW: SIP TRACKER & DIVIDEND CALENDAR ========== */}
-                <div className="grid lg:grid-cols-2 gap-6">
-                    {/* SIP Tracker */}
-                    <Card className="border-2 border-[#0A66C2]/30 bg-[#0A66C2]/5">
-                        <CardHeader className="pb-2">
-                            <CardTitle className="text-base font-bold flex items-center gap-2">
-                                <Repeat className="h-4 w-4 text-[#0A66C2]" />
-                                SIP Tracker
-                                <Badge className="ml-auto bg-[#0A66C2] text-white text-[10px]">{sipData.length} Active</Badge>
-                            </CardTitle>
-                        </CardHeader>
-                        <CardContent>
-                            <div className="space-y-3">
-                                {sipData.map((sip, i) => (
-                                    <div key={i} className="flex items-center justify-between p-3 bg-background rounded-xl border border-border">
-                                        <div>
-                                            <p className="font-bold text-sm">{sip.name}</p>
-                                            <div className="flex items-center gap-2 mt-1">
-                                                <Clock className="h-3 w-3 text-muted-foreground" />
-                                                <span className="text-xs text-muted-foreground">Next: {sip.nextDate}</span>
-                                            </div>
-                                        </div>
-                                        <div className="text-right">
-                                            <p className="font-bold text-[#0A66C2] tabular-nums">₹{sip.amount.toLocaleString()}</p>
-                                            <Badge variant="secondary" className="text-[10px] bg-emerald-500/10 text-emerald-500">{sip.status}</Badge>
-                                        </div>
-                                    </div>
-                                ))}
-                            </div>
-                            <div className="mt-4 p-3 bg-[#0A66C2]/10 rounded-xl flex items-center justify-between">
-                                <span className="text-sm font-medium">Total Monthly SIP</span>
-                                <span className="text-lg font-bold text-[#0A66C2] tabular-nums">₹{sipData.reduce((sum, s) => sum + s.amount, 0).toLocaleString()}</span>
-                            </div>
-                        </CardContent>
-                    </Card>
-
-                    {/* Dividend Calendar */}
-                    <Card className="border-2 border-[#16A34A]/30 bg-[#16A34A]/5">
-                        <CardHeader className="pb-2">
-                            <CardTitle className="text-base font-bold flex items-center gap-2">
-                                <Calendar className="h-4 w-4 text-[#16A34A]" />
-                                Upcoming Dividends
-                            </CardTitle>
-                        </CardHeader>
-                        <CardContent>
-                            <div className="space-y-3">
-                                {dividendData.map((div, i) => (
-                                    <div key={i} className="flex items-center justify-between p-3 bg-background rounded-xl border border-border">
-                                        <div>
-                                            <p className="font-bold text-sm">{div.stock}</p>
-                                            <div className="flex items-center gap-2 mt-1">
-                                                <Calendar className="h-3 w-3 text-muted-foreground" />
-                                                <span className="text-xs text-muted-foreground">Ex-Date: {div.exDate}</span>
-                                            </div>
-                                        </div>
-                                        <div className="text-right">
-                                            <p className="text-xs text-muted-foreground">{div.amount}</p>
-                                            <p className="font-bold text-[#16A34A] tabular-nums">{div.totalExpected}</p>
-                                        </div>
-                                    </div>
-                                ))}
-                            </div>
-                            <div className="mt-4 p-3 bg-[#16A34A]/10 rounded-xl flex items-center justify-between">
-                                <span className="text-sm font-medium">Expected Total</span>
-                                <span className="text-lg font-bold text-[#16A34A] tabular-nums">₹2,865</span>
-                            </div>
-                        </CardContent>
-                    </Card>
-                </div>
-
-                {/* ========== NEW: RECENT TRANSACTIONS ========== */}
-                <Card className="border-2 border-border/50">
-                    <CardHeader className="pb-2">
-                        <div className="flex items-center justify-between">
-                            <CardTitle className="text-base font-bold flex items-center gap-2">
-                                <Zap className="h-4 w-4 text-[#FF8C00]" />
-                                Recent Transactions
-                            </CardTitle>
-                            <Button variant="ghost" size="sm" className="text-xs text-[#0A66C2]">
-                                View All
-                            </Button>
-                        </div>
-                    </CardHeader>
-                    <CardContent>
-                        <div className="overflow-x-auto">
-                            <table className="w-full">
-                                <thead className="bg-muted/50">
-                                    <tr className="text-xs uppercase text-muted-foreground">
-                                        <th className="text-left p-3 font-medium">Date</th>
-                                        <th className="text-left p-3 font-medium">Asset</th>
-                                        <th className="text-center p-3 font-medium">Type</th>
-                                        <th className="text-right p-3 font-medium hidden sm:table-cell">Qty</th>
-                                        <th className="text-right p-3 font-medium hidden sm:table-cell">Price</th>
-                                        <th className="text-right p-3 font-medium">Total</th>
-                                    </tr>
-                                </thead>
-                                <tbody className="divide-y divide-border">
-                                    {transactionsData.map((tx, i) => (
-                                        <tr key={i} className="hover:bg-muted/30 transition-colors">
-                                            <td className="p-3 text-sm text-muted-foreground">{tx.date}</td>
-                                            <td className="p-3 font-bold text-sm">{tx.asset}</td>
-                                            <td className="p-3 text-center">
-                                                <Badge className={
-                                                    tx.type === "BUY" ? "bg-emerald-500" :
-                                                        tx.type === "SELL" ? "bg-red-500" :
-                                                            "bg-[#0A66C2]"
-                                                }>{tx.type}</Badge>
-                                            </td>
-                                            <td className="p-3 text-right font-mono text-sm hidden sm:table-cell">{tx.qty}</td>
-                                            <td className="p-3 text-right font-mono text-sm hidden sm:table-cell">₹{tx.price.toLocaleString()}</td>
-                                            <td className="p-3 text-right font-bold tabular-nums">₹{tx.total.toLocaleString()}</td>
-                                        </tr>
-                                    ))}
-                                </tbody>
-                            </table>
-                        </div>
-                    </CardContent>
-                </Card>
-
-                {/* ========== 4. RISK BUCKET SUMMARY ========== */}
-                <Card className="border-2 border-border/50">
-                    <CardHeader>
-                        <CardTitle className="text-base font-bold flex items-center gap-2">
-                            <Shield className="h-4 w-4 text-[#16A34A]" />
-                            Risk Exposure
-                        </CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                        <div className="grid grid-cols-3 gap-4 mb-4">
-                            {[
-                                { label: "Low Risk", value: 40, color: "#16A34A" },
-                                { label: "Medium Risk", value: 45, color: "#FF8C00" },
-                                { label: "High Risk", value: 15, color: "#f43f5e" },
-                            ].map((risk, i) => (
-                                <div key={i} className="text-center p-4 rounded-xl" style={{ backgroundColor: `${risk.color}10` }}>
-                                    <p className="text-3xl font-black" style={{ color: risk.color }}>{risk.value}%</p>
-                                    <p className="text-xs text-muted-foreground font-medium">{risk.label}</p>
-                                </div>
-                            ))}
-                        </div>
-                        <p className="text-xs text-muted-foreground text-center">
-                            <Brain className="h-3 w-3 inline mr-1" />
-                            Based on AI classification of your assets
-                        </p>
-                    </CardContent>
-                </Card>
-
-                {/* ========== 5. AI RECOMMENDATION ALERT BOX ========== */}
-                <Card className="border-2 border-[#0A66C2]/30 bg-[#0A66C2]/5">
-                    <CardHeader>
-                        <CardTitle className="text-base font-bold flex items-center gap-2">
-                            <Sparkles className="h-4 w-4 text-[#0A66C2]" />
-                            AI Insights for You
-                        </CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                        <div className="space-y-3">
-                            {aiInsights.map((insight, i) => (
-                                <div key={i} className="flex items-start gap-3 p-3 bg-background rounded-xl border border-border">
-                                    <div className={`p-2 rounded-lg ${insight.type === "BUY" ? "bg-emerald-500/10" :
-                                        insight.type === "SELL" ? "bg-red-500/10" : "bg-gray-500/10"
-                                        }`}>
-                                        {insight.type === "BUY" ? (
-                                            <ArrowUpRight className="h-4 w-4 text-emerald-500" />
-                                        ) : insight.type === "SELL" ? (
-                                            <ArrowDownRight className="h-4 w-4 text-red-500" />
-                                        ) : (
-                                            <BarChart3 className="h-4 w-4 text-gray-500" />
-                                        )}
-                                    </div>
+                    {/* Right Column: Allocation & Insights */}
+                    <div className="space-y-8">
+                        <motion.div variants={scrollReveal}>
+                            <Card className="glass-card flex flex-col h-[400px]">
+                                <CardHeader className="pb-2">
+                                    <CardTitle className="text-base font-bold flex items-center gap-2">
+                                        <PieChart className="h-4 w-4 text-emerald-500" />
+                                        Asset Distribution
+                                    </CardTitle>
+                                </CardHeader>
+                                <CardContent className="flex-1 min-h-0 flex flex-col">
                                     <div className="flex-1">
-                                        <div className="flex items-center gap-2 mb-1">
-                                            <Badge className={
-                                                insight.type === "BUY" ? "bg-emerald-500" :
-                                                    insight.type === "SELL" ? "bg-red-500" : "bg-gray-500"
-                                            }>{insight.type}</Badge>
-                                            <span className="font-bold text-foreground">{insight.asset}</span>
+                                        <ResponsiveContainer width="100%" height="100%">
+                                            <RechartsPie>
+                                                <Pie
+                                                    data={pieData}
+                                                    cx="50%"
+                                                    cy="50%"
+                                                    innerRadius={65}
+                                                    outerRadius={95}
+                                                    dataKey="value"
+                                                    paddingAngle={5}
+                                                    stroke="none"
+                                                >
+                                                    {pieData.map((entry, i) => <Cell key={i} fill={entry.color} />)}
+                                                </Pie>
+                                                <Tooltip
+                                                    contentStyle={{
+                                                        backgroundColor: 'rgba(var(--background), 0.8)',
+                                                        borderRadius: '12px',
+                                                        border: '1px solid rgba(var(--border), 0.3)',
+                                                        backdropFilter: 'blur(8px)'
+                                                    }}
+                                                />
+                                            </RechartsPie>
+                                        </ResponsiveContainer>
+                                    </div>
+                                    <div className="grid grid-cols-2 gap-y-3 mt-4">
+                                        {pieData.map((item, i) => (
+                                            <div key={i} className="flex items-center gap-2 group cursor-default">
+                                                <div className="h-2 w-2 rounded-full" style={{ backgroundColor: item.color }} />
+                                                <span className="text-[11px] font-medium text-muted-foreground group-hover:text-foreground transition-colors">
+                                                    {item.name} <span className="text-[10px] font-bold">({item.value}%)</span>
+                                                </span>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </CardContent>
+                            </Card>
+                        </motion.div>
+
+                        <motion.div variants={scrollReveal}>
+                            <Card className="glass-card border-blue-500/20 bg-blue-500/5 h-full">
+                                <CardHeader className="pb-4">
+                                    <div className="flex items-center justify-between">
+                                        <CardTitle className="text-base font-black flex items-center gap-2 uppercase tracking-tight">
+                                            <Sparkles className="h-4 w-4 text-blue-500 animate-pulse" />
+                                            AI Asset Insights
+                                        </CardTitle>
+                                        <Badge className="bg-blue-600/10 text-blue-600 border-none text-[9px] font-black uppercase">Engine v4.2</Badge>
+                                    </div>
+                                </CardHeader>
+                                <CardContent className="space-y-3">
+                                    {aiInsights.map((insight, i) => (
+                                        <div key={i} className="p-4 rounded-2xl bg-white/40 dark:bg-black/20 backdrop-blur-md border border-white/50 dark:border-white/10 hover:border-blue-500/30 transition-all flex flex-col gap-3 group">
+                                            <div className="flex items-start justify-between">
+                                                <div className="flex gap-3">
+                                                    <div className={`p-2 h-10 w-10 shrink-0 rounded-xl flex items-center justify-center shadow-inner ${insight.type === "BUY" ? "bg-emerald-500/20 text-emerald-600" :
+                                                        insight.type === "SELL" ? "bg-rose-500/20 text-rose-600" : "bg-blue-500/20 text-blue-600"
+                                                        }`}>
+                                                        {insight.type === "BUY" ? <TrendingUp className="h-5 w-5" /> :
+                                                            insight.type === "SELL" ? <TrendingDown className="h-5 w-5" /> : <Activity className="h-5 w-5" />}
+                                                    </div>
+                                                    <div className="space-y-0.5">
+                                                        <div className="flex items-center gap-2">
+                                                            <span className={`text-[9px] font-black uppercase px-2 py-0.5 rounded shadow-sm ${insight.type === "BUY" ? "bg-emerald-500 text-white" :
+                                                                insight.type === "SELL" ? "bg-rose-500 text-white" : "bg-blue-500 text-white"
+                                                                }`}>
+                                                                {insight.type}
+                                                            </span>
+                                                            <p className="font-black text-sm tracking-tight uppercase">{insight.asset}</p>
+                                                        </div>
+                                                        <p className="text-[10px] text-muted-foreground font-medium uppercase tracking-widest">{insight.timeframe}</p>
+                                                    </div>
+                                                </div>
+                                                <div className="text-right">
+                                                    <p className="text-[10px] font-black text-blue-600 uppercase tracking-tighter">{insight.confidence}%</p>
+                                                    <p className="text-[8px] text-muted-foreground font-bold uppercase">Confidence</p>
+                                                </div>
+                                            </div>
+                                            <div className="space-y-2">
+                                                <p className="text-xs text-muted-foreground leading-snug italic font-medium">"{insight.reason}"</p>
+                                                <div className="h-1 w-full bg-muted/30 rounded-full overflow-hidden">
+                                                    <motion.div
+                                                        initial={{ width: 0 }}
+                                                        whileInView={{ width: `${insight.confidence}%` }}
+                                                        transition={{ duration: 1, delay: i * 0.2 }}
+                                                        className={`h-full rounded-full ${insight.type === "BUY" ? "bg-emerald-500" :
+                                                            insight.type === "SELL" ? "bg-rose-500" : "bg-blue-500"
+                                                            }`}
+                                                    />
+                                                </div>
+                                            </div>
                                         </div>
-                                        <p className="text-sm text-muted-foreground">{insight.reason}</p>
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
-                        <Button variant="outline" className="w-full mt-4 border-[#0A66C2] text-[#0A66C2]">
-                            View Detailed Advisory
-                        </Button>
-                    </CardContent>
-                </Card>
-
-                {/* ========== 6. STOP LOSS WARNING ========== */}
-                {stopLossAlerts.length > 0 ? (
-                    <Card className="border-2 border-red-500/30 bg-red-500/5">
-                        <CardHeader>
-                            <CardTitle className="text-base font-bold flex items-center gap-2 text-red-500">
-                                <AlertTriangle className="h-4 w-4" />
-                                Stop Loss Alerts
-                            </CardTitle>
-                        </CardHeader>
-                        <CardContent>
-                            {stopLossAlerts.map((alert, i) => (
-                                <div key={i} className="flex items-center justify-between p-3 bg-background rounded-xl border border-red-500/20">
-                                    <div className="flex items-center gap-3">
-                                        <Bell className="h-5 w-5 text-red-500 animate-pulse" />
-                                        <div>
-                                            <p className="font-bold text-foreground">{alert.asset}</p>
-                                            <p className="text-xs text-muted-foreground">Stop Loss: ₹{alert.stopLoss}</p>
-                                        </div>
-                                    </div>
-                                    <div className="text-right">
-                                        <p className="font-bold text-red-500">₹{alert.currentPrice}</p>
-                                        <Badge variant="destructive" className="text-[10px]">TRIGGERED</Badge>
-                                    </div>
-                                </div>
-                            ))}
-                        </CardContent>
-                    </Card>
-                ) : (
-                    <Card className="border-2 border-emerald-500/30 bg-emerald-500/5">
-                        <CardContent className="p-6 text-center">
-                            <CheckCircle2 className="h-8 w-8 text-emerald-500 mx-auto mb-2" />
-                            <p className="font-medium text-emerald-700">No risk events detected</p>
-                            <p className="text-xs text-muted-foreground">All your positions are within safe limits</p>
-                        </CardContent>
-                    </Card>
-                )}
-
-                {/* ========== 7. REBALANCE SUGGESTION ========== */}
-                <Card className="border-2 border-[#FF8C00]/30 bg-[#FF8C00]/5">
-                    <CardHeader>
-                        <CardTitle className="text-base font-bold flex items-center gap-2">
-                            <RefreshCw className="h-4 w-4 text-[#FF8C00]" />
-                            Rebalance Suggestions
-                        </CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                        <div className="grid md:grid-cols-2 gap-4">
-                            <div className="p-4 bg-red-500/10 rounded-xl border border-red-500/20">
-                                <p className="text-xs font-medium text-red-500 uppercase mb-1">Overweight</p>
-                                <p className="font-bold text-foreground">{rebalanceSuggestions.overweight.category}</p>
-                                <p className="text-sm text-muted-foreground">
-                                    {rebalanceSuggestions.overweight.current}% → {rebalanceSuggestions.overweight.target}%
-                                </p>
-                                <p className="text-xs text-red-600 mt-1">{rebalanceSuggestions.overweight.action}</p>
-                            </div>
-                            <div className="p-4 bg-emerald-500/10 rounded-xl border border-emerald-500/20">
-                                <p className="text-xs font-medium text-emerald-500 uppercase mb-1">Underweight</p>
-                                <p className="font-bold text-foreground">{rebalanceSuggestions.underweight.category}</p>
-                                <p className="text-sm text-muted-foreground">
-                                    {rebalanceSuggestions.underweight.current}% → {rebalanceSuggestions.underweight.target}%
-                                </p>
-                                <p className="text-xs text-emerald-600 mt-1">{rebalanceSuggestions.underweight.action}</p>
-                            </div>
-                        </div>
-                        <Button variant="outline" className="w-full mt-4 border-[#FF8C00] text-[#FF8C00]">
-                            See Rebalance Plan
-                        </Button>
-                    </CardContent>
-                </Card>
-
-                {/* ========== 8. ADD HOLDINGS BUTTON ========== */}
-                <Button
-                    onClick={() => setShowAddModal(true)}
-                    className="w-full bg-[#0A66C2] hover:bg-[#0855a1] h-12"
-                >
-                    <Plus className="h-5 w-5 mr-2" />
-                    Add New Holding
-                </Button>
-
-                {/* ========== 10. FOOTER CTA ========== */}
-                <div className="grid sm:grid-cols-3 gap-4">
-                    <Button variant="outline" className="h-12 gap-2">
-                        <Link2 className="h-4 w-4" />
-                        Connect Broker
-                    </Button>
-                    <Button variant="outline" className="h-12 gap-2">
-                        <FileText className="h-4 w-4" />
-                        Full Advisory Report
-                    </Button>
-                    <Button variant="outline" className="h-12 gap-2">
-                        <Download className="h-4 w-4" />
-                        Export CSV
-                    </Button>
+                                    ))}
+                                    <Button variant="outline" className="w-full h-11 rounded-xl border-blue-500/20 bg-blue-500/5 hover:bg-blue-500/10 text-blue-600 text-[10px] font-black uppercase tracking-widest gap-2 mt-2">
+                                        View Full Intelligence Feed <ArrowRight className="h-3 w-3" />
+                                    </Button>
+                                </CardContent>
+                            </Card>
+                        </motion.div>
+                    </div>
                 </div>
 
-                {/* ========== ADD HOLDING MODAL ========== */}
-                {showAddModal && (
-                    <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-                        <Card className="w-full max-w-md">
-                            <CardHeader className="flex flex-row items-center justify-between">
-                                <CardTitle>Add New Holding</CardTitle>
-                                <Button variant="ghost" size="icon" onClick={() => setShowAddModal(false)}>
-                                    <X className="h-4 w-4" />
-                                </Button>
+                {/* ========== 5. DETAILED HOLDINGS TABLE ========== */}
+                <motion.div variants={scrollReveal}>
+                    <Card className="glass-card overflow-hidden">
+                        <CardHeader className="bg-muted/5 border-b border-border/10">
+                            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                                <div>
+                                    <CardTitle className="text-xl font-black tracking-tight">Portfolio Asset List</CardTitle>
+                                    <p className="text-xs text-muted-foreground mt-1 font-medium tracking-wide">DETAILED BREAKDOWN OVER ALL CLASSES</p>
+                                </div>
+                                <div className="flex bg-muted/30 p-1 rounded-xl backdrop-blur-md border border-border/50 overflow-x-auto scroller-hide">
+                                    {(["stocks", "mf", "crypto"] as const).map((tab) => (
+                                        <button
+                                            key={tab}
+                                            onClick={() => setActiveTab(tab)}
+                                            className={`px-4 py-2 rounded-lg text-xs font-bold transition-all uppercase tracking-widest ${activeTab === tab
+                                                ? "bg-[#0A66C2] text-white shadow-md"
+                                                : "text-muted-foreground hover:bg-muted/50"
+                                                }`}
+                                        >
+                                            {tab === "stocks" ? "Stocks" : tab === "mf" ? "Funds" : "Crypto"}
+                                        </button>
+                                    ))}
+                                </div>
+                            </div>
+                        </CardHeader>
+                        <CardContent className="p-0">
+                            <div className="overflow-x-auto">
+                                <table className="w-full">
+                                    <thead>
+                                        <tr className="bg-muted/20 text-[10px] uppercase tracking-[0.2em] text-muted-foreground border-b border-border/10">
+                                            <th className="text-left p-6 font-bold">Asset Entity</th>
+                                            <th className="text-right p-6 font-bold hidden sm:table-cell">Composition</th>
+                                            <th className="text-right p-6 font-bold hidden md:table-cell">Avg Entry</th>
+                                            <th className="text-right p-6 font-bold">Live Value</th>
+                                            <th className="text-right p-6 font-bold">PNL (Rel)</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody className="divide-y divide-border/5">
+                                        {currentData.map((asset, i) => (
+                                            <tr key={i} className="group hover:bg-muted/30 transition-all duration-300">
+                                                <td className="p-6">
+                                                    <div className="flex items-center gap-4">
+                                                        <div className="h-10 w-10 rounded-xl bg-muted/50 border border-border/50 flex items-center justify-center font-bold text-xs">
+                                                            {asset.symbol.slice(0, 2)}
+                                                        </div>
+                                                        <div>
+                                                            <p className="font-black text-foreground group-hover:text-[#0A66C2] transition-colors uppercase tracking-tight">{asset.symbol}</p>
+                                                            <div className="flex items-center gap-2 mt-1">
+                                                                <span className="text-[10px] text-muted-foreground font-medium uppercase tracking-tighter truncate max-w-[120px]">{asset.name}</span>
+                                                                <Badge variant="outline" className="text-[8px] h-3 px-1 border-none bg-muted font-bold text-muted-foreground">
+                                                                    {asset.category}
+                                                                </Badge>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td className="text-right p-6 text-sm font-mono text-muted-foreground hidden sm:table-cell">
+                                                    {"qty" in asset ? asset.qty : asset.units} <span className="text-[10px] opacity-70">units</span>
+                                                </td>
+                                                <td className="text-right p-6 font-mono text-xs hidden md:table-cell text-muted-foreground">
+                                                    ₹{"avgPrice" in asset ? asset.avgPrice.toLocaleString() : asset.avgNav.toLocaleString()}
+                                                </td>
+                                                <td className="text-right p-6 font-black tabular-nums tracking-tighter text-foreground">
+                                                    ₹{"currentPrice" in asset ? asset.currentPrice.toLocaleString() : asset.currentNav.toLocaleString()}
+                                                </td>
+                                                <td className="text-right p-6">
+                                                    <div className={`inline-flex items-center gap-1 px-3 py-1.5 rounded-full text-xs font-black transition-all ${asset.change >= 0
+                                                        ? "bg-emerald-500/10 text-emerald-600 group-hover:bg-emerald-500/20"
+                                                        : "bg-rose-500/10 text-rose-600 group-hover:bg-rose-500/20"
+                                                        }`}>
+                                                        {asset.change >= 0 ? <ArrowUpRight className="h-3 w-3" /> : <ArrowDownRight className="h-3 w-3" />}
+                                                        {asset.change >= 0 ? "+" : ""}{asset.change}%
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        ))}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </CardContent>
+                    </Card>
+                </motion.div>
+
+                {/* ========== 6. TACTICAL OVERVIEW (SIP & DIVIDENDS) ========== */}
+                <div className="grid lg:grid-cols-2 gap-8">
+                    {/* SIP Tracker */}
+                    <motion.div variants={scrollReveal}>
+                        <Card className="glass-card border-blue-500/20 bg-blue-500/5 h-full">
+                            <CardHeader className="pb-4">
+                                <div className="flex items-center justify-between">
+                                    <CardTitle className="text-base font-bold flex items-center gap-2">
+                                        <Repeat className="h-4 w-4 text-blue-500" />
+                                        Systematic Wealth (SIP)
+                                    </CardTitle>
+                                    <Badge className="bg-blue-600 text-white border-none px-2 py-0.5 text-[10px] font-black">{sipData.length} ACTIVE ENGINES</Badge>
+                                </div>
                             </CardHeader>
                             <CardContent className="space-y-4">
-                                <div>
-                                    <label className="text-sm font-medium mb-2 block">Asset Type</label>
-                                    <select className="w-full p-3 rounded-lg border border-border bg-background">
-                                        <option>Stock</option>
-                                        <option>Mutual Fund</option>
-                                        <option>Crypto</option>
-                                    </select>
+                                <div className="grid gap-3">
+                                    {sipData.map((sip, i) => (
+                                        <div key={i} className="flex items-center justify-between p-4 bg-background/40 backdrop-blur-md rounded-2xl border border-border/50 group hover:border-blue-500/30 transition-all">
+                                            <div className="flex items-center gap-3">
+                                                <div className="h-10 w-10 rounded-xl bg-blue-500/10 flex items-center justify-center">
+                                                    <Clock className="h-5 w-5 text-blue-500" />
+                                                </div>
+                                                <div>
+                                                    <p className="font-bold text-sm">{sip.name}</p>
+                                                    <p className="text-[10px] text-muted-foreground font-medium uppercase tracking-tighter">DEBIT DATE: {sip.nextDate}</p>
+                                                </div>
+                                            </div>
+                                            <div className="text-right">
+                                                <p className="font-black text-[#0A66C2] tabular-nums text-sm">₹{sip.amount.toLocaleString()}</p>
+                                                <span className="text-[10px] font-bold text-emerald-500 bg-emerald-500/10 px-1.5 py-0.5 rounded uppercase">{sip.status}</span>
+                                            </div>
+                                        </div>
+                                    ))}
                                 </div>
-                                <div>
-                                    <label className="text-sm font-medium mb-2 block">Symbol / Name</label>
-                                    <Input placeholder="e.g. RELIANCE or Bitcoin" />
+                                <div className="p-4 bg-blue-600/10 rounded-2xl flex items-center justify-between border border-blue-600/20">
+                                    <span className="text-xs font-black text-blue-700 uppercase tracking-widest">Monthly Fuel</span>
+                                    <span className="text-xl font-black text-blue-700 tabular-nums">₹{sipData.reduce((sum, s) => sum + s.amount, 0).toLocaleString()}</span>
                                 </div>
-                                <div className="grid grid-cols-2 gap-4">
-                                    <div>
-                                        <label className="text-sm font-medium mb-2 block">Quantity</label>
-                                        <Input type="number" placeholder="50" />
+                            </CardContent>
+                        </Card>
+                    </motion.div>
+
+                    {/* Dividend Calendar */}
+                    <motion.div variants={scrollReveal}>
+                        <Card className="glass-card border-emerald-500/20 bg-emerald-500/5 h-full">
+                            <CardHeader className="pb-4">
+                                <CardTitle className="text-base font-bold flex items-center gap-2">
+                                    <Calendar className="h-4 w-4 text-emerald-500" />
+                                    Passive Yield Calendar
+                                </CardTitle>
+                            </CardHeader>
+                            <CardContent className="space-y-4">
+                                <div className="grid gap-3">
+                                    {dividendData.map((div, i) => (
+                                        <div key={i} className="flex items-center justify-between p-4 bg-background/40 backdrop-blur-md rounded-2xl border border-border/50 group hover:border-emerald-500/30 transition-all">
+                                            <div className="flex items-center gap-3">
+                                                <div className="h-10 w-10 rounded-xl bg-emerald-500/10 flex items-center justify-center">
+                                                    <Target className="h-5 w-5 text-emerald-500" />
+                                                </div>
+                                                <div>
+                                                    <p className="font-bold text-sm tracking-tight">{div.stock}</p>
+                                                    <p className="text-[10px] text-muted-foreground font-medium uppercase tracking-tighter">EX-DATE: {div.exDate}</p>
+                                                </div>
+                                            </div>
+                                            <div className="text-right">
+                                                <p className="text-[10px] text-muted-foreground font-bold uppercase">{div.amount}</p>
+                                                <p className="font-black text-emerald-600 tabular-nums text-sm">{div.totalExpected}</p>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                                <div className="p-4 bg-emerald-600/10 rounded-2xl flex items-center justify-between border border-emerald-600/20">
+                                    <span className="text-xs font-black text-emerald-700 uppercase tracking-widest">Expected Harvest</span>
+                                    <span className="text-xl font-black text-emerald-700 tabular-nums">₹2,865</span>
+                                </div>
+                            </CardContent>
+                        </Card>
+                    </motion.div>
+                </div>
+
+                {/* ========== 7. WATCHLIST QUICK VIEW ========== */}
+                <motion.div variants={scrollReveal}>
+                    <Card className="glass-card border-amber-500/20 bg-amber-500/5">
+                        <CardHeader className="pb-4">
+                            <div className="flex items-center justify-between">
+                                <CardTitle className="text-base font-bold flex items-center gap-2">
+                                    <Star className="h-4 w-4 text-amber-500" />
+                                    Active Watchlist
+                                </CardTitle>
+                                <Button variant="ghost" size="sm" className="text-[10px] font-black text-blue-600 uppercase tracking-widest hover:bg-blue-50">
+                                    Analyze All Assets <Eye className="h-3 w-3 ml-2" />
+                                </Button>
+                            </div>
+                        </CardHeader>
+                        <CardContent>
+                            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                                {watchlistData.map((stock, i) => (
+                                    <div key={i} className="p-4 rounded-2xl bg-background/40 backdrop-blur-md border border-border/50 hover:border-amber-500/30 hover:shadow-lg hover:shadow-amber-500/5 transition-all group">
+                                        <div className="flex items-center justify-between mb-2">
+                                            <p className="font-black text-sm tracking-tight group-hover:text-amber-600 transition-colors uppercase">{stock.symbol}</p>
+                                            <div className={`flex items-center gap-1 text-[10px] font-black ${stock.change >= 0 ? "text-emerald-500" : "text-rose-500"}`}>
+                                                {stock.change >= 0 ? <ArrowUpRight className="h-2.5 w-2.5" /> : <ArrowDownRight className="h-2.5 w-2.5" />}
+                                                {stock.change >= 0 ? "+" : ""}{stock.change}%
+                                            </div>
+                                        </div>
+                                        <p className="text-[10px] text-muted-foreground font-medium truncate mb-4 uppercase tracking-tighter">{stock.name}</p>
+                                        <div className="flex items-center justify-between mt-auto">
+                                            <p className="font-black tabular-nums text-sm">₹{stock.price.toLocaleString()}</p>
+                                            <Button size="icon" variant="ghost" className="h-8 w-8 rounded-lg bg-blue-600/10 text-blue-600 hover:bg-blue-600 hover:text-white transition-all shadow-sm">
+                                                <Plus className="h-4 w-4" />
+                                            </Button>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </CardContent>
+                    </Card>
+                </motion.div>
+
+                {/* ========== 8. REGISTRY OF OPERATIONS (RECENT ACTIVITY) ========== */}
+                <motion.div variants={scrollReveal}>
+                    <Card className="glass-card overflow-hidden">
+                        <CardHeader className="bg-muted/5 border-b border-border/10 pb-4">
+                            <div className="flex items-center justify-between">
+                                <div className="flex items-center gap-3">
+                                    <div className="h-10 w-10 rounded-xl bg-amber-500/10 flex items-center justify-center">
+                                        <Zap className="h-5 w-5 text-amber-500" />
                                     </div>
                                     <div>
-                                        <label className="text-sm font-medium mb-2 block">Buy Price</label>
-                                        <Input type="number" placeholder="₹2500" />
+                                        <CardTitle className="text-lg font-black tracking-tight uppercase">Registry of Operations</CardTitle>
+                                        <p className="text-[10px] text-muted-foreground font-bold uppercase tracking-widest">REAL-TIME TRANSACTION LOG</p>
                                     </div>
                                 </div>
-                                <Button className="w-full bg-[#0A66C2]" onClick={() => setShowAddModal(false)}>
-                                    Save Holding
+                                <Button variant="outline" size="sm" className="rounded-xl border-border/50 text-[10px] font-black uppercase tracking-widest hover:bg-muted/50">
+                                    Full Ledger
+                                </Button>
+                            </div>
+                        </CardHeader>
+                        <CardContent className="p-0">
+                            <div className="overflow-x-auto scroller-hide">
+                                <table className="w-full">
+                                    <thead>
+                                        <tr className="bg-muted/20 text-[10px] uppercase tracking-[0.2em] text-muted-foreground border-b border-border/10">
+                                            <th className="text-left p-6 font-bold">Execution Date</th>
+                                            <th className="text-left p-6 font-bold">Asset Entity</th>
+                                            <th className="text-center p-6 font-bold">Action</th>
+                                            <th className="text-right p-6 font-bold hidden sm:table-cell">Vol</th>
+                                            <th className="text-right p-6 font-bold hidden sm:table-cell">Price (Unit)</th>
+                                            <th className="text-right p-6 font-bold">Total (Nominal)</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody className="divide-y divide-border/5">
+                                        {transactionsData.map((tx, i) => (
+                                            <tr key={i} className="group hover:bg-muted/20 transition-all duration-300">
+                                                <td className="p-6 text-xs text-muted-foreground font-medium uppercase">{tx.date}</td>
+                                                <td className="p-6">
+                                                    <p className="font-black text-sm tracking-tight group-hover:text-[#0A66C2] transition-colors">{tx.asset}</p>
+                                                </td>
+                                                <td className="p-6 text-center">
+                                                    <Badge className={`text-[9px] font-black px-2 py-0.5 rounded border-none shadow-sm ${tx.type === "BUY" ? "bg-emerald-500 text-white" :
+                                                        tx.type === "SELL" ? "bg-rose-500 text-white" : "bg-blue-600 text-white"
+                                                        }`}>{tx.type}</Badge>
+                                                </td>
+                                                <td className="p-6 text-right font-mono text-xs text-muted-foreground hidden sm:table-cell">{tx.qty}</td>
+                                                <td className="p-6 text-right font-mono text-xs text-muted-foreground hidden sm:table-cell">₹{tx.price.toLocaleString()}</td>
+                                                <td className="p-6 text-right font-black tabular-nums tracking-tighter text-foreground">₹{tx.total.toLocaleString()}</td>
+                                            </tr>
+                                        ))}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </CardContent>
+                    </Card>
+                </motion.div>
+
+                {/* ========== 9. STRATEGIC POSITIONING (RISK & REBALANCE) ========== */}
+                <div className="grid lg:grid-cols-2 gap-8">
+                    {/* Risk Exposure & Health Guard */}
+                    <motion.div variants={scrollReveal}>
+                        <Card className="glass-card h-full border-rose-500/20 bg-rose-500/5">
+                            <CardHeader className="pb-4">
+                                <CardTitle className="text-base font-bold flex items-center gap-2">
+                                    <ShieldAlert className="h-4 w-4 text-rose-500" />
+                                    Risk Exposure & Health Guard
+                                </CardTitle>
+                            </CardHeader>
+                            <CardContent className="space-y-6">
+                                <div className="grid grid-cols-3 gap-3">
+                                    {[
+                                        { label: "Stability", value: "40%", color: "text-emerald-500", bg: "bg-emerald-500/10" },
+                                        { label: "Medium", value: "45%", color: "text-amber-500", bg: "bg-amber-500/10" },
+                                        { label: "Aggressive", value: "15%", color: "text-rose-500", bg: "bg-rose-500/10" },
+                                    ].map((risk, i) => (
+                                        <div key={i} className={`text-center p-4 rounded-2xl ${risk.bg} backdrop-blur-sm border border-white/10 group hover:scale-[1.02] transition-all`}>
+                                            <p className={`text-xl font-black ${risk.color}`}>{risk.value}</p>
+                                            <p className="text-[10px] text-muted-foreground font-bold uppercase tracking-tighter">{risk.label}</p>
+                                        </div>
+                                    ))}
+                                </div>
+
+                                {stopLossAlerts.length > 0 ? (
+                                    <div className="space-y-3">
+                                        <div className="flex items-center gap-2 text-rose-600 font-black text-[10px] uppercase tracking-[0.2em] mb-2 px-1">
+                                            <Bell className="h-3 w-3 animate-pulse" /> Critical Breaches Detected
+                                        </div>
+                                        {stopLossAlerts.map((alert, i) => (
+                                            <div key={i} className="flex items-center justify-between p-4 bg-background/60 backdrop-blur-md rounded-2xl border border-rose-500/30 shadow-lg shadow-rose-500/5 group hover:bg-background/80 transition-all">
+                                                <div className="flex items-center gap-3">
+                                                    <div className="h-10 w-10 rounded-xl bg-rose-500/10 flex items-center justify-center">
+                                                        <AlertTriangle className="h-5 w-5 text-rose-500" />
+                                                    </div>
+                                                    <div>
+                                                        <p className="font-black text-sm uppercase">{alert.asset}</p>
+                                                        <p className="text-[10px] text-muted-foreground font-medium uppercase tracking-tighter">STOP LOSS: ₹{alert.stopLoss}</p>
+                                                    </div>
+                                                </div>
+                                                <div className="text-right">
+                                                    <p className="font-black text-rose-600 tabular-nums text-sm">₹{alert.currentPrice}</p>
+                                                    <Badge className="bg-rose-600 text-white text-[9px] font-black border-none px-1.5 leading-none h-4 uppercase">TRIGGERED</Badge>
+                                                </div>
+                                            </div>
+                                        ))}
+                                    </div>
+                                ) : (
+                                    <div className="p-6 text-center bg-emerald-500/5 rounded-2xl border border-emerald-500/20">
+                                        <CheckCircle2 className="h-8 w-8 text-emerald-500 mx-auto mb-2" />
+                                        <p className="font-black text-emerald-700 text-sm uppercase">Position Shield Active</p>
+                                        <p className="text-[10px] text-muted-foreground font-medium">ALL ASSETS ARE TRADING ABOVE STOP-LOSS LIMITS</p>
+                                    </div>
+                                )}
+                            </CardContent>
+                        </Card>
+                    </motion.div>
+
+                    {/* Rebalance Suggester */}
+                    <motion.div variants={scrollReveal}>
+                        <Card className="glass-card h-full border-amber-500/20 bg-amber-500/5">
+                            <CardHeader className="pb-4">
+                                <CardTitle className="text-base font-bold flex items-center gap-2">
+                                    <RefreshCw className="h-4 w-4 text-amber-500" />
+                                    Dynamic Rebalance Matrix
+                                </CardTitle>
+                            </CardHeader>
+                            <CardContent className="space-y-6">
+                                <div className="space-y-4">
+                                    <div className="p-5 rounded-2xl bg-rose-500/10 border border-rose-500/20 group hover:bg-rose-500/15 transition-all">
+                                        <div className="flex items-center justify-between mb-3">
+                                            <span className="text-[10px] font-black text-rose-600 uppercase tracking-widest">Efficiency Leak (Overweight)</span>
+                                            <ArrowDownRight className="h-4 w-4 text-rose-600" />
+                                        </div>
+                                        <p className="text-lg font-black tracking-tight">{rebalanceSuggestions.overweight.category}</p>
+                                        <div className="flex items-center gap-3 my-2">
+                                            <div className="flex-1 h-2 bg-rose-500/20 rounded-full overflow-hidden">
+                                                <div className="h-full bg-rose-500 w-[70%]" />
+                                            </div>
+                                            <span className="text-xs font-black text-rose-700">{rebalanceSuggestions.overweight.current}% → {rebalanceSuggestions.overweight.target}%</span>
+                                        </div>
+                                        <p className="text-[10px] font-bold text-rose-800/70 uppercase">{rebalanceSuggestions.overweight.action}</p>
+                                    </div>
+
+                                    <div className="p-5 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 group hover:bg-emerald-500/15 transition-all">
+                                        <div className="flex items-center justify-between mb-3">
+                                            <span className="text-[10px] font-black text-emerald-600 uppercase tracking-widest">Growth Engine (Underweight)</span>
+                                            <ArrowUpRight className="h-4 w-4 text-emerald-600" />
+                                        </div>
+                                        <p className="text-lg font-black tracking-tight">{rebalanceSuggestions.underweight.category}</p>
+                                        <div className="flex items-center gap-3 my-2">
+                                            <div className="flex-1 h-2 bg-emerald-500/20 rounded-full overflow-hidden">
+                                                <div className="h-full bg-emerald-500 w-[40%]" />
+                                            </div>
+                                            <span className="text-xs font-black text-emerald-700">{rebalanceSuggestions.underweight.current}% → {rebalanceSuggestions.underweight.target}%</span>
+                                        </div>
+                                        <p className="text-[10px] font-bold text-emerald-800/70 uppercase">{rebalanceSuggestions.underweight.action}</p>
+                                    </div>
+                                </div>
+                                <Button className="w-full h-12 rounded-xl bg-amber-600 hover:bg-amber-700 text-xs font-black uppercase tracking-widest shadow-lg shadow-amber-600/20">
+                                    Execute Rebalance Plan
                                 </Button>
                             </CardContent>
                         </Card>
-                    </div>
-                )}
+                    </motion.div>
+                </div>
 
-            </div>
+                {/* ========== 10. GLOBAL ACTIONS & FOOTER ========== */}
+                <motion.div variants={scrollReveal} className="pt-10 border-t border-border/10">
+                    <div className="grid sm:grid-cols-3 gap-6">
+                        <Button variant="outline" className="h-16 rounded-2xl gap-3 border-border/50 bg-background/50 backdrop-blur-md hover:bg-muted/50 hover:border-[#0A66C2]/30 transition-all group">
+                            <div className="h-10 w-10 rounded-xl bg-[#0A66C2]/10 flex items-center justify-center group-hover:scale-110 transition-transform">
+                                <Link2 className="h-5 w-5 text-[#0A66C2]" />
+                            </div>
+                            <div className="text-left">
+                                <p className="text-[10px] font-black text-muted-foreground uppercase tracking-widest">Data Bridge</p>
+                                <p className="font-bold text-sm">Connect Broker</p>
+                            </div>
+                        </Button>
+                        <Button variant="outline" className="h-16 rounded-2xl gap-3 border-border/50 bg-background/50 backdrop-blur-md hover:bg-muted/50 hover:border-emerald-600/30 transition-all group">
+                            <div className="h-10 w-10 rounded-xl bg-emerald-600/10 flex items-center justify-center group-hover:scale-110 transition-transform">
+                                <FileText className="h-5 w-5 text-emerald-600" />
+                            </div>
+                            <div className="text-left">
+                                <p className="text-[10px] font-black text-muted-foreground uppercase tracking-widest">Intelligence</p>
+                                <p className="font-bold text-sm">Full Advisory Report</p>
+                            </div>
+                        </Button>
+                        <Button variant="outline" className="h-16 rounded-2xl gap-3 border-border/50 bg-background/50 backdrop-blur-md hover:bg-muted/50 hover:border-amber-600/30 transition-all group">
+                            <div className="h-10 w-10 rounded-xl bg-amber-600/10 flex items-center justify-center group-hover:scale-110 transition-transform">
+                                <Download className="h-5 w-5 text-amber-600" />
+                            </div>
+                            <div className="text-left">
+                                <p className="text-[10px] font-black text-muted-foreground uppercase tracking-widest">Extraction</p>
+                                <p className="font-bold text-sm">Export Financials (CSV)</p>
+                            </div>
+                        </Button>
+                    </div>
+                </motion.div>
+
+                {/* ========== MODALS ========== */}
+                <AnimatePresence>
+                    {showAddModal && (
+                        <div className="fixed inset-0 flex items-center justify-center z-[100] p-4">
+                            <motion.div
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 1 }}
+                                exit={{ opacity: 0 }}
+                                onClick={() => setShowAddModal(false)}
+                                className="absolute inset-0 bg-background/80 backdrop-blur-sm"
+                            />
+                            <motion.div
+                                initial={{ opacity: 0, scale: 0.9, y: 20 }}
+                                animate={{ opacity: 1, scale: 1, y: 0 }}
+                                exit={{ opacity: 0, scale: 0.9, y: 20 }}
+                                className="w-full max-w-md relative"
+                            >
+                                <Card className="glass-card shadow-2xl border-[#0A66C2]/20">
+                                    <div className="absolute top-4 right-4">
+                                        <Button variant="ghost" size="icon" onClick={() => setShowAddModal(false)} className="rounded-full hover:bg-muted/50 text-muted-foreground">
+                                            <X className="h-4 w-4" />
+                                        </Button>
+                                    </div>
+                                    <CardHeader className="pt-8 text-center">
+                                        <div className="h-16 w-16 rounded-2xl bg-[#0A66C2]/10 flex items-center justify-center mx-auto mb-4 border border-[#0A66C2]/20">
+                                            <Plus className="h-8 w-8 text-[#0A66C2]" />
+                                        </div>
+                                        <CardTitle className="text-2xl font-black tracking-tight">Expand Portfolio</CardTitle>
+                                        <p className="text-xs text-muted-foreground font-medium uppercase tracking-widest mt-1">NEW ASSET REGISTRATION</p>
+                                    </CardHeader>
+                                    <CardContent className="space-y-6 pb-10">
+                                        <div className="space-y-2">
+                                            <label className="text-[10px] font-black text-muted-foreground uppercase tracking-widest ml-1">Asset Class</label>
+                                            <div className="grid grid-cols-3 gap-2">
+                                                {["Stock", "MF", "Crypto"].map((type) => (
+                                                    <button key={type} className="h-10 rounded-xl border border-border/50 text-[10px] font-black uppercase hover:border-[#0A66C2] hover:bg-[#0A66C2]/5 transition-all">
+                                                        {type}
+                                                    </button>
+                                                ))}
+                                            </div>
+                                        </div>
+                                        <div className="space-y-2">
+                                            <label className="text-[10px] font-black text-muted-foreground uppercase tracking-widest ml-1">Symbol / Name</label>
+                                            <Input placeholder="e.g. RELIANCE or BTC" className="h-12 rounded-xl border-border/50 bg-muted/20 font-bold focus:ring-[#0A66C2]/20" />
+                                        </div>
+                                        <div className="grid grid-cols-2 gap-4">
+                                            <div className="space-y-2">
+                                                <label className="text-[10px] font-black text-muted-foreground uppercase tracking-widest ml-1">Volume</label>
+                                                <Input type="number" placeholder="0.00" className="h-12 rounded-xl border-border/50 bg-muted/20 font-bold" />
+                                            </div>
+                                            <div className="space-y-2">
+                                                <label className="text-[10px] font-black text-muted-foreground uppercase tracking-widest ml-1">Unit Price</label>
+                                                <Input type="number" placeholder="₹0.00" className="h-12 rounded-xl border-border/50 bg-muted/20 font-bold" />
+                                            </div>
+                                        </div>
+                                        <Button className="w-full h-14 rounded-2xl bg-[#0A66C2] hover:bg-[#0855a1] font-black uppercase tracking-widest shadow-xl shadow-[#0A66C2]/20 transition-all hover:scale-[1.02] active:scale-[0.98]">
+                                            Commit to Portfolio
+                                        </Button>
+                                    </CardContent>
+                                </Card>
+                            </motion.div>
+                        </div>
+                    )}
+                </AnimatePresence>
+
+            </motion.div>
         </AppShell>
     )
 }

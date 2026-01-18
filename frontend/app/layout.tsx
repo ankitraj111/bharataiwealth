@@ -3,6 +3,7 @@ import type { Metadata, Viewport } from "next"
 import { Inter, Poppins, JetBrains_Mono } from "next/font/google"
 import { Providers } from "@/components/providers"
 import "./globals.css"
+import "./normalize-text.css"
 
 const inter = Inter({
   subsets: ["latin"],

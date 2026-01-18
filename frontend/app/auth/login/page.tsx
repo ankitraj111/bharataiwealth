@@ -65,7 +65,7 @@ export default function LoginPage() {
         <div className="min-h-screen grid lg:grid-cols-2 bg-background overflow-hidden font-sans">
             {/* Left Side: Branding/Visuals */}
             <div className="hidden lg:flex flex-col justify-between p-12 bg-gradient-to-br from-primary/20 via-background to-secondary/20 relative">
-                <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 brightness-100 contrast-150 pointer-events-none" />
+                <div className="absolute inset-0 bg-noise-pattern opacity-20 brightness-100 contrast-150 pointer-events-none" />
 
                 <div className="relative z-10 flex items-center gap-3">
                     <div className="h-10 w-10 flex items-center justify-center rounded-xl bg-primary shadow-lg shadow-primary/20">

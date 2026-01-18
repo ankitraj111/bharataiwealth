@@ -100,11 +100,11 @@ export default function DashboardPage() {
         <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-8">
           <div className="space-y-2">
             <div className="flex items-center gap-3">
-              <div className="h-12 w-12 rounded-2xl bg-gradient-to-br from-primary to-orange-400 flex items-center justify-center shadow-lg shadow-primary/20 text-white font-black text-xl">
+              <div className="h-12 w-12 rounded-2xl bg-gradient-to-br from-primary to-orange-400 flex items-center justify-center shadow-lg shadow-primary/20 text-white font-semibold text-xl">
                 {summary?.userName?.[0] || "I"}
               </div>
               <div>
-                <h1 className="text-3xl font-black tracking-tight text-foreground">
+                <h1 className="text-3xl font-semibold tracking-tight text-foreground">
                   {greeting}, {summary?.userName || "Investor"}
                 </h1>
                 <p className="text-sm text-muted-foreground font-semibold flex items-center gap-2">
@@ -124,7 +124,7 @@ export default function DashboardPage() {
                     <action.icon className="h-4 w-4" />
                   </div>
                   <div>
-                    <p className="text-xs font-black leading-none">{action.name}</p>
+                    <p className="text-xs font-semibold leading-none">{action.name}</p>
                     <p className="text-[10px] text-muted-foreground mt-0.5">{action.desc}</p>
                   </div>
                 </div>
@@ -141,12 +141,14 @@ export default function DashboardPage() {
           </div>
           <div className="bg-gradient-to-br from-primary/10 to-transparent border border-primary/20 rounded-[2rem] p-6 flex items-center justify-between">
             <div className="space-y-1">
-              <p className="text-xs font-black uppercase tracking-widest text-primary">Portfolio Health</p>
-              <h3 className="text-2xl font-black">94 / 100</h3>
-              <p className="text-[11px] font-bold text-muted-foreground">Excellent condition</p>
+              <p className="text-xs font-semibold uppercase tracking-widest text-primary">Portfolio Health</p>
+              <h3 className="text-2xl font-semibold">{summary?.aiConfidence || 0} / 100</h3>
+              <p className="text-[11px] font-medium text-muted-foreground">
+                {summary?.aiConfidence > 90 ? "Excellent condition" : summary?.aiConfidence > 75 ? "Good condition" : "Needs attention"}
+              </p>
             </div>
-            <div className="h-16 w-16 rounded-full border-[6px] border-primary/20 border-t-primary flex items-center justify-center font-black text-primary">
-              94%
+            <div className="h-16 w-16 rounded-full border-[6px] border-primary/20 border-t-primary flex items-center justify-center font-semibold text-primary">
+              {summary?.aiConfidence || 0}%
             </div>
           </div>
         </div>
@@ -223,7 +225,7 @@ export default function DashboardPage() {
                       axisLine={false}
                       tickLine={false}
                       tick={{ fill: "oklch(0.60 0.005 250)", fontSize: 11, fontWeight: 500 }}
-                      tickFormatter={(value) => `₹${value / 1000}k`}
+                      tickFormatter={(value: any) => `₹${Number(value || 0) / 1000}k`}
                       dx={-10}
                     />
                     <Tooltip

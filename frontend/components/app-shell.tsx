@@ -8,7 +8,7 @@ export function AppShell({ children, noPadding = false }: { children: React.Reac
   const [insightAsset, setInsightAsset] = useState<string | null>(null)
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-white via-sky-50 to-white selection:bg-primary/20 selection:text-primary overflow-x-hidden">
+    <div className="min-h-screen bg-gradient-to-br from-white via-sky-50 to-white dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 selection:bg-primary/20 selection:text-primary overflow-x-hidden">
       <Sidebar />
       <div className="lg:pl-[260px] relative z-0">
         <Topbar />

@@ -35,9 +35,9 @@ const stats = [
 
 export function SocialProof() {
     return (
-        <section className="py-24 relative overflow-hidden bg-white">
+        <section className="py-24 relative overflow-hidden bg-white dark:bg-slate-800">
             {/* Background */}
-            <div className="absolute inset-0 bg-gradient-to-b from-white via-slate-50 to-white" />
+            <div className="absolute inset-0 bg-gradient-to-b from-white dark:from-slate-800 via-slate-50 dark:via-slate-900 to-white dark:to-slate-800" />
 
             <div className="w-full px-6 md:px-12 lg:px-20 xl:px-32 relative z-10">
                 {/* Section Header */}
@@ -49,14 +49,14 @@ export function SocialProof() {
                     transition={{ duration: 0.6 }}
                 >
                     <motion.span
-                        className="inline-block px-4 py-2 rounded-full text-xs font-bold bg-slate-100 text-slate-500 border border-slate-200 mb-6 uppercase tracking-[0.2em]"
+                        className="inline-block px-4 py-2 rounded-full text-xs font-bold bg-slate-100 dark:bg-slate-900 text-slate-500 dark:text-slate-400 border border-slate-200 dark:border-slate-700 mb-6 uppercase tracking-[0.2em]"
                         initial={{ opacity: 0, scale: 0.9 }}
                         whileInView={{ opacity: 1, scale: 1 }}
                         viewport={{ once: true }}
                     >
                         Trusted by Investors
                     </motion.span>
-                    <h2 className="text-4xl md:text-5xl font-black mb-6 text-slate-900 tracking-tight">
+                    <h2 className="text-4xl md:text-5xl font-black mb-6 text-slate-900 dark:text-white tracking-tight">
                         What Our Users
                         <br />
                         <span className="bg-gradient-to-r from-emerald-600 to-teal-500 bg-clip-text text-transparent">
@@ -83,7 +83,7 @@ export function SocialProof() {
                             whileHover={{ y: -6 }}
                             className="group"
                         >
-                            <div className="h-full p-8 rounded-[2rem] bg-white border border-slate-100 shadow-xl shadow-slate-200/40 transition-all duration-300 hover:shadow-2xl hover:border-blue-100">
+                            <div className="h-full p-8 rounded-[2rem] bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-700 shadow-xl shadow-slate-200/40 dark:shadow-slate-900/40 transition-all duration-300 hover:shadow-2xl hover:border-blue-100 dark:hover:border-blue-800">
                                 {/* Stars */}
                                 <div className="flex gap-1 mb-4">
                                     {[...Array(5)].map((_, i) => (
@@ -92,7 +92,7 @@ export function SocialProof() {
                                 </div>
 
                                 {/* Quote */}
-                                <p className="text-slate-600 leading-relaxed mb-6 italic font-medium">
+                                <p className="text-slate-600 dark:text-slate-300 leading-relaxed mb-6 italic font-medium">
                                     &ldquo;{testimonial.quote}&rdquo;
                                 </p>
 
@@ -102,8 +102,8 @@ export function SocialProof() {
                                         {testimonial.avatar}
                                     </div>
                                     <div>
-                                        <p className="font-black text-slate-900">{testimonial.name}</p>
-                                        <p className="text-xs font-bold text-slate-400 uppercase tracking-wider">{testimonial.role}</p>
+                                        <p className="font-black text-slate-900 dark:text-white">{testimonial.name}</p>
+                                        <p className="text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider">{testimonial.role}</p>
                                     </div>
                                 </div>
                             </div>
@@ -125,12 +125,12 @@ export function SocialProof() {
                             whileHover={{ scale: 1.03, y: -4 }}
                             className="relative group h-full"
                         >
-                            <div className={`h-full p-8 rounded-[2rem] bg-white border border-slate-100 shadow-xl shadow-slate-200/40 transition-all duration-300 group-hover:shadow-2xl flex flex-col items-center text-center`}>
+                            <div className={`h-full p-8 rounded-[2rem] bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-700 shadow-xl shadow-slate-200/40 dark:shadow-slate-900/40 transition-all duration-300 group-hover:shadow-2xl flex flex-col items-center text-center`}>
                                 <div className={`w-12 h-12 rounded-2xl bg-gradient-to-br ${stat.gradient} flex items-center justify-center mb-4 shadow-lg group-hover:scale-110 transition-transform`}>
                                     <stat.icon className="w-6 h-6 text-white" />
                                 </div>
-                                <p className="text-3xl md:text-4xl font-black text-slate-900 mb-1">{stat.value}</p>
-                                <p className="text-xs font-bold text-slate-500 uppercase tracking-widest">{stat.label}</p>
+                                <p className="text-3xl md:text-4xl font-black text-slate-900 dark:text-white mb-1">{stat.value}</p>
+                                <p className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest">{stat.label}</p>
                             </div>
                         </motion.div>
                     ))}

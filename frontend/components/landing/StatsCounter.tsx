@@ -74,9 +74,9 @@ export function StatsCounter() {
     const isInView = useInView(ref, { once: true })
 
     return (
-        <section ref={ref} className="py-24 relative overflow-hidden bg-white">
+        <section ref={ref} className="py-24 relative overflow-hidden bg-white dark:bg-slate-900">
             {/* Background */}
-            <div className="absolute inset-0 bg-gradient-to-b from-white via-slate-50 to-white" />
+            <div className="absolute inset-0 bg-gradient-to-b from-white dark:from-slate-900 via-slate-50 dark:via-slate-800 to-white dark:to-slate-900" />
 
             {/* Decorative Elements */}
             <div className="absolute inset-0 opacity-40" style={{
@@ -104,12 +104,12 @@ export function StatsCounter() {
                             </motion.div>
 
                             {/* Value */}
-                            <div className="text-4xl md:text-5xl font-black text-slate-900 mb-2">
+                            <div className="text-4xl md:text-5xl font-black text-slate-900 dark:text-white mb-2">
                                 <AnimatedCounter value={stat.value} suffix={stat.suffix} inView={isInView} />
                             </div>
 
                             {/* Label */}
-                            <p className="text-xs font-bold text-slate-500 uppercase tracking-widest">
+                            <p className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest">
                                 {stat.label}
                             </p>
                         </motion.div>

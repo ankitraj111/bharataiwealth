@@ -366,17 +366,17 @@ function PredictionsContent() {
                                     <p className="text-xs font-medium uppercase tracking-wider text-muted-foreground">Risk Level</p>
                                     <div className="mt-1">
                                         <span className={`text-2xl font-bold capitalize ${data?.risk === 'low' ? 'text-success' :
-                                                data?.risk === 'medium' ? 'text-warning' : 'text-destructive'
+                                            data?.risk === 'medium' ? 'text-warning' : 'text-destructive'
                                             }`}>
                                             {isLoading ? "---" : (data?.risk || "---")}
                                         </span>
                                     </div>
                                 </div>
                                 <div className={`h-10 w-10 rounded-full flex items-center justify-center ${data?.risk === 'low' ? 'bg-success/10' :
-                                        data?.risk === 'medium' ? 'bg-warning/10' : 'bg-destructive/10'
+                                    data?.risk === 'medium' ? 'bg-warning/10' : 'bg-destructive/10'
                                     }`}>
                                     <ShieldAlert className={`h-5 w-5 ${data?.risk === 'low' ? 'text-success' :
-                                            data?.risk === 'medium' ? 'text-warning' : 'text-destructive'
+                                        data?.risk === 'medium' ? 'text-warning' : 'text-destructive'
                                         }`} />
                                 </div>
                             </div>
@@ -425,7 +425,7 @@ function PredictionsContent() {
                                                     </defs>
                                                     <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" vertical={false} />
                                                     <XAxis dataKey="time" axisLine={false} tickLine={false} tick={{ fill: '#6b7280', fontSize: 11 }} dy={10} />
-                                                    <YAxis domain={['auto', 'auto']} axisLine={false} tickLine={false} tick={{ fill: '#6b7280', fontSize: 11 }} tickFormatter={(val) => `₹${val}`} />
+                                                    <YAxis domain={['auto', 'auto']} axisLine={false} tickLine={false} tick={{ fill: '#6b7280', fontSize: 11 }} tickFormatter={(val: any) => `₹${val}`} />
                                                     <Tooltip
                                                         contentStyle={{ backgroundColor: '#fff', border: '1px solid #e5e7eb', borderRadius: '8px', boxShadow: '0 4px 6px rgba(0,0,0,0.1)' }}
                                                         formatter={(value: any) => [`₹${value}`, '']}
@@ -642,7 +642,7 @@ function PredictionsContent() {
                                         <>
                                             <div className="text-center py-6">
                                                 <div className={`text-6xl font-bold ${sentiment.overall_sentiment === 'Bullish' ? 'text-success' :
-                                                        sentiment.overall_sentiment === 'Bearish' ? 'text-destructive' : 'text-muted-foreground'
+                                                    sentiment.overall_sentiment === 'Bearish' ? 'text-destructive' : 'text-muted-foreground'
                                                     }`}>
                                                     {(sentiment.score * 100).toFixed(0)}%
                                                 </div>
@@ -677,7 +677,7 @@ function PredictionsContent() {
                                     {sentiment?.headlines?.map((h: any, i: number) => (
                                         <div key={i} className="p-3 rounded-xl bg-secondary/30 border border-border/30 flex items-start gap-3">
                                             <div className={`h-2 w-2 rounded-full mt-1.5 shrink-0 ${h.sentiment === 'positive' ? 'bg-success' :
-                                                    h.sentiment === 'negative' ? 'bg-destructive' : 'bg-muted-foreground'
+                                                h.sentiment === 'negative' ? 'bg-destructive' : 'bg-muted-foreground'
                                                 }`} />
                                             <div>
                                                 <p className="text-sm">{h.text}</p>

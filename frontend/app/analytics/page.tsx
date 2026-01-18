@@ -269,7 +269,7 @@ export default function AnalyticsPage() {
                       axisLine={false}
                       tickLine={false}
                       tick={{ fill: "var(--muted-foreground)", fontSize: 10, fontWeight: 700 }}
-                      tickFormatter={(value) => `₹${value / 1000}k`}
+                      tickFormatter={(value: any) => `₹${Number(value || 0) / 1000}k`}
                       dx={-10}
                     />
                     <Tooltip
@@ -419,7 +419,7 @@ export default function AnalyticsPage() {
                       axisLine={false}
                       tickLine={false}
                       tick={{ fill: "var(--muted-foreground)", fontSize: 10, fontWeight: 700 }}
-                      tickFormatter={(value) => `₹${value / 1000}k`}
+                      tickFormatter={(value: any) => `₹${Number(value || 0) / 1000}k`}
                       dx={-10}
                     />
                     <Tooltip

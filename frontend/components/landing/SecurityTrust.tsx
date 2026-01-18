@@ -26,9 +26,9 @@ const trustPoints = [
 
 export function SecurityTrust() {
     return (
-        <section className="py-24 relative overflow-hidden bg-white">
+        <section className="py-24 relative overflow-hidden bg-white dark:bg-slate-900">
             {/* Background */}
-            <div className="absolute inset-0 bg-gradient-to-b from-white via-slate-50 to-white" />
+            <div className="absolute inset-0 bg-gradient-to-b from-white dark:from-slate-900 via-slate-50 dark:via-slate-800 to-white dark:to-slate-900" />
 
             <div className="w-full px-6 md:px-12 lg:px-20 xl:px-32 relative z-10">
                 <div className="max-w-5xl mx-auto">
@@ -41,21 +41,21 @@ export function SecurityTrust() {
                         transition={{ duration: 0.6 }}
                     >
                         <motion.div
-                            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-50 border border-emerald-100 mb-6"
+                            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-50 dark:bg-emerald-900/30 border border-emerald-100 dark:border-emerald-800 mb-6"
                             initial={{ opacity: 0, scale: 0.9 }}
                             whileInView={{ opacity: 1, scale: 1 }}
                             viewport={{ once: true }}
                         >
-                            <Shield className="w-4 h-4 text-emerald-600" />
-                            <span className="text-xs font-bold text-emerald-600 uppercase tracking-widest">Security First</span>
+                            <Shield className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
+                            <span className="text-xs font-bold text-emerald-600 dark:text-emerald-400 uppercase tracking-widest">Security First</span>
                         </motion.div>
-                        <h2 className="text-4xl md:text-5xl font-black text-slate-900 mb-6 tracking-tight">
+                        <h2 className="text-4xl md:text-5xl font-black text-slate-900 dark:text-white mb-6 tracking-tight">
                             Your Trust is{" "}
-                            <span className="bg-gradient-to-r from-emerald-600 to-blue-500 bg-clip-text text-transparent">
+                            <span className="bg-gradient-to-r from-emerald-600 to-blue-500 dark:from-emerald-400 dark:to-blue-400 bg-clip-text text-transparent">
                                 Our Priority
                             </span>
                         </h2>
-                        <p className="text-lg text-slate-600 font-medium max-w-2xl mx-auto">
+                        <p className="text-lg text-slate-600 dark:text-slate-300 font-medium max-w-2xl mx-auto">
                             We&apos;ve built every feature with your security in mind. Your money, your control — always.
                         </p>
                     </motion.div>
@@ -78,7 +78,7 @@ export function SecurityTrust() {
                                 whileHover={{ y: -6 }}
                                 className="group"
                             >
-                                <div className="h-full p-8 rounded-[2rem] bg-white border border-slate-100 shadow-xl shadow-slate-200/40 text-center transition-all duration-300 group-hover:shadow-2xl hover:border-emerald-100">
+                                <div className="h-full p-8 rounded-[2rem] bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700 shadow-xl shadow-slate-200/40 dark:shadow-slate-900/40 text-center transition-all duration-300 group-hover:shadow-2xl hover:border-emerald-100 dark:hover:border-emerald-800">
                                     {/* Icon */}
                                     <motion.div
                                         className={`w-16 h-16 rounded-2xl bg-gradient-to-r ${point.gradient} flex items-center justify-center mx-auto mb-6 shadow-lg`}
@@ -87,10 +87,10 @@ export function SecurityTrust() {
                                         <point.icon className="w-8 h-8 text-white" />
                                     </motion.div>
 
-                                    <h3 className="text-xl font-black text-slate-900 mb-3">
+                                    <h3 className="text-xl font-black text-slate-900 dark:text-white mb-3">
                                         {point.title}
                                     </h3>
-                                    <p className="text-slate-600 font-medium leading-relaxed">
+                                    <p className="text-slate-600 dark:text-slate-300 font-medium leading-relaxed">
                                         {point.description}
                                     </p>
                                 </div>
@@ -100,7 +100,7 @@ export function SecurityTrust() {
 
                     {/* Bottom Trust Strip */}
                     <motion.div
-                        className="mt-12 p-8 rounded-[2rem] bg-slate-50 border border-slate-100 shadow-sm"
+                        className="mt-12 p-8 rounded-[2rem] bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 shadow-sm"
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
@@ -114,8 +114,8 @@ export function SecurityTrust() {
                                 "Regular security audits"
                             ].map((item, i) => (
                                 <div key={i} className="flex items-center gap-2">
-                                    <CheckCircle2 className="w-5 h-5 text-emerald-500" />
-                                    <span className="text-xs font-bold text-slate-500 uppercase tracking-widest">{item}</span>
+                                    <CheckCircle2 className="w-5 h-5 text-emerald-500 dark:text-emerald-400" />
+                                    <span className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest">{item}</span>
                                 </div>
                             ))}
                         </div>
