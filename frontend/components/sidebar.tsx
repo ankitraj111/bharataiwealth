@@ -78,6 +78,8 @@ const bottomNavItems = [
 export function Sidebar() {
   const pathname = usePathname()
   const [portfolioOpen, setPortfolioOpen] = useState(true)
+  const [mutualFundsOpen, setMutualFundsOpen] = useState(true)
+  const [toolsOpen, setToolsOpen] = useState(true)
   const [engagementOpen, setEngagementOpen] = useState(false)
 
   return (
@@ -147,11 +149,17 @@ export function Sidebar() {
 
         {/* Mutual Funds Section */}
         <div className="mb-5">
-          <p className="px-3 py-2 text-xs font-bold uppercase tracking-wider text-amber-700 dark:text-amber-400 flex items-center gap-2 bg-amber-50 dark:bg-amber-900/30 rounded-lg mx-1">
-            <Coins className="h-4 w-4" />
-            Mutual Funds
-          </p>
-          <div className="mt-1 space-y-0.5">
+          <button
+            onClick={() => setMutualFundsOpen(!mutualFundsOpen)}
+            className="flex w-full items-center justify-between px-3 py-2 text-xs font-bold uppercase tracking-wider text-amber-700 dark:text-amber-400 bg-amber-50 dark:bg-amber-900/30 rounded-lg mx-1"
+          >
+            <span className="flex items-center gap-2">
+              <Coins className="h-4 w-4" />
+              Mutual Funds
+            </span>
+            <ChevronDown className={cn("h-3 w-3 transition-transform", mutualFundsOpen && "rotate-180")} />
+          </button>
+          <div className={cn("mt-1 space-y-0.5 overflow-hidden transition-all", mutualFundsOpen ? "max-h-[200px]" : "max-h-0")}>
             {mutualFundItems.map((item) => (
               <Link
                 key={item.href}
@@ -172,11 +180,17 @@ export function Sidebar() {
 
         {/* Tools Section */}
         <div className="mb-5">
-          <p className="px-3 py-2 text-xs font-bold uppercase tracking-wider text-blue-700 dark:text-blue-400 flex items-center gap-2 bg-blue-50 dark:bg-blue-900/30 rounded-lg mx-1">
-            <FlaskConical className="h-4 w-4" />
-            Tools
-          </p>
-          <div className="mt-1 space-y-0.5">
+          <button
+            onClick={() => setToolsOpen(!toolsOpen)}
+            className="flex w-full items-center justify-between px-3 py-2 text-xs font-bold uppercase tracking-wider text-blue-700 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/30 rounded-lg mx-1"
+          >
+            <span className="flex items-center gap-2">
+              <FlaskConical className="h-4 w-4" />
+              Tools
+            </span>
+            <ChevronDown className={cn("h-3 w-3 transition-transform", toolsOpen && "rotate-180")} />
+          </button>
+          <div className={cn("mt-1 space-y-0.5 overflow-hidden transition-all", toolsOpen ? "max-h-[300px]" : "max-h-0")}>
             {toolsNavItems.map((item) => (
               <Link
                 key={item.href}

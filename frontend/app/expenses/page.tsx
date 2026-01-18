@@ -90,28 +90,39 @@ export default function ExpensesPage() {
     try {
       const token = authService.getToken()
       if (!token) {
-        console.log("No auth token found")
+        console.log("No auth token found - using demo mode")
+        setExpenses([])
         setIsLoading(false)
         return
       }
+
+      const controller = new AbortController()
+      const timeoutId = setTimeout(() => controller.abort(), 10000) // 10s timeout
 
       const response = await fetch(`${BACKEND_URL}/expenses`, {
         headers: {
           "Authorization": `Bearer ${token}`,
           "Content-Type": "application/json"
-        }
+        },
+        signal: controller.signal
       })
+      
+      clearTimeout(timeoutId)
       
       if (response.ok) {
         const data = await response.json()
-        setExpenses(data)
+        setExpenses(data || [])
       } else {
-        console.error("Failed to fetch expenses:", response.status)
-        // Don't show error toast on initial load, just log it
+        console.warn("Failed to fetch expenses:", response.status)
+        setExpenses([])
       }
-    } catch (error) {
-      console.error("Failed to fetch expenses:", error)
-      // Set empty array instead of showing error
+    } catch (error: any) {
+      if (error.name === 'AbortError') {
+        console.warn("Request timeout - backend may be unavailable")
+      } else {
+        console.warn("Failed to fetch expenses:", error.message)
+      }
+      // Set empty array instead of showing error - graceful degradation
       setExpenses([])
     } finally {
       setIsLoading(false)

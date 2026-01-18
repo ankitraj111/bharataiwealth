@@ -19,7 +19,7 @@ const Tooltip = dynamic(() => import("recharts").then(m => m.Tooltip), { ssr: fa
 const PieChart = dynamic(() => import("recharts").then(m => m.PieChart), { ssr: false })
 const Pie = dynamic(() => import("recharts").then(m => m.Pie), { ssr: false })
 const Cell = dynamic(() => import("recharts").then(m => m.Cell), { ssr: false })
-import { ArrowUpRight, Wallet, PiggyBank, TrendingUp, Shield, Sparkles, ChevronRight, BarChart3, Target, AlertTriangle } from "lucide-react"
+import { ArrowUpRight, Wallet, PiggyBank, TrendingUp, Shield, Sparkles, ChevronRight, ChevronDown, BarChart3, Target, AlertTriangle, Scale, Flame, Zap, LayoutDashboard, Calculator, Users, FlaskConical } from "lucide-react"
 import { KiteConnector } from "@/components/kite-connector"
 import { fetchDashboardSummary, fetcher, BACKEND_URL } from "@/lib/api"
 import useSWR from "swr"
@@ -188,6 +188,166 @@ export default function DashboardPage() {
             color="purple"
           />
         </div>
+
+        {/* Portfolio Risk Overview */}
+        <div className="grid gap-4 sm:grid-cols-3">
+          <Link href="/portfolios/low-risk">
+            <Card className="border-2 border-emerald-500/30 bg-gradient-to-br from-emerald-500/5 to-transparent hover:shadow-lg hover:border-emerald-500/50 transition-all cursor-pointer group">
+              <CardContent className="p-6">
+                <div className="flex items-start justify-between mb-4">
+                  <div className="h-12 w-12 rounded-xl bg-emerald-500/10 flex items-center justify-center group-hover:bg-emerald-500 transition-colors">
+                    <Shield className="h-6 w-6 text-emerald-600 group-hover:text-white transition-colors" />
+                  </div>
+                  <ChevronDown className="h-3 w-3 text-muted-foreground group-hover:text-emerald-600 transition-transform rotate-180" />
+                </div>
+                <h3 className="text-lg font-bold text-foreground mb-1">Low Risk Portfolio</h3>
+                <p className="text-sm text-muted-foreground mb-3">Capital protection • 6-8% returns</p>
+                <div className="flex items-center justify-between">
+                  <span className="text-xs font-medium text-emerald-600">Risk Score: 2/10</span>
+                  <div className="flex items-center gap-1 text-emerald-600">
+                    <TrendingUp className="h-4 w-4" />
+                    <span className="text-sm font-bold">+7.2%</span>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </Link>
+
+          <Link href="/portfolios/medium-risk">
+            <Card className="border-2 border-amber-500/30 bg-gradient-to-br from-amber-500/5 to-transparent hover:shadow-lg hover:border-amber-500/50 transition-all cursor-pointer group">
+              <CardContent className="p-6">
+                <div className="flex items-start justify-between mb-4">
+                  <div className="h-12 w-12 rounded-xl bg-amber-500/10 flex items-center justify-center group-hover:bg-amber-500 transition-colors">
+                    <Scale className="h-6 w-6 text-amber-600 group-hover:text-white transition-colors" />
+                  </div>
+                  <ChevronDown className="h-3 w-3 text-muted-foreground group-hover:text-amber-600 transition-transform rotate-180" />
+                </div>
+                <h3 className="text-lg font-bold text-foreground mb-1">Medium Risk Portfolio</h3>
+                <p className="text-sm text-muted-foreground mb-3">Balanced growth • 12-15% returns</p>
+                <div className="flex items-center justify-between">
+                  <span className="text-xs font-medium text-amber-600">Risk Score: 5/10</span>
+                  <div className="flex items-center gap-1 text-amber-600">
+                    <TrendingUp className="h-4 w-4" />
+                    <span className="text-sm font-bold">+13.8%</span>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </Link>
+
+          <Link href="/portfolios/high-risk">
+            <Card className="border-2 border-red-500/30 bg-gradient-to-br from-red-500/5 to-transparent hover:shadow-lg hover:border-red-500/50 transition-all cursor-pointer group">
+              <CardContent className="p-6">
+                <div className="flex items-start justify-between mb-4">
+                  <div className="h-12 w-12 rounded-xl bg-red-500/10 flex items-center justify-center group-hover:bg-red-500 transition-colors">
+                    <Flame className="h-6 w-6 text-red-600 group-hover:text-white transition-colors" />
+                  </div>
+                  <ChevronDown className="h-3 w-3 text-muted-foreground group-hover:text-red-600 transition-transform rotate-180" />
+                </div>
+                <h3 className="text-lg font-bold text-foreground mb-1">High Risk Portfolio</h3>
+                <p className="text-sm text-muted-foreground mb-3">Aggressive growth • 30-50% returns</p>
+                <div className="flex items-center justify-between">
+                  <span className="text-xs font-medium text-red-600">Risk Score: 8/10</span>
+                  <div className="flex items-center gap-1 text-red-600">
+                    <Zap className="h-4 w-4" />
+                    <span className="text-sm font-bold">+42.5%</span>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </Link>
+        </div>
+
+        {/* Quick Tools Section */}
+        <Card className="border-border/50 shadow-sm overflow-hidden">
+          <CardHeader className="bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-950/30 dark:to-indigo-950/30 border-b border-border/50">
+            <div className="flex items-center justify-between">
+              <CardTitle className="flex items-center gap-2 text-base font-bold uppercase tracking-widest">
+                <FlaskConical className="h-5 w-5 text-blue-600" />
+                Financial Tools
+              </CardTitle>
+              <Link href="/goals">
+                <Button variant="ghost" size="sm" className="gap-1 text-xs font-bold">
+                  View All
+                  <ChevronRight className="h-3 w-3" />
+                </Button>
+              </Link>
+            </div>
+          </CardHeader>
+          <CardContent className="p-6">
+            <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
+              <Link href="/goals">
+                <div className="group p-4 rounded-xl bg-gradient-to-br from-emerald-50 to-teal-50 dark:from-emerald-950/30 dark:to-teal-950/30 border border-emerald-200/50 dark:border-emerald-800/50 hover:border-emerald-400 dark:hover:border-emerald-600 transition-all cursor-pointer hover:shadow-md">
+                  <div className="flex flex-col items-center text-center space-y-2">
+                    <div className="h-12 w-12 rounded-xl bg-emerald-500/10 flex items-center justify-center group-hover:bg-emerald-500 transition-colors">
+                      <Target className="h-6 w-6 text-emerald-600 group-hover:text-white transition-colors" />
+                    </div>
+                    <div>
+                      <p className="font-bold text-sm text-foreground">Goal Tracker</p>
+                      <p className="text-[10px] text-muted-foreground font-medium">Track goals</p>
+                    </div>
+                  </div>
+                </div>
+              </Link>
+
+              <Link href="/emergency-fund">
+                <div className="group p-4 rounded-xl bg-gradient-to-br from-blue-50 to-cyan-50 dark:from-blue-950/30 dark:to-cyan-950/30 border border-blue-200/50 dark:border-blue-800/50 hover:border-blue-400 dark:hover:border-blue-600 transition-all cursor-pointer hover:shadow-md">
+                  <div className="flex flex-col items-center text-center space-y-2">
+                    <div className="h-12 w-12 rounded-xl bg-blue-500/10 flex items-center justify-center group-hover:bg-blue-500 transition-colors">
+                      <Shield className="h-6 w-6 text-blue-600 group-hover:text-white transition-colors" />
+                    </div>
+                    <div>
+                      <p className="font-bold text-sm text-foreground">Emergency</p>
+                      <p className="text-[10px] text-muted-foreground font-medium">Safety fund</p>
+                    </div>
+                  </div>
+                </div>
+              </Link>
+
+              <Link href="/sandbox">
+                <div className="group p-4 rounded-xl bg-gradient-to-br from-purple-50 to-fuchsia-50 dark:from-purple-950/30 dark:to-fuchsia-950/30 border border-purple-200/50 dark:border-purple-800/50 hover:border-purple-400 dark:hover:border-purple-600 transition-all cursor-pointer hover:shadow-md">
+                  <div className="flex flex-col items-center text-center space-y-2">
+                    <div className="h-12 w-12 rounded-xl bg-purple-500/10 flex items-center justify-center group-hover:bg-purple-500 transition-colors">
+                      <FlaskConical className="h-6 w-6 text-purple-600 group-hover:text-white transition-colors" />
+                    </div>
+                    <div>
+                      <p className="font-bold text-sm text-foreground">Sandbox</p>
+                      <p className="text-[10px] text-muted-foreground font-medium">Simulate risk</p>
+                    </div>
+                  </div>
+                </div>
+              </Link>
+
+              <Link href="/tax">
+                <div className="group p-4 rounded-xl bg-gradient-to-br from-teal-50 to-green-50 dark:from-teal-950/30 dark:to-green-950/30 border border-teal-200/50 dark:border-teal-800/50 hover:border-teal-400 dark:hover:border-teal-600 transition-all cursor-pointer hover:shadow-md">
+                  <div className="flex flex-col items-center text-center space-y-2">
+                    <div className="h-12 w-12 rounded-xl bg-teal-500/10 flex items-center justify-center group-hover:bg-teal-500 transition-colors">
+                      <Calculator className="h-6 w-6 text-teal-600 group-hover:text-white transition-colors" />
+                    </div>
+                    <div>
+                      <p className="font-bold text-sm text-foreground">Tax & Insurance</p>
+                      <p className="text-[10px] text-muted-foreground font-medium">Optimize tax</p>
+                    </div>
+                  </div>
+                </div>
+              </Link>
+
+              <Link href="/family">
+                <div className="group p-4 rounded-xl bg-gradient-to-br from-indigo-50 to-violet-50 dark:from-indigo-950/30 dark:to-violet-950/30 border border-indigo-200/50 dark:border-indigo-800/50 hover:border-indigo-400 dark:hover:border-indigo-600 transition-all cursor-pointer hover:shadow-md">
+                  <div className="flex flex-col items-center text-center space-y-2">
+                    <div className="h-12 w-12 rounded-xl bg-indigo-500/10 flex items-center justify-center group-hover:bg-indigo-500 transition-colors">
+                      <Users className="h-6 w-6 text-indigo-600 group-hover:text-white transition-colors" />
+                    </div>
+                    <div>
+                      <p className="font-bold text-sm text-foreground">Family</p>
+                      <p className="text-[10px] text-muted-foreground font-medium">Manage vault</p>
+                    </div>
+                  </div>
+                </div>
+              </Link>
+            </div>
+          </CardContent>
+        </Card>
 
         <div className="grid gap-6 lg:grid-cols-2">
           {/* Spending Chart */}

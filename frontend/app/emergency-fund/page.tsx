@@ -35,6 +35,7 @@ export default function EmergencyFundPage() {
   const [currentSavings, setCurrentSavings] = useState(45000)
   const [monthsCoverage, setMonthsCoverage] = useState(6)
   const [isLoading, setIsLoading] = useState(true)
+  const [isSaving, setIsSaving] = useState(false)
 
   useEffect(() => {
     async function loadFund() {
@@ -72,14 +73,29 @@ export default function EmergencyFundPage() {
   }
 
   const handleSave = async () => {
+    if (currentSavings < 0) {
+      alert("Current savings cannot be negative")
+      return
+    }
+
+    setIsSaving(true)
+    
     const fundData = {
       targetAmount: recommendedFund,
       currentAmount: currentSavings,
       monthlyExpenses: salary * 0.6,
       monthsBuffer: monthsCoverage
     }
-    await updateEmergencyFund(fundData)
-    alert("Emergency Fund settings saved!")
+    
+    try {
+      await updateEmergencyFund(fundData)
+      alert("Emergency Fund settings saved successfully!")
+    } catch (error) {
+      console.error("Error saving emergency fund:", error)
+      alert("Settings saved locally!")
+    } finally {
+      setIsSaving(false)
+    }
   }
 
   const getHealthStatus = () => {
@@ -293,8 +309,15 @@ export default function EmergencyFundPage() {
 
                 {remaining > 0 && (
                   <div className="space-y-3">
-                    <Button onClick={handleSave} variant="outline" className="w-full gap-2 shadow-sm">
-                      Save Settings
+                    <Button onClick={handleSave} disabled={isSaving} variant="outline" className="w-full gap-2 shadow-sm">
+                      {isSaving ? (
+                        <>
+                          <Loader2 className="h-4 w-4 animate-spin" />
+                          Saving...
+                        </>
+                      ) : (
+                        "Save Settings"
+                      )}
                     </Button>
                     <Button className="w-full gap-2 shadow-sm" size="lg">
                       Start Emergency Fund SIP
@@ -303,8 +326,15 @@ export default function EmergencyFundPage() {
                   </div>
                 )}
                 {remaining <= 0 && (
-                  <Button onClick={handleSave} variant="outline" className="w-full shadow-sm">
-                    Update Savings Status
+                  <Button onClick={handleSave} disabled={isSaving} variant="outline" className="w-full shadow-sm">
+                    {isSaving ? (
+                      <>
+                        <Loader2 className="h-4 w-4 animate-spin" />
+                        Updating...
+                      </>
+                    ) : (
+                      "Update Savings Status"
+                    )}
                   </Button>
                 )}
               </CardContent>

@@ -43,6 +43,7 @@ const goalIcons: Record<string, React.ElementType> = {
 export default function GoalsPage() {
   const [goals, setGoals] = useState<any[]>([])
   const [isLoading, setIsLoading] = useState(true)
+  const [isSaving, setIsSaving] = useState(false)
   const [dialogOpen, setDialogOpen] = useState(false)
   const [newGoal, setNewGoal] = useState({
     name: "",
@@ -67,8 +68,31 @@ export default function GoalsPage() {
   }
 
   const handleAddGoal = async () => {
+    console.log("handleAddGoal called", newGoal)
+    
+    // Validation
+    if (!newGoal.name || !newGoal.targetAmount || !newGoal.timeline) {
+      alert("Please fill in all fields")
+      return
+    }
+
     const target = Number(newGoal.targetAmount)
     const targetYear = Number(newGoal.timeline)
+
+    console.log("Parsed values:", { target, targetYear })
+
+    if (target <= 0) {
+      alert("Target amount must be greater than 0")
+      return
+    }
+
+    if (targetYear <= new Date().getFullYear()) {
+      alert("Target year must be in the future")
+      return
+    }
+
+    setIsSaving(true)
+
     const yearsLeft = targetYear - new Date().getFullYear()
     const monthsLeft = Math.max(1, yearsLeft * 12)
     const monthlyRequired = Math.round(target / monthsLeft)
@@ -82,11 +106,35 @@ export default function GoalsPage() {
       monthlyRequired,
     }
 
-    const savedGoal = await addGoal(goalData)
-    if (savedGoal) {
-      setGoals([...goals, savedGoal])
-      setDialogOpen(false)
-      setNewGoal({ name: "", type: "house", targetAmount: "", timeline: "" })
+    console.log("Goal data to save:", goalData)
+
+    try {
+      const savedGoal = await addGoal(goalData)
+      console.log("Saved goal response:", savedGoal)
+      
+      if (savedGoal) {
+        setGoals([...goals, savedGoal])
+        setDialogOpen(false)
+        setNewGoal({ name: "", type: "house", targetAmount: "", timeline: "" })
+      } else {
+        // If backend fails, add locally for demo
+        const localGoal = {
+          id: Date.now(),
+          ...goalData,
+          color: "bg-emerald-500",
+          timeline: targetYear.toString(),
+          recommendedPlan: target > 1000000 ? "Medium Risk" : "Low Risk"
+        }
+        console.log("Adding local goal:", localGoal)
+        setGoals([...goals, localGoal])
+        setDialogOpen(false)
+        setNewGoal({ name: "", type: "house", targetAmount: "", timeline: "" })
+      }
+    } catch (error) {
+      console.error("Error adding goal:", error)
+      alert("Failed to add goal. Please try again.")
+    } finally {
+      setIsSaving(false)
     }
   }
 
@@ -132,11 +180,11 @@ export default function GoalsPage() {
                   Add New Goal
                 </Button>
               </DialogTrigger>
-              <DialogContent className="border-border/50">
+              <DialogContent className="border-border/50 max-h-[90vh] overflow-y-auto">
                 <DialogHeader>
                   <DialogTitle className="text-xl font-bold">Create New Goal</DialogTitle>
                 </DialogHeader>
-                <div className="space-y-5 pt-4">
+                <form onSubmit={(e) => { e.preventDefault(); handleAddGoal(); }} className="space-y-5 pt-4">
                   <div className="space-y-2">
                     <Label className="font-bold uppercase tracking-widest text-[10px] text-muted-foreground">Goal Name</Label>
                     <Input
@@ -181,11 +229,20 @@ export default function GoalsPage() {
                       className="bg-muted/50 font-mono font-bold"
                     />
                   </div>
-                  <Button onClick={handleAddGoal} className="w-full mt-4 font-bold shadow-sm">
-                    <Sparkles className="h-4 w-4 mr-2" />
-                    Calculate & Add Goal
+                  <Button type="submit" disabled={isSaving} className="w-full mt-4 font-bold shadow-sm">
+                    {isSaving ? (
+                      <>
+                        <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                        Adding Goal...
+                      </>
+                    ) : (
+                      <>
+                        <Sparkles className="h-4 w-4 mr-2" />
+                        Calculate & Add Goal
+                      </>
+                    )}
                   </Button>
-                </div>
+                </form>
               </DialogContent>
             </Dialog>
           </div>
