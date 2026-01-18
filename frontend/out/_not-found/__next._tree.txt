@@ -1,3 +1,4 @@
 :HL["/bharataiwealth/_next/static/chunks/15901dbdec823f69.css","style"]
-:HL["/bharataiwealth/_next/static/chunks/f69c896d0f1aea3e.css","style"]
-0:{"buildId":"7WSAPLFffPNN_PZnIsRWL","tree":{"name":"","paramType":null,"paramKey":"","hasRuntimePrefetch":false,"slots":{"children":{"name":"/_not-found","paramType":null,"paramKey":"/_not-found","hasRuntimePrefetch":false,"slots":{"children":{"name":"__PAGE__","paramType":null,"paramKey":"__PAGE__","hasRuntimePrefetch":false,"slots":null,"isRootLayout":false}},"isRootLayout":false}},"isRootLayout":true},"staleTime":300}
+:HL["/bharataiwealth/_next/static/chunks/427ea67ffe9a40f3.css","style"]
+:HL["/bharataiwealth/_next/static/chunks/7617e5cd100fd20e.css","style"]
+0:{"buildId":"8XoDIyvwpOwuEN2-tFsQI","tree":{"name":"","paramType":null,"paramKey":"","hasRuntimePrefetch":false,"slots":{"children":{"name":"/_not-found","paramType":null,"paramKey":"/_not-found","hasRuntimePrefetch":false,"slots":{"children":{"name":"__PAGE__","paramType":null,"paramKey":"__PAGE__","hasRuntimePrefetch":false,"slots":null,"isRootLayout":false}},"isRootLayout":false}},"isRootLayout":true},"staleTime":300}

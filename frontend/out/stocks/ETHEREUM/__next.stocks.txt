@@ -1,4 +1,4 @@
 1:"$Sreact.fragment"
 2:I[39756,["/bharataiwealth/_next/static/chunks/b6f319ae66855ad9.js","/bharataiwealth/_next/static/chunks/64c0a5e3a0354479.js","/bharataiwealth/_next/static/chunks/9661b6be9fc52b6c.js"],"default"]
 3:I[37457,["/bharataiwealth/_next/static/chunks/b6f319ae66855ad9.js","/bharataiwealth/_next/static/chunks/64c0a5e3a0354479.js","/bharataiwealth/_next/static/chunks/9661b6be9fc52b6c.js"],"default"]
-0:{"buildId":"7WSAPLFffPNN_PZnIsRWL","rsc":["$","$1","c",{"children":[null,["$","$L2",null,{"parallelRouterKey":"children","template":["$","$L3",null,{}]}]]}],"loading":null,"isPartial":false}
+0:{"buildId":"8XoDIyvwpOwuEN2-tFsQI","rsc":["$","$1","c",{"children":[null,["$","$L2",null,{"parallelRouterKey":"children","template":["$","$L3",null,{}]}]]}],"loading":null,"isPartial":false}

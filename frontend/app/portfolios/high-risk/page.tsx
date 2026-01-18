@@ -152,8 +152,8 @@ export default function HighRiskPortfolioPage() {
                 <ResponsiveContainer width="100%" height="100%">
                   <AreaChart data={performanceData}>
                     <defs><linearGradient id="highGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stopColor="#f43f5e" stopOpacity={0.3} /><stop offset="100%" stopColor="#f43f5e" stopOpacity={0} /></linearGradient></defs>
-                    <XAxis dataKey="month" tick={{ fontSize: 10 }} /><YAxis tick={{ fontSize: 10 }} tickFormatter={(v) => `${(v / 100000).toFixed(0)}L`} />
-                    <Tooltip formatter={(v: number) => `₹${(v / 100000).toFixed(2)}L`} />
+                    <XAxis dataKey="month" tick={{ fontSize: 10 }} /><YAxis tick={{ fontSize: 10 }} tickFormatter={(v: any) => `${(Number(v || 0) / 100000).toFixed(0)}L`} />
+                    <Tooltip formatter={(v: any) => `₹${(Number(v || 0) / 100000).toFixed(2)}L`} />
                     <Area type="monotone" dataKey="value" stroke="#f43f5e" strokeWidth={2} fill="url(#highGrad)" />
                   </AreaChart>
                 </ResponsiveContainer>

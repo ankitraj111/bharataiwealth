@@ -182,8 +182,8 @@ export default function LowRiskPortfolioPage() {
                       </linearGradient>
                     </defs>
                     <XAxis dataKey="month" tick={{ fontSize: 10 }} />
-                    <YAxis tick={{ fontSize: 10 }} tickFormatter={(v) => `${(v / 100000).toFixed(0)}L`} />
-                    <Tooltip formatter={(v: number) => `₹${(v / 100000).toFixed(2)}L`} />
+                    <YAxis tick={{ fontSize: 10 }} tickFormatter={(v: any) => `${(Number(v || 0) / 100000).toFixed(0)}L`} />
+                    <Tooltip formatter={(v: any) => `₹${(Number(v || 0) / 100000).toFixed(2)}L`} />
                     <Area type="monotone" dataKey="value" stroke="#16A34A" strokeWidth={2} fill="url(#lowRiskGradient)" />
                   </AreaChart>
                 </ResponsiveContainer>
