@@ -77,6 +77,11 @@ export default function DashboardPage() {
     fallbackData: defaultSummary,
     revalidateOnFocus: false,
     refreshInterval: 30000,
+    onError: (err) => {
+      // Silently handle errors - fallback data will be used
+      console.warn('Dashboard API unavailable, using fallback data')
+    },
+    shouldRetryOnError: false, // Don't retry on error, use fallback
   })
 
   // Merge summaryData with defaultSummary if needed, but fallbackData handles it

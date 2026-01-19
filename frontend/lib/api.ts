@@ -51,7 +51,13 @@ export const fetcher = async (url: string, retries = 2): Promise<any> => {
                     continue;
                 }
 
-                console.error(`API Error [${response.status}]: ${url}`);
+                // Suppress error logging for 500 errors - just return null
+                if (response.status >= 500) {
+                    console.warn(`Backend unavailable: ${url}`);
+                    return null;
+                }
+
+                console.warn(`API Error [${response.status}]: ${url}`);
                 return null;
             }
 
