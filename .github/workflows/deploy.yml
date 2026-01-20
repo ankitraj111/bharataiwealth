@@ -41,7 +41,10 @@ jobs:
         env:
           GITHUB_PAGES: "true"
           NEXT_PUBLIC_ML_SERVICE_URL: "https://your-ml-service.onrender.com" 
-          NEXT_PUBLIC_BACKEND_URL: "https://bharataiwealth-backend.onrender.com/api" 
+          NEXT_PUBLIC_BACKEND_URL: "https://bharataiwealth-backend.onrender.com/api"
+
+      - name: Add .nojekyll file
+        run: touch ./frontend/out/.nojekyll
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
