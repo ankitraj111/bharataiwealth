@@ -41,12 +41,12 @@ interface Expense {
   isAutoSynced: boolean
 }
 
-const majorBanks = [
-  { id: "sbi", name: "State Bank of India", logo: "SBI", color: "bg-blue-600" },
-  { id: "hdfc", name: "HDFC Bank", logo: "HDFC", color: "bg-blue-900" },
-  { id: "icici", name: "ICICI Bank", logo: "ICICI", color: "bg-orange-600" },
-  { id: "axis", name: "Axis Bank", logo: "AXIS", color: "bg-rose-900" },
-  { id: "kotak", name: "Kotak Mahindra", logo: "KOTAK", color: "bg-red-600" },
+const majorUPIApps = [
+  { id: "gpay", name: "Google Pay", logo: "GPay", color: "bg-gradient-to-br from-blue-500 to-green-500" },
+  { id: "phonepe", name: "PhonePe", logo: "PhonePe", color: "bg-gradient-to-br from-purple-600 to-purple-800" },
+  { id: "paytm", name: "Paytm", logo: "Paytm", color: "bg-gradient-to-br from-blue-600 to-cyan-500" },
+  { id: "bhim", name: "BHIM UPI", logo: "BHIM", color: "bg-gradient-to-br from-orange-500 to-red-600" },
+  { id: "amazonpay", name: "Amazon Pay", logo: "Amazon", color: "bg-gradient-to-br from-orange-400 to-yellow-500" },
 ]
 
 const categories = ["All", "FOOD", "TRANSPORT", "ENTERTAINMENT", "BILLS", "SHOPPING", "HEALTH", "EDUCATION", "OTHER"]
@@ -174,12 +174,12 @@ export default function ExpensesPage() {
     }
   }
 
-  const handleConnectBank = (bankName: string) => {
+  const handleConnectUPI = (upiName: string) => {
     if (!consentGiven) {
       toast.error("Please provide consent to proceed")
       return
     }
-    setConnectingBank(bankName)
+    setConnectingBank(upiName)
     setSyncStatus("mobile")
   }
 
@@ -359,70 +359,99 @@ export default function ExpensesPage() {
                 <DialogTrigger asChild>
                   <Button className="font-bold rounded-lg shadow-sm">
                     <RefreshCw className="h-4 w-4 mr-2" />
-                    Connect All Banks
+                    Connect UPI
                   </Button>
                 </DialogTrigger>
-                <DialogContent className="sm:max-w-md overflow-hidden bg-background border-border/50">
-                  <DialogHeader>
-                    <DialogTitle className="text-xl font-black uppercase tracking-tight flex items-center gap-2">
-                      <ShieldCheck className="h-5 w-5 text-primary" />
-                      Secure Bank Connect
+                <DialogContent className="sm:max-w-lg overflow-hidden bg-background border-border/50">
+                  <DialogHeader className="space-y-3">
+                    <DialogTitle className="text-2xl font-black uppercase tracking-tight flex items-center gap-3">
+                      <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-primary to-primary/60 flex items-center justify-center shadow-lg">
+                        <ShieldCheck className="h-6 w-6 text-white" />
+                      </div>
+                      Secure UPI Connect
                     </DialogTitle>
-                    <DialogDescription className="font-medium">
-                      Link your accounts via Indian Account Aggregator (read-only) to track all UPI and card spends.
+                    <DialogDescription className="font-medium text-base">
+                      Link your UPI apps to automatically track all your transactions and expenses in real-time.
                     </DialogDescription>
                   </DialogHeader>
 
                   {syncStatus === "idle" ? (
-                    <div className="grid gap-3 py-4">
-                      <div className="p-4 rounded-xl bg-secondary/20 border border-primary/20 space-y-3">
+                    <div className="grid gap-4 py-4">
+                      <div className="p-5 rounded-2xl bg-gradient-to-br from-primary/5 via-primary/10 to-secondary/20 border border-primary/20 space-y-4 shadow-sm">
                         <div className="flex items-start gap-3">
-                          <Info className="h-5 w-5 text-primary mt-0.5" />
-                          <div className="text-xs space-y-2">
-                            <p className="font-bold text-foreground">Why connect your bank?</p>
-                            <ul className="list-disc pl-4 space-y-1 text-muted-foreground font-medium">
-                              <li>Zero manual entry – all UPI & card spends appear instantly</li>
-                              <li>Smart categorization using Bharat AI engine</li>
-                              <li><span className="text-primary">Read-only access</span> – we cannot move any money</li>
-                              <li>256-bit AES encryption with RBI regulated aggregators</li>
+                          <div className="h-8 w-8 rounded-lg bg-primary/20 flex items-center justify-center flex-shrink-0">
+                            <Info className="h-5 w-5 text-primary" />
+                          </div>
+                          <div className="text-sm space-y-3 flex-1">
+                            <p className="font-black text-foreground text-base">Why connect your UPI?</p>
+                            <ul className="space-y-2 text-muted-foreground font-medium">
+                              <li className="flex items-start gap-2">
+                                <span className="text-primary mt-0.5">✓</span>
+                                <span>Zero manual entry – all UPI transactions appear instantly</span>
+                              </li>
+                              <li className="flex items-start gap-2">
+                                <span className="text-primary mt-0.5">✓</span>
+                                <span>Smart categorization using Bharat AI engine</span>
+                              </li>
+                              <li className="flex items-start gap-2">
+                                <span className="text-primary mt-0.5">✓</span>
+                                <span><span className="text-primary font-bold">Read-only access</span> – we cannot move any money</span>
+                              </li>
+                              <li className="flex items-start gap-2">
+                                <span className="text-primary mt-0.5">✓</span>
+                                <span>256-bit AES encryption with secure UPI integration</span>
+                              </li>
                             </ul>
                           </div>
                         </div>
-                        <div className="flex items-center gap-2 pt-2 border-t border-border/30">
+                        <div className="flex items-start gap-3 pt-3 border-t border-border/30">
                           <input
                             type="checkbox"
                             id="consent"
                             checked={consentGiven}
                             onChange={(e) => setConsentGiven(e.target.checked)}
-                            className="h-4 w-4 rounded border-border/50 text-primary"
+                            className="h-5 w-5 mt-0.5 rounded border-border/50 text-primary cursor-pointer"
                           />
-                          <label htmlFor="consent" className="text-[10px] font-bold text-muted-foreground uppercase cursor-pointer" id="consent-label">
-                            I consent to share read-only transaction data
+                          <label htmlFor="consent" className="text-xs font-bold text-foreground cursor-pointer flex-1" id="consent-label">
+                            I consent to share read-only transaction data for expense tracking
                           </label>
                         </div>
                       </div>
 
-                      <div className="space-y-2">
-                        <p className="text-[10px] font-black uppercase text-muted-foreground/60 tracking-widest pl-1">Select Your Bank</p>
-                        {majorBanks.map((bank) => (
-                          <button
-                            key={bank.id}
-                            disabled={!consentGiven}
-                            onClick={() => handleConnectBank(bank.name)}
-                            className={cn(
-                              "w-full flex items-center justify-between p-4 rounded-xl border border-border/50 bg-secondary/30 transition-premium group",
-                              consentGiven ? "hover:bg-secondary/60 hover:border-primary/30" : "opacity-50 cursor-not-allowed"
-                            )}
-                          >
-                            <div className="flex items-center gap-4">
-                              <div className={cn("h-10 w-10 rounded-lg flex items-center justify-center text-[10px] font-black text-white shadow-sm", bank.color)}>
-                                {bank.logo}
+                      <div className="space-y-3">
+                        <p className="text-xs font-black uppercase text-muted-foreground/70 tracking-widest pl-1">Select Your UPI App</p>
+                        <div className="space-y-2">
+                          {majorUPIApps.map((upi, index) => (
+                            <motion.button
+                              key={upi.id}
+                              initial={{ opacity: 0, x: -20 }}
+                              animate={{ opacity: 1, x: 0 }}
+                              transition={{ delay: index * 0.1 }}
+                              disabled={!consentGiven}
+                              onClick={() => handleConnectUPI(upi.name)}
+                              className={cn(
+                                "w-full flex items-center justify-between p-4 rounded-xl border-2 transition-all duration-300 group relative overflow-hidden",
+                                consentGiven 
+                                  ? "bg-secondary/40 border-border/50 hover:border-primary/50 hover:bg-secondary/60 hover:shadow-lg hover:shadow-primary/10 hover:scale-[1.02]" 
+                                  : "opacity-40 cursor-not-allowed bg-secondary/20 border-border/30"
+                              )}
+                            >
+                              <div className="flex items-center gap-4 relative z-10">
+                                <div className={cn("h-12 w-12 rounded-xl flex items-center justify-center text-xs font-black text-white shadow-md", upi.color)}>
+                                  {upi.logo}
+                                </div>
+                                <span className="font-bold text-foreground tracking-tight text-lg">{upi.name}</span>
                               </div>
-                              <span className="font-bold text-foreground tracking-tight">{bank.name}</span>
-                            </div>
-                            <ChevronRight className="h-5 w-5 text-muted-foreground group-hover:translate-x-1 transition-transform" />
-                          </button>
-                        ))}
+                              <ChevronRight className={cn(
+                                "h-5 w-5 transition-all duration-300 relative z-10",
+                                consentGiven ? "text-muted-foreground group-hover:text-primary group-hover:translate-x-1" : "text-muted-foreground/50"
+                              )} />
+                              {consentGiven && (
+                                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-primary/5 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700" />
+                              )}
+                            </motion.button>
+                          ))}
+                        </div>
                       </div>
                     </div>
                   ) : syncStatus === "mobile" ? (
@@ -432,7 +461,7 @@ export default function ExpensesPage() {
                           <Building2 className="h-6 w-6 text-primary" />
                         </div>
                         <h3 className="text-lg font-black uppercase tracking-tight">Enter Mobile Number</h3>
-                        <p className="text-sm text-muted-foreground font-medium">Enter the mobile number linked with your {connectingBank} account</p>
+                        <p className="text-sm text-muted-foreground font-medium">Enter the mobile number linked with your {connectingBank} UPI</p>
                       </div>
 
                       <div className="space-y-4">
@@ -501,7 +530,7 @@ export default function ExpensesPage() {
                       <div className="text-center space-y-2">
                         <h3 className="text-lg font-black uppercase tracking-tight">Syncing Transactions</h3>
                         <p className="text-sm text-muted-foreground font-medium max-w-[250px]">
-                          Securely fetching last 90 days from <span className="text-primary font-bold">{connectingBank}</span>...
+                          Securely fetching last 90 days from <span className="text-primary font-bold">{connectingBank}</span> UPI...
                         </p>
                       </div>
 
@@ -522,7 +551,7 @@ export default function ExpensesPage() {
                       <div className="text-center space-y-2 px-4">
                         <h3 className="text-xl font-black uppercase tracking-tight text-foreground">Sync Complete!</h3>
                         <p className="text-sm text-muted-foreground font-medium">
-                          Transactions from <span className="font-bold text-foreground">{connectingBank}</span> are now being analyzed by AI.
+                          Transactions from <span className="font-bold text-foreground">{connectingBank}</span> UPI are now being analyzed by AI.
                         </p>
                       </div>
 
@@ -618,7 +647,7 @@ export default function ExpensesPage() {
                   ) : filteredExpenses.length === 0 ? (
                     <TableRow>
                       <TableCell colSpan={6} className="h-24 text-center text-muted-foreground font-bold italic">
-                        No transactions found. Connect your bank to start tracking automatically.
+                        No transactions found. Connect your UPI to start tracking automatically.
                       </TableCell>
                     </TableRow>
                   ) : (

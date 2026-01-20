@@ -124,17 +124,41 @@ export function AppPreview() {
                         </div>
                     </motion.div>
 
-                    {/* Right: App Mockups */}
+                    {/* Right: App Mockups with Yellow Circle */}
                     <motion.div
                         initial={{ opacity: 0, x: 30 }}
                         whileInView={{ opacity: 1, x: 0 }}
                         viewport={{ once: true }}
                         className="relative"
                     >
+                        {/* Yellow Organic Circle Background */}
+                        <motion.div
+                            className="absolute inset-0 -z-10 flex items-center justify-center"
+                            animate={{ rotate: [0, 3, 0, -3, 0] }}
+                            transition={{ duration: 20, repeat: Infinity, ease: "easeInOut" }}
+                        >
+                            <svg viewBox="0 0 600 600" className="w-[120%] h-[120%]">
+                                <motion.path
+                                    d="M 300,80 
+                                       C 420,90 510,180 520,300
+                                       C 530,420 440,510 320,520
+                                       C 200,530 90,440 80,320
+                                       C 70,200 160,90 280,80
+                                       C 290,79 295,79 300,80 Z"
+                                    fill="#FFD700"
+                                    stroke="#FFC700"
+                                    strokeWidth="12"
+                                    initial={{ pathLength: 0, opacity: 0 }}
+                                    animate={{ pathLength: 1, opacity: 0.9 }}
+                                    transition={{ duration: 2, ease: "easeInOut" }}
+                                />
+                            </svg>
+                        </motion.div>
+
                         {/* Desktop Mockup */}
                         <motion.div
                             className="relative z-10 bg-gradient-to-br from-slate-200 to-slate-300 dark:from-slate-700 dark:to-slate-800 rounded-[2.5rem] p-5 shadow-2xl border-2 border-white/50 dark:border-slate-600"
-                            whileHover={{ y: -8, rotateY: 2 }}
+                            whileHover={{ y: -8, scale: 1.02 }}
                             transition={{ type: "spring", stiffness: 300 }}
                         >
                             <div className="bg-white dark:bg-slate-900 rounded-[2rem] p-5 shadow-2xl border border-slate-200 dark:border-slate-700">
@@ -160,19 +184,17 @@ export function AppPreview() {
                                     </div>
                                 </div>
 
-                                {/* App Content Preview - Real Dashboard Iframe */}
-                                <div className="bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-800 dark:to-slate-900 rounded-2xl overflow-hidden">
+                                {/* App Content Preview - Live Predictions Page */}
+                                <div className="bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-800 dark:to-slate-900 rounded-2xl overflow-hidden shadow-inner">
                                     <div className="relative w-full h-[350px]">
                                         <iframe 
-                                            src="/dashboard" 
-                                            className="absolute inset-0 w-full h-full border-0 pointer-events-none scale-75 origin-top-left"
+                                            src="/predictions?search=RELIANCE.NS" 
+                                            className="absolute inset-0 w-full h-full border-0 pointer-events-none"
                                             style={{ 
-                                                width: '133.33%', 
-                                                height: '133.33%',
-                                                transform: 'scale(0.75)',
-                                                transformOrigin: 'top left'
+                                                width: '100%', 
+                                                height: '100%',
                                             }}
-                                            title="Dashboard Preview"
+                                            title="AI Predictions Dashboard Preview"
                                         />
                                         {/* Overlay to prevent interaction */}
                                         <div className="absolute inset-0 bg-transparent pointer-events-auto" />
@@ -191,11 +213,11 @@ export function AppPreview() {
                                 {/* Phone Notch */}
                                 <div className="w-10 h-1.5 bg-slate-200 dark:bg-slate-700 rounded-full mx-auto mb-3" />
 
-                                {/* App Content - Dashboard Preview */}
-                                <div className="bg-slate-50/50 dark:bg-slate-800/50 rounded-[1.5rem] overflow-hidden">
+                                {/* App Content - Live Predictions Preview */}
+                                <div className="bg-slate-50/50 dark:bg-slate-800/50 rounded-[1.5rem] overflow-hidden shadow-inner">
                                     <div className="relative w-full h-24">
                                         <iframe 
-                                            src="/dashboard" 
+                                            src="/predictions?search=RELIANCE.NS" 
                                             className="absolute inset-0 w-full h-full border-0 pointer-events-none"
                                             style={{ 
                                                 width: '400%', 
@@ -203,7 +225,7 @@ export function AppPreview() {
                                                 transform: 'scale(0.25)',
                                                 transformOrigin: 'top left'
                                             }}
-                                            title="Mobile Dashboard Preview"
+                                            title="Mobile Predictions Preview"
                                         />
                                         <div className="absolute inset-0 bg-transparent pointer-events-auto" />
                                     </div>
@@ -212,7 +234,8 @@ export function AppPreview() {
                         </motion.div>
 
                         {/* Glow Effects */}
-                        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-blue-500/20 rounded-full blur-3xl" />
+                        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-yellow-400/20 rounded-full blur-3xl -z-20" />
+                        <div className="absolute top-1/4 right-1/4 w-64 h-64 bg-blue-500/10 rounded-full blur-3xl -z-20" />
                     </motion.div>
                 </div>
             </div>

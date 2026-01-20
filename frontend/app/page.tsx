@@ -8,6 +8,7 @@ import { Hero } from "@/components/landing/Hero"
 const ValueProposition = dynamic(() => import("@/components/landing/ValueProposition").then(m => m.ValueProposition))
 const StatsCounter = dynamic(() => import("@/components/landing/StatsCounter").then(m => m.StatsCounter))
 const ProblemSolution = dynamic(() => import("@/components/landing/ProblemSolution").then(m => m.ProblemSolution))
+const AIPredictionsPreview = dynamic(() => import("@/components/landing/AIPredictionsPreview").then(m => m.AIPredictionsPreview))
 const AppPreview = dynamic(() => import("@/components/landing/AppPreview").then(m => m.AppPreview))
 const SocialProof = dynamic(() => import("@/components/landing/SocialProof").then(m => m.SocialProof))
 const HowItWorks = dynamic(() => import("@/components/landing/HowItWorks").then(m => m.HowItWorks))

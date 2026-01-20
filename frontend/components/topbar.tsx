@@ -2,7 +2,6 @@
 
 import { Bell, Mic, Search, Menu, Command, User, CreditCard, Settings, Users, LifeBuoy, LogOut, Crown } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -18,11 +17,16 @@ import { MobileSidebar } from "./mobile-sidebar"
 import { ThemeToggle } from "./theme-toggle"
 import { Badge } from "@/components/ui/badge"
 import Link from "next/link"
+import { useRouter } from "next/navigation"
+import { useState, useEffect, useRef } from "react"
 
 import { useAuth } from "@/context/auth-context"
 
 export function Topbar() {
   const { user, logout } = useAuth()
+  const router = useRouter()
+  const [searchQuery, setSearchQuery] = useState("")
+  const searchInputRef = useRef<HTMLInputElement>(null)
 
   // Fallback for avatar initials
   const getInitials = (name: string) => {
@@ -38,6 +42,37 @@ export function Topbar() {
   const userName = user?.name?.split(" ")[0] || "Guest"
   const fullName = user?.name || "Guest User"
   const email = user?.email || "guest@bharatai.com"
+
+  // Handle search submission
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault()
+    e.stopPropagation()
+    
+    const trimmedQuery = searchQuery.trim()
+    if (trimmedQuery) {
+      const upperQuery = trimmedQuery.toUpperCase()
+      router.push(`/predictions?search=${encodeURIComponent(upperQuery)}`)
+      setSearchQuery("")
+    }
+  }
+
+  // Handle input click to ensure it's focusable
+  const handleInputClick = () => {
+    searchInputRef.current?.focus()
+  }
+
+  // Keyboard shortcut for search (Cmd+K or Ctrl+K)
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+        e.preventDefault()
+        searchInputRef.current?.focus()
+      }
+    }
+
+    document.addEventListener('keydown', handleKeyDown)
+    return () => document.removeEventListener('keydown', handleKeyDown)
+  }, [])
 
   return (
     <header className="sticky top-0 z-30 flex h-[72px] items-center justify-between border-b border-border/50 bg-background/80 px-4 backdrop-blur-xl lg:px-6">
@@ -59,26 +94,34 @@ export function Topbar() {
       <div className="hidden flex-1 md:flex md:max-w-lg">
         <form
           className="relative w-full group"
-          onSubmit={(e) => {
-            e.preventDefault();
-            const formData = new FormData(e.currentTarget);
-            const query = formData.get('search') as string;
-            if (query) {
-              window.location.href = `/predictions?search=${encodeURIComponent(query)}`;
-            }
-          }}
+          onSubmit={handleSearch}
         >
-          <Search className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground/60 transition-colors group-focus-within:text-primary" />
-          <Input
+          <Search className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground/60 transition-colors group-focus-within:text-primary pointer-events-none z-10" />
+          <input
+            ref={searchInputRef}
+            type="text"
             name="search"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            onClick={handleInputClick}
             placeholder="Search assets (e.g. RELIANCE.NS, BTC-USD)..."
-            className="w-full h-11 bg-secondary/40 border-border/50 pl-11 pr-20 rounded-xl focus:bg-secondary/60 focus:border-primary/20 focus:ring-1 focus:ring-primary/10 transition-premium placeholder:text-muted-foreground/60"
+            className="w-full h-11 bg-secondary/40 border border-border/50 pl-11 pr-20 rounded-xl focus:bg-secondary/60 focus:border-primary/20 focus:ring-2 focus:ring-primary/10 transition-all placeholder:text-muted-foreground/60 outline-none text-sm"
+            autoComplete="off"
+            style={{ 
+              WebkitAppearance: 'none',
+              MozAppearance: 'none',
+              appearance: 'none'
+            }}
           />
-          <div className="absolute right-3 top-1/2 -translate-y-1/2 flex items-center gap-1 text-muted-foreground/50">
+          <button
+            type="button"
+            onClick={() => searchInputRef.current?.focus()}
+            className="absolute right-3 top-1/2 -translate-y-1/2 flex items-center gap-1 text-muted-foreground/50 hover:text-muted-foreground transition-colors pointer-events-auto"
+          >
             <kbd className="flex h-6 items-center gap-1 rounded-md border border-border/50 bg-muted/50 px-2 text-[10px] font-medium">
               <Command className="h-3 w-3" />K
             </kbd>
-          </div>
+          </button>
         </form>
       </div>
 
