@@ -2,87 +2,115 @@
 
 import { motion } from "framer-motion"
 import { Smartphone, Monitor, TrendingUp, PieChart, Bell, BarChart3, Sparkles } from "lucide-react"
+import { useState } from "react"
 import Image from "next/image"
 
 export function AppPreview() {
+    const [activeDevice, setActiveDevice] = useState<"desktop" | "mobile">("desktop")
+
     const features = [
-        { icon: TrendingUp, label: "AI Predictions", color: "text-blue-500" },
-        { icon: PieChart, label: "Portfolio Analytics", color: "text-purple-500" },
-        { icon: Bell, label: "Smart Alerts", color: "text-orange-500" },
-        { icon: BarChart3, label: "Risk Scoring", color: "text-emerald-500" }
+        { icon: TrendingUp, label: "AI Predictions", color: "from-cyan-400 to-blue-500" },
+        { icon: PieChart, label: "Portfolio Analytics", color: "from-purple-400 to-pink-500" },
+        { icon: Bell, label: "Smart Alerts", color: "from-orange-400 to-red-500" },
+        { icon: BarChart3, label: "Risk Scoring", color: "from-emerald-400 to-teal-500" }
     ]
 
     return (
-        <section className="py-32 relative overflow-hidden bg-gradient-to-b from-white via-slate-50 to-white dark:from-slate-900 dark:via-slate-800 dark:to-slate-900">
-            {/* Animated Background Gradient */}
-            <motion.div 
-                className="absolute inset-0 opacity-30"
-                animate={{ 
-                    background: [
-                        'radial-gradient(circle at 20% 50%, rgba(59, 130, 246, 0.1) 0%, transparent 50%)',
-                        'radial-gradient(circle at 80% 50%, rgba(168, 85, 247, 0.1) 0%, transparent 50%)',
-                        'radial-gradient(circle at 20% 50%, rgba(59, 130, 246, 0.1) 0%, transparent 50%)'
-                    ]
-                }}
-                transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
-            />
+        <section className="py-32 relative overflow-hidden bg-gradient-to-b from-[#0a0f1a] via-[#0d1321] to-[#0a0f1a]">
+            {/* Animated Background Glow Effects */}
+            <div className="absolute inset-0">
+                <motion.div
+                    className="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-blue-600/10 rounded-full blur-[120px]"
+                    animate={{
+                        scale: [1, 1.2, 1],
+                        opacity: [0.3, 0.5, 0.3]
+                    }}
+                    transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+                />
+                <motion.div
+                    className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] bg-purple-600/10 rounded-full blur-[100px]"
+                    animate={{
+                        scale: [1.2, 1, 1.2],
+                        opacity: [0.2, 0.4, 0.2]
+                    }}
+                    transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+                />
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-cyan-500/5 rounded-full blur-[150px]" />
+            </div>
+
+            {/* Subtle Grid Pattern */}
+            <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:60px_60px] opacity-40" />
 
             {/* Floating Particles */}
-            {[...Array(6)].map((_, i) => (
+            {[...Array(8)].map((_, i) => (
                 <motion.div
                     key={i}
-                    className="absolute w-2 h-2 bg-blue-400/20 rounded-full"
+                    className="absolute w-1.5 h-1.5 bg-blue-400/30 rounded-full"
                     style={{
-                        left: `${20 + i * 15}%`,
-                        top: `${30 + (i % 3) * 20}%`
+                        left: `${15 + i * 12}%`,
+                        top: `${25 + (i % 4) * 15}%`
                     }}
                     animate={{
-                        y: [0, -30, 0],
-                        opacity: [0.2, 0.5, 0.2]
+                        y: [0, -40, 0],
+                        opacity: [0.2, 0.6, 0.2],
+                        scale: [1, 1.5, 1]
                     }}
                     transition={{
-                        duration: 3 + i,
+                        duration: 4 + i * 0.5,
                         repeat: Infinity,
-                        delay: i * 0.5
+                        delay: i * 0.3
                     }}
                 />
             ))}
 
             <div className="w-full px-6 md:px-12 lg:px-20 xl:px-32 relative z-10">
-                <div className="grid lg:grid-cols-2 gap-16 items-center">
+                <div className="grid lg:grid-cols-2 gap-16 lg:gap-20 items-center">
                     {/* Left: Text Content */}
                     <motion.div
-                        initial={{ opacity: 0, x: -30 }}
+                        initial={{ opacity: 0, x: -40 }}
                         whileInView={{ opacity: 1, x: 0 }}
                         viewport={{ once: true }}
+                        transition={{ duration: 0.7 }}
                         className="text-center lg:text-left"
                     >
+                        {/* Badge */}
                         <motion.div
-                            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-gradient-to-r from-blue-50 to-purple-50 dark:from-blue-950/30 dark:to-purple-950/30 border border-blue-200 dark:border-blue-800 mb-8 shadow-sm"
+                            className="inline-flex items-center gap-2.5 px-5 py-2.5 rounded-full bg-gradient-to-r from-cyan-500/10 to-blue-500/10 border border-cyan-500/30 mb-8 backdrop-blur-sm"
                             initial={{ opacity: 0, y: 20 }}
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
+                            transition={{ delay: 0.2 }}
                         >
-                            <Sparkles className="w-4 h-4 text-blue-600 dark:text-blue-400" />
-                            <span className="text-xs font-bold text-blue-700 dark:text-blue-300 uppercase tracking-widest">Available on All Devices</span>
+                            <motion.div
+                                animate={{ rotate: [0, 360] }}
+                                transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
+                            >
+                                <Sparkles className="w-4 h-4 text-cyan-400" />
+                            </motion.div>
+                            <span className="text-xs font-bold text-cyan-300 uppercase tracking-[0.2em]">Available on All Devices</span>
                         </motion.div>
 
-                        <h2 className="text-5xl md:text-6xl lg:text-7xl font-black text-slate-900 dark:text-white mb-8 leading-[1.1] tracking-tight">
+                        {/* Heading */}
+                        <h2 className="text-5xl md:text-6xl lg:text-7xl font-black text-white mb-8 leading-[1.05] tracking-tight">
                             Beautiful on{" "}
                             <span className="relative inline-block">
-                                <span className="bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 dark:from-blue-400 dark:via-purple-400 dark:to-pink-400 bg-clip-text text-transparent">
+                                <span className="bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-500 bg-clip-text text-transparent">
                                     Every Screen
                                 </span>
                                 <motion.div
-                                    className="absolute -bottom-2 left-0 right-0 h-3 bg-gradient-to-r from-blue-400/30 via-purple-400/30 to-pink-400/30 blur-sm"
-                                    animate={{ scaleX: [0.8, 1, 0.8] }}
-                                    transition={{ duration: 3, repeat: Infinity }}
+                                    className="absolute -bottom-3 left-0 right-0 h-1 bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-500 rounded-full"
+                                    initial={{ scaleX: 0 }}
+                                    whileInView={{ scaleX: 1 }}
+                                    viewport={{ once: true }}
+                                    transition={{ delay: 0.5, duration: 0.8 }}
                                 />
                             </span>
                         </h2>
 
-                        <p className="text-xl text-slate-600 dark:text-slate-300 mb-12 max-w-xl mx-auto lg:mx-0 leading-relaxed">
-                            Access your AI-powered insights anywhere. Our responsive design ensures a <span className="font-semibold text-slate-900 dark:text-white">seamless experience</span> on desktop, tablet, and mobile.
+                        {/* Description */}
+                        <p className="text-lg md:text-xl text-slate-400 mb-12 max-w-xl mx-auto lg:mx-0 leading-relaxed">
+                            Access your AI-powered insights anywhere. Our responsive design ensures a{" "}
+                            <span className="font-semibold text-white">seamless experience</span> on desktop, tablet, and mobile.
                         </p>
 
                         {/* Feature Pills */}
@@ -93,152 +121,151 @@ export function AppPreview() {
                                     initial={{ opacity: 0, scale: 0.8 }}
                                     whileInView={{ opacity: 1, scale: 1 }}
                                     viewport={{ once: true }}
-                                    transition={{ delay: i * 0.1, type: "spring" }}
-                                    whileHover={{ scale: 1.05, y: -2 }}
-                                    className="flex items-center gap-2.5 px-5 py-3 rounded-2xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-lg hover:shadow-xl transition-shadow"
+                                    transition={{ delay: 0.3 + i * 0.1, type: "spring" }}
+                                    whileHover={{ scale: 1.05, y: -3 }}
+                                    className="flex items-center gap-2.5 px-5 py-3 rounded-2xl bg-slate-800/60 border border-slate-700/50 backdrop-blur-sm shadow-lg hover:border-slate-600 transition-all cursor-pointer group"
                                 >
-                                    <div className={`p-1.5 rounded-lg bg-gradient-to-br ${feature.color === 'text-blue-500' ? 'from-blue-100 to-blue-200 dark:from-blue-900/30 dark:to-blue-800/30' : feature.color === 'text-purple-500' ? 'from-purple-100 to-purple-200 dark:from-purple-900/30 dark:to-purple-800/30' : feature.color === 'text-orange-500' ? 'from-orange-100 to-orange-200 dark:from-orange-900/30 dark:to-orange-800/30' : 'from-emerald-100 to-emerald-200 dark:from-emerald-900/30 dark:to-emerald-800/30'}`}>
-                                        <feature.icon className={`w-4 h-4 ${feature.color}`} />
+                                    <div className={`p-2 rounded-xl bg-gradient-to-br ${feature.color} shadow-lg`}>
+                                        <feature.icon className="w-4 h-4 text-white" />
                                     </div>
-                                    <span className="text-sm font-bold text-slate-700 dark:text-slate-200">{feature.label}</span>
+                                    <span className="text-sm font-semibold text-slate-200 group-hover:text-white transition-colors">{feature.label}</span>
                                 </motion.div>
                             ))}
                         </div>
 
-                        {/* Device Icons */}
-                        <div className="flex items-center gap-8 justify-center lg:justify-start">
-                            <motion.div 
-                                className="flex items-center gap-3 px-4 py-2 rounded-xl bg-slate-100 dark:bg-slate-800"
-                                whileHover={{ scale: 1.05 }}
+                        {/* Device Toggle Buttons */}
+                        <div className="flex items-center gap-4 justify-center lg:justify-start">
+                            <motion.button
+                                onClick={() => setActiveDevice("desktop")}
+                                className={`flex items-center gap-3 px-6 py-3 rounded-2xl transition-all duration-300 ${activeDevice === "desktop"
+                                        ? "bg-gradient-to-r from-slate-700 to-slate-800 border-2 border-cyan-500/50 shadow-lg shadow-cyan-500/20"
+                                        : "bg-slate-800/50 border border-slate-700/50 hover:border-slate-600"
+                                    }`}
+                                whileHover={{ scale: 1.02 }}
+                                whileTap={{ scale: 0.98 }}
                             >
-                                <Monitor className="w-5 h-5 text-blue-600 dark:text-blue-400" />
-                                <span className="text-sm font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider">Desktop</span>
-                            </motion.div>
-                            <motion.div 
-                                className="flex items-center gap-3 px-4 py-2 rounded-xl bg-slate-100 dark:bg-slate-800"
-                                whileHover={{ scale: 1.05 }}
+                                <Monitor className={`w-5 h-5 ${activeDevice === "desktop" ? "text-cyan-400" : "text-slate-400"}`} />
+                                <span className={`text-sm font-bold uppercase tracking-wider ${activeDevice === "desktop" ? "text-white" : "text-slate-400"}`}>Desktop</span>
+                            </motion.button>
+                            <motion.button
+                                onClick={() => setActiveDevice("mobile")}
+                                className={`flex items-center gap-3 px-6 py-3 rounded-2xl transition-all duration-300 ${activeDevice === "mobile"
+                                        ? "bg-gradient-to-r from-slate-700 to-slate-800 border-2 border-purple-500/50 shadow-lg shadow-purple-500/20"
+                                        : "bg-slate-800/50 border border-slate-700/50 hover:border-slate-600"
+                                    }`}
+                                whileHover={{ scale: 1.02 }}
+                                whileTap={{ scale: 0.98 }}
                             >
-                                <Smartphone className="w-5 h-5 text-purple-600 dark:text-purple-400" />
-                                <span className="text-sm font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider">Mobile</span>
-                            </motion.div>
+                                <Smartphone className={`w-5 h-5 ${activeDevice === "mobile" ? "text-purple-400" : "text-slate-400"}`} />
+                                <span className={`text-sm font-bold uppercase tracking-wider ${activeDevice === "mobile" ? "text-white" : "text-slate-400"}`}>Mobile</span>
+                            </motion.button>
                         </div>
                     </motion.div>
 
-                    {/* Right: App Mockups with Yellow Circle */}
+                    {/* Right: App Mockups with Images */}
                     <motion.div
-                        initial={{ opacity: 0, x: 30 }}
+                        initial={{ opacity: 0, x: 40 }}
                         whileInView={{ opacity: 1, x: 0 }}
                         viewport={{ once: true }}
+                        transition={{ duration: 0.7, delay: 0.2 }}
                         className="relative"
                     >
-                        {/* Yellow Organic Circle Background */}
+                        {/* Main Tablet/Desktop Mockup */}
                         <motion.div
-                            className="absolute inset-0 -z-10 flex items-center justify-center"
-                            animate={{ rotate: [0, 3, 0, -3, 0] }}
-                            transition={{ duration: 20, repeat: Infinity, ease: "easeInOut" }}
-                        >
-                            <svg viewBox="0 0 600 600" className="w-[120%] h-[120%]">
-                                <motion.path
-                                    d="M 300,80 
-                                       C 420,90 510,180 520,300
-                                       C 530,420 440,510 320,520
-                                       C 200,530 90,440 80,320
-                                       C 70,200 160,90 280,80
-                                       C 290,79 295,79 300,80 Z"
-                                    fill="#FFD700"
-                                    stroke="#FFC700"
-                                    strokeWidth="12"
-                                    initial={{ pathLength: 0, opacity: 0 }}
-                                    animate={{ pathLength: 1, opacity: 0.9 }}
-                                    transition={{ duration: 2, ease: "easeInOut" }}
-                                />
-                            </svg>
-                        </motion.div>
-
-                        {/* Desktop Mockup */}
-                        <motion.div
-                            className="relative z-10 bg-gradient-to-br from-slate-200 to-slate-300 dark:from-slate-700 dark:to-slate-800 rounded-[2.5rem] p-5 shadow-2xl border-2 border-white/50 dark:border-slate-600"
+                            className="relative z-10"
                             whileHover={{ y: -8, scale: 1.02 }}
                             transition={{ type: "spring", stiffness: 300 }}
                         >
-                            <div className="bg-white dark:bg-slate-900 rounded-[2rem] p-5 shadow-2xl border border-slate-200 dark:border-slate-700">
-                                {/* Browser Bar */}
-                                <div className="flex items-center gap-3 mb-5 border-b border-slate-100 dark:border-slate-800 pb-4">
-                                    <div className="flex gap-2">
-                                        <motion.div 
-                                            className="w-3 h-3 rounded-full bg-red-500"
-                                            whileHover={{ scale: 1.2 }}
-                                        />
-                                        <motion.div 
-                                            className="w-3 h-3 rounded-full bg-yellow-500"
-                                            whileHover={{ scale: 1.2 }}
-                                        />
-                                        <motion.div 
-                                            className="w-3 h-3 rounded-full bg-green-500"
-                                            whileHover={{ scale: 1.2 }}
-                                        />
-                                    </div>
-                                    <div className="flex-1 h-7 bg-slate-100 dark:bg-slate-800 rounded-lg mx-3 flex items-center px-3">
-                                        <div className="w-3 h-3 rounded-full bg-slate-300 dark:bg-slate-600 mr-2" />
-                                        <div className="h-2 flex-1 bg-slate-200 dark:bg-slate-700 rounded" />
-                                    </div>
-                                </div>
+                            {/* Outer Frame with Glow */}
+                            <div className="relative">
+                                {/* Glow behind device */}
+                                <div className="absolute -inset-4 bg-gradient-to-r from-cyan-500/20 via-blue-500/20 to-purple-500/20 rounded-[2.5rem] blur-2xl opacity-60" />
 
-                                {/* App Content Preview - Live Predictions Page */}
-                                <div className="bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-800 dark:to-slate-900 rounded-2xl overflow-hidden shadow-inner">
-                                    <div className="relative w-full h-[350px]">
-                                        <iframe 
-                                            src="/predictions?search=RELIANCE.NS" 
-                                            className="absolute inset-0 w-full h-full border-0 pointer-events-none"
-                                            style={{ 
-                                                width: '100%', 
-                                                height: '100%',
-                                            }}
-                                            title="AI Predictions Dashboard Preview"
-                                        />
-                                        {/* Overlay to prevent interaction */}
-                                        <div className="absolute inset-0 bg-transparent pointer-events-auto" />
+                                {/* Device Frame */}
+                                <div className="relative bg-gradient-to-b from-slate-600 via-slate-700 to-slate-800 rounded-[2rem] p-3 shadow-2xl border border-slate-500/30">
+                                    {/* Screen Bezel */}
+                                    <div className="bg-slate-900 rounded-[1.5rem] p-2 shadow-inner">
+                                        {/* Browser Chrome */}
+                                        <div className="flex items-center gap-3 px-4 py-3 bg-slate-800/80 rounded-t-xl">
+                                            <div className="flex gap-2">
+                                                <div className="w-3 h-3 rounded-full bg-red-500 shadow-lg shadow-red-500/50" />
+                                                <div className="w-3 h-3 rounded-full bg-yellow-500 shadow-lg shadow-yellow-500/50" />
+                                                <div className="w-3 h-3 rounded-full bg-green-500 shadow-lg shadow-green-500/50" />
+                                            </div>
+                                            <div className="flex-1 h-6 bg-slate-700/50 rounded-md mx-4" />
+                                        </div>
+
+                                        {/* Tablet Image */}
+                                        <div className="relative w-full aspect-[4/3] overflow-hidden rounded-b-xl">
+                                            <Image
+                                                src="/tablet-mockup.png"
+                                                alt="AI Asset Insights Dashboard"
+                                                fill
+                                                className="object-cover object-top"
+                                                priority
+                                            />
+                                            {/* Glass overlay */}
+                                            <div className="absolute inset-0 bg-gradient-to-t from-slate-900/20 via-transparent to-transparent" />
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </motion.div>
 
-                        {/* Mobile Mockup (Floating) */}
+                        {/* Floating Mobile Mockup */}
                         <motion.div
-                            className="absolute -bottom-10 -right-6 w-32 md:w-44 bg-gradient-to-br from-slate-200 to-slate-300 dark:from-slate-700 dark:to-slate-800 rounded-[2.5rem] p-3 shadow-2xl z-20 border-2 border-white/50 dark:border-slate-600"
-                            animate={{ y: [0, -10, 0] }}
+                            className="absolute -bottom-6 -right-2 md:right-6 w-32 md:w-40 z-20"
+                            animate={{ y: [0, -15, 0] }}
                             transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
                         >
-                            <div className="bg-white dark:bg-slate-900 rounded-[2rem] p-2 shadow-inner border border-slate-100 dark:border-slate-800">
-                                {/* Phone Notch */}
-                                <div className="w-10 h-1.5 bg-slate-200 dark:bg-slate-700 rounded-full mx-auto mb-3" />
+                            {/* Glow behind mobile */}
+                            <div className="absolute -inset-3 bg-gradient-to-r from-purple-500/30 to-pink-500/30 rounded-[2rem] blur-xl opacity-60" />
 
-                                {/* App Content - Live Predictions Preview */}
-                                <div className="bg-slate-50/50 dark:bg-slate-800/50 rounded-[1.5rem] overflow-hidden shadow-inner">
-                                    <div className="relative w-full h-24">
-                                        <iframe 
-                                            src="/predictions?search=RELIANCE.NS" 
-                                            className="absolute inset-0 w-full h-full border-0 pointer-events-none"
-                                            style={{ 
-                                                width: '400%', 
-                                                height: '400%',
-                                                transform: 'scale(0.25)',
-                                                transformOrigin: 'top left'
-                                            }}
-                                            title="Mobile Predictions Preview"
+                            {/* Phone Frame */}
+                            <div className="relative bg-gradient-to-b from-slate-600 via-slate-700 to-slate-800 rounded-[1.75rem] p-2 shadow-2xl border border-slate-500/30">
+                                <div className="bg-slate-900 rounded-[1.5rem] overflow-hidden relative">
+                                    {/* Dynamic Island */}
+                                    <div className="absolute top-2 left-1/2 -translate-x-1/2 w-14 h-5 bg-black rounded-full z-10 flex items-center justify-center">
+                                        <div className="w-2 h-2 rounded-full bg-slate-800" />
+                                    </div>
+
+                                    {/* Mobile Image */}
+                                    <div className="relative w-full aspect-[9/19] overflow-hidden">
+                                        <Image
+                                            src="/mobile-mockup.png"
+                                            alt="AI Insights Mobile App"
+                                            fill
+                                            className="object-cover"
+                                            priority
                                         />
-                                        <div className="absolute inset-0 bg-transparent pointer-events-auto" />
+                                        {/* Glass overlay */}
+                                        <div className="absolute inset-0 bg-gradient-to-t from-slate-900/30 via-transparent to-transparent" />
                                     </div>
                                 </div>
                             </div>
                         </motion.div>
 
+                        {/* Decorative Elements */}
+                        <motion.div
+                            className="absolute -top-8 -left-8 w-20 h-20 border-2 border-cyan-500/20 rounded-full"
+                            animate={{ rotate: [0, 360] }}
+                            transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+                        />
+                        <motion.div
+                            className="absolute -bottom-12 left-1/4 w-16 h-16 border-2 border-purple-500/20 rounded-full"
+                            animate={{ rotate: [360, 0] }}
+                            transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
+                        />
+
                         {/* Glow Effects */}
-                        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-yellow-400/20 rounded-full blur-3xl -z-20" />
-                        <div className="absolute top-1/4 right-1/4 w-64 h-64 bg-blue-500/10 rounded-full blur-3xl -z-20" />
+                        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-cyan-500/10 rounded-full blur-[100px] -z-10" />
+                        <div className="absolute top-1/4 right-0 w-[300px] h-[300px] bg-purple-500/10 rounded-full blur-[80px] -z-10" />
                     </motion.div>
                 </div>
             </div>
+
+            {/* Decorative Bottom Gradient */}
+            <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-[#0a0f1a] to-transparent pointer-events-none" />
         </section>
     )
 }
