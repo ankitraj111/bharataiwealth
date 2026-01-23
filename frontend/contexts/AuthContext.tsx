@@ -52,6 +52,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
      * Login with email and password
      */
     const login = async (data: LoginRequest) => {
+        const isDemoEnv = typeof window !== 'undefined' &&
+            (window.location.hostname.includes('github.io') ||
+                window.location.pathname.includes('/bharataiwealth'));
+
         try {
             const response = await AuthService.login(data);
 
@@ -77,6 +81,17 @@ export function AuthProvider({ children }: { children: ReactNode }) {
                 router.push('/dashboard');
             }
         } catch (error: any) {
+            if (isDemoEnv) {
+                console.warn('Demo environment detected. API login failed, using demo fallback.', error);
+                // Mock success for demo
+                const demoUser: User = { id: 1, name: 'Demo User', email: data.email, role: 'USER', mfaEnabled: false };
+                TokenStorage.setAccessToken('demo-token');
+                TokenStorage.setUser(demoUser);
+                setToken('demo-token');
+                setUser(demoUser);
+                router.push('/dashboard');
+                return;
+            }
             console.error('Login error:', error.message || error);
             console.dir(error);
             throw error;
@@ -87,6 +102,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
      * Register a new user
      */
     const register = async (data: RegisterRequest) => {
+        const isDemoEnv = typeof window !== 'undefined' &&
+            (window.location.hostname.includes('github.io') ||
+                window.location.pathname.includes('/bharataiwealth'));
+
         try {
             const response = await AuthService.register(data);
 
@@ -104,6 +123,17 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
             router.push('/dashboard');
         } catch (error: any) {
+            if (isDemoEnv) {
+                console.warn('Demo environment detected. API registration failed, using demo fallback.', error);
+                // Mock success for demo
+                const demoUser: User = { id: 1, name: data.name, email: data.email, role: 'USER', mfaEnabled: false };
+                TokenStorage.setAccessToken('demo-token');
+                TokenStorage.setUser(demoUser);
+                setToken('demo-token');
+                setUser(demoUser);
+                router.push('/dashboard');
+                return;
+            }
             console.error('Register error:', error);
             throw error;
         }

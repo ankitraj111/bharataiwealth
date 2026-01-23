@@ -65,7 +65,8 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorResponse> handleGlobalException(Exception ex, WebRequest request) {
         log.error("Global exception: ", ex);
-        return buildErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, "An unexpected error occurred", request);
+        String message = ex.getMessage() != null ? ex.getMessage() : "An unexpected error occurred";
+        return buildErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, message, request);
     }
 
     private ResponseEntity<ErrorResponse> buildErrorResponse(HttpStatus status, String message, WebRequest request) {
