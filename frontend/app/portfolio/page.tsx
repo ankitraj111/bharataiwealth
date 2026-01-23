@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { AppShell } from "@/components/app-shell"
+import { ProtectedRoute } from "@/components/protected-route"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -43,6 +44,7 @@ import {
 } from "lucide-react"
 import { PieChart as RechartsPie, Pie, Cell, ResponsiveContainer, LineChart as RechartsLine, Line, XAxis, YAxis, Tooltip, AreaChart, Area } from "recharts"
 import { staggerContainer, scrollReveal } from "@/lib/animation-variants"
+import { fetchMarketIndices, fetchPortfolioAnalysis, fetchMutualFundNavBatch, fetchPortfolioItems, safeFetch } from "@/lib/api"
 
 // ============================================
 // DUMMY DATA
@@ -56,10 +58,10 @@ const stocksData = [
 ]
 
 const mfData = [
-    { symbol: "AXIS-BLUECHIP", name: "Axis Bluechip Fund", units: 500, avgNav: 42, currentNav: 48.5, category: "Large Cap", change: 15.5 },
-    { symbol: "HDFC-MIDCAP", name: "HDFC Mid-Cap Opp", units: 300, avgNav: 95, currentNav: 108, category: "Mid Cap", change: 13.7 },
-    { symbol: "SBI-SMALLCAP", name: "SBI Small Cap", units: 200, avgNav: 120, currentNav: 145, category: "Small Cap", change: 20.8 },
-    { symbol: "ICICI-LIQUID", name: "ICICI Prudential Liquid", units: 1000, avgNav: 310, currentNav: 318, category: "Debt", change: 2.6 },
+    { symbol: "119551", name: "Axis Bluechip Fund", units: 500, avgNav: 42, currentNav: 48.5, category: "Large Cap", change: 15.5 },
+    { symbol: "100522", name: "HDFC Mid-Cap Opp", units: 300, avgNav: 95, currentNav: 108, category: "Mid Cap", change: 13.7 },
+    { symbol: "125494", name: "SBI Small Cap", units: 200, avgNav: 120, currentNav: 145, category: "Small Cap", change: 20.8 },
+    { symbol: "118988", name: "Axis Liquid Fund", units: 1000, avgNav: 310, currentNav: 318, category: "Debt", change: 2.6 },
 ]
 
 const cryptoData = [
@@ -173,7 +175,7 @@ function PortfolioHealthScore({ score }: { score: number }) {
     const strokeDashoffset = circumference - (animatedScore / 100) * circumference
 
     return (
-        <Card className="glass-card overflow-hidden group hover:border-[#0A66C2]/30 transition-all duration-500">
+        <Card className={`glass-card overflow-hidden group hover:border-[#0A66C2]/30 transition-all duration-500 ${score < 60 ? "border-rose-500/20" : ""}`}>
             <CardHeader className="pb-2 border-b border-border/10 bg-muted/5">
                 <CardTitle className="text-base font-bold flex items-center justify-between">
                     <div className="flex items-center gap-2">
@@ -271,25 +273,232 @@ function PortfolioHealthScore({ score }: { score: number }) {
 // ============================================
 // MAIN PORTFOLIO PAGE
 // ============================================
+
+interface AnalysisResult {
+    symbol: string;
+    signal: "BUY" | "SELL" | "HOLD";
+    reason: string;
+    confidence: number;
+    current_price: number;
+    error?: string;
+    indicators: {
+        rsi: number | null;
+        sma20: number | null;
+        sma50: number | null;
+        macd: number | null;
+    };
+}
+
 export default function PortfolioPage() {
+    return (
+        <ProtectedRoute>
+            <PortfolioContent />
+        </ProtectedRoute>
+    )
+}
+
+function PortfolioContent() {
     const [activeTab, setActiveTab] = useState<"stocks" | "mf" | "crypto">("stocks")
     const [showAddModal, setShowAddModal] = useState(false)
+    const [liveMarketData, setLiveMarketData] = useState(marketData)
+    const [liveStocksData, setLiveStocksData] = useState(stocksData)
+    const [liveMfData, setLiveMfData] = useState(mfData)
+    const [liveCryptoData, setLiveCryptoData] = useState(cryptoData)
+    const [liveWatchlistData, setLiveWatchlistData] = useState(watchlistData)
+    const [liveAiInsights, setLiveAiInsights] = useState(aiInsights)
+    const [isLoading, setIsLoading] = useState(true)
+    const [isDemoData, setIsDemoData] = useState(false)
+    const [lastUpdated, setLastUpdated] = useState<Date | null>(null)
+
+    const healthScore = Math.max(30, Math.min(98,
+        70 +
+        (liveAiInsights.filter(i => i.type === "BUY").length * 8) -
+        (liveAiInsights.filter(i => i.type === "SELL").length * 10)
+    ))
+
+    useEffect(() => {
+        const fetchLiveData = async () => {
+            setIsLoading(true)
+            try {
+                // 1. Fetch Portfolio Items from Backend
+                const backendItems = await fetchPortfolioItems()
+                let baseStocks = stocksData
+                let baseMf = mfData
+                let baseCrypto = cryptoData
+
+                if (backendItems && backendItems.length > 0) {
+                    setIsDemoData(false)
+                    baseStocks = backendItems
+                        .filter((item: any) => item.type === "STOCK" || item.type === "ETF")
+                        .map((item: any) => ({
+                            symbol: item.symbol,
+                            name: item.name,
+                            qty: item.quantity,
+                            avgPrice: item.avgBuyPrice,
+                            currentPrice: item.currentPrice,
+                            category: item.type === "ETF" ? "ETF" : "Equity",
+                            change: 0
+                        }))
+
+                    baseMf = backendItems
+                        .filter((item: any) => item.type === "MUTUAL_FUND")
+                        .map((item: any) => ({
+                            symbol: item.symbol,
+                            name: item.name,
+                            units: item.quantity,
+                            avgNav: item.avgBuyPrice,
+                            currentNav: item.currentPrice,
+                            category: "Mutual Fund",
+                            change: 0
+                        }))
+
+                    baseCrypto = backendItems
+                        .filter((item: any) => item.type === "CRYPTO")
+                        .map((item: any) => ({
+                            symbol: item.symbol,
+                            name: item.name,
+                            qty: item.quantity,
+                            avgPrice: item.avgBuyPrice,
+                            currentPrice: item.currentPrice,
+                            category: "Crypto",
+                            change: 0
+                        }))
+                } else {
+                    setIsDemoData(true)
+                }
+
+                // 2. Fetch Market Indices
+                const mData = await fetchMarketIndices()
+                if (mData && mData.market_data) {
+                    setLiveMarketData(mData.market_data)
+                }
+
+                // 3. Fetch Portfolio & Watchlist Analysis
+                const allSymbols = [
+                    ...baseStocks.map(s => s.symbol),
+                    ...baseCrypto.map(c => `${c.symbol}-INR`),
+                    ...watchlistData.map(w => w.symbol)
+                ]
+
+                const analysisRes = await fetchPortfolioAnalysis(allSymbols)
+                if (analysisRes && analysisRes.analysis) {
+                    const analysisArray = analysisRes.analysis as AnalysisResult[]
+                    const analysisMap = new Map<string, AnalysisResult>(
+                        analysisArray.map((a: AnalysisResult) => [a.symbol, a])
+                    )
+
+                    // Update Stocks
+                    const updatedStocks = baseStocks.map(s => {
+                        const analysis = analysisMap.get(s.symbol)
+                        if (analysis && !analysis.error) {
+                            return {
+                                ...s,
+                                currentPrice: analysis.current_price,
+                                change: parseFloat(((analysis.current_price - s.avgPrice) / s.avgPrice * 100).toFixed(2))
+                            }
+                        }
+                        return s
+                    })
+                    setLiveStocksData(updatedStocks)
+
+                    // Update Crypto
+                    const updatedCrypto = baseCrypto.map(c => {
+                        const analysis = analysisMap.get(`${c.symbol}-INR`)
+                        if (analysis && !analysis.error) {
+                            return {
+                                ...c,
+                                currentPrice: analysis.current_price,
+                                change: parseFloat(((analysis.current_price - c.avgPrice) / c.avgPrice * 100).toFixed(2))
+                            }
+                        }
+                        return c
+                    })
+                    setLiveCryptoData(updatedCrypto)
+
+                    // Update Watchlist
+                    const updatedWatchlist = watchlistData.map(w => {
+                        const analysis = analysisMap.get(w.symbol)
+                        if (analysis && !analysis.error) {
+                            return {
+                                ...w,
+                                price: analysis.current_price,
+                                change: parseFloat(((analysis.current_price - w.price) / w.price * 100).toFixed(2))
+                            }
+                        }
+                        return w
+                    })
+                    setLiveWatchlistData(updatedWatchlist)
+
+                    // Update AI Insights - generate from all technical analysis results
+                    const newInsights = analysisArray
+                        .filter((a: AnalysisResult) => !a.error && a.signal)
+                        .map((a: AnalysisResult) => {
+                            const signalType = a.signal === "BUY" ? "BUY" :
+                                a.signal === "SELL" ? "SELL" : "ACCUMULATE"
+                            const tf = a.signal === "BUY" ? "Short-term" :
+                                a.signal === "SELL" ? "Intraday" : "Long-term"
+                            return {
+                                type: signalType as "BUY" | "SELL" | "ACCUMULATE",
+                                asset: a.symbol,
+                                reason: a.reason || `RSI: ${a.indicators?.rsi?.toFixed(0) || 'N/A'}, SMA20: ₹${a.indicators?.sma20?.toFixed(0) || 'N/A'}`,
+                                confidence: Math.round(a.confidence * 100),
+                                timeframe: tf
+                            }
+                        })
+                        .sort((a, b) => b.confidence - a.confidence)
+
+                    setLiveAiInsights(newInsights.length > 0 ? newInsights.slice(0, 3) as any : aiInsights)
+                }
+
+                // 4. Fetch Mutual Fund NAVs
+                const mfSchemes = baseMf.map(f => f.symbol)
+                if (mfSchemes.length > 0) {
+                    const mfRes = await fetchMutualFundNavBatch(mfSchemes)
+                    if (mfRes && mfRes.nav_data) {
+                        const updatedMf = baseMf.map(f => {
+                            const navInfo = mfRes.nav_data[f.symbol]
+                            if (navInfo && !navInfo.error) {
+                                return {
+                                    ...f,
+                                    currentNav: navInfo.nav_value,
+                                    change: parseFloat(((navInfo.nav_value - f.avgNav) / f.avgNav * 100).toFixed(2))
+                                }
+                            }
+                            return f
+                        })
+                        setLiveMfData(updatedMf)
+                    } else {
+                        setLiveMfData(baseMf)
+                    }
+                } else {
+                    setLiveMfData([])
+                }
+            } catch (error) {
+                console.error("Failed to fetch live data:", error)
+            } finally {
+                setLastUpdated(new Date())
+                setTimeout(() => setIsLoading(false), 800) // Small delay for smooth transition
+            }
+        }
+
+        fetchLiveData()
+    }, [])
 
     // Calculate totals
-    const stocksTotal = stocksData.reduce((sum, s) => sum + s.qty * s.currentPrice, 0)
-    const stocksInvested = stocksData.reduce((sum, s) => sum + s.qty * s.avgPrice, 0)
-    const mfTotal = mfData.reduce((sum, s) => sum + s.units * s.currentNav, 0)
-    const mfInvested = mfData.reduce((sum, s) => sum + s.units * s.avgNav, 0)
-    const cryptoTotal = cryptoData.reduce((sum, s) => sum + s.qty * s.currentPrice, 0)
-    const cryptoInvested = cryptoData.reduce((sum, s) => sum + s.qty * s.avgPrice, 0)
+    const stocksTotal = liveStocksData.reduce((sum, s) => sum + s.qty * s.currentPrice, 0)
+    const stocksInvested = liveStocksData.reduce((sum, s) => sum + s.qty * s.avgPrice, 0)
+    const mfTotal = liveMfData.reduce((sum, s) => sum + s.units * s.currentNav, 0)
+    const mfInvested = liveMfData.reduce((sum, s) => sum + s.units * s.avgNav, 0)
+    const cryptoTotal = liveCryptoData.reduce((sum, s) => sum + s.qty * s.currentPrice, 0)
+    const cryptoInvested = liveCryptoData.reduce((sum, s) => sum + s.qty * s.avgPrice, 0)
 
     const totalInvested = stocksInvested + mfInvested + cryptoInvested
     const currentValue = stocksTotal + mfTotal + cryptoTotal
     const profit = currentValue - totalInvested
-    const profitPercent = ((profit / totalInvested) * 100).toFixed(2)
+    const profitPercent = totalInvested > 0 ? ((profit / totalInvested) * 100).toFixed(2) : "0.00"
     const isProfit = profit >= 0
 
-    const currentData = activeTab === "stocks" ? stocksData : activeTab === "mf" ? mfData : cryptoData
+    const currentData = activeTab === "stocks" ? liveStocksData : activeTab === "mf" ? liveMfData : liveCryptoData
 
     return (
         <AppShell>
@@ -310,8 +519,10 @@ export default function PortfolioPage() {
                                 <h1 className="text-3xl font-extrabold tracking-tight text-foreground sm:text-4xl">
                                     Your <span className="text-[#0A66C2]">Portfolio</span>
                                 </h1>
-                                <p className="text-muted-foreground flex items-center gap-2">
-                                    <Sparkles className="h-3 w-3 text-amber-500" /> Complete Portfolio Overview
+                                <p className="text-muted-foreground flex items-center gap-2 text-sm">
+                                    <Sparkles className="h-3 w-3 text-amber-500" />
+                                    {isLoading ? "Synchronizing with live markets..." : isDemoData ? "Demo Mode: Add Your Own Assets for Live Tracking" : "Connected to Real-time Intelligence Engine"}
+                                    {!isLoading && <Badge className={`${isDemoData ? "bg-amber-500/10 text-amber-500" : "bg-emerald-500/10 text-emerald-500"} border-none h-4 text-[8px] px-1 ml-1 animate-pulse`}>{isDemoData ? "DEMO" : "LIVE"}</Badge>}
                                 </p>
                             </div>
                         </div>
@@ -331,17 +542,24 @@ export default function PortfolioPage() {
 
                 {/* ========== 2. MARKET PULSE ========== */}
                 <motion.div variants={scrollReveal} className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-                    {marketData.map((market, i) => (
-                        <div key={i} className="glass-card p-4 flex items-center justify-between group hover:border-[#0A66C2]/30 transition-all">
+                    {liveMarketData.map((market, i) => (
+                        <div key={i} className={`glass-card p-4 flex items-center justify-between group hover:border-[#0A66C2]/30 transition-all ${isLoading ? "animate-pulse" : ""}`}>
                             <div className="space-y-1">
-                                <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider">{market.name}</p>
-                                <p className="text-lg font-bold tabular-nums">{market.value}</p>
+                                <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider flex items-center gap-1">
+                                    {market.name}
+                                    {!isLoading && <div className="h-1 w-1 rounded-full bg-emerald-500 animate-ping" />}
+                                </p>
+                                <p className="text-lg font-bold tabular-nums">
+                                    {isLoading ? "---" : market.value}
+                                </p>
                             </div>
-                            <div className={`flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-bold ${market.change >= 0 ? "bg-emerald-500/10 text-emerald-500" : "bg-rose-500/10 text-rose-500"
-                                }`}>
-                                {market.change >= 0 ? <ArrowUpRight className="h-3 w-3" /> : <ArrowDownRight className="h-3 w-3" />}
-                                {market.change >= 0 ? "+" : ""}{market.change}%
-                            </div>
+                            {!isLoading && (
+                                <div className={`flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-bold ${market.change >= 0 ? "bg-emerald-500/10 text-emerald-500" : "bg-rose-500/10 text-rose-500"
+                                    }`}>
+                                    {market.change >= 0 ? <ArrowUpRight className="h-3 w-3" /> : <ArrowDownRight className="h-3 w-3" />}
+                                    {market.change >= 0 ? "+" : ""}{market.change}%
+                                </div>
+                            )}
                         </div>
                     ))}
                 </motion.div>
@@ -352,17 +570,17 @@ export default function PortfolioPage() {
                         { label: "Total Invested", value: `₹${(totalInvested / 100000).toFixed(2)}L`, icon: IndianRupee, color: "text-blue-500", bg: "bg-blue-500/10" },
                         { label: "Current Portfolio Value", value: `₹${(currentValue / 100000).toFixed(2)}L`, icon: TrendingUp, color: "text-[#0A66C2]", bg: "bg-[#0A66C2]/10" },
                         { label: "Net Gain/Loss", value: `₹${(profit / 1000).toFixed(1)}K`, icon: Zap, color: isProfit ? "text-emerald-500" : "text-rose-500", bg: isProfit ? "bg-emerald-500/10" : "bg-rose-500/10", suffix: `${isProfit ? "+" : ""}${profitPercent}%` },
-                        { label: "Monthly AI Yield", value: "₹42,500", icon: Sparkles, color: "text-amber-500", bg: "bg-amber-500/10" },
+                        { label: "Yearly Prediction", value: "₹42,500", icon: Sparkles, color: "text-amber-500", bg: "bg-amber-500/10" },
                     ].map((stat, i) => (
                         <motion.div key={i} variants={scrollReveal}>
-                            <Card className="glass-card group hover:border-[#0A66C2]/30 transition-all relative overflow-hidden">
+                            <Card className={`glass-card group hover:border-[#0A66C2]/30 transition-all relative overflow-hidden ${isLoading ? "animate-pulse" : ""}`}>
                                 <CardContent className="p-6">
                                     <div className="flex items-start justify-between">
                                         <div className="space-y-1">
                                             <p className="text-xs font-bold text-muted-foreground uppercase tracking-widest">{stat.label}</p>
                                             <div className="flex items-center gap-3">
-                                                <p className="text-2xl font-black tabular-nums">{stat.value}</p>
-                                                {stat.suffix && (
+                                                <p className="text-2xl font-black tabular-nums">{isLoading ? "---" : stat.value}</p>
+                                                {stat.suffix && !isLoading && (
                                                     <Badge className={isProfit ? "bg-emerald-500/10 text-emerald-500 border-none px-1" : "bg-rose-500/10 text-rose-500 border-none px-1"}>
                                                         {stat.suffix}
                                                     </Badge>
@@ -388,7 +606,7 @@ export default function PortfolioPage() {
                     {/* Left Column: Health & Momentum */}
                     <div className="lg:col-span-2 space-y-8">
                         <motion.div variants={scrollReveal}>
-                            <PortfolioHealthScore score={78} />
+                            <PortfolioHealthScore score={healthScore} />
                         </motion.div>
 
                         <motion.div variants={scrollReveal}>
@@ -509,11 +727,20 @@ export default function PortfolioPage() {
                                             <Sparkles className="h-4 w-4 text-blue-500 animate-pulse" />
                                             AI Asset Insights
                                         </CardTitle>
-                                        <Badge className="bg-blue-600/10 text-blue-600 border-none text-[9px] font-black uppercase">Engine v4.2</Badge>
+                                        <div className="flex items-center gap-2">
+                                            {lastUpdated && (
+                                                <span className="text-[9px] text-muted-foreground font-medium">
+                                                    {lastUpdated.toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' })}
+                                                </span>
+                                            )}
+                                            <Badge className={`${isLoading ? "bg-amber-500/10 text-amber-600" : "bg-emerald-500/10 text-emerald-600"} border-none text-[9px] font-black uppercase`}>
+                                                {isLoading ? "SYNCING" : "LIVE"}
+                                            </Badge>
+                                        </div>
                                     </div>
                                 </CardHeader>
                                 <CardContent className="space-y-3">
-                                    {aiInsights.map((insight, i) => (
+                                    {liveAiInsights.map((insight, i) => (
                                         <div key={i} className="p-4 rounded-2xl bg-white/40 dark:bg-black/20 backdrop-blur-md border border-white/50 dark:border-white/10 hover:border-blue-500/30 transition-all flex flex-col gap-3 group">
                                             <div className="flex items-start justify-between">
                                                 <div className="flex gap-3">
@@ -743,18 +970,22 @@ export default function PortfolioPage() {
                         </CardHeader>
                         <CardContent>
                             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                                {watchlistData.map((stock, i) => (
-                                    <div key={i} className="p-4 rounded-2xl bg-background/40 backdrop-blur-md border border-border/50 hover:border-amber-500/30 hover:shadow-lg hover:shadow-amber-500/5 transition-all group">
+                                {liveWatchlistData.map((stock, i) => (
+                                    <div key={i} className={`p-4 rounded-2xl bg-background/40 backdrop-blur-md border border-border/50 hover:border-amber-500/30 hover:shadow-lg hover:shadow-amber-500/5 transition-all group ${isLoading ? "animate-pulse" : ""}`}>
                                         <div className="flex items-center justify-between mb-2">
                                             <p className="font-black text-sm tracking-tight group-hover:text-amber-600 transition-colors uppercase">{stock.symbol}</p>
-                                            <div className={`flex items-center gap-1 text-[10px] font-black ${stock.change >= 0 ? "text-emerald-500" : "text-rose-500"}`}>
-                                                {stock.change >= 0 ? <ArrowUpRight className="h-2.5 w-2.5" /> : <ArrowDownRight className="h-2.5 w-2.5" />}
-                                                {stock.change >= 0 ? "+" : ""}{stock.change}%
-                                            </div>
+                                            {!isLoading && (
+                                                <div className={`flex items-center gap-1 text-[10px] font-black ${stock.change >= 0 ? "text-emerald-500" : "text-rose-500"}`}>
+                                                    {stock.change >= 0 ? <ArrowUpRight className="h-2.5 w-2.5" /> : <ArrowDownRight className="h-2.5 w-2.5" />}
+                                                    {stock.change >= 0 ? "+" : ""}{stock.change}%
+                                                </div>
+                                            )}
                                         </div>
                                         <p className="text-[10px] text-muted-foreground font-medium truncate mb-4 uppercase tracking-tighter">{stock.name}</p>
                                         <div className="flex items-center justify-between mt-auto">
-                                            <p className="font-black tabular-nums text-sm">₹{stock.price.toLocaleString()}</p>
+                                            <p className="font-black tabular-nums text-sm">
+                                                {isLoading ? "₹---" : `₹${stock.price.toLocaleString()}`}
+                                            </p>
                                             <Button size="icon" variant="ghost" className="h-8 w-8 rounded-lg bg-blue-600/10 text-blue-600 hover:bg-blue-600 hover:text-white transition-all shadow-sm">
                                                 <Plus className="h-4 w-4" />
                                             </Button>

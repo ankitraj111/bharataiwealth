@@ -20,7 +20,7 @@ import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { useState, useEffect, useRef } from "react"
 
-import { useAuth } from "@/context/auth-context"
+import { useAuth } from "@/contexts/AuthContext"
 
 export function Topbar() {
   const { user, logout } = useAuth()
@@ -47,7 +47,7 @@ export function Topbar() {
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault()
     e.stopPropagation()
-    
+
     const trimmedQuery = searchQuery.trim()
     if (trimmedQuery) {
       const upperQuery = trimmedQuery.toUpperCase()
@@ -107,7 +107,7 @@ export function Topbar() {
             placeholder="Search assets (e.g. RELIANCE.NS, BTC-USD)..."
             className="w-full h-11 bg-secondary/40 border border-border/50 pl-11 pr-20 rounded-xl focus:bg-secondary/60 focus:border-primary/20 focus:ring-2 focus:ring-primary/10 transition-all placeholder:text-muted-foreground/60 outline-none text-sm"
             autoComplete="off"
-            style={{ 
+            style={{
               WebkitAppearance: 'none',
               MozAppearance: 'none',
               appearance: 'none'

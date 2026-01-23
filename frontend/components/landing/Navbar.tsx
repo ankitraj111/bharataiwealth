@@ -32,7 +32,7 @@ export function Navbar() {
                 ? "bg-white/90 dark:bg-slate-900/90 backdrop-blur-xl shadow-lg shadow-slate-200/20 dark:shadow-slate-900/20 border-b border-slate-100 dark:border-slate-800"
                 : "bg-transparent"
                 }`}>
-                <div className="w-full px-6 md:px-12 lg:px-20 xl:px-32">
+                <div className="w-full px-4 sm:px-10 ">
                     <div className="h-18 flex items-center justify-between py-4">
                         {/* Logo */}
                         <Link href="/" className="flex items-center gap-3 group">

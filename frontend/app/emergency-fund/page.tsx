@@ -2,6 +2,7 @@
 
 import { useState } from "react"
 import { AppShell } from "@/components/app-shell"
+import { ProtectedRoute } from "@/components/protected-route"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -28,6 +29,14 @@ import { fetchEmergencyFund, updateEmergencyFund } from "@/lib/api"
 import { Loader2 } from "lucide-react"
 
 export default function EmergencyFundPage() {
+  return (
+    <ProtectedRoute>
+      <EmergencyFundContent />
+    </ProtectedRoute>
+  )
+}
+
+function EmergencyFundContent() {
   const [salary, setSalary] = useState(75000)
   const [familySize, setFamilySize] = useState(3)
   const [rent, setRent] = useState(20000)
@@ -79,14 +88,14 @@ export default function EmergencyFundPage() {
     }
 
     setIsSaving(true)
-    
+
     const fundData = {
       targetAmount: recommendedFund,
       currentAmount: currentSavings,
       monthlyExpenses: salary * 0.6,
       monthsBuffer: monthsCoverage
     }
-    
+
     try {
       await updateEmergencyFund(fundData)
       alert("Emergency Fund settings saved successfully!")

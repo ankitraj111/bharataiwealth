@@ -4,6 +4,7 @@ import { useState, useEffect, useMemo } from "react"
 import dynamic from "next/dynamic"
 import { AppShell } from "@/components/app-shell"
 import { StatCard } from "@/components/stat-card"
+import { ProtectedRoute } from "@/components/protected-route"
 import { AICoachWidget } from "@/components/ai-coach-widget"
 import { RegulatoryDisclaimer } from "@/components/regulatory-disclaimer"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
@@ -71,6 +72,14 @@ function getGreeting(): string {
 }
 
 export default function DashboardPage() {
+  return (
+    <ProtectedRoute>
+      <DashboardContent />
+    </ProtectedRoute>
+  )
+}
+
+function DashboardContent() {
   const [greeting, setGreeting] = useState("Welcome")
 
   const { data: summaryData, error } = useSWR(`${BACKEND_URL}/dashboard/summary`, fetcher, {

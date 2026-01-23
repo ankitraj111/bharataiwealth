@@ -80,7 +80,7 @@ export function ScientificInvesting() {
                 />
             ))}
 
-            <div className="w-full px-6 md:px-12 lg:px-20 xl:px-32 relative z-10">
+            <div className="w-full px-4 sm:px-10 relative z-10">
                 <div className="flex flex-col lg:flex-row gap-16 items-center">
                     {/* Left Side: Text Content */}
                     <div className="lg:w-1/2 space-y-8">

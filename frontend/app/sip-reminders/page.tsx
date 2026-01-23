@@ -2,6 +2,7 @@
 
 import { useState } from "react"
 import { AppShell } from "@/components/app-shell"
+import { ProtectedRoute } from "@/components/protected-route"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Switch } from "@/components/ui/switch"
@@ -83,6 +84,14 @@ const notificationSettings = [
 ]
 
 export default function SIPRemindersPage() {
+  return (
+    <ProtectedRoute>
+      <SIPRemindersContent />
+    </ProtectedRoute>
+  )
+}
+
+function SIPRemindersContent() {
   const [settings, setSettings] = useState(notificationSettings)
 
   const toggleSetting = (id: string) => {

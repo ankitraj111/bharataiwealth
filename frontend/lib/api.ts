@@ -12,7 +12,7 @@ export const fetcher = async (url: string, retries = 2): Promise<any> => {
             const headers: any = {
                 'Content-Type': 'application/json',
             };
-            
+
             if (token) {
                 headers["Authorization"] = `Bearer ${token}`;
             }
@@ -20,7 +20,7 @@ export const fetcher = async (url: string, retries = 2): Promise<any> => {
             const controller = new AbortController();
             const timeoutId = setTimeout(() => controller.abort(), 15000); // 15s timeout
 
-            const response = await fetch(url, { 
+            const response = await fetch(url, {
                 headers,
                 signal: controller.signal,
                 cache: 'no-store'
@@ -38,7 +38,7 @@ export const fetcher = async (url: string, retries = 2): Promise<any> => {
                     }
                     return null;
                 }
-                
+
                 if (response.status === 404) {
                     console.warn(`Resource not found: ${url}`);
                     return null;
@@ -75,7 +75,7 @@ export const fetcher = async (url: string, retries = 2): Promise<any> => {
                 return null;
             }
 
-            if (error.message?.includes('fetch') || 
+            if (error.message?.includes('fetch') ||
                 error.message?.includes('Failed to fetch') ||
                 error.message?.includes('NetworkError')) {
                 console.warn(`Network error: ${url} (attempt ${attempt + 1}/${retries + 1})`);
@@ -90,7 +90,7 @@ export const fetcher = async (url: string, retries = 2): Promise<any> => {
             return null;
         }
     }
-    
+
     return null;
 };
 
@@ -150,7 +150,7 @@ export async function safeFetch(url: string, options?: RequestInit, retries = 2)
                 return null;
             }
 
-            if (error.message?.includes('fetch') || 
+            if (error.message?.includes('fetch') ||
                 error.message?.includes('Failed to fetch') ||
                 error.message?.includes('NetworkError')) {
                 console.warn(`Network error: ${url} (attempt ${attempt + 1}/${retries + 1})`);
@@ -165,7 +165,7 @@ export async function safeFetch(url: string, options?: RequestInit, retries = 2)
             return null;
         }
     }
-    
+
     return null;
 }
 
@@ -403,5 +403,26 @@ export async function fetchGoalBasedFunds(goal?: string) {
         ? `${ML_SERVICE_URL}/mutualfunds/goal-based?goal=${goal}`
         : `${ML_SERVICE_URL}/mutualfunds/goal-based`;
     return fetchWithCache(url);
+}
+
+export async function fetchPortfolioAnalysis(symbols: string[]) {
+    return safeFetch(`${ML_SERVICE_URL}/analyze/portfolio?symbols=${symbols.join(',')}`);
+}
+
+export async function fetchMarketIndices() {
+    return fetchWithCache(`${ML_SERVICE_URL}/market/indices`);
+}
+
+export async function fetchMutualFundNavBatch(schemes: string[]) {
+    return safeFetch(`${ML_SERVICE_URL}/mutualfunds/nav/batch?schemes=${schemes.join(',')}`);
+}
+
+export async function fetchPortfolioItems() {
+    const token = typeof window !== 'undefined' ? localStorage.getItem("token") : null;
+    if (!token) return [];
+    const data = await safeFetch(`${BACKEND_URL}/portfolio`, {
+        headers: { "Authorization": `Bearer ${token}` }
+    });
+    return data || [];
 }
 

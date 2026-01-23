@@ -44,4 +44,19 @@ public class MLServiceClient {
             return null;
         }
     }
+
+    public Map<String, Object> getPortfolioAnalysis(java.util.List<String> symbols) {
+        if (symbols == null || symbols.isEmpty())
+            return null;
+        try {
+            String symbolsParam = String.join(",", symbols);
+            @SuppressWarnings("unchecked")
+            Map<String, Object> analysis = (Map<String, Object>) restTemplate.getForObject(
+                    mlServiceUrl + "/analyze/portfolio?symbols=" + symbolsParam, Map.class);
+            return analysis;
+        } catch (Exception e) {
+            log.warn("Failed to fetch portfolio analysis: {}", e.getMessage());
+            return null;
+        }
+    }
 }

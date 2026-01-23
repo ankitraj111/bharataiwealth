@@ -19,7 +19,8 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { Checkbox } from "@/components/ui/checkbox"
-import { useAuth } from "@/context/auth-context"
+import { useAuth } from "@/contexts/AuthContext"
+import { DotsBackground } from "@/components/ui/DotsBackground"
 import { cn } from "@/lib/utils"
 
 const loginSchema = z.object({
@@ -32,14 +33,14 @@ export default function LoginPage() {
     const [showPassword, setShowPassword] = useState(false)
     const [error, setError] = useState<string | null>(null)
     const [isStaticSite, setIsStaticSite] = useState(false)
-    const { login, demoLogin, isLoading } = useAuth()
+    const { login, isLoading } = useAuth()
     const router = useRouter()
 
     useEffect(() => {
         // Check if running on GitHub Pages
         if (typeof window !== 'undefined') {
-            const isGitHubPages = window.location.hostname.includes('github.io') || 
-                                 window.location.pathname.includes('/bharataiwealth')
+            const isGitHubPages = window.location.hostname.includes('github.io') ||
+                window.location.pathname.includes('/bharataiwealth')
             setIsStaticSite(isGitHubPages)
         }
     }, [])
@@ -56,18 +57,21 @@ export default function LoginPage() {
     async function onSubmit(values: z.infer<typeof loginSchema>) {
         setError(null)
         try {
-            await login(values.email, values.password)
+            await login({ email: values.email, password: values.password })
+            // Redirect handled by AuthContext (dashboard or MFA)
         } catch (e: any) {
-            setError(e.message || "Invalid credentials. Try demo@bharatai.com / demo123")
+            setError(e.message || "Invalid credentials. Please try again.")
         }
     }
 
     const handleDemoLogin = async () => {
         setError(null)
+        form.setValue('email', 'demo@bharatai.com')
+        form.setValue('password', 'demo123')
         try {
-            await demoLogin()
+            await login({ email: 'demo@bharatai.com', password: 'demo123' })
         } catch (e: any) {
-            setError("Demo login failed. Please try again.")
+            setError("Demo login failed. Please register first.")
         }
     }
 
@@ -75,7 +79,10 @@ export default function LoginPage() {
         <div className="min-h-screen grid lg:grid-cols-2 bg-background overflow-hidden font-sans">
             {/* Left Side: Branding/Visuals */}
             <div className="hidden lg:flex flex-col justify-between p-12 bg-gradient-to-br from-primary/20 via-background to-secondary/20 relative">
-                <div className="absolute inset-0 bg-noise-pattern opacity-20 brightness-100 contrast-150 pointer-events-none" />
+                <div className="absolute inset-0 z-0">
+                    <DotsBackground />
+                </div>
+                <div className="absolute inset-0 bg-noise-pattern opacity-10 brightness-100 contrast-150 pointer-events-none z-0" />
 
                 <div className="relative z-10 flex items-center gap-3">
                     <div className="h-10 w-10 flex items-center justify-center rounded-xl bg-primary shadow-lg shadow-primary/20">
@@ -111,7 +118,10 @@ export default function LoginPage() {
 
             {/* Right Side: Login Form */}
             <div className="flex items-center justify-center p-6 lg:p-12 relative">
-                <div className="w-full max-w-md space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
+                <div className="absolute inset-0 z-0">
+                    <DotsBackground />
+                </div>
+                <div className="w-full max-w-md space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-700 relative z-10">
                     <div className="space-y-2 text-center lg:text-left">
                         <h2 className="text-3xl font-black tracking-tighter text-foreground uppercase">Welcome Back</h2>
                         <p className="text-muted-foreground font-medium">Please enter your details to access your wealth.</p>

@@ -26,7 +26,7 @@ export function Hero() {
                 }}
             />
 
-            <div className="w-full px-4 sm:px-6 md:px-12 lg:px-20 xl:px-32 relative z-10">
+            <div className="w-full px-4 sm:px-10  xl:px-10 relative z-10">
                 <div className="grid lg:grid-cols-2 gap-8 sm:gap-12 lg:gap-24 items-center min-h-[85vh] sm:min-h-[90vh] max-w-[1800px] mx-auto">
                     
                     {/* Left Content */}

@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react"
 import { AppShell } from "@/components/app-shell"
+import { ProtectedRoute } from "@/components/protected-route"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
@@ -43,6 +44,14 @@ const marketSentiment = [
 ]
 
 export default function HighRiskPortfolioPage() {
+  return (
+    <ProtectedRoute>
+      <HighRiskPortfolioContent />
+    </ProtectedRoute>
+  )
+}
+
+function HighRiskPortfolioContent() {
   const [assets, setAssets] = useState(defaultAssets)
   const [showAddModal, setShowAddModal] = useState(false)
   useEffect(() => {

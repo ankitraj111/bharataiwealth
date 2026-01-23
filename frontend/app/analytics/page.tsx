@@ -3,6 +3,7 @@
 import { useState, useEffect, useCallback, useMemo } from "react"
 import { AppShell } from "@/components/app-shell"
 import { AICoachWidget } from "@/components/ai-coach-widget"
+import { ProtectedRoute } from "@/components/protected-route"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Badge } from "@/components/ui/badge"
@@ -28,9 +29,8 @@ import {
   BarChart3,
   PieChart as PieChartIcon,
 } from "lucide-react"
-import { authService } from "@/lib/auth"
+import ApiClient from "@/lib/api-client"
 import { toast } from "sonner"
-import { BACKEND_URL } from "@/lib/api"
 import { DatePickerWithRange } from "@/components/date-range-picker"
 import { DateRange } from "react-day-picker"
 import { isWithinInterval, parseISO, subDays } from "date-fns"
@@ -47,6 +47,14 @@ interface Expense {
 }
 
 export default function AnalyticsPage() {
+  return (
+    <ProtectedRoute>
+      <AnalyticsContent />
+    </ProtectedRoute>
+  )
+}
+
+function AnalyticsContent() {
   const [expenses, setExpenses] = useState<Expense[]>([])
   const [isLoading, setIsLoading] = useState(true)
   const [dateRange, setDateRange] = useState<DateRange | undefined>({
@@ -57,29 +65,10 @@ export default function AnalyticsPage() {
   const fetchExpenses = useCallback(async () => {
     setIsLoading(true)
     try {
-      const token = authService.getToken()
-      if (!token) {
-        console.log("No auth token found")
-        setIsLoading(false)
-        return
-      }
-
-      const response = await fetch(`${BACKEND_URL}/expenses`, {
-        headers: {
-          "Authorization": `Bearer ${token}`,
-          "Content-Type": "application/json"
-        }
-      })
-      
-      if (response.ok) {
-        const data = await response.json()
-        setExpenses(data)
-      } else {
-        console.error("Failed to fetch expenses:", response.status)
-      }
+      const data = await ApiClient.get('/expenses')
+      setExpenses(data || [])
     } catch (error) {
       console.error("Failed to fetch expenses:", error)
-      // Set empty array instead of showing error
       setExpenses([])
     } finally {
       setIsLoading(false)

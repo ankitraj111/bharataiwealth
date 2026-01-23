@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react"
 import { AppShell } from "@/components/app-shell"
+import { ProtectedRoute } from "@/components/protected-route"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
@@ -35,6 +36,14 @@ const performanceData = Array.from({ length: 12 }, (_, i) => ({
 }))
 
 export default function MediumRiskPortfolioPage() {
+  return (
+    <ProtectedRoute>
+      <MediumRiskPortfolioContent />
+    </ProtectedRoute>
+  )
+}
+
+function MediumRiskPortfolioContent() {
   const [assets, setAssets] = useState(defaultAssets)
   const [showAddModal, setShowAddModal] = useState(false)
   useEffect(() => {

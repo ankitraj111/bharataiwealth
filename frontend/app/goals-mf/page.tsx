@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react"
 import { AppShell } from "@/components/app-shell"
+import { ProtectedRoute } from "@/components/protected-route"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
@@ -75,6 +76,14 @@ const goalBgColors: Record<string, string> = {
 }
 
 export default function GoalBasedFundsPage() {
+    return (
+        <ProtectedRoute>
+            <GoalBasedFundsContent />
+        </ProtectedRoute>
+    )
+}
+
+function GoalBasedFundsContent() {
     const [goals, setGoals] = useState<Goal[]>([])
     const [loading, setLoading] = useState(true)
     const [selectedGoal, setSelectedGoal] = useState<string | null>(null)
@@ -161,8 +170,8 @@ export default function GoalBasedFundsPage() {
                                         <Card
                                             key={goal.goal_type}
                                             className={`cursor-pointer transition-all border-2 ${isSelected
-                                                    ? "border-primary bg-primary/5"
-                                                    : "border-border/50 hover:border-primary/30"
+                                                ? "border-primary bg-primary/5"
+                                                : "border-border/50 hover:border-primary/30"
                                                 }`}
                                             onClick={() => loadPortfolio(goal.goal_type)}
                                         >

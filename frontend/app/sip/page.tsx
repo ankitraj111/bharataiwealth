@@ -2,6 +2,7 @@
 
 import { useState } from "react"
 import { AppShell } from "@/components/app-shell"
+import { ProtectedRoute } from "@/components/protected-route"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -51,6 +52,14 @@ interface SIPResult {
 }
 
 export default function SIPPlannerPage() {
+    return (
+        <ProtectedRoute>
+            <SIPPlannerContent />
+        </ProtectedRoute>
+    )
+}
+
+function SIPPlannerContent() {
     const [monthlyAmount, setMonthlyAmount] = useState(10000)
     const [goalYears, setGoalYears] = useState(10)
     const [expectedReturn, setExpectedReturn] = useState(12)

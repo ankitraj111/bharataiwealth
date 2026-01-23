@@ -18,7 +18,7 @@ import {
     FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-import { authService } from "@/lib/auth"
+import { useAuth } from "@/contexts/AuthContext"
 
 const signupSchema = z.object({
     name: z.string().min(2, { message: "Name must be at least 2 characters" }),
@@ -35,13 +35,14 @@ export default function SignupPage() {
     const [error, setError] = useState<string | null>(null)
     const [isSubmitting, setIsSubmitting] = useState(false)
     const [isStaticSite, setIsStaticSite] = useState(false)
+    const { register } = useAuth()
     const router = useRouter()
 
     useEffect(() => {
         // Check if running on GitHub Pages
         if (typeof window !== 'undefined') {
-            const isGitHubPages = window.location.hostname.includes('github.io') || 
-                                 window.location.pathname.includes('/bharataiwealth')
+            const isGitHubPages = window.location.hostname.includes('github.io') ||
+                window.location.pathname.includes('/bharataiwealth')
             setIsStaticSite(isGitHubPages)
         }
     }, [])
@@ -60,8 +61,8 @@ export default function SignupPage() {
         setError(null)
         setIsSubmitting(true)
         try {
-            await authService.register(values.name, values.email, values.password)
-            router.push('/auth/login?registered=true')
+            await register({ name: values.name, email: values.email, password: values.password })
+            // Redirect handled by AuthContext
         } catch (e: any) {
             setError(e.message || "Something went wrong. Please try again.")
             setIsSubmitting(false)

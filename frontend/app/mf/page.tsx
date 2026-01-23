@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useMemo } from "react"
 import { AppShell } from "@/components/app-shell"
+import { ProtectedRoute } from "@/components/protected-route"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -50,6 +51,14 @@ const categories = [
 const riskLevels = ["all", "low", "medium", "high"]
 
 export default function MutualFundsPage() {
+    return (
+        <ProtectedRoute>
+            <MutualFundsContent />
+        </ProtectedRoute>
+    )
+}
+
+function MutualFundsContent() {
     const [funds, setFunds] = useState<MutualFund[]>([])
     const [loading, setLoading] = useState(true)
     const [searchQuery, setSearchQuery] = useState("")

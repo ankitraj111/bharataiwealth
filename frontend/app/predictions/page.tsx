@@ -5,6 +5,7 @@ import { useState, useEffect, Suspense, useCallback } from "react"
 import { useSearchParams } from "next/navigation"
 import { AppShell } from "@/components/app-shell"
 import { AICoachWidget } from "@/components/ai-coach-widget"
+import { ProtectedRoute } from "@/components/protected-route"
 import { RegulatoryDisclaimer } from "@/components/regulatory-disclaimer"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
@@ -42,8 +43,8 @@ import {
     CandlestickChart,
 } from "lucide-react"
 
-// Trending Indian Stocks for quick access
-const trendingAssets = [
+// Trending Indian Stocks for quick access (fallback values)
+const defaultTrendingAssets = [
     { symbol: "RELIANCE.NS", name: "Reliance", change: 2.4, price: 2876 },
     { symbol: "TCS.NS", name: "TCS", change: -0.8, price: 3945 },
     { symbol: "HDFCBANK.NS", name: "HDFC Bank", change: 1.2, price: 1654 },
@@ -54,7 +55,7 @@ const trendingAssets = [
 
 // Generate mock prediction when ML service is offline
 const generateMockPrediction = (symbol: string) => {
-    const asset = trendingAssets.find(a => a.symbol === symbol)
+    const asset = defaultTrendingAssets.find((a: { symbol: string; price: number }) => a.symbol === symbol)
     const basePrice = asset?.price || Math.floor(Math.random() * 2000) + 1000
     const confidence = 0.72 + Math.random() * 0.18
     const changePercent = (Math.random() - 0.4) * 8
@@ -143,9 +144,44 @@ function PredictionsContent() {
     const [chartData, setChartData] = useState<any[]>([])
     const [activeTab, setActiveTab] = useState("forecast")
     const [mounted, setMounted] = useState(false)
+    const [trendingAssets, setTrendingAssets] = useState(defaultTrendingAssets)
 
     useEffect(() => {
         setMounted(true)
+
+        // Fetch live trending assets data
+        const fetchTrendingData = async () => {
+            try {
+                const ML_URL = process.env.NEXT_PUBLIC_ML_SERVICE_URL || "http://localhost:8000"
+                const symbols = defaultTrendingAssets.map(a => a.symbol).join(',')
+                const res = await fetch(`${ML_URL}/analyze/portfolio?symbols=${encodeURIComponent(symbols)}`)
+                if (res.ok) {
+                    const result = await res.json()
+                    if (result.analysis) {
+                        const updatedAssets = defaultTrendingAssets.map(asset => {
+                            const liveData = result.analysis.find((a: any) =>
+                                a.symbol === asset.symbol.replace('.NS', '') || a.symbol === asset.symbol
+                            )
+                            if (liveData && !liveData.error) {
+                                const change = liveData.indicators?.rsi
+                                    ? ((liveData.current_price - asset.price) / asset.price * 100)
+                                    : asset.change
+                                return {
+                                    ...asset,
+                                    price: liveData.current_price || asset.price,
+                                    change: parseFloat(change.toFixed(2))
+                                }
+                            }
+                            return asset
+                        })
+                        setTrendingAssets(updatedAssets)
+                    }
+                }
+            } catch (e) {
+                console.error("Failed to fetch trending assets:", e)
+            }
+        }
+        fetchTrendingData()
     }, [])
 
     const loadData = useCallback(async (symbol: string) => {
@@ -708,8 +744,10 @@ function PredictionsContent() {
 
 export default function PredictionsPage() {
     return (
-        <Suspense fallback={<div className="flex h-screen items-center justify-center"><Loader2 className="h-10 w-10 animate-spin text-primary" /></div>}>
-            <PredictionsContent />
-        </Suspense>
+        <ProtectedRoute>
+            <Suspense fallback={<div className="flex h-screen items-center justify-center"><Loader2 className="h-10 w-10 animate-spin text-primary" /></div>}>
+                <PredictionsContent />
+            </Suspense>
+        </ProtectedRoute>
     )
 }

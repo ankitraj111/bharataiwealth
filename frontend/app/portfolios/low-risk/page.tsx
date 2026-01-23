@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react"
 import { AppShell } from "@/components/app-shell"
+import { ProtectedRoute } from "@/components/protected-route"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
@@ -53,6 +54,14 @@ const sipRecommendations = [
 ]
 
 export default function LowRiskPortfolioPage() {
+  return (
+    <ProtectedRoute>
+      <LowRiskPortfolioContent />
+    </ProtectedRoute>
+  )
+}
+
+function LowRiskPortfolioContent() {
   const [assets, setAssets] = useState(defaultAssets)
   const [showAddModal, setShowAddModal] = useState(false)
 

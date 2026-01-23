@@ -3,6 +3,7 @@
 import { useState, useEffect, useCallback, useMemo } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { AppShell } from "@/components/app-shell"
+import { ProtectedRoute } from "@/components/protected-route"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
@@ -23,7 +24,7 @@ import { Plus, Upload, Pencil, Trash2, Filter, Building2, CheckCircle2, RefreshC
 import { cn } from "@/lib/utils"
 import { ExportButton } from "@/components/export-button"
 import { Progress } from "@/components/ui/progress"
-import { authService } from "@/lib/auth"
+import ApiClient from "@/lib/api-client"
 import { toast } from "sonner"
 import { BACKEND_URL } from "@/lib/api"
 import { DatePickerWithRange } from "@/components/date-range-picker"
@@ -65,6 +66,14 @@ const getCategoryColor = (category: string) => {
 }
 
 export default function ExpensesPage() {
+  return (
+    <ProtectedRoute>
+      <ExpensesContent />
+    </ProtectedRoute>
+  )
+}
+
+function ExpensesContent() {
   const [expenses, setExpenses] = useState<Expense[]>([])
   const [selectedCategory, setSelectedCategory] = useState("All")
   const [dateRange, setDateRange] = useState<DateRange | undefined>({
@@ -88,40 +97,10 @@ export default function ExpensesPage() {
   const fetchExpenses = useCallback(async () => {
     setIsLoading(true)
     try {
-      const token = authService.getToken()
-      if (!token) {
-        console.log("No auth token found - using demo mode")
-        setExpenses([])
-        setIsLoading(false)
-        return
-      }
-
-      const controller = new AbortController()
-      const timeoutId = setTimeout(() => controller.abort(), 10000) // 10s timeout
-
-      const response = await fetch(`${BACKEND_URL}/expenses`, {
-        headers: {
-          "Authorization": `Bearer ${token}`,
-          "Content-Type": "application/json"
-        },
-        signal: controller.signal
-      })
-      
-      clearTimeout(timeoutId)
-      
-      if (response.ok) {
-        const data = await response.json()
-        setExpenses(data || [])
-      } else {
-        console.warn("Failed to fetch expenses:", response.status)
-        setExpenses([])
-      }
+      const data = await ApiClient.get('/expenses')
+      setExpenses(data || [])
     } catch (error: any) {
-      if (error.name === 'AbortError') {
-        console.warn("Request timeout - backend may be unavailable")
-      } else {
-        console.warn("Failed to fetch expenses:", error.message)
-      }
+      console.warn("Failed to fetch expenses:", error.message)
       // Set empty array instead of showing error - graceful degradation
       setExpenses([])
     } finally {
@@ -135,20 +114,10 @@ export default function ExpensesPage() {
 
   const handleUpdateExpense = async (id: number, updates: Partial<Expense>) => {
     try {
-      const response = await fetch(`${BACKEND_URL}/expenses/${id}`, {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${authService.getToken()}`
-        },
-        body: JSON.stringify(updates)
-      })
-
-      if (response.ok) {
-        toast.success("Expense updated")
-        fetchExpenses()
-        setIsEditOpen(false)
-      }
+      await ApiClient.patch(`/expenses/${id}`, updates)
+      toast.success("Expense updated")
+      fetchExpenses()
+      setIsEditOpen(false)
     } catch (error) {
       toast.error("Failed to update expense")
     }
@@ -158,17 +127,9 @@ export default function ExpensesPage() {
     if (!confirm("Are you sure you want to delete this expense? It will be removed from your dashboard.")) return;
 
     try {
-      const response = await fetch(`${BACKEND_URL}/expenses/${id}`, {
-        method: "DELETE",
-        headers: {
-          "Authorization": `Bearer ${authService.getToken()}`
-        }
-      })
-
-      if (response.ok) {
-        toast.success("Expense deleted")
-        fetchExpenses()
-      }
+      await ApiClient.delete(`/expenses/${id}`)
+      toast.success("Expense deleted")
+      fetchExpenses()
     } catch (error) {
       toast.error("Failed to delete expense")
     }
@@ -208,19 +169,12 @@ export default function ExpensesPage() {
     }, 200)
 
     try {
-      const connectResp = await fetch(`${BACKEND_URL}/bank-connections/connect`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${authService.getToken()}`
-        },
-        body: JSON.stringify({
-          bankName: connectingBank,
-          accountLastFour: Math.floor(1000 + Math.random() * 9000).toString()
-        })
+      const connectResp = await ApiClient.post('/bank-connections/connect', {
+        bankName: connectingBank,
+        accountLastFour: Math.floor(1000 + Math.random() * 9000).toString()
       })
 
-      if (connectResp.ok) {
+      if (connectResp) {
         clearInterval(interval)
         setSyncProgress(100)
         setSyncStatus("completed")
@@ -431,8 +385,8 @@ export default function ExpensesPage() {
                               onClick={() => handleConnectUPI(upi.name)}
                               className={cn(
                                 "w-full flex items-center justify-between p-4 rounded-xl border-2 transition-all duration-300 group relative overflow-hidden",
-                                consentGiven 
-                                  ? "bg-secondary/40 border-border/50 hover:border-primary/50 hover:bg-secondary/60 hover:shadow-lg hover:shadow-primary/10 hover:scale-[1.02]" 
+                                consentGiven
+                                  ? "bg-secondary/40 border-border/50 hover:border-primary/50 hover:bg-secondary/60 hover:shadow-lg hover:shadow-primary/10 hover:scale-[1.02]"
                                   : "opacity-40 cursor-not-allowed bg-secondary/20 border-border/30"
                               )}
                             >

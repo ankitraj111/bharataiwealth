@@ -1,5 +1,6 @@
 import { Suspense } from "react"
 import StockAnalysisClient from "@/components/analysis/StockAnalysisClient"
+import { ProtectedRoute } from "@/components/protected-route"
 
 // Generate static params for pre-rendering popular stocks
 export function generateStaticParams() {
@@ -19,10 +20,12 @@ export default async function StockAnalysisPage({ params }: PageProps) {
     const resolvedParams = await params
 
     return (
-        <Suspense fallback={<div>Loading analysis...</div>}>
-            <StockAnalysisClient
-                symbol={resolvedParams.symbol}
-            />
-        </Suspense>
+        <ProtectedRoute>
+            <Suspense fallback={<div>Loading analysis...</div>}>
+                <StockAnalysisClient
+                    symbol={resolvedParams.symbol}
+                />
+            </Suspense>
+        </ProtectedRoute>
     )
 }

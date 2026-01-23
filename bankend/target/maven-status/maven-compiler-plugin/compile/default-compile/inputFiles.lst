@@ -1,5 +1,6 @@
 Z:\bharat-ai-wealth-ui (1)\bankend\src\main\java\com\bharatai\wealth\service\BankSyncService.java
 Z:\bharat-ai-wealth-ui (1)\bankend\src\main\java\com\bharatai\wealth\dto\StockAnalysisDTO.java
+Z:\bharat-ai-wealth-ui (1)\bankend\src\main\java\com\bharatai\wealth\service\MfaService.java
 Z:\bharat-ai-wealth-ui (1)\bankend\src\main\java\com\bharatai\wealth\repository\AlertRepository.java
 Z:\bharat-ai-wealth-ui (1)\bankend\src\main\java\com\bharatai\wealth\controller\BankConnectionController.java
 Z:\bharat-ai-wealth-ui (1)\bankend\src\main\java\com\bharatai\wealth\dto\BankConnectionRequest.java
@@ -14,6 +15,7 @@ Z:\bharat-ai-wealth-ui (1)\bankend\src\main\java\com\bharatai\wealth\model\Famil
 Z:\bharat-ai-wealth-ui (1)\bankend\src\main\java\com\bharatai\wealth\controller\FamilyController.java
 Z:\bharat-ai-wealth-ui (1)\bankend\src\main\java\com\bharatai\wealth\controller\FamilyMemberController.java
 Z:\bharat-ai-wealth-ui (1)\bankend\src\main\java\com\bharatai\wealth\repository\TaxRecordRepository.java
+Z:\bharat-ai-wealth-ui (1)\bankend\src\main\java\com\bharatai\wealth\service\AuditService.java
 Z:\bharat-ai-wealth-ui (1)\bankend\src\main\java\com\bharatai\wealth\repository\BankConnectionRepository.java
 Z:\bharat-ai-wealth-ui (1)\bankend\src\main\java\com\bharatai\wealth\repository\GoalRepository.java
 Z:\bharat-ai-wealth-ui (1)\bankend\src\main\java\com\bharatai\wealth\controller\AuthController.java
@@ -21,6 +23,8 @@ Z:\bharat-ai-wealth-ui (1)\bankend\src\main\java\com\bharatai\wealth\controller\
 Z:\bharat-ai-wealth-ui (1)\bankend\src\main\java\com\bharatai\wealth\BharatAiWealthApplication.java
 Z:\bharat-ai-wealth-ui (1)\bankend\src\main\java\com\bharatai\wealth\repository\ExpenseRepository.java
 Z:\bharat-ai-wealth-ui (1)\bankend\src\main\java\com\bharatai\wealth\controller\AdvisorController.java
+Z:\bharat-ai-wealth-ui (1)\bankend\src\main\java\com\bharatai\wealth\repository\AuditLogRepository.java
+Z:\bharat-ai-wealth-ui (1)\bankend\src\main\java\com\bharatai\wealth\security\RateLimitingFilter.java
 Z:\bharat-ai-wealth-ui (1)\bankend\src\main\java\com\bharatai\wealth\controller\AlertsController.java
 Z:\bharat-ai-wealth-ui (1)\bankend\src\main\java\com\bharatai\wealth\controller\TaxController.java
 Z:\bharat-ai-wealth-ui (1)\bankend\src\main\java\com\bharatai\wealth\repository\FamilyMemberRepository.java
@@ -34,17 +38,21 @@ Z:\bharat-ai-wealth-ui (1)\bankend\src\main\java\com\bharatai\wealth\model\User.
 Z:\bharat-ai-wealth-ui (1)\bankend\src\main\java\com\bharatai\wealth\controller\AnalyticsController.java
 Z:\bharat-ai-wealth-ui (1)\bankend\src\main\java\com\bharatai\wealth\controller\GoalsController.java
 Z:\bharat-ai-wealth-ui (1)\bankend\src\main\java\com\bharatai\wealth\model\PortfolioItem.java
+Z:\bharat-ai-wealth-ui (1)\bankend\src\main\java\com\bharatai\wealth\exception\GlobalExceptionHandler.java
 Z:\bharat-ai-wealth-ui (1)\bankend\src\main\java\com\bharatai\wealth\repository\UserRepository.java
 Z:\bharat-ai-wealth-ui (1)\bankend\src\main\java\com\bharatai\wealth\controller\ExpenseController.java
 Z:\bharat-ai-wealth-ui (1)\bankend\src\main\java\com\bharatai\wealth\controller\StockAnalysisController.java
+Z:\bharat-ai-wealth-ui (1)\bankend\src\main\java\com\bharatai\wealth\model\AuditLog.java
 Z:\bharat-ai-wealth-ui (1)\bankend\src\main\java\com\bharatai\wealth\controller\EmergencyFundController.java
 Z:\bharat-ai-wealth-ui (1)\bankend\src\main\java\com\bharatai\wealth\service\AuthService.java
 Z:\bharat-ai-wealth-ui (1)\bankend\src\main\java\com\bharatai\wealth\config\SecurityConfig.java
 Z:\bharat-ai-wealth-ui (1)\bankend\src\main\java\com\bharatai\wealth\controller\PredictionController.java
 Z:\bharat-ai-wealth-ui (1)\bankend\src\main\java\com\bharatai\wealth\model\EmergencyFund.java
 Z:\bharat-ai-wealth-ui (1)\bankend\src\main\java\com\bharatai\wealth\model\BankConnection.java
+Z:\bharat-ai-wealth-ui (1)\bankend\src\main\java\com\bharatai\wealth\config\AsyncConfig.java
 Z:\bharat-ai-wealth-ui (1)\bankend\src\main\java\com\bharatai\wealth\service\StockAnalysisService.java
 Z:\bharat-ai-wealth-ui (1)\bankend\src\main\java\com\bharatai\wealth\controller\SettingsController.java
 Z:\bharat-ai-wealth-ui (1)\bankend\src\main\java\com\bharatai\wealth\repository\EmergencyFundRepository.java
+Z:\bharat-ai-wealth-ui (1)\bankend\src\main\java\com\bharatai\wealth\service\LoginAttemptService.java
 Z:\bharat-ai-wealth-ui (1)\bankend\src\main\java\com\bharatai\wealth\config\PasswordConfig.java
 Z:\bharat-ai-wealth-ui (1)\bankend\src\main\java\com\bharatai\wealth\config\ApplicationConfig.java

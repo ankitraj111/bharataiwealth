@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react"
 import { AppShell } from "@/components/app-shell"
+import { ProtectedRoute } from "@/components/protected-route"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
@@ -24,6 +25,14 @@ import { cn } from "@/lib/utils"
 import { fetchAlerts } from "@/lib/api"
 
 export default function AlertsPage() {
+  return (
+    <ProtectedRoute>
+      <AlertsContent />
+    </ProtectedRoute>
+  )
+}
+
+function AlertsContent() {
   const [alertsList, setAlertsList] = useState<any[]>([])
   const [isLoading, setIsLoading] = useState(true)
   const [dismissedAlerts, setDismissedAlerts] = useState<number[]>([])

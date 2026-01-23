@@ -1,6 +1,7 @@
 "use client"
 
 import { AppShell } from "@/components/app-shell"
+import { ProtectedRoute } from "@/components/protected-route"
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Progress } from "@/components/ui/progress"
@@ -130,6 +131,14 @@ const rarityColors: Record<string, string> = {
 }
 
 export default function BadgesPage() {
+  return (
+    <ProtectedRoute>
+      <BadgesContent />
+    </ProtectedRoute>
+  )
+}
+
+function BadgesContent() {
   return (
     <AppShell>
       <div className="space-y-8">

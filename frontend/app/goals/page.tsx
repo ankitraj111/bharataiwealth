@@ -4,6 +4,7 @@ import type React from "react"
 
 import { useState, useEffect } from "react"
 import { AppShell } from "@/components/app-shell"
+import { ProtectedRoute } from "@/components/protected-route"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -41,6 +42,14 @@ const goalIcons: Record<string, React.ElementType> = {
 }
 
 export default function GoalsPage() {
+  return (
+    <ProtectedRoute>
+      <GoalsContent />
+    </ProtectedRoute>
+  )
+}
+
+function GoalsContent() {
   const [goals, setGoals] = useState<any[]>([])
   const [isLoading, setIsLoading] = useState(true)
   const [isSaving, setIsSaving] = useState(false)
@@ -69,7 +78,7 @@ export default function GoalsPage() {
 
   const handleAddGoal = async () => {
     console.log("handleAddGoal called", newGoal)
-    
+
     // Validation
     if (!newGoal.name || !newGoal.targetAmount || !newGoal.timeline) {
       alert("Please fill in all fields")
@@ -111,7 +120,7 @@ export default function GoalsPage() {
     try {
       const savedGoal = await addGoal(goalData)
       console.log("Saved goal response:", savedGoal)
-      
+
       if (savedGoal) {
         setGoals([...goals, savedGoal])
         setDialogOpen(false)

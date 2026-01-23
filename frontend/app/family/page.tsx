@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react"
 import { AppShell } from "@/components/app-shell"
+import { ProtectedRoute } from "@/components/protected-route"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
@@ -9,10 +10,18 @@ import { Badge } from "@/components/ui/badge"
 import { Progress } from "@/components/ui/progress"
 import { cn } from "@/lib/utils"
 import { Users, TrendingUp, Target, Wallet, Plus, Loader2 } from "lucide-react"
-import { useAuth } from "@/context/auth-context"
+import { useAuth } from "@/contexts/AuthContext"
 import { fetchFamily } from "@/lib/api"
 
 export default function FamilyPage() {
+  return (
+    <ProtectedRoute>
+      <FamilyContent />
+    </ProtectedRoute>
+  )
+}
+
+function FamilyContent() {
   const { user } = useAuth()
   const [familyMembers, setFamilyMembers] = useState<any[]>([])
   const [isLoading, setIsLoading] = useState(true)

@@ -1,6 +1,7 @@
 "use client"
 
 import { AppShell } from "@/components/app-shell"
+import { ProtectedRoute } from "@/components/protected-route"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Switch } from "@/components/ui/switch"
@@ -44,6 +45,14 @@ const digestSections = [
 ]
 
 export default function DigestPage() {
+  return (
+    <ProtectedRoute>
+      <DigestContent />
+    </ProtectedRoute>
+  )
+}
+
+function DigestContent() {
   return (
     <AppShell>
       <div className="space-y-8">

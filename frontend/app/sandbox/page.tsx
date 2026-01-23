@@ -2,6 +2,7 @@
 
 import { useState } from "react"
 import { AppShell } from "@/components/app-shell"
+import { ProtectedRoute } from "@/components/protected-route"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -23,6 +24,14 @@ const scenarios = [
 ]
 
 export default function SandboxPage() {
+  return (
+    <ProtectedRoute>
+      <SandboxContent />
+    </ProtectedRoute>
+  )
+}
+
+function SandboxContent() {
   const [scenario, setScenario] = useState("")
   const [sipAmount, setSipAmount] = useState("")
   const [hasSimulated, setHasSimulated] = useState(false)

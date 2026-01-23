@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect } from "react"
 import { AppShell } from "@/components/app-shell"
+import { ProtectedRoute } from "@/components/protected-route"
 import { Button } from "@/components/ui/button"
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
@@ -44,6 +45,14 @@ const chatThreads = [
 ]
 
 export default function AdvisorPage() {
+  return (
+    <ProtectedRoute>
+      <AdvisorContent />
+    </ProtectedRoute>
+  )
+}
+
+function AdvisorContent() {
   const [messages, setMessages] = useState<Message[]>(initialMessages)
   const [input, setInput] = useState("")
   const [isTyping, setIsTyping] = useState(false)

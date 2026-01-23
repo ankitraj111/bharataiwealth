@@ -6,9 +6,11 @@ from risk_engine import RiskEngine, RiskInput
 from advisory_engine import AdvisoryEngine
 from kite_engine import KiteEngine
 from mf_engine import MFEngine, SIPInput
+from ta_engine import TechnicalAnalysisEngine
 from fastapi.middleware.cors import CORSMiddleware
 import uvicorn
 import os
+import yfinance as yf
 
 app = FastAPI(title="Bharat AI Wealth Prediction Engine")
 
@@ -27,6 +29,7 @@ risk_engine = RiskEngine()
 advisory_engine = AdvisoryEngine()
 kite_engine = KiteEngine()
 mf_engine = MFEngine()
+ta_engine = TechnicalAnalysisEngine()
 
 @app.on_event("shutdown")
 def shutdown_event():
@@ -228,6 +231,52 @@ async def get_sentiment(symbol: str = Query(..., description="Symbol to analyze 
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
+@app.get("/analyze/portfolio")
+async def analyze_portfolio(
+    symbols: str = Query(..., description="Comma-separated symbols")
+):
+    """
+    Perform technical analysis (SMA, RSI, MACD) on a list of symbols.
+    """
+    try:
+        symbol_list = symbols.split(",")
+        results = ta_engine.analyze_portfolio(symbol_list)
+        return {"analysis": results}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.get("/market/indices")
+async def get_market_indices():
+    """
+    Fetch live indices for the dashboard.
+    """
+    indices = ["^CNXIT", "^NSEI", "^BSESN", "GC=F", "INR=X"]
+    names = ["NIFTY IT", "NIFTY 50", "SENSEX", "GOLD", "USD/INR"]
+    
+    results = []
+    for i, symbol in enumerate(indices):
+        try:
+            ticker = yf.Ticker(symbol)
+            hist = ticker.history(period="2d")
+            if not hist.empty and len(hist) >= 2:
+                latest = hist.iloc[-1]
+                prev = hist.iloc[-2]
+                change_val = float(((latest['Close'] - prev['Close']) / prev['Close']) * 100)
+                price_val = float(latest['Close'])
+                results.append({
+                    "name": str(names[i]),
+                    "value": str(round(price_val, 2)),
+                    "change": round(change_val, 2),
+                    "trending": bool(change_val >= 0)
+                })
+            else:
+                # Fallback if history fail
+                results.append({"name": names[i], "value": "---", "change": 0, "trending": True})
+        except:
+            results.append({"name": names[i], "value": "---", "change": 0, "trending": True})
+            
+    return {"market_data": results}
+
 @app.get("/health")
 async def health():
     """Health check endpoint."""
@@ -284,6 +333,23 @@ async def get_mutual_fund_nav(
         return nav_data
     except HTTPException:
         raise
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.get("/mutualfunds/nav/batch")
+async def get_mutual_fund_nav_batch(
+    schemes: str = Query(..., description="Comma-separated scheme codes")
+):
+    """
+    Fetch current NAV for multiple scheme codes.
+    """
+    try:
+        scheme_list = schemes.split(",")
+        results = {}
+        for scheme in scheme_list:
+            nav_data = mf_engine.fetch_nav(scheme)
+            results[scheme] = nav_data
+        return {"nav_data": results}
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
