@@ -5,72 +5,86 @@ import { usePathname } from "next/navigation"
 import { cn } from "@/lib/utils"
 import {
   LayoutDashboard,
-  Receipt,
   BarChart3,
   MessageSquareText,
   FlaskConical,
   Calculator,
-  Users,
   Bell,
   Settings,
   TrendingUp,
   Zap,
   ChevronDown,
   Sparkles,
-  Target,
-  Trophy,
   Shield,
   Wallet,
   Mail,
   HelpCircle,
   PiggyBank,
   Coins,
+  BrainCircuit,
+  Clock,
+  Calendar,
+  History,
+  LineChart,
+  Activity,
+  FileSearch,
+  BookOpen,
+  Circle,
+  Trophy,
 } from "lucide-react"
 import { useState } from "react"
 
 // Main Navigation
 const mainNavItems = [
   { name: "Dashboard", href: "/dashboard", icon: LayoutDashboard, color: "text-slate-600" },
-  { name: "Expenses", href: "/expenses", icon: Receipt, color: "text-slate-600" },
-  { name: "Analytics", href: "/analytics", icon: BarChart3, color: "text-slate-600" },
   { name: "AI Advisor", href: "/advisor", icon: MessageSquareText, color: "text-slate-600" },
 ]
 
 // Portfolio Section
 const portfolioItems = [
-  { name: "Portfolio Management", href: "/portfolio", icon: Wallet, color: "text-blue-600" },
   { name: "Low Risk", href: "/portfolios/low-risk", icon: TrendingUp, color: "text-emerald-600" },
   { name: "Medium Risk", href: "/portfolios/medium-risk", icon: BarChart3, color: "text-amber-600" },
-  { name: "High Risk (Crypto)", href: "/portfolios/high-risk", icon: Zap, color: "text-red-600" },
   { name: "ML Price Predictions", href: "/predictions", icon: TrendingUp, color: "text-cyan-600" },
+]
+
+// AI HUB Predictions Section
+const aiHubItems = [
+  { name: "Portfolio Management", href: "/portfolio", icon: Wallet, color: "text-blue-600" },
+  { name: "Short-Term Forecast", href: "/predictions?tab=short-term", icon: Clock, color: "text-blue-500" },
+  { name: "Mid-Term Forecast", href: "/predictions?tab=mid-term", icon: Calendar, color: "text-indigo-500" },
+  { name: "Long-Term Forecast", href: "/predictions?tab=long-term", icon: History, color: "text-purple-500" },
+  { name: "Accuracy Report", href: "/predictions?tab=accuracy", icon: Activity, color: "text-emerald-500" },
+  { name: "Technical Signals", href: "/predictions?tab=technicals", icon: LineChart, color: "text-amber-500" },
+  { name: "Risk Analysis", href: "/predictions?tab=risk", icon: FileSearch, color: "text-rose-500" },
+  { name: "AI Explanation", href: "/predictions?tab=explanation", icon: BookOpen, color: "text-cyan-500" },
+]
+
+// Crypto Section
+const cryptoItems = [
+  { name: "Crypto Dashboard", href: "/portfolios/high-risk", icon: Zap, color: "text-red-600" },
 ]
 
 // Mutual Funds Section
 const mutualFundItems = [
   { name: "MF Explorer", href: "/mf", icon: Coins, color: "text-orange-600" },
   { name: "SIP Planner", href: "/sip", icon: PiggyBank, color: "text-pink-600" },
-  { name: "Goal Funds", href: "/goals-mf", icon: Target, color: "text-violet-600" },
 ]
 
 // Tools Section
 const toolsNavItems = [
-  { name: "Goal Tracker", href: "/goals", icon: Target, color: "text-emerald-600" },
   { name: "Emergency Fund", href: "/emergency-fund", icon: Shield, color: "text-blue-600" },
-  { name: "Sandbox Simulator", href: "/sandbox", icon: FlaskConical, color: "text-purple-600" },
   { name: "Tax & Insurance", href: "/tax", icon: Calculator, color: "text-teal-600" },
-  { name: "Family Dashboard", href: "/family", icon: Users, color: "text-indigo-600" },
 ]
 
-// Engagement Section
-const engagementNavItems = [
+// Updates & Engagement
+const updateNavItems = [
+  { name: "Alerts & Reports", href: "/alerts", icon: Bell, color: "text-rose-600" },
   { name: "Badges & Rewards", href: "/badges", icon: Trophy, color: "text-yellow-600" },
-  { name: "SIP Reminders", href: "/sip-reminders", icon: Wallet, color: "text-orange-600" },
   { name: "Email Digest", href: "/digest", icon: Mail, color: "text-sky-600" },
 ]
 
 // Bottom Section
 const bottomNavItems = [
-  { name: "Alerts & Reports", href: "/alerts", icon: Bell, color: "text-rose-600" },
   { name: "Help & Support", href: "/support", icon: HelpCircle, color: "text-green-600" },
   { name: "Settings", href: "/settings", icon: Settings, color: "text-slate-500" },
 ]
@@ -78,9 +92,11 @@ const bottomNavItems = [
 export function Sidebar() {
   const pathname = usePathname()
   const [portfolioOpen, setPortfolioOpen] = useState(true)
+  const [aiHubOpen, setAiHubOpen] = useState(true)
+  const [cryptoOpen, setCryptoOpen] = useState(true)
   const [mutualFundsOpen, setMutualFundsOpen] = useState(true)
   const [toolsOpen, setToolsOpen] = useState(true)
-  const [engagementOpen, setEngagementOpen] = useState(false)
+  const [updatesOpen, setUpdatesOpen] = useState(false)
 
   return (
     <aside className="fixed left-0 top-0 z-40 h-screen w-[260px] border-r border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 flex-col hidden lg:flex shadow-sm">
@@ -117,30 +133,107 @@ export function Sidebar() {
         </div>
 
         {/* Portfolios Section */}
-        <div className="mb-5">
+        <div className="mb-3 px-2">
           <button
             onClick={() => setPortfolioOpen(!portfolioOpen)}
-            className="flex w-full items-center justify-between px-3 py-2 text-xs font-bold uppercase tracking-wider text-emerald-700 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-900/30 rounded-lg mx-1"
+            className={cn(
+              "flex w-full items-center justify-between px-3 py-2 text-[10px] font-bold uppercase tracking-[0.15em] transition-all rounded-lg",
+              portfolioOpen
+                ? "text-emerald-600 dark:text-emerald-400 bg-emerald-50/30 dark:bg-emerald-500/5"
+                : "text-slate-400 hover:text-emerald-600 dark:hover:text-emerald-400 hover:bg-slate-50 dark:hover:bg-slate-800/50"
+            )}
           >
-            <span className="flex items-center gap-2">
+            <span className="flex items-center gap-2.5">
               <TrendingUp className="h-4 w-4" />
               Portfolios
             </span>
-            <ChevronDown className={cn("h-3 w-3 transition-transform", portfolioOpen && "rotate-180")} />
+            <ChevronDown className={cn("h-3 w-3 transition-transform opacity-40", portfolioOpen && "rotate-180")} />
           </button>
-          <div className={cn("mt-1 space-y-0.5 overflow-hidden transition-all", portfolioOpen ? "max-h-[250px]" : "max-h-0")}>
+          <div className={cn("mt-1 ml-4 pl-3 border-l border-slate-100 dark:border-slate-800 space-y-0.5 overflow-hidden transition-all", portfolioOpen ? "max-h-[250px] opacity-100" : "max-h-0 opacity-0")}>
             {portfolioItems.map((item) => (
               <Link
                 key={item.href}
                 href={item.href}
                 className={cn(
-                  "flex items-center gap-3 rounded-lg px-3 py-2 text-[13px] font-medium transition-colors",
+                  "flex items-center gap-2.5 rounded-md px-3 py-1.5 text-[12.5px] font-medium transition-all group",
                   pathname === item.href
-                    ? "bg-emerald-50 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-800"
-                    : "text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white",
+                    ? "text-emerald-700 dark:text-emerald-400 bg-emerald-50/50 dark:bg-emerald-500/10"
+                    : "text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-50 dark:hover:bg-slate-800/50",
                 )}
               >
-                <item.icon className={cn("h-4 w-4", item.color)} />
+                <Circle className={cn("h-1 w-1 fill-current transition-opacity", pathname === item.href ? "opacity-100 text-emerald-500" : "opacity-20 group-hover:opacity-60")} />
+                <span>{item.name}</span>
+              </Link>
+            ))}
+          </div>
+        </div>
+
+        {/* AI HUB Predictions Section */}
+        <div className="mb-3 px-2">
+          <button
+            onClick={() => setAiHubOpen(!aiHubOpen)}
+            className={cn(
+              "flex w-full items-center justify-between px-3 py-2 text-[10px] font-bold uppercase tracking-[0.15em] transition-all rounded-lg",
+              aiHubOpen
+                ? "text-cyan-600 dark:text-cyan-400 bg-cyan-50/30 dark:bg-cyan-500/5"
+                : "text-slate-400 hover:text-cyan-600 dark:hover:text-cyan-400 hover:bg-slate-50 dark:hover:bg-slate-800/50"
+            )}
+          >
+            <span className="flex items-center gap-2.5">
+              <BrainCircuit className="h-4 w-4" />
+              AI HUB PREDICTIONS
+            </span>
+            <ChevronDown className={cn("h-3 w-3 transition-transform opacity-40", aiHubOpen && "rotate-180")} />
+          </button>
+          <div className={cn("mt-1 ml-4 pl-3 border-l border-slate-100 dark:border-slate-800 space-y-0.5 overflow-hidden transition-all", aiHubOpen ? "max-h-[400px] opacity-100" : "max-h-0 opacity-0")}>
+            {aiHubItems.map((item) => (
+              <Link
+                key={item.href}
+                href={item.href}
+                className={cn(
+                  "flex items-center gap-2.5 rounded-md px-3 py-1.5 text-[12.5px] font-medium transition-all group",
+                  pathname === item.href
+                    ? "text-cyan-700 dark:text-cyan-400 bg-cyan-50/50 dark:bg-cyan-500/10"
+                    : "text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-50 dark:hover:bg-slate-800/50",
+                )}
+              >
+                <div className={cn("h-1.5 w-1.5 rounded-full bg-slate-400 group-hover:bg-cyan-500 transition-colors", pathname === item.href && "bg-cyan-500")} />
+                <span className="truncate">{item.name}</span>
+              </Link>
+            ))}
+          </div>
+        </div>
+
+        {/* Crypto Assets Section */}
+        <div className="mb-3 px-2">
+          <button
+            onClick={() => setCryptoOpen(!cryptoOpen)}
+            className={cn(
+              "flex w-full items-center justify-between px-3 py-2 text-[10px] font-bold uppercase tracking-[0.15em] transition-all rounded-lg",
+              cryptoOpen
+                ? "text-rose-600 dark:text-rose-400 bg-rose-50/30 dark:bg-rose-500/5"
+                : "text-slate-400 hover:text-rose-600 dark:hover:text-rose-400 hover:bg-slate-50 dark:hover:bg-slate-800/50"
+            )}
+          >
+            <span className="flex items-center gap-2.5">
+              <Zap className="h-4 w-4" />
+              Crypto Assets
+            </span>
+            <ChevronDown className={cn("h-3 w-3 transition-transform opacity-40", cryptoOpen && "rotate-180")} />
+          </button>
+          <div className={cn("mt-1 ml-4 pl-3 border-l border-slate-100 dark:border-slate-800 space-y-0.5 overflow-hidden transition-all", cryptoOpen ? "max-h-[100px] opacity-100" : "max-h-0 opacity-0")}>
+            {cryptoItems.map((item) => (
+              <Link
+                key={item.href}
+                href={item.href}
+                className={cn(
+                  "flex items-center gap-2.5 rounded-md px-3 py-1.5 text-[12.5px] font-medium transition-all group",
+                  pathname === item.href
+                    ? "text-rose-700 dark:text-rose-400 bg-rose-50/50 dark:bg-rose-500/10"
+                    : "text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-50 dark:hover:bg-slate-800/50",
+                )}
+              >
+                <Circle className={cn("h-1 w-1 fill-current transition-opacity", pathname === item.href ? "opacity-100 text-rose-500" : "opacity-20 group-hover:opacity-60")} />
                 <span>{item.name}</span>
               </Link>
             ))}
@@ -148,30 +241,35 @@ export function Sidebar() {
         </div>
 
         {/* Mutual Funds Section */}
-        <div className="mb-5">
+        <div className="mb-3 px-2">
           <button
             onClick={() => setMutualFundsOpen(!mutualFundsOpen)}
-            className="flex w-full items-center justify-between px-3 py-2 text-xs font-bold uppercase tracking-wider text-amber-700 dark:text-amber-400 bg-amber-50 dark:bg-amber-900/30 rounded-lg mx-1"
+            className={cn(
+              "flex w-full items-center justify-between px-3 py-2 text-[10px] font-bold uppercase tracking-[0.15em] transition-all rounded-lg",
+              mutualFundsOpen
+                ? "text-orange-600 dark:text-orange-400 bg-orange-50/30 dark:bg-orange-500/5"
+                : "text-slate-400 hover:text-orange-600 dark:hover:text-orange-400 hover:bg-slate-50 dark:hover:bg-slate-800/50"
+            )}
           >
-            <span className="flex items-center gap-2">
+            <span className="flex items-center gap-2.5">
               <Coins className="h-4 w-4" />
               Mutual Funds
             </span>
-            <ChevronDown className={cn("h-3 w-3 transition-transform", mutualFundsOpen && "rotate-180")} />
+            <ChevronDown className={cn("h-3 w-3 transition-transform opacity-40", mutualFundsOpen && "rotate-180")} />
           </button>
-          <div className={cn("mt-1 space-y-0.5 overflow-hidden transition-all", mutualFundsOpen ? "max-h-[200px]" : "max-h-0")}>
+          <div className={cn("mt-1 ml-4 pl-3 border-l border-slate-100 dark:border-slate-800 space-y-0.5 overflow-hidden transition-all", mutualFundsOpen ? "max-h-[200px] opacity-100" : "max-h-0 opacity-0")}>
             {mutualFundItems.map((item) => (
               <Link
                 key={item.href}
                 href={item.href}
                 className={cn(
-                  "flex items-center gap-3 rounded-lg px-3 py-2 text-[13px] font-medium transition-colors",
+                  "flex items-center gap-2.5 rounded-md px-3 py-1.5 text-[12.5px] font-medium transition-all group",
                   pathname === item.href
-                    ? "bg-amber-50 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400 border border-amber-200 dark:border-amber-800"
-                    : "text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white",
+                    ? "text-orange-700 dark:text-orange-400 bg-orange-50/50 dark:bg-orange-500/10"
+                    : "text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-50 dark:hover:bg-slate-800/50",
                 )}
               >
-                <item.icon className={cn("h-4 w-4", item.color)} />
+                <Circle className={cn("h-1 w-1 fill-current transition-opacity", pathname === item.href ? "opacity-100 text-orange-500" : "opacity-20 group-hover:opacity-60")} />
                 <span>{item.name}</span>
               </Link>
             ))}
@@ -179,61 +277,71 @@ export function Sidebar() {
         </div>
 
         {/* Tools Section */}
-        <div className="mb-5">
+        <div className="mb-3 px-2">
           <button
             onClick={() => setToolsOpen(!toolsOpen)}
-            className="flex w-full items-center justify-between px-3 py-2 text-xs font-bold uppercase tracking-wider text-blue-700 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/30 rounded-lg mx-1"
+            className={cn(
+              "flex w-full items-center justify-between px-3 py-2 text-[10px] font-bold uppercase tracking-[0.15em] transition-all rounded-lg",
+              toolsOpen
+                ? "text-indigo-600 dark:text-indigo-400 bg-indigo-50/30 dark:bg-indigo-500/5"
+                : "text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 hover:bg-slate-50 dark:hover:bg-slate-800/50"
+            )}
           >
-            <span className="flex items-center gap-2">
+            <span className="flex items-center gap-2.5">
               <FlaskConical className="h-4 w-4" />
               Tools
             </span>
-            <ChevronDown className={cn("h-3 w-3 transition-transform", toolsOpen && "rotate-180")} />
+            <ChevronDown className={cn("h-3 w-3 transition-transform opacity-40", toolsOpen && "rotate-180")} />
           </button>
-          <div className={cn("mt-1 space-y-0.5 overflow-hidden transition-all", toolsOpen ? "max-h-[300px]" : "max-h-0")}>
+          <div className={cn("mt-1 ml-4 pl-3 border-l border-slate-100 dark:border-slate-800 space-y-0.5 overflow-hidden transition-all", toolsOpen ? "max-h-[300px] opacity-100" : "max-h-0 opacity-0")}>
             {toolsNavItems.map((item) => (
               <Link
                 key={item.href}
                 href={item.href}
                 className={cn(
-                  "flex items-center gap-3 rounded-lg px-3 py-2 text-[13px] font-medium transition-colors",
+                  "flex items-center gap-2.5 rounded-md px-3 py-1.5 text-[12.5px] font-medium transition-all group",
                   pathname === item.href
-                    ? "bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400 border border-blue-200 dark:border-blue-800"
-                    : "text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white",
+                    ? "text-indigo-700 dark:text-indigo-400 bg-indigo-50/50 dark:bg-indigo-500/10"
+                    : "text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-50 dark:hover:bg-slate-800/50",
                 )}
               >
-                <item.icon className={cn("h-4 w-4", item.color)} />
+                <Circle className={cn("h-1 w-1 fill-current transition-opacity", pathname === item.href ? "opacity-100 text-indigo-500" : "opacity-20 group-hover:opacity-60")} />
                 <span>{item.name}</span>
               </Link>
             ))}
           </div>
         </div>
 
-        {/* Engagement Section */}
-        <div className="mb-5">
+        {/* Updates Section */}
+        <div className="mb-3 px-2">
           <button
-            onClick={() => setEngagementOpen(!engagementOpen)}
-            className="flex w-full items-center justify-between px-3 py-2 text-xs font-bold uppercase tracking-wider text-purple-700 dark:text-purple-400 bg-purple-50 dark:bg-purple-900/30 rounded-lg mx-1"
+            onClick={() => setUpdatesOpen(!updatesOpen)}
+            className={cn(
+              "flex w-full items-center justify-between px-3 py-2 text-[10px] font-bold uppercase tracking-[0.15em] transition-all rounded-lg",
+              updatesOpen
+                ? "text-violet-600 dark:text-violet-400 bg-violet-50/30 dark:bg-violet-500/5"
+                : "text-slate-400 hover:text-violet-600 dark:hover:text-violet-400 hover:bg-slate-50 dark:hover:bg-slate-800/50"
+            )}
           >
-            <span className="flex items-center gap-2">
-              <Trophy className="h-4 w-4" />
-              Engagement
+            <span className="flex items-center gap-2.5">
+              <Bell className="h-4 w-4" />
+              Updates
             </span>
-            <ChevronDown className={cn("h-3 w-3 transition-transform", engagementOpen && "rotate-180")} />
+            <ChevronDown className={cn("h-3 w-3 transition-transform opacity-40", updatesOpen && "rotate-180")} />
           </button>
-          <div className={cn("mt-1 space-y-0.5 overflow-hidden transition-all", engagementOpen ? "max-h-[150px]" : "max-h-0")}>
-            {engagementNavItems.map((item) => (
+          <div className={cn("mt-1 ml-4 pl-3 border-l border-slate-100 dark:border-slate-800 space-y-0.5 overflow-hidden transition-all", updatesOpen ? "max-h-[200px] opacity-100" : "max-h-0 opacity-0")}>
+            {updateNavItems.map((item) => (
               <Link
                 key={item.href}
                 href={item.href}
                 className={cn(
-                  "flex items-center gap-3 rounded-lg px-3 py-2 text-[13px] font-medium transition-colors",
+                  "flex items-center gap-2.5 rounded-md px-3 py-1.5 text-[12.5px] font-medium transition-all group",
                   pathname === item.href
-                    ? "bg-purple-50 dark:bg-purple-900/30 text-purple-700 dark:text-purple-400 border border-purple-200 dark:border-purple-800"
-                    : "text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white",
+                    ? "text-violet-700 dark:text-violet-400 bg-violet-50/50 dark:bg-violet-500/10"
+                    : "text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-50 dark:hover:bg-slate-800/50",
                 )}
               >
-                <item.icon className={cn("h-4 w-4", item.color)} />
+                <Circle className={cn("h-1 w-1 fill-current transition-opacity", pathname === item.href ? "opacity-100 text-violet-500" : "opacity-20 group-hover:opacity-60")} />
                 <span>{item.name}</span>
               </Link>
             ))}
@@ -258,6 +366,6 @@ export function Sidebar() {
           </Link>
         ))}
       </div>
-    </aside>
+    </aside >
   )
 }

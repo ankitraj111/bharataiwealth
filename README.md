@@ -21,3 +21,20 @@ Check out the live application here: [https://ankitraj111.github.io/bharataiweal
 2. `npm install`
 3. `npm run dev`
 4. Access at `http://localhost:3001`
+
+### ML Service (Python)
+1. `cd ml-service`
+2. Recommended: Create a virtual environment:
+   ```bash
+   python -m venv .venv
+   source .venv/bin/activate  # On Windows: .venv\Scripts\activate
+   ```
+3. Install dependencies:
+   ```bash
+   pip install -r requirements.txt
+   ```
+4. Start the service:
+   ```bash
+   python main.py
+   ```
+   *The service runs on `http://localhost:8000`*

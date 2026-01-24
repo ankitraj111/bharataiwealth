@@ -38,9 +38,9 @@ const performanceData = Array.from({ length: 12 }, (_, i) => ({
 }))
 
 const marketSentiment = [
-  { coin: "BTC", sentiment: "Bullish", fearGreed: 72 },
-  { coin: "ETH", sentiment: "Bullish", fearGreed: 68 },
-  { coin: "SOL", sentiment: "Neutral", fearGreed: 52 },
+  { coin: "BTC", sentiment: "Bullish", fearGreed: 72, trend: "up", predicted: "+12.5%" },
+  { coin: "ETH", sentiment: "Bullish", fearGreed: 68, trend: "up", predicted: "+8.2%" },
+  { coin: "SOL", sentiment: "Neutral", fearGreed: 52, trend: "down", predicted: "-3.4%" },
 ]
 
 export default function HighRiskPortfolioPage() {
@@ -111,26 +111,81 @@ function HighRiskPortfolioContent() {
           </CardContent></Card>
         </div>
 
-        {/* Market Sentiment */}
-        <Card className="border-2 border-amber-500/30 bg-amber-500/5">
-          <CardHeader><CardTitle className="text-base font-bold flex items-center gap-2"><Activity className="h-4 w-4 text-amber-600" />Market Sentiment</CardTitle></CardHeader>
-          <CardContent>
-            <div className="grid sm:grid-cols-3 gap-3">
-              {marketSentiment.map((item, i) => (
-                <div key={i} className="p-3 bg-background rounded-xl border border-border flex items-center justify-between">
-                  <div className="flex items-center gap-2">
-                    <Bitcoin className="h-5 w-5 text-amber-500" />
-                    <span className="font-bold">{item.coin}</span>
-                  </div>
-                  <div className="text-right">
-                    <Badge className={item.sentiment === "Bullish" ? "bg-emerald-500" : item.sentiment === "Bearish" ? "bg-red-500" : "bg-gray-500"}>{item.sentiment}</Badge>
-                    <p className="text-xs text-muted-foreground mt-1">Fear/Greed: {item.fearGreed}</p>
-                  </div>
-                </div>
-              ))}
+        {/* AI Predictions & Market Sentiment */}
+        <div className="grid lg:grid-cols-3 gap-6">
+          <Card className="lg:col-span-2 border-2 border-orange-500/30 bg-orange-500/5 overflow-hidden relative">
+            <div className="absolute top-0 right-0 p-4 opacity-10">
+              <Brain className="h-24 w-24 text-orange-600" />
             </div>
-          </CardContent>
-        </Card>
+            <CardHeader>
+              <CardTitle className="text-lg font-bold flex items-center gap-2">
+                <Sparkles className="h-5 w-5 text-orange-500" />
+                AI Price Prediction (Next 7 Days)
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="grid sm:grid-cols-3 gap-4">
+                {marketSentiment.map((item, i) => (
+                  <div key={i} className="relative group p-4 rounded-2xl bg-background/50 backdrop-blur border border-orange-200/50 dark:border-orange-900/50 hover:border-orange-500 transition-all">
+                    <div className="flex items-center justify-between mb-3">
+                      <div className="flex items-center gap-2">
+                        <Bitcoin className="h-5 w-5 text-orange-500" />
+                        <span className="font-bold">{item.coin}</span>
+                      </div>
+                      <Badge variant="outline" className="text-[10px] uppercase border-orange-200 text-orange-700">{item.sentiment}</Badge>
+                    </div>
+                    <div className="space-y-1">
+                      <p className="text-xs text-muted-foreground uppercase font-medium">Predicted Move</p>
+                      <div className="flex items-center gap-2">
+                        <span className={`text-2xl font-black ${item.trend === 'up' ? 'text-emerald-500' : 'text-rose-500'}`}>
+                          {item.predicted}
+                        </span>
+                        {item.trend === 'up' ? <ArrowUpRight className="h-5 w-5 text-emerald-500" /> : <ArrowDownRight className="h-5 w-5 text-rose-500" />}
+                      </div>
+                    </div>
+                    <div className="mt-4 pt-4 border-t border-orange-200/30 dark:border-orange-900/30">
+                      <div className="flex justify-between text-[10px] mb-1">
+                        <span className="text-muted-foreground">Confidence</span>
+                        <span className="font-bold text-orange-600">88%</span>
+                      </div>
+                      <div className="h-1 w-full bg-orange-100 dark:bg-orange-900/30 rounded-full overflow-hidden">
+                        <div className="h-full bg-orange-500 rounded-full" style={{ width: '88%' }} />
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+              <div className="mt-6 p-4 rounded-xl bg-background/40 border border-orange-200/50 text-xs text-orange-800 dark:text-orange-300 flex items-start gap-3">
+                <Info className="h-4 w-4 mt-0.5 flex-shrink-0" />
+                <p>Our AI model analyzes social sentiment, whale movements, and technical patterns to predict short-term price action. These predictions are updated every 6 hours.</p>
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card className="border-2 border-amber-500/30 bg-amber-500/5">
+            <CardHeader><CardTitle className="text-base font-bold flex items-center gap-2"><Activity className="h-4 w-4 text-amber-600" />Fear & Greed Index</CardTitle></CardHeader>
+            <CardContent className="flex flex-col items-center justify-center h-full pb-10">
+              <div className="relative h-32 w-48 mb-4">
+                <div className="absolute inset-0 border-[12px] border-muted rounded-t-full" />
+                <div className="absolute inset-0 border-[12px] border-amber-500 rounded-t-full" style={{ clipPath: 'inset(0 30% 0 0)' }} />
+                <div className="absolute bottom-0 left-1/2 -translate-x-1/2 text-center">
+                  <span className="text-4xl font-black text-amber-600">72</span>
+                  <p className="text-[10px] font-bold uppercase tracking-widest text-amber-500">Greed</p>
+                </div>
+              </div>
+              <div className="w-full space-y-3">
+                <div className="flex justify-between text-xs">
+                  <span className="text-muted-foreground">Yesterday</span>
+                  <span className="font-bold">68 (Greed)</span>
+                </div>
+                <div className="flex justify-between text-xs">
+                  <span className="text-muted-foreground">Last Week</span>
+                  <span className="font-bold text-emerald-600">45 (Neutral)</span>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
 
         <div className="grid lg:grid-cols-2 gap-6">
           <Card className="border-2 border-border/50">
