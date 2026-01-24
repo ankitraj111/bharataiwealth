@@ -641,9 +641,18 @@ function PredictionsContent() {
                                                         dataKey="predicted"
                                                         stroke="#3b82f6"
                                                         strokeWidth={3}
+                                                        strokeDasharray="5 5"
                                                         fill="url(#shortTermGradient)"
+                                                        name="Forecast"
                                                     />
-                                                    <Line type="monotone" dataKey="actual" stroke="#10b981" strokeWidth={2} dot={{ r: 4 }} />
+                                                    <Area
+                                                        type="monotone"
+                                                        dataKey="actual"
+                                                        stroke="#10b981"
+                                                        strokeWidth={3}
+                                                        fill="transparent"
+                                                        name="Actual"
+                                                    />
                                                 </AreaChart>
                                             </ResponsiveContainer>
                                         </div>
@@ -746,7 +755,7 @@ function PredictionsContent() {
                                         <CardContent className="text-center py-6">
                                             <div className="relative inline-flex items-center justify-center">
                                                 <svg className="w-32 h-32 transform -rotate-90">
-                                                    <circle className="text-secondary" strokeWidth="8" stroke="currentColor" fill="transparent" r="50" cx="64" ay="64" />
+                                                    <circle className="text-secondary" strokeWidth="8" stroke="currentColor" fill="transparent" r="50" cx="64" cy="64" />
                                                     <circle className="text-primary" strokeWidth="8" strokeDasharray={314} strokeDashoffset={314 - (314 * (midTerm?.risk_adjusted_score * 10)) / 100} strokeLinecap="round" stroke="currentColor" fill="transparent" r="50" cx="64" cy="64" />
                                                 </svg>
                                                 <span className="absolute text-2xl font-black">{midTerm?.risk_adjusted_score}</span>
