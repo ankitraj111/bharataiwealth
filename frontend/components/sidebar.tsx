@@ -40,16 +40,9 @@ const mainNavItems = [
   { name: "AI Advisor", href: "/advisor", icon: MessageSquareText, color: "text-slate-600" },
 ]
 
-// Portfolio Section
-const portfolioItems = [
-  { name: "Portfolio Management", href: "/portfolio", icon: Wallet, color: "text-blue-600" },
-  { name: "Low Risk", href: "/portfolios/low-risk", icon: TrendingUp, color: "text-emerald-600" },
-  { name: "Medium Risk", href: "/portfolios/medium-risk", icon: BarChart3, color: "text-amber-600" },
-  { name: "ML Price Predictions", href: "/predictions", icon: TrendingUp, color: "text-cyan-600" },
-]
-
 // AI HUB Predictions Section
 const aiHubItems = [
+  { name: "Portfolio Management", href: "/portfolio", icon: Wallet, color: "text-blue-600" },
   { name: "Short-Term Forecast", href: "/predictions?tab=short-term", icon: Clock, color: "text-blue-500" },
   { name: "Mid-Term Forecast", href: "/predictions?tab=mid-term", icon: Calendar, color: "text-indigo-500" },
   { name: "Long-Term Forecast", href: "/predictions?tab=long-term", icon: History, color: "text-purple-500" },
@@ -91,7 +84,6 @@ const bottomNavItems = [
 
 export function Sidebar() {
   const pathname = usePathname()
-  const [portfolioOpen, setPortfolioOpen] = useState(true)
   const [aiHubOpen, setAiHubOpen] = useState(true)
   const [cryptoOpen, setCryptoOpen] = useState(true)
   const [mutualFundsOpen, setMutualFundsOpen] = useState(true)
@@ -132,41 +124,7 @@ export function Sidebar() {
           ))}
         </div>
 
-        {/* Portfolios Section */}
-        <div className="mb-3 px-2">
-          <button
-            onClick={() => setPortfolioOpen(!portfolioOpen)}
-            className={cn(
-              "flex w-full items-center justify-between px-3 py-2 text-[10px] font-bold uppercase tracking-[0.15em] transition-all rounded-lg",
-              portfolioOpen
-                ? "text-emerald-600 dark:text-emerald-400 bg-emerald-50/30 dark:bg-emerald-500/5"
-                : "text-slate-400 hover:text-emerald-600 dark:hover:text-emerald-400 hover:bg-slate-50 dark:hover:bg-slate-800/50"
-            )}
-          >
-            <span className="flex items-center gap-2.5">
-              <TrendingUp className="h-4 w-4" />
-              Portfolios
-            </span>
-            <ChevronDown className={cn("h-3 w-3 transition-transform opacity-40", portfolioOpen && "rotate-180")} />
-          </button>
-          <div className={cn("mt-1 ml-4 pl-3 border-l border-slate-100 dark:border-slate-800 space-y-0.5 overflow-hidden transition-all", portfolioOpen ? "max-h-[250px] opacity-100" : "max-h-0 opacity-0")}>
-            {portfolioItems.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                className={cn(
-                  "flex items-center gap-2.5 rounded-md px-3 py-1.5 text-[12.5px] font-medium transition-all group",
-                  pathname === item.href
-                    ? "text-emerald-700 dark:text-emerald-400 bg-emerald-50/50 dark:bg-emerald-500/10"
-                    : "text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-50 dark:hover:bg-slate-800/50",
-                )}
-              >
-                <Circle className={cn("h-1 w-1 fill-current transition-opacity", pathname === item.href ? "opacity-100 text-emerald-500" : "opacity-20 group-hover:opacity-60")} />
-                <span>{item.name}</span>
-              </Link>
-            ))}
-          </div>
-        </div>
+
 
         {/* AI HUB Predictions Section */}
         <div className="mb-3 px-2">
