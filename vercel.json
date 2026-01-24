@@ -1,0 +1,7 @@
+{
+  "buildCommand": "cd frontend && npm run build",
+  "outputDirectory": "frontend/out",
+  "installCommand": "cd frontend && npm install",
+  "framework": "nextjs",
+  "regions": ["bom1"]
+}
