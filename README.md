@@ -2,8 +2,10 @@
 
 AI-powered wealth management platform for Bharat.
 
-## Live Demo
+## 🌐 Live Demo
 Check out the live application here: [https://ankitraj111.github.io/bharataiwealth/](https://ankitraj111.github.io/bharataiwealth/)
+
+> **Note**: The site is deployed using GitHub Pages with GitHub Actions. Any push to the `main` branch will automatically trigger a new deployment.
 
 ## Recent Fixes
 - **Login Issues Resolved**: Fixed a critical 500 error related to NULL boolean flags in the User entity.
