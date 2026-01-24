@@ -42,6 +42,7 @@ const mainNavItems = [
 
 // Portfolio Section
 const portfolioItems = [
+  { name: "Portfolio Management", href: "/portfolio", icon: Wallet, color: "text-blue-600" },
   { name: "Low Risk", href: "/portfolios/low-risk", icon: TrendingUp, color: "text-emerald-600" },
   { name: "Medium Risk", href: "/portfolios/medium-risk", icon: BarChart3, color: "text-amber-600" },
   { name: "ML Price Predictions", href: "/predictions", icon: TrendingUp, color: "text-cyan-600" },
@@ -49,7 +50,6 @@ const portfolioItems = [
 
 // AI HUB Predictions Section
 const aiHubItems = [
-  { name: "Portfolio Management", href: "/portfolio", icon: Wallet, color: "text-blue-600" },
   { name: "Short-Term Forecast", href: "/predictions?tab=short-term", icon: Clock, color: "text-blue-500" },
   { name: "Mid-Term Forecast", href: "/predictions?tab=mid-term", icon: Calendar, color: "text-indigo-500" },
   { name: "Long-Term Forecast", href: "/predictions?tab=long-term", icon: History, color: "text-purple-500" },
