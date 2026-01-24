@@ -21,7 +21,7 @@ export function RegulatoryDisclaimer() {
             </li>
             <li className="flex items-start gap-2">
               <CheckCircle2 className="h-4 w-4 text-success mt-0.5 shrink-0" />
-              We do not sell securities. All transactions are executed through SEBI registered brokers/AMCs.
+              We do not sell securities. All transactions are executed through SEBI registered platforms.
             </li>
             <li className="flex items-start gap-2">
               <AlertTriangle className="h-4 w-4 text-accent mt-0.5 shrink-0" />

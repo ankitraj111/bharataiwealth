@@ -26,18 +26,18 @@ import {
 const mainSteps = [
     {
         number: "01",
-        title: "Connect Your Broker",
-        subtitle: "Secure & Optional",
-        description: "Link your Zerodha, Groww, or Upstox account with read-only access. Your credentials stay completely safe with bank-grade encryption.",
+        title: "Import Your Portfolio",
+        subtitle: "Secure & Simple",
+        description: "Upload your portfolio via CSV or enter manually. Your data is protected with bank-grade encryption and stored securely.",
         icon: Link2,
         gradient: "from-blue-500 to-cyan-500",
         features: [
-            "Read-only API access",
+            "CSV import support",
             "256-bit encryption",
-            "No password storage",
-            "Instant sync"
+            "Manual entry option",
+            "Secure storage"
         ],
-        optional: true
+        optional: false
     },
     {
         number: "02",
@@ -88,8 +88,8 @@ const detailedProcess = [
                 icon: Target
             },
             {
-                title: "Connect Brokers (Optional)",
-                description: "Link Zerodha/Groww for automatic portfolio sync, or add manually.",
+                title: "Import Portfolio",
+                description: "Upload via CSV or add holdings manually for complete flexibility.",
                 icon: Link2
             }
         ]
@@ -142,8 +142,8 @@ const detailedProcess = [
 
 const benefits = [
     {
-        title: "No Manual Data Entry",
-        description: "Automatic sync with your broker means zero manual work.",
+        title: "Easy Data Import",
+        description: "Simple CSV upload or manual entry - your choice.",
         icon: Zap,
         gradient: "from-orange-500 to-red-500"
     },
@@ -372,15 +372,15 @@ export default function HowItWorksPage() {
                         >
                             <div>
                                 <Zap className="w-12 h-12 text-white mb-6" />
-                                <h3 className="text-2xl md:text-3xl font-bold text-white mb-4">Instant Sync</h3>
-                                <p className="text-white/90">Real-time portfolio updates with zero manual work.</p>
+                                <h3 className="text-2xl md:text-3xl font-bold text-white mb-4">Flexible Import</h3>
+                                <p className="text-white/90">Import your portfolio via CSV or manual entry with ease.</p>
                             </div>
                             <div className="mt-8 pt-8 border-t border-white/20">
-                                <div className="text-xs font-medium text-white/70 mb-3 uppercase tracking-widest">Supported Brokers</div>
+                                <div className="text-xs font-medium text-white/70 mb-3 uppercase tracking-widest">Import Options</div>
                                 <div className="flex gap-2">
-                                    <div className="w-10 h-10 rounded-lg bg-white/20 backdrop-blur" />
-                                    <div className="w-10 h-10 rounded-lg bg-white/20 backdrop-blur" />
-                                    <div className="w-10 h-10 rounded-lg bg-white/20 backdrop-blur" />
+                                    <div className="w-10 h-10 rounded-lg bg-white/20 backdrop-blur flex items-center justify-center text-white text-xs font-bold">CSV</div>
+                                    <div className="w-10 h-10 rounded-lg bg-white/20 backdrop-blur flex items-center justify-center text-white text-xs font-bold">API</div>
+                                    <div className="w-10 h-10 rounded-lg bg-white/20 backdrop-blur flex items-center justify-center text-white text-xs font-bold">+</div>
                                 </div>
                             </div>
                         </motion.div>

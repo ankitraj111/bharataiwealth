@@ -31,6 +31,17 @@ import {
   BookOpen,
   Circle,
   Trophy,
+  Newspaper,
+  BookOpenCheck,
+  ShieldCheck,
+  Eye,
+  Link2,
+  Smile,
+  Repeat,
+  PenTool,
+  Scale,
+  FileText,
+  Users2,
 } from "lucide-react"
 import { useState } from "react"
 
@@ -42,27 +53,34 @@ const mainNavItems = [
 
 // Portfolio Section
 const portfolioItems = [
-  { name: "Low Risk", href: "/portfolios/low-risk", icon: TrendingUp, color: "text-emerald-600" },
-  { name: "Medium Risk", href: "/portfolios/medium-risk", icon: BarChart3, color: "text-amber-600" },
-  { name: "ML Price Predictions", href: "/predictions", icon: TrendingUp, color: "text-cyan-600" },
-]
-
-// AI HUB Predictions Section
-const aiHubItems = [
   { name: "Portfolio Management", href: "/portfolio", icon: Wallet, color: "text-blue-600" },
-  { name: "Short-Term Forecast", href: "/predictions?tab=short-term", icon: Clock, color: "text-blue-500" },
-  { name: "Mid-Term Forecast", href: "/predictions?tab=mid-term", icon: Calendar, color: "text-indigo-500" },
-  { name: "Long-Term Forecast", href: "/predictions?tab=long-term", icon: History, color: "text-purple-500" },
-  { name: "Accuracy Report", href: "/predictions?tab=accuracy", icon: Activity, color: "text-emerald-500" },
-  { name: "Technical Signals", href: "/predictions?tab=technicals", icon: LineChart, color: "text-amber-500" },
-  { name: "Risk Analysis", href: "/predictions?tab=risk", icon: FileSearch, color: "text-rose-500" },
-  { name: "AI Explanation", href: "/predictions?tab=explanation", icon: BookOpen, color: "text-cyan-500" },
+  { name: "Short-Term Forecast", href: "/portfolios/low-risk", icon: TrendingUp, color: "text-emerald-600" },
+  { name: "Mid-Term Forecast", href: "/portfolios/medium-risk", icon: BarChart3, color: "text-amber-600" },
+  { name: "Long-Term Forecast", href: "/portfolios/high-risk", icon: Zap, color: "text-rose-600" },
+  { name: "AI Predictions", href: "/predictions", icon: TrendingUp, color: "text-cyan-600" },
 ]
 
-// Crypto Section
+// Crypto Hub Section
 const cryptoItems = [
-  { name: "Crypto Dashboard", href: "/portfolios/high-risk", icon: Zap, color: "text-red-600" },
+  { name: "Market Overview", href: "/crypto/market", icon: LayoutDashboard, color: "text-cyan-500" },
+  { name: "Watchlist", href: "/crypto/watchlist", icon: Eye, color: "text-amber-400" },
+  { name: "Crypto Portfolio", href: "/crypto/portfolio", icon: Wallet, color: "text-purple-500" },
+  { name: "Technical Analysis", href: "/crypto/analysis", icon: LineChart, color: "text-blue-500" },
+  { name: "Signals & Alerts", href: "/crypto/signals", icon: Zap, color: "text-orange-500" },
+  { name: "On-Chain Data", href: "/crypto/on-chain", icon: Link2, color: "text-emerald-500" },
+  { name: "Sentiment Analysis", href: "/crypto/sentiment", icon: Smile, color: "text-rose-400" },
+  { name: "Crypto Tools", href: "/crypto/tools", icon: Calculator, color: "text-teal-500" },
+  { name: "Compare Coins", href: "/crypto/compare", icon: Repeat, color: "text-indigo-500" },
+  { name: "Strategy Builder", href: "/crypto/strategy", icon: PenTool, color: "text-fuchsia-500" },
+  { name: "Backtesting", href: "/crypto/backtesting", icon: History, color: "text-slate-400" },
+  { name: "Tax & Compliance", href: "/crypto/tax", icon: Scale, color: "text-amber-600" },
+  { name: "Advisory Reports", href: "/crypto/reports", icon: FileText, color: "text-sky-500" },
+  { name: "News & Updates", href: "/crypto/news", icon: Newspaper, color: "text-blue-400" },
+  { name: "Learn Crypto", href: "/crypto/learn", icon: BookOpenCheck, color: "text-lime-500" },
+  { name: "Security Hub", href: "/crypto/security", icon: ShieldCheck, color: "text-rose-600" },
 ]
+
+
 
 // Mutual Funds Section
 const mutualFundItems = [
@@ -92,7 +110,6 @@ const bottomNavItems = [
 export function Sidebar() {
   const pathname = usePathname()
   const [portfolioOpen, setPortfolioOpen] = useState(true)
-  const [aiHubOpen, setAiHubOpen] = useState(true)
   const [cryptoOpen, setCryptoOpen] = useState(true)
   const [mutualFundsOpen, setMutualFundsOpen] = useState(true)
   const [toolsOpen, setToolsOpen] = useState(true)
@@ -170,25 +187,27 @@ export function Sidebar() {
           </div>
         </div>
 
-        {/* AI HUB Predictions Section */}
+
+
+        {/* Crypto Hub Section */}
         <div className="mb-3 px-2">
           <button
-            onClick={() => setAiHubOpen(!aiHubOpen)}
+            onClick={() => setCryptoOpen(!cryptoOpen)}
             className={cn(
               "flex w-full items-center justify-between px-3 py-2 text-[10px] font-bold uppercase tracking-[0.15em] transition-all rounded-lg",
-              aiHubOpen
+              cryptoOpen
                 ? "text-cyan-600 dark:text-cyan-400 bg-cyan-50/30 dark:bg-cyan-500/5"
                 : "text-slate-400 hover:text-cyan-600 dark:hover:text-cyan-400 hover:bg-slate-50 dark:hover:bg-slate-800/50"
             )}
           >
             <span className="flex items-center gap-2.5">
-              <BrainCircuit className="h-4 w-4" />
-              AI HUB PREDICTIONS
+              <Coins className="h-4 w-4" />
+              Crypto Hub
             </span>
-            <ChevronDown className={cn("h-3 w-3 transition-transform opacity-40", aiHubOpen && "rotate-180")} />
+            <ChevronDown className={cn("h-3 w-3 transition-transform opacity-40", cryptoOpen && "rotate-180")} />
           </button>
-          <div className={cn("mt-1 ml-4 pl-3 border-l border-slate-100 dark:border-slate-800 space-y-0.5 overflow-hidden transition-all", aiHubOpen ? "max-h-[400px] opacity-100" : "max-h-0 opacity-0")}>
-            {aiHubItems.map((item) => (
+          <div className={cn("mt-1 ml-4 pl-3 border-l border-slate-100 dark:border-slate-800 space-y-0.5 overflow-hidden transition-all", cryptoOpen ? "max-h-[500px] opacity-100" : "max-h-0 opacity-0")}>
+            {cryptoItems.map((item) => (
               <Link
                 key={item.href}
                 href={item.href}
@@ -199,48 +218,14 @@ export function Sidebar() {
                     : "text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-50 dark:hover:bg-slate-800/50",
                 )}
               >
-                <div className={cn("h-1.5 w-1.5 rounded-full bg-slate-400 group-hover:bg-cyan-500 transition-colors", pathname === item.href && "bg-cyan-500")} />
-                <span className="truncate">{item.name}</span>
-              </Link>
-            ))}
-          </div>
-        </div>
-
-        {/* Crypto Assets Section */}
-        <div className="mb-3 px-2">
-          <button
-            onClick={() => setCryptoOpen(!cryptoOpen)}
-            className={cn(
-              "flex w-full items-center justify-between px-3 py-2 text-[10px] font-bold uppercase tracking-[0.15em] transition-all rounded-lg",
-              cryptoOpen
-                ? "text-rose-600 dark:text-rose-400 bg-rose-50/30 dark:bg-rose-500/5"
-                : "text-slate-400 hover:text-rose-600 dark:hover:text-rose-400 hover:bg-slate-50 dark:hover:bg-slate-800/50"
-            )}
-          >
-            <span className="flex items-center gap-2.5">
-              <Zap className="h-4 w-4" />
-              Crypto Assets
-            </span>
-            <ChevronDown className={cn("h-3 w-3 transition-transform opacity-40", cryptoOpen && "rotate-180")} />
-          </button>
-          <div className={cn("mt-1 ml-4 pl-3 border-l border-slate-100 dark:border-slate-800 space-y-0.5 overflow-hidden transition-all", cryptoOpen ? "max-h-[100px] opacity-100" : "max-h-0 opacity-0")}>
-            {cryptoItems.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                className={cn(
-                  "flex items-center gap-2.5 rounded-md px-3 py-1.5 text-[12.5px] font-medium transition-all group",
-                  pathname === item.href
-                    ? "text-rose-700 dark:text-rose-400 bg-rose-50/50 dark:bg-rose-500/10"
-                    : "text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-50 dark:hover:bg-slate-800/50",
-                )}
-              >
-                <Circle className={cn("h-1 w-1 fill-current transition-opacity", pathname === item.href ? "opacity-100 text-rose-500" : "opacity-20 group-hover:opacity-60")} />
+                <div className={cn("h-1 w-1 rounded-full bg-slate-300 transition-opacity", pathname === item.href ? "opacity-100 text-cyan-500" : "opacity-20 group-hover:opacity-60")} />
                 <span>{item.name}</span>
               </Link>
             ))}
           </div>
         </div>
+
+
 
         {/* Mutual Funds Section */}
         <div className="mb-3 px-2">

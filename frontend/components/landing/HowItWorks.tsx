@@ -6,8 +6,8 @@ import { Link2, Brain, TrendingUp, ArrowRight } from "lucide-react"
 const steps = [
     {
         number: "01",
-        title: "Connect Your Broker",
-        description: "Link your Zerodha or Groww account with read-only access. Your credentials stay safe.",
+        title: "Import Your Portfolio",
+        description: "Upload your portfolio via CSV or connect through our secure API. Your data stays safe with bank-grade encryption.",
         icon: Link2,
         gradient: "from-blue-500 to-cyan-500",
         bgGradient: "from-blue-100 to-cyan-100 dark:from-blue-900/30 dark:to-cyan-900/30",

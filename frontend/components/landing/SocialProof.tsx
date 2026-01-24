@@ -22,7 +22,7 @@ const testimonials = [
         name: "Amit Kumar",
         role: "Business Owner, Delhi",
         avatar: "AK",
-        quote: "Love how it works with my Zerodha account. The mutual fund rankings helped me pick better funds for my SIPs.",
+        quote: "Love how easy it is to track my portfolio. The mutual fund rankings helped me pick better funds for my SIPs.",
         gradient: "from-orange-500 to-amber-500"
     }
 ]

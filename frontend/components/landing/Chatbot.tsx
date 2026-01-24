@@ -14,16 +14,16 @@ const initialMessages = [
 
 const quickReplies = [
     "How does AI analysis work?",
-    "What brokers do you support?",
+    "How do I import my portfolio?",
     "Tell me about pricing",
     "Is my data secure?"
 ]
 
 const botResponses: Record<string, string> = {
     "How does AI analysis work?": "Our AI uses ensemble machine learning models trained on historical market data, technical indicators, and sentiment analysis to generate actionable investment insights. The models analyze patterns across 500+ data points to provide predictions with 70-85% directional accuracy.",
-    "What brokers do you support?": "We currently support Zerodha, Groww, Upstox, and Angel One with read-only access. We're actively adding more brokers. You can also manually import your portfolio via CSV.",
+    "How do I import my portfolio?": "You can import your portfolio via CSV upload or manual entry. We support secure data import with bank-grade encryption to keep your information safe.",
     "Tell me about pricing": "We offer a Free tier with basic features, Pro at ₹499/month with unlimited insights and advanced features, and Enterprise at ₹1,999/month for families and HNIs. Start with a 14-day free trial of Pro!",
-    "Is my data secure?": "Absolutely! We use bank-grade 256-bit encryption. We only have read-only access to your broker - we can NEVER move, withdraw, or trade your funds. Your credentials are never stored on our servers."
+    "Is my data secure?": "Absolutely! We use bank-grade 256-bit encryption for all data. Your portfolio information is stored securely and never shared with third parties. Your credentials are never stored on our servers."
 }
 
 export function Chatbot() {

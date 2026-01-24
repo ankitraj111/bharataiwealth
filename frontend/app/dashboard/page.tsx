@@ -21,7 +21,6 @@ const PieChart = dynamic(() => import("recharts").then(m => m.PieChart), { ssr: 
 const Pie = dynamic(() => import("recharts").then(m => m.Pie), { ssr: false })
 const Cell = dynamic(() => import("recharts").then(m => m.Cell), { ssr: false })
 import { ArrowUpRight, Wallet, PiggyBank, TrendingUp, Shield, Sparkles, ChevronRight, ChevronDown, BarChart3, Target, AlertTriangle, Scale, Flame, Zap, LayoutDashboard, Calculator, Users, FlaskConical } from "lucide-react"
-import { KiteConnector } from "@/components/kite-connector"
 import { fetchDashboardSummary, fetcher, BACKEND_URL } from "@/lib/api"
 import useSWR from "swr"
 import Link from "next/link"
@@ -111,22 +110,64 @@ function DashboardContent() {
     <AppShell noPadding>
       <MarketTicker />
       <div className="p-6 md:p-8 space-y-8">
-        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-8">
-          <div className="space-y-2">
-            <div className="flex items-center gap-3">
-              <div className="h-12 w-12 rounded-2xl bg-gradient-to-br from-primary to-orange-400 flex items-center justify-center shadow-lg shadow-primary/20 text-white font-semibold text-xl">
+        {/* Hero Banner */}
+        <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-blue-600 via-purple-600 to-orange-500 p-8 md:p-10 text-white">
+          <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+          <div className="absolute bottom-0 left-0 w-64 h-64 bg-black/10 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2" />
+          
+          <div className="relative z-10">
+            <div className="flex items-center gap-4 mb-6">
+              <div className="h-16 w-16 rounded-2xl bg-white/20 backdrop-blur-sm flex items-center justify-center text-white font-bold text-2xl border-2 border-white/30">
                 {summary?.userName?.[0] || "I"}
               </div>
               <div>
-                <h1 className="text-3xl font-semibold tracking-tight text-foreground">
-                  {greeting}, {summary?.userName || "Investor"}
+                <h1 className="text-3xl md:text-4xl font-black tracking-tight">
+                  {greeting}, {summary?.userName || "Investor"}!
                 </h1>
-                <p className="text-sm text-muted-foreground font-semibold flex items-center gap-2">
-                  <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
-                  Portfolio is active and growing today.
+                <p className="text-white/90 font-medium mt-1 flex items-center gap-2">
+                  <span className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
+                  Your portfolio is performing well today
                 </p>
               </div>
             </div>
+            
+            <div className="grid md:grid-cols-3 gap-4">
+              <div className="bg-white/10 backdrop-blur-md rounded-2xl p-5 border border-white/20">
+                <p className="text-white/70 text-xs font-semibold mb-1 uppercase tracking-wider">Portfolio Value</p>
+                <h3 className="text-2xl font-black">₹{summary?.totalNetWorth?.toLocaleString("en-IN")}</h3>
+                <div className="flex items-center gap-1 mt-2">
+                  <TrendingUp className="h-3 w-3 text-emerald-300" />
+                  <span className="text-emerald-300 font-bold text-xs">+{summary?.portfolioGain || 0}% this month</span>
+                </div>
+              </div>
+              
+              <div className="bg-white/10 backdrop-blur-md rounded-2xl p-5 border border-white/20">
+                <p className="text-white/70 text-xs font-semibold mb-1 uppercase tracking-wider">AI Health Score</p>
+                <h3 className="text-2xl font-black">{summary?.aiConfidence || 0}/100</h3>
+                <div className="flex items-center gap-1 mt-2">
+                  <Shield className="h-3 w-3 text-purple-300" />
+                  <span className="text-purple-300 font-bold text-xs">
+                    {summary?.aiConfidence > 80 ? "Excellent" : "Good"} condition
+                  </span>
+                </div>
+              </div>
+              
+              <div className="bg-white/10 backdrop-blur-md rounded-2xl p-5 border border-white/20">
+                <p className="text-white/70 text-xs font-semibold mb-1 uppercase tracking-wider">Monthly Expenses</p>
+                <h3 className="text-2xl font-black">₹{summary?.monthlyExpense?.toLocaleString("en-IN")}</h3>
+                <div className="flex items-center gap-1 mt-2">
+                  <ChevronDown className="h-3 w-3 text-orange-300" />
+                  <span className="text-orange-300 font-bold text-xs">-8% from last month</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-8">
+          <div className="space-y-2">
+            <h2 className="text-2xl font-bold text-foreground">Quick Actions</h2>
+            <p className="text-sm text-muted-foreground">Access your most used features</p>
           </div>
 
           {/* Quick Actions Grid */}
@@ -147,12 +188,34 @@ function DashboardContent() {
           </div>
         </div>
 
+        {/* AI Insights Banner */}
+        <Card className="border-2 border-purple-500/30 bg-gradient-to-r from-purple-50 via-pink-50 to-orange-50 dark:from-purple-950/30 dark:via-pink-950/30 dark:to-orange-950/30 overflow-hidden">
+          <CardContent className="p-6">
+            <div className="flex items-start gap-4">
+              <div className="h-12 w-12 rounded-xl bg-purple-500/10 flex items-center justify-center flex-shrink-0">
+                <Sparkles className="h-6 w-6 text-purple-600" />
+              </div>
+              <div className="flex-1">
+                <h3 className="font-bold text-lg mb-1 flex items-center gap-2">
+                  AI-Powered Insights
+                  <span className="px-2 py-0.5 text-xs font-bold rounded-full bg-purple-500/10 text-purple-600">NEW</span>
+                </h3>
+                <p className="text-sm text-muted-foreground mb-3">
+                  Your portfolio is well-diversified! Consider increasing your SIP amount by ₹2,000 to reach your retirement goal 2 years earlier.
+                </p>
+                <Link href="/predictions">
+                  <Button size="sm" className="bg-purple-600 hover:bg-purple-700 text-white">
+                    View All Recommendations
+                    <ArrowUpRight className="h-4 w-4 ml-1" />
+                  </Button>
+                </Link>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
         {/* Portfolio Health & Key Metrics Group */}
         <div className="grid gap-6 lg:grid-cols-3">
-          <div className="lg:col-span-2">
-            {/* Kite Integration Widget Inline */}
-            <KiteConnector />
-          </div>
           <div className="bg-gradient-to-br from-primary/10 to-transparent border border-primary/20 rounded-[2rem] p-6 flex items-center justify-between">
             <div className="space-y-1">
               <p className="text-xs font-semibold uppercase tracking-widest text-primary">Portfolio Health</p>
@@ -204,7 +267,21 @@ function DashboardContent() {
         </div>
 
         {/* Portfolio Risk Overview */}
-        <div className="grid gap-4 sm:grid-cols-3">
+        <div>
+          <div className="flex items-center justify-between mb-6">
+            <div>
+              <h2 className="text-2xl font-bold text-foreground">Investment Portfolios</h2>
+              <p className="text-sm text-muted-foreground">Choose your risk appetite and start investing</p>
+            </div>
+            <Link href="/portfolios/medium-risk">
+              <Button variant="outline" className="gap-2">
+                View All
+                <ChevronRight className="h-4 w-4" />
+              </Button>
+            </Link>
+          </div>
+
+          <div className="grid gap-4 sm:grid-cols-3">
           <Link href="/portfolios/low-risk">
             <Card className="border-2 border-emerald-500/30 bg-gradient-to-br from-emerald-500/5 to-transparent hover:shadow-lg hover:border-emerald-500/50 transition-all cursor-pointer group">
               <CardContent className="p-6">
@@ -270,6 +347,7 @@ function DashboardContent() {
               </CardContent>
             </Card>
           </Link>
+          </div>
         </div>
 
         {/* Quick Tools Section */}

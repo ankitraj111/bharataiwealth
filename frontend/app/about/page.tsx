@@ -72,7 +72,7 @@ const team = [
     {
         name: "Amit Sharma",
         role: "Head of Product",
-        bio: "Ex-Zerodha Product Manager. Passionate about making finance accessible to every Indian.",
+        bio: "Ex-Fintech Product Manager. Passionate about making finance accessible to every Indian.",
         gradient: "from-emerald-500 to-teal-500"
     },
     {
@@ -99,7 +99,7 @@ const milestones = [
     {
         year: "2024",
         title: "Rapid Growth",
-        description: "Crossed 10,000 users. Integrated with Zerodha, Groww, and Upstox. Raised seed funding.",
+        description: "Crossed 10,000 users. Expanded platform features and raised seed funding.",
         icon: TrendingUp
     },
     {
@@ -114,7 +114,7 @@ const achievements = [
     "Featured in Economic Times as 'Top 10 Fintech Startups to Watch'",
     "Winner of NASSCOM Emerge 50 Award 2024",
     "Certified by ISO 27001 for Information Security",
-    "Partnered with leading Indian brokers and financial institutions",
+    "Partnered with leading Indian financial institutions",
     "Recognized by Forbes India 30 Under 30",
     "Backed by top-tier VCs and angel investors"
 ]
@@ -425,8 +425,8 @@ export default function AboutPage() {
                                     Bank-Grade Security
                                 </h3>
                                 <p className="text-slate-600 dark:text-slate-400 leading-relaxed">
-                                    ISO 27001 certified with 256-bit encryption. Read-only broker access means 
-                                    we never touch your money or store passwords.
+                                    ISO 27001 certified with 256-bit encryption. Your portfolio data is 
+                                    stored securely and never shared with third parties.
                                 </p>
                             </motion.div>
 

@@ -18,4 +18,3 @@ nltk
 redis
 requests
 psycopg2-binary
-kiteconnect

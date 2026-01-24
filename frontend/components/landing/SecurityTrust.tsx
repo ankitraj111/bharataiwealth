@@ -5,8 +5,8 @@ import { Shield, Eye, Lock, CheckCircle2 } from "lucide-react"
 
 const trustPoints = [
     {
-        title: "Read-Only Access",
-        description: "We never have write access to your broker accounts. Your money stays 100% in your control.",
+        title: "Secure Data Storage",
+        description: "Your portfolio data is encrypted and stored securely. Your money stays 100% in your control.",
         icon: Eye,
         gradient: "from-blue-500 to-cyan-500"
     },

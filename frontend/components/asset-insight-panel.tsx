@@ -126,7 +126,7 @@ export function AssetInsightPanel({
                                         <span className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">Economic Times • 2h ago</span>
                                         <Badge variant="outline" className="text-[9px] font-bold uppercase tracking-tighter h-4 px-1 bg-emerald-500/10 text-emerald-600 border-emerald-500/20">Positive</Badge>
                                     </div>
-                                    <p className="text-[11px] font-bold leading-relaxed">{i === 1 ? "Reliance Retail expansion plans trigger upgrades from top brokerage firms." : "New strategic partnership in green energy sector expected to drive future growth."}</p>
+                                    <p className="text-[11px] font-bold leading-relaxed">{i === 1 ? "Reliance Retail expansion plans trigger upgrades from top financial analysts." : "New strategic partnership in green energy sector expected to drive future growth."}</p>
                                 </div>
                             ))}
                         </div>

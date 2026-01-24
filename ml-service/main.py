@@ -4,7 +4,6 @@ from ml_engine import MLEngine
 from sentiment_engine import SentimentEngine
 from risk_engine import RiskEngine, RiskInput
 from advisory_engine import AdvisoryEngine
-from kite_engine import KiteEngine
 from mf_engine import MFEngine, SIPInput
 from ta_engine import TechnicalAnalysisEngine
 from fastapi.middleware.cors import CORSMiddleware
@@ -27,48 +26,12 @@ engine = MLEngine()
 sentiment_engine = SentimentEngine()
 risk_engine = RiskEngine()
 advisory_engine = AdvisoryEngine()
-kite_engine = KiteEngine()
 mf_engine = MFEngine()
 ta_engine = TechnicalAnalysisEngine()
 
 @app.on_event("shutdown")
 def shutdown_event():
     pass
-
-# =====================
-# KITE TRADING ENDPOINTS
-# =====================
-
-@app.get("/kite/login")
-async def kite_login():
-    """Returns the Kite login URL for authentication."""
-    url = kite_engine.get_login_url()
-    if not url:
-        raise HTTPException(status_code=400, detail="KITE_API_KEY not configured in environment.")
-    return {"login_url": url}
-
-@app.get("/kite/callback")
-async def kite_callback(request_token: str = Query(...)):
-    """Handles Kite redirect, generates access token."""
-    session = kite_engine.generate_session(request_token)
-    if not session:
-        raise HTTPException(status_code=500, detail="Failed to generate Kite session.")
-    return {"status": "success", "user_name": session.get("user_name")}
-
-@app.get("/kite/holdings")
-async def get_kite_holdings():
-    """Fetches real-time holdings from Zerodha."""
-    if not kite_engine.is_active():
-        raise HTTPException(status_code=401, detail="Kite session not active. Please login first.")
-    return {"holdings": kite_engine.get_holdings()}
-
-@app.get("/kite/status")
-async def get_kite_status():
-    """Returns the current connection status of Kite."""
-    return {
-        "is_active": kite_engine.is_active(),
-        "api_key_configured": kite_engine.api_key is not None
-    }
 
 # =====================
 # ADVISORY ENDPOINTS (Recommendation Only)

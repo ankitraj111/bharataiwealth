@@ -213,14 +213,6 @@ export async function fetchPortfolioAssets(riskLevel: string) {
     return fetchWithCache(`${ML_SERVICE_URL}/portfolio/assets?risk_level=${riskLevel}`);
 }
 
-export async function fetchKiteStatus() {
-    return fetchWithCache(`${ML_SERVICE_URL}/kite/status`);
-}
-
-export async function fetchKiteLoginUrl() {
-    return fetchWithCache(`${ML_SERVICE_URL}/kite/login`);
-}
-
 export async function fetchDashboardSummary() {
     const token = typeof window !== 'undefined' ? localStorage.getItem("token") : null;
     if (!token) return getMockDashboardData();

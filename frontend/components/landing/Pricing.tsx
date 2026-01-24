@@ -18,7 +18,7 @@ const plans = [
         features: [
             "Basic portfolio tracking",
             "3 AI insights per day",
-            "1 broker connection",
+            "Manual portfolio entry",
             "Community support",
             "Basic risk score"
         ],
@@ -36,7 +36,7 @@ const plans = [
         features: [
             "Unlimited portfolio tracking",
             "Unlimited AI insights",
-            "5 broker connections",
+            "CSV import & export",
             "Priority support",
             "Advanced risk scoring",
             "Stop-loss alerts",
@@ -56,7 +56,7 @@ const plans = [
         bgGradient: "from-amber-50 to-orange-50 dark:from-amber-900/30 dark:to-orange-900/30",
         features: [
             "Everything in Pro",
-            "Unlimited broker connections",
+            "Unlimited portfolio imports",
             "Family accounts (up to 5)",
             "Dedicated account manager",
             "Custom AI models",

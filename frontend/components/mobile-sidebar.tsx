@@ -31,6 +31,16 @@ import {
   FileSearch,
   BookOpen,
   History,
+  Newspaper,
+  BookOpenCheck,
+  ShieldCheck,
+  Eye,
+  Link2,
+  Smile,
+  Repeat,
+  PenTool,
+  Scale,
+  FileText,
 } from "lucide-react"
 
 const allNavItems = [
@@ -44,8 +54,26 @@ const allNavItems = [
   { name: "Portfolio", href: "/portfolio", icon: Wallet, section: "portfolio" },
   { name: "Low Risk", href: "/portfolios/low-risk", icon: TrendingUp, section: "portfolio" },
   { name: "Medium Risk", href: "/portfolios/medium-risk", icon: BarChart3, section: "portfolio" },
-  { name: "High Risk", href: "/portfolios/high-risk", icon: Zap, section: "portfolio" },
-  { name: "Predictions", href: "/predictions", icon: TrendingUp, section: "portfolio" },
+  { name: "Long-Term Forecast", href: "/portfolios/high-risk", icon: Zap, section: "portfolio" },
+  { name: "AI Predictions", href: "/predictions", icon: TrendingUp, section: "portfolio" },
+
+  // Crypto Hub
+  { name: "Crypto Market", href: "/crypto/market", icon: LayoutDashboard, section: "crypto" },
+  { name: "Watchlist", href: "/crypto/watchlist", icon: Eye, section: "crypto" },
+  { name: "Portfolio", href: "/crypto/portfolio", icon: Wallet, section: "crypto" },
+  { name: "Analysis", href: "/crypto/analysis", icon: LineChart, section: "crypto" },
+  { name: "Signals", href: "/crypto/signals", icon: Zap, section: "crypto" },
+  { name: "On-Chain", href: "/crypto/on-chain", icon: Link2, section: "crypto" },
+  { name: "Sentiment", href: "/crypto/sentiment", icon: Smile, section: "crypto" },
+  { name: "Tools", href: "/crypto/tools", icon: Calculator, section: "crypto" },
+  { name: "Compare", href: "/crypto/compare", icon: Repeat, section: "crypto" },
+  { name: "Strategy", href: "/crypto/strategy", icon: PenTool, section: "crypto" },
+  { name: "Backtesting", href: "/crypto/backtesting", icon: History, section: "crypto" },
+  { name: "Tax Hub", href: "/crypto/tax", icon: Scale, section: "crypto" },
+  { name: "Reports", href: "/crypto/reports", icon: FileText, section: "crypto" },
+  { name: "News", href: "/crypto/news", icon: Newspaper, section: "crypto" },
+  { name: "Learn", href: "/crypto/learn", icon: BookOpenCheck, section: "crypto" },
+  { name: "Security", href: "/crypto/security", icon: ShieldCheck, section: "crypto" },
 
   // Mutual Funds
   { name: "MF Explorer", href: "/mf", icon: Coins, section: "mf" },

@@ -38,8 +38,7 @@ public class AuthDTO {
         private String email;
 
         @NotBlank(message = "Password is required")
-        @Size(min = 8, message = "Password must be at least 8 characters")
-        @Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=!]).*$", message = "Password must contain at least one digit, one lowercase, one uppercase, and one special character")
+        @Size(min = 6, message = "Password must be at least 6 characters")
         private String password;
     }
 
@@ -107,8 +106,7 @@ public class AuthDTO {
         private String currentPassword;
 
         @NotBlank(message = "New password is required")
-        @Size(min = 8, message = "Password must be at least 8 characters")
-        @Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=!]).*$", message = "Password must contain at least one digit, one lowercase, one uppercase, and one special character")
+        @Size(min = 6, message = "Password must be at least 6 characters")
         private String newPassword;
     }
 }

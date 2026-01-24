@@ -7,15 +7,15 @@ import { ChevronDown, HelpCircle } from "lucide-react"
 const faqs = [
     {
         question: "Is my data safe with Bharat AI Wealth?",
-        answer: "Absolutely! We use bank-grade 256-bit encryption for all data. We only have read-only access to your broker accounts — we can never move, withdraw, or trade your funds. Your credentials are never stored on our servers."
+        answer: "Absolutely! We use bank-grade 256-bit encryption for all data. Your portfolio information is stored securely and never shared with third parties. We never have access to move, withdraw, or trade your funds."
     },
     {
         question: "How does the AI generate investment insights?",
         answer: "Our AI uses ensemble machine learning models trained on historical market data, technical indicators, sentiment analysis from news/social media, and your personal risk profile to generate actionable insights. The models are continuously learning and improving."
     },
     {
-        question: "Which brokers do you support?",
-        answer: "We currently support Zerodha, Groww, Upstox, and Angel One. We're actively adding more brokers. If your broker isn't listed, you can still use manual portfolio entry or CSV import."
+        question: "How do I add my portfolio?",
+        answer: "You can import your portfolio via CSV upload or use our secure API integration. We support manual entry as well for complete flexibility."
     },
     {
         question: "Is this SEBI registered?",

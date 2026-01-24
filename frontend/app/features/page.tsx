@@ -91,8 +91,8 @@ const featureGroups = [
                 gradient: "from-fuchsia-500 to-purple-600"
             },
             {
-                title: "Secure Broker Sync",
-                description: "Seamless read-only integration with Zerodha, Groww, and Upstox via encrypted API bridges.",
+                title: "Secure Portfolio Import",
+                description: "Import your portfolio via CSV or manual entry with bank-grade encryption.",
                 icon: Link2,
                 gradient: "from-slate-500 to-slate-800"
             }
@@ -216,7 +216,7 @@ export default function FeaturesPage() {
                             <div>
                                 <Zap className="w-12 h-12 text-white mb-6" />
                                 <h3 className="text-3xl font-bold text-white mb-4">Real-Time Sync</h3>
-                                <p className="text-white/90">Connect Zerodha & Groww to see all assets in one place with zero latency.</p>
+                                <p className="text-white/90">Import your portfolio to see all assets in one place with comprehensive analysis.</p>
                             </div>
                             <div className="mt-8 pt-8 border-t border-white/20">
                                 <div className="text-sm font-medium text-white/70 mb-2 uppercase tracking-widest">Active Bridges</div>

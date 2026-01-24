@@ -31,7 +31,7 @@ const plans = [
         features: [
             { name: "Portfolio tracking", included: true, limit: "Up to 3 portfolios" },
             { name: "AI insights", included: true, limit: "3 per day" },
-            { name: "Broker connections", included: true, limit: "1 broker" },
+            { name: "Manual portfolio entry", included: true },
             { name: "Risk scoring", included: true, limit: "Basic" },
             { name: "Community support", included: true },
             { name: "Mobile app access", included: true },
@@ -55,7 +55,7 @@ const plans = [
         features: [
             { name: "Portfolio tracking", included: true, limit: "Unlimited" },
             { name: "AI insights", included: true, limit: "Unlimited" },
-            { name: "Broker connections", included: true, limit: "5 brokers" },
+            { name: "CSV import & export", included: true },
             { name: "Risk scoring", included: true, limit: "Advanced" },
             { name: "Community support", included: true },
             { name: "Mobile app access", included: true },
@@ -79,7 +79,7 @@ const plans = [
         features: [
             { name: "Portfolio tracking", included: true, limit: "Unlimited" },
             { name: "AI insights", included: true, limit: "Unlimited" },
-            { name: "Broker connections", included: true, limit: "Unlimited" },
+            { name: "Advanced import options", included: true },
             { name: "Risk scoring", included: true, limit: "Custom AI models" },
             { name: "Community support", included: true },
             { name: "Mobile app access", included: true },
@@ -110,7 +110,7 @@ const faqs = [
     },
     {
         question: "Is my data secure?",
-        answer: "Absolutely. We use bank-grade 256-bit encryption and never store your broker passwords. All connections are read-only."
+        answer: "Absolutely. We use bank-grade 256-bit encryption for all data. Your portfolio information is stored securely and never shared with third parties."
     },
     {
         question: "Can I cancel anytime?",

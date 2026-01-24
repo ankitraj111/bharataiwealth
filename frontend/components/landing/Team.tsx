@@ -21,7 +21,7 @@ const team = [
     {
         name: "Amit Patel",
         role: "Head of Product",
-        bio: "Ex-Zerodha, IIMA. Built products used by 10M+ investors.",
+        bio: "Ex-Fintech Leader, IIMA. Built products used by 10M+ investors.",
         avatar: "AP",
         gradient: "from-orange-500 to-amber-500"
     },
