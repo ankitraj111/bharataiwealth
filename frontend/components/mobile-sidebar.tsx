@@ -40,15 +40,12 @@ const allNavItems = [
   { name: "Analytics", href: "/analytics", icon: BarChart3, section: "main" },
   { name: "AI Advisor", href: "/advisor", icon: MessageSquareText, section: "main" },
 
-  // Portfolio & Predictions
+  // Portfolio Management
   { name: "Portfolio", href: "/portfolio", icon: Wallet, section: "portfolio" },
-  { name: "Short-Term Forecast", href: "/predictions?tab=short-term", icon: Clock, section: "portfolio" },
-  { name: "Mid-Term Forecast", href: "/predictions?tab=mid-term", icon: Calendar, section: "portfolio" },
-  { name: "Long-Term Forecast", href: "/predictions?tab=long-term", icon: History, section: "portfolio" },
-  { name: "Accuracy Report", href: "/predictions?tab=accuracy", icon: Activity, section: "portfolio" },
-  { name: "Technical Signals", href: "/predictions?tab=technicals", icon: LineChart, section: "portfolio" },
-  { name: "Risk Analysis", href: "/predictions?tab=risk", icon: FileSearch, section: "portfolio" },
-  { name: "AI Explanation", href: "/predictions?tab=explanation", icon: BookOpen, section: "portfolio" },
+  { name: "Low Risk", href: "/portfolios/low-risk", icon: TrendingUp, section: "portfolio" },
+  { name: "Medium Risk", href: "/portfolios/medium-risk", icon: BarChart3, section: "portfolio" },
+  { name: "High Risk", href: "/portfolios/high-risk", icon: Zap, section: "portfolio" },
+  { name: "Predictions", href: "/predictions", icon: TrendingUp, section: "portfolio" },
 
   // Mutual Funds
   { name: "MF Explorer", href: "/mf", icon: Coins, section: "mf" },
