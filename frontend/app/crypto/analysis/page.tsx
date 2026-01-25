@@ -143,52 +143,58 @@ export default function CryptoAnalysis() {
                         </div>
                     </TabsContent>
 
-                    <TabsContent value="ai-insights" className="space-y-8 animate-in fade-in duration-500">
-                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                            <Card className="bg-gradient-to-br from-purple-50 to-blue-50 border-slate-200/60 backdrop-blur-2xl shadow-[0_10px_40px_rgba(0,0,0,0.04)] rounded-[2.5rem] p-10 relative overflow-hidden group border-2">
-                                <div className="absolute top-0 right-0 h-48 w-48 bg-purple-500/10 rounded-full blur-3xl -mr-24 -mt-24 group-hover:bg-purple-500/20 transition-all duration-700" />
-                                <div className="flex items-center gap-4 mb-8">
-                                    <div className="p-4 rounded-3xl bg-white/20 backdrop-blur-3xl shadow-lg"><Zap className="h-8 w-8 text-slate-900" /></div>
+                    <TabsContent value="ai-insights" className="space-y-6 animate-in fade-in duration-500">
+                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                            {/* AI Momentum Prophecy - Theme Aware Compact Version */}
+                            <Card className="bg-slate-50 dark:bg-slate-950 border-slate-200 dark:border-slate-800 shadow-xl shadow-slate-200/50 dark:shadow-slate-900/50 rounded-[1.5rem] p-8 relative overflow-hidden group border">
+                                <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-purple-500/5 via-transparent to-transparent dark:from-purple-500/10" />
+                                <div className="flex items-center gap-4 mb-6 relative z-10">
+                                    <div className="p-3 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm">
+                                        <Zap className="h-6 w-6 text-primary" />
+                                    </div>
                                     <div>
-                                        <h4 className="text-2xl font-black text-slate-900">AI Momentum Prophecy</h4>
-                                        <p className="text-[10px] font-black text-purple-200 uppercase tracking-[0.2em] opacity-60">Next 7 Days Forecast</p>
+                                        <h4 className="text-xl font-bold text-slate-900 dark:text-white">AI Momentum Prophecy</h4>
+                                        <p className="text-[10px] font-bold text-primary uppercase tracking-widest opacity-80">Next 7 Days Forecast</p>
                                     </div>
                                 </div>
-                                <div className="space-y-6 mb-10">
-                                    <div className="flex items-center justify-between p-6 rounded-[2rem] bg-white/5 border border-white/10 shadow-inner group/item hover:bg-white/10 transition-all">
-                                        <div className="flex items-center gap-4">
-                                            <Badge className="bg-emerald-500 text-white font-black px-4 py-1.5 rounded-full text-[10px]">92% ACCURACY</Badge>
-                                            <span className="font-bold text-slate-200">Price Target 1</span>
+                                <div className="space-y-4 mb-8 relative z-10">
+                                    <div className="flex items-center justify-between p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm hover:shadow-md transition-all">
+                                        <div className="flex items-center gap-3">
+                                            <Badge className="bg-emerald-500 text-white font-bold px-3 py-1 rounded-full text-[9px]">92% ACCURACY</Badge>
+                                            <span className="text-xs font-bold text-slate-500 dark:text-slate-400">Price Target 1</span>
                                         </div>
-                                        <span className="text-2xl font-black text-white tabular-nums">$68,540</span>
+                                        <span className="text-xl font-bold text-slate-900 dark:text-white tabular-nums">$68,540</span>
                                     </div>
-                                    <div className="flex items-center justify-between p-6 rounded-[2rem] bg-white/5 border border-white/10 shadow-inner group/item hover:bg-white/10 transition-all">
-                                        <div className="flex items-center gap-4">
-                                            <Badge className="bg-emerald-500/50 text-white font-black px-4 py-1.5 rounded-full text-[10px]">74% ACCURACY</Badge>
-                                            <span className="font-bold text-slate-200">Price Target 2</span>
+                                    <div className="flex items-center justify-between p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm hover:shadow-md transition-all">
+                                        <div className="flex items-center gap-3">
+                                            <Badge className="bg-emerald-500/80 text-white font-bold px-3 py-1 rounded-full text-[9px]">74% ACCURACY</Badge>
+                                            <span className="text-xs font-bold text-slate-500 dark:text-slate-400">Price Target 2</span>
                                         </div>
-                                        <span className="text-2xl font-black text-white tabular-nums">$72,400</span>
+                                        <span className="text-xl font-bold text-slate-900 dark:text-white tabular-nums">$72,400</span>
                                     </div>
                                 </div>
-                                <p className="text-xs font-bold text-slate-300 leading-relaxed max-w-lg italic">
+                                <p className="text-xs font-medium text-slate-500 dark:text-slate-400 leading-relaxed italic relative z-10">
                                     "Our LLM-V3 engine has detected institutional accumulation patterns similar to the Q1 2024 breakout. High probability of upward volatility."
                                 </p>
                             </Card>
 
-                            <Card className="bg-white/90 border-slate-200/60 backdrop-blur-2xl shadow-[0_10px_40px_rgba(0,0,0,0.04)] rounded-[2.5rem] p-10 border-2">
-                                <h4 className="text-sm font-black text-slate-500 uppercase tracking-widest mb-8">Neural Heatmap Analytics</h4>
-                                <div className="grid grid-cols-4 gap-4">
+                            {/* Neural Heatmap - Sophisticated Palette */}
+                            <Card className="bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 shadow-lg rounded-[1.5rem] p-8 border">
+                                <h4 className="text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-8">Neural Heatmap Analytics</h4>
+                                <div className="grid grid-cols-4 gap-3">
                                     {Array.from({ length: 16 }).map((_, i) => (
                                         <div
                                             key={i}
-                                            className={`aspect-square rounded-2xl transition-all hover:scale-105 cursor-pointer border border-white/10 ${Math.random() > 0.5 ? "bg-emerald-500/30" : Math.random() > 0.3 ? "bg-blue-500/20" : "bg-rose-500/20"
+                                            className={`aspect-square rounded-xl transition-all hover:scale-105 cursor-pointer border border-white/5 dark:border-black/20 ${i % 3 === 0 ? "bg-emerald-500/20 dark:bg-emerald-500/30" :
+                                                    i % 2 === 0 ? "bg-blue-500/10 dark:bg-blue-500/20" :
+                                                        "bg-rose-500/10 dark:bg-rose-500/20"
                                                 }`}
                                         />
                                     ))}
                                 </div>
-                                <div className="mt-8 flex justify-between text-[10px] font-black uppercase tracking-widest text-slate-500">
-                                    <span>Bearish Pressure</span>
-                                    <span>Institutional Buy Wall</span>
+                                <div className="mt-8 flex justify-between text-[9px] font-bold uppercase tracking-widest text-slate-400 dark:text-slate-500">
+                                    <span className="flex items-center gap-1.5"><div className="w-2 h-2 rounded-full bg-rose-500/40" /> Bearish Pressure</span>
+                                    <span className="flex items-center gap-1.5">Institutional Buy Wall <div className="w-2 h-2 rounded-full bg-emerald-500/40" /></span>
                                 </div>
                             </Card>
                         </div>

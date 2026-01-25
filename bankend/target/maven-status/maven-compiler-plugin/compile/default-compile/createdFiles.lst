@@ -2,7 +2,6 @@ com\bharatai\wealth\model\Goal.class
 com\bharatai\wealth\dto\StockAnalysisDTO$EventRadar.class
 com\bharatai\wealth\service\StockAnalysisService.class
 com\bharatai\wealth\dto\StockAnalysisDTO$Valuation.class
-com\bharatai\wealth\service\BankSyncService.class
 com\bharatai\wealth\model\FamilyMember$FamilyMemberBuilder.class
 com\bharatai\wealth\dto\StockAnalysisDTO$CyclePhase.class
 com\bharatai\wealth\dto\StockAnalysisDTO$Fundamentals$FundamentalsBuilder.class
@@ -14,7 +13,6 @@ com\bharatai\wealth\model\User$UserBuilder.class
 com\bharatai\wealth\config\DataInitializer.class
 com\bharatai\wealth\controller\DashboardController.class
 com\bharatai\wealth\repository\AuditLogRepository.class
-com\bharatai\wealth\model\BankConnection$BankConnectionBuilder.class
 com\bharatai\wealth\model\PortfolioItem$PortfolioItemBuilder.class
 com\bharatai\wealth\dto\StockAnalysisDTO$InsiderActivity$InsiderActivityBuilder.class
 com\bharatai\wealth\service\MfaService$MfaSetupResponse.class
@@ -42,10 +40,8 @@ com\bharatai\wealth\model\TaxRecord.class
 com\bharatai\wealth\service\StockAnalysisService$StockInfo.class
 com\bharatai\wealth\controller\AnalyticsController.class
 com\bharatai\wealth\dto\StockAnalysisDTO$StockAnalysisResponse$StockAnalysisResponseBuilder.class
-com\bharatai\wealth\controller\BankConnectionController.class
 com\bharatai\wealth\dto\StockAnalysisDTO$UpcomingEvent$UpcomingEventBuilder.class
 com\bharatai\wealth\dto\StockAnalysisDTO$BusinessCycle.class
-com\bharatai\wealth\model\BankConnection.class
 com\bharatai\wealth\controller\TaxController.class
 com\bharatai\wealth\dto\StockAnalysisDTO$FnOData.class
 com\bharatai\wealth\model\EmergencyFund$EmergencyFundBuilder.class
@@ -64,7 +60,6 @@ com\bharatai\wealth\repository\FamilyMemberRepository.class
 com\bharatai\wealth\repository\UserRepository.class
 com\bharatai\wealth\controller\AlertsController.class
 com\bharatai\wealth\dto\StockAnalysisDTO$FnOData$FnODataBuilder.class
-com\bharatai\wealth\model\BankConnection$ConnectionStatus.class
 com\bharatai\wealth\dto\StockAnalysisDTO$GlobalPeers.class
 com\bharatai\wealth\dto\StockAnalysisDTO$RiskMetrics$RiskMetricsBuilder.class
 com\bharatai\wealth\dto\StockAnalysisDTO$Verdict.class
@@ -78,7 +73,6 @@ com\bharatai\wealth\dto\StockAnalysisDTO$StrikeData$StrikeDataBuilder.class
 com\bharatai\wealth\exception\GlobalExceptionHandler.class
 com\bharatai\wealth\model\Expense$PaymentSource.class
 com\bharatai\wealth\model\FamilyMember.class
-com\bharatai\wealth\repository\BankConnectionRepository.class
 com\bharatai\wealth\repository\ExpenseRepository.class
 com\bharatai\wealth\security\RateLimitingFilter.class
 com\bharatai\wealth\dto\StockAnalysisDTO$Sentiment$SentimentBuilder.class
@@ -89,7 +83,6 @@ com\bharatai\wealth\dto\StockAnalysisDTO$ImpactLevel.class
 com\bharatai\wealth\config\PasswordConfig.class
 com\bharatai\wealth\controller\PortfolioController.class
 com\bharatai\wealth\repository\PortfolioRepository.class
-com\bharatai\wealth\dto\BankConnectionRequest.class
 com\bharatai\wealth\service\LoginAttemptService.class
 com\bharatai\wealth\controller\SipController.class
 com\bharatai\wealth\dto\AuthDTO$RefreshTokenRequest$RefreshTokenRequestBuilder.class

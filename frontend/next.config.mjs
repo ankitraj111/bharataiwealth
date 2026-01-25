@@ -1,9 +1,11 @@
+const isProd = process.env.NODE_ENV === 'production';
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   // Production deployment settings for GitHub Pages
-  output: 'export',
-  basePath: '/bharataiwealth',
-  assetPrefix: '/bharataiwealth',
+  output: isProd ? 'export' : undefined,
+  basePath: isProd ? '/bharataiwealth' : '',
+  assetPrefix: isProd ? '/bharataiwealth' : '',
   trailingSlash: true,
   images: {
     unoptimized: true,
