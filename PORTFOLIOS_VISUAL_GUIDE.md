@@ -140,8 +140,22 @@ Desktop (> 1024px):
 
 ```
 Sidebar
-├── Dashboard
-├── AI Advisor
+├── 🏠 Dashboard ◄── COLLAPSIBLE SECTION
+│   ├── 📊 Main Dashboard
+│   │   ├── 💰 Crypto Analytics
+│   │   └── 📈 Portfolio Analytics
+│   ├── 💰 Crypto Dashboard
+│   └── 📈 Portfolios Dashboard
+├── 🤖 AI Advisor
+├── 💼 Portfolio Management
+├── 📊 Analytics
+├── 🎯 Goals
+├── � Expenses
+├── 🏦 Emergency Fund
+├── 📈 SIP
+├── 👨‍👩‍👧‍👦 Family
+├── 🔔 Alerts
+├── 📊 Tax
 └── 📊 PORTFOLIOS ◄── COLLAPSIBLE SECTION
     ├── 🏠 Portfolios Dashboard  ◄── NEW (Main Hub)
     ├── 💼 Portfolio Management

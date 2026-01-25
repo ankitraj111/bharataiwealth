@@ -9,6 +9,7 @@ import { AICoachWidget } from "@/components/ai-coach-widget"
 import { RegulatoryDisclaimer } from "@/components/regulatory-disclaimer"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
+import { cn } from "@/lib/utils"
 
 // Lazy load Recharts for performance
 const ResponsiveContainer = dynamic(() => import("recharts").then(m => m.ResponsiveContainer), { ssr: false })
@@ -20,7 +21,7 @@ const Tooltip = dynamic(() => import("recharts").then(m => m.Tooltip), { ssr: fa
 const PieChart = dynamic(() => import("recharts").then(m => m.PieChart), { ssr: false })
 const Pie = dynamic(() => import("recharts").then(m => m.Pie), { ssr: false })
 const Cell = dynamic(() => import("recharts").then(m => m.Cell), { ssr: false })
-import { ArrowUpRight, Wallet, PiggyBank, TrendingUp, Shield, Sparkles, ChevronRight, ChevronDown, BarChart3, Target, AlertTriangle, Scale, Flame, Zap, LayoutDashboard, Calculator, Users, FlaskConical } from "lucide-react"
+import { ArrowUpRight, Wallet, PiggyBank, TrendingUp, Shield, Sparkles, ChevronRight, ChevronDown, BarChart3, Target, AlertTriangle, Scale, Flame, Zap, LayoutDashboard, Calculator, Users, FlaskConical, Coins } from "lucide-react"
 import { fetchDashboardSummary, fetcher, BACKEND_URL } from "@/lib/api"
 import useSWR from "swr"
 import Link from "next/link"
@@ -106,10 +107,98 @@ function DashboardContent() {
     { name: "Support", desc: "Expert help", href: "/support", color: "green", icon: Shield },
   ]
 
+  const dashboardCards = [
+    { 
+      name: "Portfolios Dashboard", 
+      desc: "AI-powered investment insights", 
+      href: "/portfolios", 
+      color: "emerald", 
+      icon: TrendingUp,
+      stats: { label: "Active Predictions", value: "24" },
+      features: [
+        { label: "Short-Term Forecast", value: "87% Accuracy" },
+        { label: "Mid-Term Trend", value: "+15.2% Bull" },
+        { label: "Long-Term CAGR", value: "+42.5%" }
+      ]
+    },
+    { 
+      name: "Crypto Dashboard", 
+      desc: "Real-time crypto analytics", 
+      href: "/crypto/dashboard", 
+      color: "orange", 
+      icon: Coins,
+      stats: { label: "Market Cap", value: "$1.8T" },
+      features: [
+        { label: "Bitcoin", value: "$43,250 (+5.2%)" },
+        { label: "Ethereum", value: "$2,280 (+3.8%)" },
+        { label: "Portfolio Value", value: "₹2.5L (+12.5%)" }
+      ]
+    },
+  ]
+
   return (
     <AppShell noPadding>
       <MarketTicker />
       <div className="p-6 md:p-8 space-y-8">
+        {/* Quick Actions - Moved to Top */}
+        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-8">
+          <div className="space-y-2">
+            <h2 className="text-2xl font-bold text-foreground">Quick Actions</h2>
+            <p className="text-sm text-muted-foreground">Access your most used features</p>
+          </div>
+
+          {/* Quick Actions Grid */}
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+            <Link href="/portfolios">
+              <div className="group h-14 w-full sm:w-32 bg-white dark:bg-slate-800 hover:bg-blue-50 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-700 hover:border-blue-300 dark:hover:border-blue-600 rounded-xl p-2.5 px-3.5 flex items-center gap-2.5 transition-all cursor-pointer shadow-sm hover:shadow-md">
+                <div className="p-1.5 rounded-lg bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 group-hover:bg-blue-500 group-hover:text-white transition-all">
+                  <Wallet className="h-3.5 w-3.5" />
+                </div>
+                <div className="overflow-hidden">
+                  <p className="text-[12px] font-semibold leading-none text-slate-900 dark:text-slate-100 truncate">Portfolios</p>
+                  <p className="text-[9px] text-slate-500 dark:text-slate-400 mt-1 font-medium truncate">View dashboard</p>
+                </div>
+              </div>
+            </Link>
+
+            <Link href="/family">
+              <div className="group h-14 w-full sm:w-32 bg-white dark:bg-slate-800 hover:bg-purple-50 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-700 hover:border-purple-300 dark:hover:border-purple-600 rounded-xl p-2.5 px-3.5 flex items-center gap-2.5 transition-all cursor-pointer shadow-sm hover:shadow-md">
+                <div className="p-1.5 rounded-lg bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 group-hover:bg-purple-500 group-hover:text-white transition-all">
+                  <Target className="h-3.5 w-3.5" />
+                </div>
+                <div className="overflow-hidden">
+                  <p className="text-[12px] font-semibold leading-none text-slate-900 dark:text-slate-100 truncate">Family</p>
+                  <p className="text-[9px] text-slate-500 dark:text-slate-400 mt-1 font-medium truncate">Manage vault</p>
+                </div>
+              </div>
+            </Link>
+
+            <Link href="/predictions">
+              <div className="group h-14 w-full sm:w-32 bg-white dark:bg-slate-800 hover:bg-orange-50 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-700 hover:border-orange-300 dark:hover:border-orange-600 rounded-xl p-2.5 px-3.5 flex items-center gap-2.5 transition-all cursor-pointer shadow-sm hover:shadow-md">
+                <div className="p-1.5 rounded-lg bg-orange-100 dark:bg-orange-900/30 text-orange-600 dark:text-orange-400 group-hover:bg-orange-500 group-hover:text-white transition-all">
+                  <Sparkles className="h-3.5 w-3.5" />
+                </div>
+                <div className="overflow-hidden">
+                  <p className="text-[12px] font-semibold leading-none text-slate-900 dark:text-slate-100 truncate">AI Predict</p>
+                  <p className="text-[9px] text-slate-500 dark:text-slate-400 mt-1 font-medium truncate">Market edge</p>
+                </div>
+              </div>
+            </Link>
+
+            <Link href="/support">
+              <div className="group h-14 w-full sm:w-32 bg-white dark:bg-slate-800 hover:bg-emerald-50 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-700 hover:border-emerald-300 dark:hover:border-emerald-600 rounded-xl p-2.5 px-3.5 flex items-center gap-2.5 transition-all cursor-pointer shadow-sm hover:shadow-md">
+                <div className="p-1.5 rounded-lg bg-emerald-100 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400 group-hover:bg-emerald-500 group-hover:text-white transition-all">
+                  <Shield className="h-3.5 w-3.5" />
+                </div>
+                <div className="overflow-hidden">
+                  <p className="text-[12px] font-semibold leading-none text-slate-900 dark:text-slate-100 truncate">Support</p>
+                  <p className="text-[9px] text-slate-500 dark:text-slate-400 mt-1 font-medium truncate">Expert help</p>
+                </div>
+              </div>
+            </Link>
+          </div>
+        </div>
+
         {/* Hero Banner - Compact Theme-Aware Premium Theme */}
         <div className="relative overflow-hidden rounded-[1.5rem] bg-slate-50 dark:bg-slate-950 p-6 md:p-8 text-slate-900 dark:text-slate-100 shadow-xl shadow-slate-200/50 dark:shadow-slate-900/50 border border-slate-200 dark:border-slate-800">
           <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,_var(--tw-gradient-stops))] from-white via-slate-50 to-slate-100 dark:from-indigo-900/20 dark:via-slate-950 dark:to-slate-950 opacity-100" />
@@ -180,25 +269,69 @@ function DashboardContent() {
           </div>
         </div>
 
-        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-8">
-          <div className="space-y-2">
-            <h2 className="text-2xl font-bold text-foreground">Quick Actions</h2>
-            <p className="text-sm text-muted-foreground">Access your most used features</p>
+        {/* Dashboard Quick Access Cards */}
+        <div>
+          <div className="flex items-center justify-between mb-6">
+            <div>
+              <h2 className="text-2xl font-bold text-foreground">Specialized Dashboards</h2>
+              <p className="text-sm text-muted-foreground">Access detailed analytics and insights</p>
+            </div>
           </div>
 
-          {/* Quick Actions Grid */}
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-            {quickActions.map((action) => (
-              <Link key={action.name} href={action.href}>
-                <div className="group h-14 w-full sm:w-32 bg-white hover:bg-slate-50 border border-slate-200 hover:border-primary/40 rounded-xl p-2.5 px-3.5 flex items-center gap-2.5 transition-all cursor-pointer shadow-sm hover:shadow-md">
-                  <div className={`p-1.5 rounded-lg bg-slate-100 text-slate-600 group-hover:bg-primary group-hover:text-white transition-all`}>
-                    <action.icon className="h-3.5 w-3.5" />
-                  </div>
-                  <div className="overflow-hidden">
-                    <p className="text-[12px] font-semibold leading-none text-slate-900 group-hover:text-primary transition-colors truncate">{action.name}</p>
-                    <p className="text-[9px] text-slate-400 mt-1 font-medium truncate">{action.desc}</p>
-                  </div>
-                </div>
+          <div className="grid gap-4 sm:grid-cols-2">
+            {dashboardCards.map((card) => (
+              <Link key={card.href} href={card.href}>
+                <Card className={cn(
+                  "border-2 transition-all cursor-pointer group hover:shadow-xl",
+                  card.color === "emerald" && "border-emerald-500/30 bg-gradient-to-br from-emerald-500/5 to-transparent hover:border-emerald-500/50",
+                  card.color === "orange" && "border-orange-500/30 bg-gradient-to-br from-orange-500/5 to-transparent hover:border-orange-500/50"
+                )}>
+                  <CardContent className="p-6">
+                    <div className="flex items-start justify-between mb-4">
+                      <div className={cn(
+                        "h-14 w-14 rounded-xl flex items-center justify-center transition-colors",
+                        card.color === "emerald" && "bg-emerald-500/10 group-hover:bg-emerald-500",
+                        card.color === "orange" && "bg-orange-500/10 group-hover:bg-orange-500"
+                      )}>
+                        <card.icon className={cn(
+                          "h-7 w-7 transition-colors",
+                          card.color === "emerald" && "text-emerald-600 group-hover:text-white",
+                          card.color === "orange" && "text-orange-600 group-hover:text-white"
+                        )} />
+                      </div>
+                      <ChevronRight className={cn(
+                        "h-5 w-5 transition-all group-hover:translate-x-1",
+                        card.color === "emerald" && "text-emerald-600",
+                        card.color === "orange" && "text-orange-600"
+                      )} />
+                    </div>
+                    <h3 className="text-xl font-bold text-foreground mb-2">{card.name}</h3>
+                    <p className="text-sm text-muted-foreground mb-4">{card.desc}</p>
+                    
+                    {/* Key Features */}
+                    <div className="space-y-2 mb-4">
+                      {card.features.map((feature, idx) => (
+                        <div key={idx} className="flex items-center justify-between py-2 border-b border-border/30 last:border-0">
+                          <span className="text-xs font-medium text-muted-foreground">{feature.label}</span>
+                          <span className={cn(
+                            "text-sm font-bold",
+                            card.color === "emerald" && "text-emerald-600",
+                            card.color === "orange" && "text-orange-600"
+                          )}>{feature.value}</span>
+                        </div>
+                      ))}
+                    </div>
+
+                    <div className="flex items-center justify-between pt-3 border-t border-border/50">
+                      <span className={cn(
+                        "text-xs font-medium",
+                        card.color === "emerald" && "text-emerald-600",
+                        card.color === "orange" && "text-orange-600"
+                      )}>{card.stats.label}</span>
+                      <span className="text-lg font-bold text-foreground">{card.stats.value}</span>
+                    </div>
+                  </CardContent>
+                </Card>
               </Link>
             ))}
           </div>
