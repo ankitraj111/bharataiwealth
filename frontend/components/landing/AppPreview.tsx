@@ -138,8 +138,8 @@ export function AppPreview() {
                             <motion.button
                                 onClick={() => setActiveDevice("desktop")}
                                 className={`flex items-center gap-3 px-6 py-3 rounded-2xl transition-all duration-300 ${activeDevice === "desktop"
-                                        ? "bg-gradient-to-r from-slate-700 to-slate-800 border-2 border-cyan-500/50 shadow-lg shadow-cyan-500/20"
-                                        : "bg-slate-800/50 border border-slate-700/50 hover:border-slate-600"
+                                    ? "bg-gradient-to-r from-slate-700 to-slate-800 border-2 border-cyan-500/50 shadow-lg shadow-cyan-500/20"
+                                    : "bg-slate-800/50 border border-slate-700/50 hover:border-slate-600"
                                     }`}
                                 whileHover={{ scale: 1.02 }}
                                 whileTap={{ scale: 0.98 }}
@@ -150,8 +150,8 @@ export function AppPreview() {
                             <motion.button
                                 onClick={() => setActiveDevice("mobile")}
                                 className={`flex items-center gap-3 px-6 py-3 rounded-2xl transition-all duration-300 ${activeDevice === "mobile"
-                                        ? "bg-gradient-to-r from-slate-700 to-slate-800 border-2 border-purple-500/50 shadow-lg shadow-purple-500/20"
-                                        : "bg-slate-800/50 border border-slate-700/50 hover:border-slate-600"
+                                    ? "bg-gradient-to-r from-slate-700 to-slate-800 border-2 border-purple-500/50 shadow-lg shadow-purple-500/20"
+                                    : "bg-slate-800/50 border border-slate-700/50 hover:border-slate-600"
                                     }`}
                                 whileHover={{ scale: 1.02 }}
                                 whileTap={{ scale: 0.98 }}
@@ -202,6 +202,7 @@ export function AppPreview() {
                                                 alt="AI Asset Insights Dashboard"
                                                 fill
                                                 className="object-cover object-top"
+                                                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                                                 priority
                                             />
                                             {/* Glass overlay */}
@@ -236,6 +237,7 @@ export function AppPreview() {
                                             alt="AI Insights Mobile App"
                                             fill
                                             className="object-cover"
+                                            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 30vw, 20vw"
                                             priority
                                         />
                                         {/* Glass overlay */}

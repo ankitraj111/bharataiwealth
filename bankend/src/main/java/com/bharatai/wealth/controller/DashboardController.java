@@ -32,8 +32,14 @@ public class DashboardController {
 
         java.time.LocalDate firstOfMonth = java.time.LocalDate.now().withDayOfMonth(1);
 
-        java.math.BigDecimal monthlyExpense = expenseRepository.sumMonthlyExpenses(user, firstOfMonth);
-        java.math.BigDecimal totalNetWorth = portfolioRepository.sumTotalNetWorth(user);
+        // Parallelize DB calls
+        java.util.concurrent.CompletableFuture<java.math.BigDecimal> expenseFuture = java.util.concurrent.CompletableFuture
+                .supplyAsync(() -> expenseRepository.sumMonthlyExpenses(user, firstOfMonth));
+        java.util.concurrent.CompletableFuture<java.math.BigDecimal> netWorthFuture = java.util.concurrent.CompletableFuture
+                .supplyAsync(() -> portfolioRepository.sumTotalNetWorth(user));
+
+        java.math.BigDecimal monthlyExpense = expenseFuture.join();
+        java.math.BigDecimal totalNetWorth = netWorthFuture.join();
 
         // Calculate dynamic gains
         double portfolioGain = 0.0;

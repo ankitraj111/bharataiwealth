@@ -18,6 +18,7 @@ public class MLServiceClient {
     @Value("${ml.service.url:http://localhost:8000}")
     private String mlServiceUrl;
 
+    @org.springframework.cache.annotation.Cacheable(value = "aiConfidence", key = "'global'")
     public Integer getAIConfidence() {
         try {
             // Use ClientHttpRequestFactory with timeout in a real world app,
@@ -33,6 +34,7 @@ public class MLServiceClient {
         return 87; // Fallback mock value
     }
 
+    @org.springframework.cache.annotation.Cacheable(value = "predictions", key = "#symbol")
     public Map<String, Object> getPrediction(String symbol) {
         try {
             @SuppressWarnings("unchecked")
@@ -45,6 +47,7 @@ public class MLServiceClient {
         }
     }
 
+    @org.springframework.cache.annotation.Cacheable(value = "portfolioAnalysis", key = "#symbols")
     public Map<String, Object> getPortfolioAnalysis(java.util.List<String> symbols) {
         if (symbols == null || symbols.isEmpty())
             return null;

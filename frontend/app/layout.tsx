@@ -49,6 +49,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
+      <head>
+        <link rel="preconnect" href="http://localhost:8080" />
+        <link rel="dns-prefetch" href="http://localhost:8080" />
+        <link rel="manifest" href="/manifest.json" />
+      </head>
       <body
         className={`${inter.variable} ${poppins.variable} ${jetbrainsMono.variable} font-sans antialiased`}
         suppressHydrationWarning
