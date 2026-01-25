@@ -109,11 +109,15 @@ const bottomNavItems = [
 
 export function Sidebar() {
   const pathname = usePathname()
-  const [portfolioOpen, setPortfolioOpen] = useState(true)
-  const [cryptoOpen, setCryptoOpen] = useState(false)
-  const [mutualFundsOpen, setMutualFundsOpen] = useState(false)
-  const [toolsOpen, setToolsOpen] = useState(false)
-  const [updatesOpen, setUpdatesOpen] = useState(false)
+  const [portfolioOpen, setPortfolioOpen] = useState(() =>
+    pathname === "/portfolio" || pathname.startsWith("/portfolios") || pathname === "/predictions"
+  )
+  const [cryptoOpen, setCryptoOpen] = useState(() => pathname.startsWith("/crypto"))
+  const [mutualFundsOpen, setMutualFundsOpen] = useState(() => pathname === "/mf" || pathname === "/sip")
+  const [toolsOpen, setToolsOpen] = useState(() => pathname === "/emergency-fund" || pathname === "/tax")
+  const [updatesOpen, setUpdatesOpen] = useState(() =>
+    pathname === "/alerts" || pathname === "/badges" || pathname === "/digest"
+  )
 
   return (
     <aside className="fixed left-0 top-0 z-40 h-screen w-[260px] border-r border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 flex-col hidden lg:flex shadow-sm">
