@@ -547,7 +547,7 @@ function PortfolioContent() {
                             <div className="space-y-1">
                                 <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider flex items-center gap-1">
                                     {market.name}
-                                    {!isLoading && <div className="h-1 w-1 rounded-full bg-emerald-500 animate-ping" />}
+                                    {!isLoading && <span className="h-1 w-1 rounded-full bg-emerald-500 animate-ping" />}
                                 </p>
                                 <p className="text-lg font-bold tabular-nums">
                                     {isLoading ? "---" : market.value}
