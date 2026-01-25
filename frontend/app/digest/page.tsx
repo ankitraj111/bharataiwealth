@@ -194,15 +194,15 @@ function DigestContent() {
                 <div className="h-px bg-border my-2" />
 
                 <p className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground/60 mb-2">Include in digest:</p>
-                {digestSections.map((section) => (
-                  <div key={section.id} className="flex items-center justify-between py-1.5">
+                {digestSections.map((item) => (
+                  <div key={item.id} className="flex items-center justify-between py-1.5">
                     <div className="flex items-center gap-3">
                       <div className="h-8 w-8 rounded-lg bg-muted flex items-center justify-center">
-                        <section.icon className="h-4 w-4 text-muted-foreground/70" />
+                        <item.icon className="h-4 w-4 text-muted-foreground/70" />
                       </div>
-                      <span className="text-sm font-medium">{section.label}</span>
+                      <span className="text-sm font-medium">{item.label}</span>
                     </div>
-                    <Switch defaultChecked={section.enabled} />
+                    <Switch defaultChecked={item.enabled} />
                   </div>
                 ))}
               </CardContent>
