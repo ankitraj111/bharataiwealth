@@ -1,6 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // Only use basePath and output export for production (GitHub Pages)
+  // Re-triggering deployment to ensure GitHub Actions is synced.
   ...(process.env.NODE_ENV === 'production' && {
     output: 'export',
     basePath: '/bharataiwealth',
