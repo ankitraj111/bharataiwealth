@@ -457,7 +457,7 @@ function PredictionsContent() {
                     </div>
 
                     {/* Trending Assets */}
-                    <Card className="border-cyan-200/30 dark:border-cyan-900/30 bg-white/40 dark:bg-slate-900/40 backdrop-blur-xl shadow-xl shadow-cyan-500/5">
+                    <Card className="border-border/50 bg-card shadow-xl shadow-primary/5">
                         <CardHeader className="pb-3">
                             <div className="flex items-center gap-2">
                                 <TrendingUp className="h-4 w-4 text-primary" />
@@ -610,8 +610,8 @@ function PredictionsContent() {
                         {/* 1. Short-Term Forecast */}
                         <TabsContent value="short-term" className="space-y-6">
                             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                                <Card className="lg:col-span-2 border-cyan-500/10 shadow-2xl overflow-hidden bg-slate-900/40 backdrop-blur-xl">
-                                    <CardHeader className="border-b border-white/5 bg-secondary/10">
+                                <Card className="lg:col-span-2 border-border/50 shadow-2xl overflow-hidden bg-card">
+                                    <CardHeader className="border-b border-border/50 bg-muted/20">
                                         <div className="flex items-center justify-between">
                                             <div>
                                                 <CardTitle className="text-lg font-bold">1–7 Day Momentum Forecast</CardTitle>
@@ -630,11 +630,11 @@ function PredictionsContent() {
                                                             <stop offset="95%" stopColor="#3b82f6" stopOpacity={0} />
                                                         </linearGradient>
                                                     </defs>
-                                                    <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#ffffff10" />
-                                                    <XAxis dataKey="time" axisLine={false} tickLine={false} tick={{ fontSize: 10, fill: '#94a3b8' }} />
+                                                    <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="currentColor" opacity={0.1} />
+                                                    <XAxis dataKey="time" axisLine={false} tickLine={false} tick={{ fontSize: 10, fill: 'hsl(var(--muted-foreground))' }} />
                                                     <YAxis hide domain={['auto', 'auto']} />
                                                     <Tooltip
-                                                        contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: '0 4px 12px rgba(0,0,0,0.1)' }}
+                                                        contentStyle={{ backgroundColor: 'hsl(var(--card))', borderRadius: '12px', border: '1px solid hsl(var(--border))', color: 'hsl(var(--foreground))' }}
                                                     />
                                                     <Area
                                                         type="monotone"
@@ -658,9 +658,9 @@ function PredictionsContent() {
                                         </div>
                                         <div className="grid grid-cols-4 gap-4 mt-6">
                                             {shortTerm?.targets.map((t: any, i: number) => (
-                                                <div key={i} className="p-4 rounded-2xl bg-secondary/20 border border-white/5 text-center shadow-inner hover:bg-white/5 transition-colors group">
+                                                <div key={i} className="p-4 rounded-2xl bg-muted/30 border border-border/50 text-center shadow-inner hover:bg-muted/50 transition-colors group">
                                                     <p className="text-[10px] text-muted-foreground font-black uppercase tracking-widest">{t.period}</p>
-                                                    <p className="text-sm font-black mt-1 text-foreground">₹{t.price.toLocaleString()}</p>
+                                                    <p className="text-sm font-black mt-1">₹{t.price.toLocaleString()}</p>
                                                     <p className={`text-[10px] font-black mt-0.5 ${t.change >= 0 ? 'text-emerald-500' : 'text-rose-500'}`}>
                                                         {t.change >= 0 ? '+' : ''}{t.change}%
                                                     </p>
@@ -716,21 +716,21 @@ function PredictionsContent() {
                         {/* 2. Mid-Term Forecast */}
                         <TabsContent value="mid-term" className="space-y-6">
                             <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
-                                <Card className="lg:col-span-3 border border-gray-200 shadow-sm bg-white">
-                                    <CardHeader className="border-b border-gray-100 bg-gray-50/50">
-                                        <CardTitle className="text-lg font-bold text-gray-900">1–3 Month Positional Outlook</CardTitle>
-                                        <CardDescription className="text-gray-600">Swing & Positional Investors focus</CardDescription>
+                                <Card className="lg:col-span-3 border border-border shadow-sm bg-card">
+                                    <CardHeader className="border-b border-border bg-muted/10">
+                                        <CardTitle className="text-lg font-bold">1–3 Month Positional Outlook</CardTitle>
+                                        <CardDescription>Swing & Positional Investors focus</CardDescription>
                                     </CardHeader>
                                     <CardContent className="p-8">
                                         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
                                             {midTerm?.cards.map((c: any, i: number) => (
                                                 <div key={i} className="p-6 rounded-xl bg-gradient-to-br from-blue-50 to-cyan-50 border border-blue-200 hover:border-blue-300 transition-all shadow-sm">
                                                     <div className="flex items-center justify-between mb-4">
-                                                        <span className="text-xs text-gray-600 font-semibold uppercase">{c.period}</span>
+                                                        <span className="text-xs text-muted-foreground font-semibold uppercase">{c.period}</span>
                                                         <Clock className="h-4 w-4 text-blue-500" />
                                                     </div>
                                                     <p className="text-4xl font-bold text-cyan-600 mb-2">{c.val}%</p>
-                                                    <Badge className="bg-blue-100 text-blue-700 border-0 text-xs font-semibold">{c.trend}</Badge>
+                                                    <Badge className="bg-blue-500/10 text-blue-600 border-0 text-xs font-semibold">{c.trend}</Badge>
                                                 </div>
                                             ))}
                                         </div>
@@ -755,12 +755,12 @@ function PredictionsContent() {
                                         <CardContent className="text-center py-6">
                                             <div className="relative inline-flex items-center justify-center">
                                                 <svg className="w-32 h-32 transform -rotate-90">
-                                                    <circle className="text-gray-200" strokeWidth="8" stroke="currentColor" fill="transparent" r="50" cx="64" cy="64" />
+                                                    <circle className="text-muted/10" strokeWidth="8" stroke="currentColor" fill="transparent" r="50" cx="64" cy="64" />
                                                     <circle className="text-blue-600" strokeWidth="8" strokeDasharray={314} strokeDashoffset={314 - (314 * ((midTerm?.risk_adjusted_score || 0) * 10)) / 100} strokeLinecap="round" stroke="currentColor" fill="transparent" r="50" cx="64" cy="64" />
                                                 </svg>
-                                                <span className="absolute text-2xl font-bold text-gray-900">{midTerm?.risk_adjusted_score}</span>
+                                                <span className="absolute text-2xl font-bold text-foreground">{midTerm?.risk_adjusted_score}</span>
                                             </div>
-                                            <p className="text-xs font-semibold text-gray-600 mt-4">Risk-Adjusted Score</p>
+                                            <p className="text-xs font-semibold text-muted-foreground mt-4">Risk-Adjusted Score</p>
                                         </CardContent>
                                     </Card>
 
@@ -785,15 +785,15 @@ function PredictionsContent() {
                         {/* 3. Long-Term Forecast */}
                         <TabsContent value="long-term" className="space-y-6">
                             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                                <Card className="lg:col-span-2 border border-gray-200 shadow-sm bg-white">
-                                    <CardHeader className="border-b border-gray-100 bg-gray-50/50">
-                                        <CardTitle className="text-lg font-bold text-gray-900">6 Month – 3 Year Projection</CardTitle>
-                                        <CardDescription className="text-gray-600">Fundamental + ML Hybrid Analysis</CardDescription>
+                                <Card className="lg:col-span-2 border border-border shadow-sm bg-card">
+                                    <CardHeader className="border-b border-border bg-muted/10">
+                                        <CardTitle className="text-lg font-bold">6 Month – 3 Year Projection</CardTitle>
+                                        <CardDescription>Fundamental + ML Hybrid Analysis</CardDescription>
                                     </CardHeader>
                                     <CardContent className="p-8">
                                         <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-10">
                                             <div className="space-y-1">
-                                                <p className="text-xs text-gray-600 font-semibold uppercase">Projected CAGR</p>
+                                                <p className="text-xs text-muted-foreground font-semibold uppercase">Projected CAGR</p>
                                                 <p className="text-6xl font-bold text-cyan-600">{longTerm?.cagr}%</p>
                                             </div>
                                             <div className="text-right">
@@ -807,28 +807,28 @@ function PredictionsContent() {
                                             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                                                 <div className="space-y-3">
                                                     <div className="flex justify-between text-[10px] font-black uppercase tracking-wider">
-                                                        <span className="text-slate-300">Bull Case</span>
+                                                        <span className="text-muted-foreground">Bull Case</span>
                                                         <span className="text-emerald-500">{longTerm?.scenarios.bull}%</span>
                                                     </div>
-                                                    <div className="h-2 w-full bg-secondary/40 rounded-full overflow-hidden border border-white/5">
+                                                    <div className="h-2 w-full bg-muted/40 rounded-full overflow-hidden border border-border/50">
                                                         <div className="h-full bg-emerald-500 shadow-[0_0_10px_#10b981]" style={{ width: `${longTerm?.scenarios.bull}%` }} />
                                                     </div>
                                                 </div>
                                                 <div className="space-y-3">
                                                     <div className="flex justify-between text-[10px] font-black uppercase tracking-wider">
-                                                        <span className="text-slate-300">Base Case</span>
+                                                        <span className="text-muted-foreground">Base Case</span>
                                                         <span className="text-cyan-500">{longTerm?.scenarios.base}%</span>
                                                     </div>
-                                                    <div className="h-2 w-full bg-secondary/40 rounded-full overflow-hidden border border-white/5">
+                                                    <div className="h-2 w-full bg-muted/40 rounded-full overflow-hidden border border-border/50">
                                                         <div className="h-full bg-cyan-500 shadow-[0_0_10px_#06b6d4]" style={{ width: `${longTerm?.scenarios.base / 2}%` }} />
                                                     </div>
                                                 </div>
                                                 <div className="space-y-3">
                                                     <div className="flex justify-between text-[10px] font-black uppercase tracking-wider">
-                                                        <span className="text-slate-300">Bear Case</span>
+                                                        <span className="text-muted-foreground">Bear Case</span>
                                                         <span className="text-rose-500">{longTerm?.scenarios.bear}%</span>
                                                     </div>
-                                                    <div className="h-2 w-full bg-secondary/40 rounded-full overflow-hidden border border-white/5">
+                                                    <div className="h-2 w-full bg-muted/40 rounded-full overflow-hidden border border-border/50">
                                                         <div className="h-full bg-rose-500 shadow-[0_0_10px_#f43f5e]" style={{ width: '15%' }} />
                                                     </div>
                                                 </div>
@@ -872,7 +872,7 @@ function PredictionsContent() {
                         {/* 4. Accuracy Report */}
                         <TabsContent value="accuracy" className="space-y-6">
                             <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
-                                <Card className="lg:col-span-3 border-cyan-500/10 shadow-2xl bg-slate-900/40 backdrop-blur-xl">
+                                <Card className="lg:col-span-3 border-border/50 shadow-2xl bg-card">
                                     <CardHeader>
                                         <CardTitle className="flex items-center gap-2">
                                             <ShieldAlert className="h-5 w-5 text-primary" /> Transparency: Historical AI Accuracy
@@ -881,19 +881,19 @@ function PredictionsContent() {
                                     </CardHeader>
                                     <CardContent>
                                         <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
-                                            <div className="p-5 rounded-2xl bg-cyan-500/5 border border-cyan-500/10 shadow-inner">
-                                                <p className="text-[10px] text-cyan-500/70 font-black uppercase tracking-widest">Rolling Accuracy</p>
-                                                <p className="text-4xl font-black text-cyan-500">{accuracyReport?.rolling_accuracy}%</p>
+                                            <div className="p-5 rounded-2xl bg-cyan-500/10 border border-cyan-500/20 shadow-inner">
+                                                <p className="text-[10px] text-cyan-600 dark:text-cyan-400 font-black uppercase tracking-widest">Rolling Accuracy</p>
+                                                <p className="text-4xl font-black text-cyan-600 dark:text-cyan-400">{accuracyReport?.rolling_accuracy}%</p>
                                             </div>
-                                            <div className="p-5 rounded-2xl bg-secondary/20 border border-white/5 shadow-inner">
+                                            <div className="p-5 rounded-2xl bg-muted/50 border border-border/50 shadow-inner">
                                                 <p className="text-[10px] text-muted-foreground font-black uppercase tracking-widest">MAE / RMSE</p>
                                                 <p className="text-xl font-extrabold text-foreground">{accuracyReport?.metrics.mae} / {accuracyReport?.metrics.rmse}</p>
                                             </div>
-                                            <div className="p-5 rounded-2xl bg-secondary/20 border border-white/5 shadow-inner">
+                                            <div className="p-5 rounded-2xl bg-muted/50 border border-border/50 shadow-inner">
                                                 <p className="text-[10px] text-muted-foreground font-black uppercase tracking-widest">MAPE Error</p>
                                                 <p className="text-3xl font-black text-foreground">{accuracyReport?.metrics.mape}%</p>
                                             </div>
-                                            <div className="p-5 rounded-2xl bg-secondary/20 border border-white/5 shadow-inner">
+                                            <div className="p-5 rounded-2xl bg-muted/50 border border-border/50 shadow-inner">
                                                 <p className="text-[10px] text-muted-foreground font-black uppercase tracking-widest">Directional Hit</p>
                                                 <p className="text-3xl font-black text-foreground">{accuracyReport?.hit_ratio}%</p>
                                             </div>
@@ -902,19 +902,19 @@ function PredictionsContent() {
                                         <div className="overflow-x-auto rounded-xl border border-border">
                                             <table className="w-full text-sm">
                                                 <thead>
-                                                    <tr className="bg-secondary/40 border-b border-white/5">
+                                                    <tr className="bg-muted/30 border-b border-border/50">
                                                         <th className="text-left p-5 font-black uppercase tracking-widest text-[10px] text-muted-foreground">Timeframe</th>
                                                         <th className="text-right p-5 font-black uppercase tracking-widest text-[10px] text-muted-foreground">AI Accuracy %</th>
                                                     </tr>
                                                 </thead>
-                                                <tbody className="divide-y divide-white/5">
+                                                <tbody className="divide-y divide-border/50">
                                                     {accuracyReport?.performance.map((p: any, i: number) => (
-                                                        <tr key={i} className="hover:bg-white/5 transition-colors group">
+                                                        <tr key={i} className="hover:bg-muted/20 transition-colors group">
                                                             <td className="p-5 font-bold text-sm">{p.period} Forecasts</td>
                                                             <td className="p-5 text-right">
                                                                 <div className="flex items-center justify-end gap-4 text-emerald-500 font-extrabold tabular-nums">
                                                                     {p.val}%
-                                                                    <div className="w-24 h-1.5 bg-secondary/50 rounded-full overflow-hidden hidden md:block border border-white/5">
+                                                                    <div className="w-24 h-1.5 bg-muted/50 rounded-full overflow-hidden hidden md:block border border-border/50">
                                                                         <div className="h-full bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.5)]" style={{ width: `${p.val}%` }} />
                                                                     </div>
                                                                 </div>
@@ -934,9 +934,9 @@ function PredictionsContent() {
                                         </CardHeader>
                                         <CardContent className="space-y-3">
                                             {accuracyReport?.failures.map((f: any, i: number) => (
-                                                <div key={i} className="flex items-center justify-between p-3 rounded-lg bg-orange-500/5 border border-orange-500/10">
-                                                    <span className="text-[10px] font-bold text-orange-600">{f.reason}</span>
-                                                    <Badge variant="outline" className="text-[10px] border-orange-200">{f.count} instances</Badge>
+                                                <div key={i} className="flex items-center justify-between p-3 rounded-lg bg-orange-500/10 border border-orange-500/20">
+                                                    <span className="text-[10px] font-bold text-orange-600 dark:text-orange-400">{f.reason}</span>
+                                                    <Badge variant="outline" className="text-[10px] border-orange-500/30 text-orange-600 dark:text-orange-400">{f.count} instances</Badge>
                                                 </div>
                                             ))}
                                             <p className="text-[10px] text-muted-foreground italic mt-4">
@@ -951,21 +951,21 @@ function PredictionsContent() {
                         {/* 5. Technical Signals */}
                         <TabsContent value="technicals" className="space-y-6">
                             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                                <Card className="border-cyan-500/10 shadow-2xl col-span-1 lg:col-span-2 bg-slate-900/40 backdrop-blur-xl overflow-hidden">
-                                    <CardHeader className="border-b border-white/5 bg-secondary/10">
+                                <Card className="border-border/50 shadow-2xl col-span-1 lg:col-span-2 bg-card overflow-hidden">
+                                    <CardHeader className="border-b border-border/50 bg-muted/20">
                                         <CardTitle className="text-sm font-black flex items-center justify-between">
                                             Momentum Indicators
-                                            <Badge className="bg-emerald-500/10 text-emerald-500 border-emerald-500/20 font-black px-3 py-1 rounded-full text-[10px]">Bullish Confirmation</Badge>
+                                            <Badge className="bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-500/20 font-black px-3 py-1 rounded-full text-[10px]">Bullish Confirmation</Badge>
                                         </CardTitle>
                                     </CardHeader>
                                     <CardContent className="p-0">
-                                        <div className="grid grid-cols-2 divide-x divide-white/5 border-t border-white/5">
-                                            <div className="p-8 text-center group hover:bg-white/5 transition-colors">
+                                        <div className="grid grid-cols-2 divide-x divide-border/50 border-t border-border/50">
+                                            <div className="p-8 text-center group hover:bg-muted/20 transition-colors">
                                                 <p className="text-[10px] text-muted-foreground font-black uppercase tracking-widest mb-3">RSI (14)</p>
-                                                <p className="text-5xl font-black text-foreground tabular-nums group-hover:text-cyan-500 transition-colors">{technicals?.rsi}</p>
+                                                <p className="text-5xl font-black text-foreground tabular-nums group-hover:text-cyan-600 dark:group-hover:text-cyan-400 transition-colors">{technicals?.rsi}</p>
                                                 <p className="text-[10px] font-bold text-muted-foreground mt-2 uppercase">Neutral position</p>
                                             </div>
-                                            <div className="p-8 text-center group hover:bg-white/5 transition-colors">
+                                            <div className="p-8 text-center group hover:bg-muted/20 transition-colors">
                                                 <p className="text-[10px] text-muted-foreground font-black uppercase tracking-widest mb-3">MACD Crossover</p>
                                                 <div className="flex flex-col items-center">
                                                     <TrendingUp className="h-10 w-10 text-emerald-500 mb-2 group-hover:scale-110 transition-transform" />
@@ -976,26 +976,26 @@ function PredictionsContent() {
                                     </CardContent>
                                 </Card>
 
-                                <Card className="border-cyan-500/10 shadow-2xl bg-slate-900/40 backdrop-blur-xl">
-                                    <CardHeader className="pb-4 border-b border-white/5 bg-secondary/10">
+                                <Card className="border-border/50 shadow-2xl bg-card">
+                                    <CardHeader className="pb-4 border-b border-border/50 bg-muted/10">
                                         <CardTitle className="text-sm font-black">Trend Gauges</CardTitle>
                                     </CardHeader>
                                     <CardContent className="space-y-6 p-6">
                                         <div className="space-y-2">
                                             <div className="flex items-center justify-between text-[10px] font-black uppercase tracking-widest">
-                                                <span className="text-slate-300">EMA 20/50</span>
-                                                <span className="text-emerald-500">Golden Cross</span>
+                                                <span className="text-muted-foreground">EMA 20/50</span>
+                                                <span className="text-emerald-500 font-bold">Golden Cross</span>
                                             </div>
-                                            <div className="h-2 w-full bg-secondary/40 rounded-full overflow-hidden border border-white/5">
+                                            <div className="h-2 w-full bg-muted/50 rounded-full overflow-hidden border border-border/50">
                                                 <div className="h-full bg-emerald-500 shadow-[0_0_10px_#10b981]" style={{ width: '85%' }} />
                                             </div>
                                         </div>
                                         <div className="space-y-2">
                                             <div className="flex items-center justify-between text-[10px] font-black uppercase tracking-widest">
-                                                <span className="text-slate-300">Volume Confirm</span>
-                                                <span className="text-emerald-500">High</span>
+                                                <span className="text-muted-foreground">Volume Confirm</span>
+                                                <span className="text-emerald-500 font-bold">High</span>
                                             </div>
-                                            <div className="h-2 w-full bg-secondary/40 rounded-full overflow-hidden border border-white/5">
+                                            <div className="h-2 w-full bg-muted/50 rounded-full overflow-hidden border border-border/50">
                                                 <div className="h-full bg-emerald-500 shadow-[0_0_10px_#10b981]" style={{ width: '70%' }} />
                                             </div>
                                         </div>
@@ -1022,12 +1022,12 @@ function PredictionsContent() {
                         {/* 6. Risk Analysis */}
                         <TabsContent value="risk" className="space-y-6">
                             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                                <Card className="lg:col-span-2 border-cyan-500/10 shadow-2xl overflow-hidden bg-slate-900/40 backdrop-blur-xl">
-                                    <CardHeader className="border-b border-white/5 bg-secondary/10">
+                                <Card className="lg:col-span-2 border-border/50 shadow-2xl overflow-hidden bg-card">
+                                    <CardHeader className="border-b border-border/50 bg-muted/20">
                                         <CardTitle className="text-lg font-bold flex items-center gap-2">
                                             <BarChart3 className="h-5 w-5 text-rose-500" /> Portfolio Safety Metrics
                                         </CardTitle>
-                                        <CardDescription className="text-slate-400">Value at Risk (VaR) and Drawdown Analysis</CardDescription>
+                                        <CardDescription>Value at Risk (VaR) and Drawdown Analysis</CardDescription>
                                     </CardHeader>
                                     <CardContent className="p-8">
                                         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-10">
@@ -1045,14 +1045,14 @@ function PredictionsContent() {
                                             </div>
                                         </div>
 
-                                        <div className="p-6 rounded-3xl bg-secondary/20 border border-white/5 shadow-inner space-y-4">
+                                        <div className="p-6 rounded-3xl bg-muted/40 border border-border/50 shadow-inner space-y-4">
                                             <div className="flex items-center justify-between">
-                                                <p className="text-sm font-black text-slate-200">Suggested Stop-Loss</p>
+                                                <p className="text-sm font-black">Suggested Stop-Loss</p>
                                                 <Badge variant="outline" className="border-rose-500/30 text-rose-500 bg-rose-500/5 font-black px-3 py-1 rounded-full tabular-nums">
                                                     ₹{riskAnalysis?.stop_loss.price} (-{riskAnalysis?.stop_loss.percent}%)
                                                 </Badge>
                                             </div>
-                                            <div className="flex items-center justify-between pt-4 border-t border-white/5">
+                                            <div className="flex items-center justify-between pt-4 border-t border-border/50">
                                                 <p className="text-xs font-black text-muted-foreground uppercase tracking-widest">Risk/Reward Ratio</p>
                                                 <p className="text-base font-black text-emerald-500 tabular-nums">{riskAnalysis?.risk_reward}</p>
                                             </div>
@@ -1060,8 +1060,8 @@ function PredictionsContent() {
                                     </CardContent>
                                 </Card>
 
-                                <Card className="border-cyan-500/10 shadow-2xl bg-slate-900/40 backdrop-blur-xl">
-                                    <CardHeader className="border-b border-white/5 bg-secondary/10">
+                                <Card className="border-border/50 shadow-2xl bg-card">
+                                    <CardHeader className="border-b border-border/50 bg-muted/20">
                                         <CardTitle className="text-sm font-black">Risk Flags & Compliance</CardTitle>
                                     </CardHeader>
                                     <CardContent className="space-y-6 h-full p-8">
@@ -1071,12 +1071,12 @@ function PredictionsContent() {
                                                 <span className="text-xs font-black text-rose-600 uppercase tracking-tight">{flag}</span>
                                             </div>
                                         ))}
-                                        <div className="pt-8 border-t border-white/5 mt-8">
+                                        <div className="pt-8 border-t border-border/50 mt-8">
                                             <div className="flex items-center justify-between mb-3">
                                                 <span className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">Value at Risk (VaR 95%)</span>
                                                 <span className="text-sm font-black text-rose-500 tabular-nums">₹{((currentPrice * riskAnalysis?.var_95) / 100).toFixed(0)}</span>
                                             </div>
-                                            <div className="h-1 w-full bg-secondary/40 rounded-full overflow-hidden mb-3">
+                                            <div className="h-1 w-full bg-muted/50 rounded-full overflow-hidden mb-3">
                                                 <div className="h-full bg-rose-500 shadow-[0_0_8px_#f43f5e]" style={{ width: `${riskAnalysis?.var_95 * 5}%` }} />
                                             </div>
                                             <p className="text-[10px] text-slate-500 font-medium leading-relaxed">
@@ -1090,43 +1090,43 @@ function PredictionsContent() {
 
                         {/* 7. AI Explanation (XAI) */}
                         <TabsContent value="explanation" className="space-y-6">
-                            <Card className="border-cyan-500/10 shadow-2xl bg-slate-900/40 backdrop-blur-xl relative overflow-hidden group">
-                                <div className="absolute -top-20 -right-20 h-64 w-64 bg-cyan-500/5 rounded-full blur-3xl" />
-                                <CardHeader className="text-center pb-6 border-b border-white/5 bg-secondary/10">
-                                    <div className="mx-auto h-16 w-16 rounded-3xl bg-cyan-500/10 flex items-center justify-center mb-4 shadow-lg shadow-cyan-500/10">
-                                        <BrainCircuit className="h-8 w-8 text-cyan-500" />
+                            <Card className="border-border/50 shadow-2xl bg-card relative overflow-hidden group">
+                                <div className="absolute -top-20 -right-20 h-64 w-64 bg-primary/5 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity" />
+                                <CardHeader className="text-center pb-6 border-b border-border/50 bg-muted/20">
+                                    <div className="mx-auto h-16 w-16 rounded-3xl bg-primary/10 flex items-center justify-center mb-4 shadow-lg shadow-primary/10">
+                                        <BrainCircuit className="h-8 w-8 text-primary" />
                                     </div>
-                                    <CardTitle className="text-3xl font-black bg-gradient-to-br from-white to-white/60 bg-clip-text text-transparent">AI Explainability Layer</CardTitle>
-                                    <CardDescription className="text-cyan-500/80 font-black uppercase tracking-[0.2em] text-[10px] mt-2">Uncovering the "Black Box" – Verdict: {aiExplanation?.verdict}</CardDescription>
+                                    <CardTitle className="text-3xl font-black text-foreground">AI Explainability Layer</CardTitle>
+                                    <CardDescription className="text-primary font-black uppercase tracking-[0.2em] text-[10px] mt-2">Uncovering the "Black Box" – Verdict: {aiExplanation?.verdict}</CardDescription>
                                 </CardHeader>
                                 <CardContent className="space-y-12 p-12">
-                                    <div className="p-10 rounded-[2.5rem] bg-secondary/30 border border-white/5 shadow-inner relative flex items-center justify-center">
-                                        <p className="text-xl font-medium leading-relaxed italic text-center text-slate-200 max-w-2xl px-8">
+                                    <div className="p-10 rounded-[2.5rem] bg-muted/30 border border-border/50 shadow-inner relative flex items-center justify-center">
+                                        <p className="text-xl font-medium leading-relaxed italic text-center text-foreground max-w-2xl px-8">
                                             "{aiExplanation?.summary}"
                                         </p>
                                     </div>
 
                                     <div className="space-y-8">
-                                        <h4 className="text-[10px] font-black uppercase tracking-[0.3em] text-cyan-500/60 text-center">Neural Feature Importance Network</h4>
+                                        <h4 className="text-[10px] font-black uppercase tracking-[0.3em] text-primary/60 text-center text-muted-foreground">Neural Feature Importance Network</h4>
                                         <div className="grid grid-cols-1 md:grid-cols-5 gap-6">
                                             {aiExplanation?.factors.map((f: any, i: number) => (
                                                 <div key={i} className="group/factor">
-                                                    <div className="w-full bg-secondary/40 h-32 rounded-3xl relative flex items-end overflow-hidden mb-4 border border-white/5 shadow-inner">
-                                                        <div className="w-full bg-cyan-500/30 group-hover/factor:bg-cyan-500/50 transition-colors" style={{ height: `${f.importance}%` }} />
-                                                        <span className="absolute inset-x-0 bottom-4 flex items-center justify-center font-black text-xs text-white tabular-nums drop-shadow-md">{f.importance}%</span>
+                                                    <div className="w-full bg-muted h-32 rounded-3xl relative flex items-end overflow-hidden mb-4 border border-border/50 shadow-inner">
+                                                        <div className="w-full bg-primary/30 group-hover/factor:bg-primary/50 transition-colors" style={{ height: `${f.importance}%` }} />
+                                                        <span className="absolute inset-x-0 bottom-4 flex items-center justify-center font-black text-xs tabular-nums drop-shadow-md">{f.importance}%</span>
                                                     </div>
-                                                    <p className="text-xs font-black text-center text-slate-200">{f.name}</p>
+                                                    <p className="text-xs font-black text-center">{f.name}</p>
                                                     <p className="text-[9px] text-muted-foreground text-center mt-2 px-1 leading-relaxed font-bold uppercase tracking-tight opacity-60">{f.desc}</p>
                                                 </div>
                                             ))}
                                         </div>
                                     </div>
 
-                                    <div className="flex items-center gap-6 p-6 rounded-3xl bg-cyan-500/5 border border-cyan-500/10 shadow-inner">
-                                        <div className="p-3 rounded-2xl bg-cyan-500/10">
-                                            <Sparkles className="h-6 w-6 text-cyan-500" />
+                                    <div className="flex items-center gap-6 p-6 rounded-3xl bg-primary/5 border border-primary/20 shadow-inner">
+                                        <div className="p-3 rounded-2xl bg-primary/10">
+                                            <Sparkles className="h-6 w-6 text-primary" />
                                         </div>
-                                        <p className="text-xs font-bold text-cyan-500/80 leading-relaxed uppercase tracking-wide">
+                                        <p className="text-xs font-bold text-muted-foreground leading-relaxed uppercase tracking-wide">
                                             Our glass-box explainability layer utilizes SHAP (SHapley Additive exPlanations) values to determine high-order feature interaction in real-time, ensuring algorithmic accountability.
                                         </p>
                                     </div>
@@ -1136,24 +1136,24 @@ function PredictionsContent() {
                     </Tabs>
 
                     {/* Technical Output Summary */}
-                    <div className="mt-8 flex flex-col md:flex-row items-center gap-6 p-6 rounded-[2rem] bg-slate-900/60 border border-cyan-500/10 backdrop-blur-2xl shadow-2xl">
-                        <div className="flex items-center gap-3 font-black text-cyan-500 uppercase tracking-widest text-xs shrink-0 px-4 py-2 bg-cyan-500/5 rounded-full border border-cyan-500/10">
+                    <div className="mt-8 flex flex-col md:flex-row items-center gap-6 p-6 rounded-[2rem] bg-card border border-border shadow-2xl">
+                        <div className="flex items-center gap-3 font-black text-cyan-600 dark:text-cyan-400 uppercase tracking-widest text-xs shrink-0 px-4 py-2 bg-cyan-500/10 rounded-full border border-cyan-500/20">
                             <Sparkles className="h-4 w-4" />
                             AI Intelligence Summary
                         </div>
-                        <p className="text-sm font-black italic text-slate-200 leading-relaxed">
+                        <p className="text-sm font-black italic text-foreground leading-relaxed">
                             {activeTab === 'technicals' ? "“Momentum bullish but approaching resistance zone. High probability of trend exhaustion at 1.2x volatility.”" : aiExplanation?.summary}
                         </p>
                     </div>
 
-                    <Card className="border-rose-500/10 bg-rose-500/5 mt-8 rounded-3xl overflow-hidden backdrop-blur-md">
+                    <Card className="border-destructive/20 bg-destructive/5 mt-8 rounded-3xl overflow-hidden backdrop-blur-md">
                         <CardContent className="p-8 flex items-start gap-6">
-                            <div className="p-3 rounded-2xl bg-rose-500/10">
-                                <ShieldAlert className="h-6 w-6 text-rose-500 shrink-0" />
+                            <div className="p-3 rounded-2xl bg-destructive/10">
+                                <ShieldAlert className="h-6 w-6 text-destructive shrink-0" />
                             </div>
                             <div className="space-y-2">
-                                <p className="text-sm font-black text-rose-500 uppercase tracking-[0.25em]">Critical Risk Protocol</p>
-                                <p className="text-xs text-rose-600/70 leading-relaxed font-bold uppercase tracking-tight">
+                                <p className="text-sm font-black text-destructive uppercase tracking-[0.25em]">Critical Risk Protocol</p>
+                                <p className="text-xs text-muted-foreground leading-relaxed font-bold uppercase tracking-tight">
                                     Machine Learning predictions are probabilistic and never guaranteed. Financial markets contain tail-risk volatility. These insights are for tactical advisory only. Always consult a certified risk professional before deploying significant capital.
                                 </p>
                             </div>

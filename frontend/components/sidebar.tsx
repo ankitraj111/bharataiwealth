@@ -110,9 +110,9 @@ const bottomNavItems = [
 export function Sidebar() {
   const pathname = usePathname()
   const [portfolioOpen, setPortfolioOpen] = useState(true)
-  const [cryptoOpen, setCryptoOpen] = useState(true)
-  const [mutualFundsOpen, setMutualFundsOpen] = useState(true)
-  const [toolsOpen, setToolsOpen] = useState(true)
+  const [cryptoOpen, setCryptoOpen] = useState(false)
+  const [mutualFundsOpen, setMutualFundsOpen] = useState(false)
+  const [toolsOpen, setToolsOpen] = useState(false)
   const [updatesOpen, setUpdatesOpen] = useState(false)
 
   return (
@@ -174,13 +174,13 @@ export function Sidebar() {
                 key={item.href}
                 href={item.href}
                 className={cn(
-                  "flex items-center gap-2.5 rounded-md px-3 py-1.5 text-[12.5px] font-medium transition-all group",
+                  "flex items-center gap-2.5 rounded-md px-3 py-1 text-[12px] font-medium transition-all group",
                   pathname === item.href
                     ? "text-emerald-700 dark:text-emerald-400 bg-emerald-50/50 dark:bg-emerald-500/10"
                     : "text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-50 dark:hover:bg-slate-800/50",
                 )}
               >
-                <div className={cn("h-1 w-1 rounded-full bg-slate-300 transition-opacity", pathname === item.href ? "opacity-100 text-emerald-500" : "opacity-20 group-hover:opacity-60")} />
+                <div className={cn("h-1 w-1 rounded-full transition-all duration-300", pathname === item.href ? "bg-emerald-500 scale-125 shadow-[0_0_8px_rgba(16,185,129,0.5)]" : "bg-slate-300 opacity-20 group-hover:opacity-60 group-hover:scale-110")} />
                 <span>{item.name}</span>
               </Link>
             ))}
@@ -212,13 +212,13 @@ export function Sidebar() {
                 key={item.href}
                 href={item.href}
                 className={cn(
-                  "flex items-center gap-2.5 rounded-md px-3 py-1.5 text-[12.5px] font-medium transition-all group",
+                  "flex items-center gap-2.5 rounded-md px-3 py-1 text-[12px] font-medium transition-all group",
                   pathname === item.href
                     ? "text-cyan-700 dark:text-cyan-400 bg-cyan-50/50 dark:bg-cyan-500/10"
                     : "text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-50 dark:hover:bg-slate-800/50",
                 )}
               >
-                <div className={cn("h-1 w-1 rounded-full bg-slate-300 transition-opacity", pathname === item.href ? "opacity-100 text-cyan-500" : "opacity-20 group-hover:opacity-60")} />
+                <div className={cn("h-1 w-1 rounded-full transition-all duration-300", pathname === item.href ? "bg-cyan-500 scale-125 shadow-[0_0_8px_rgba(6,182,212,0.5)]" : "bg-slate-300 opacity-20 group-hover:opacity-60 group-hover:scale-110")} />
                 <span>{item.name}</span>
               </Link>
             ))}
@@ -250,13 +250,13 @@ export function Sidebar() {
                 key={item.href}
                 href={item.href}
                 className={cn(
-                  "flex items-center gap-2.5 rounded-md px-3 py-1.5 text-[12.5px] font-medium transition-all group",
+                  "flex items-center gap-2.5 rounded-md px-3 py-1 text-[12px] font-medium transition-all group",
                   pathname === item.href
                     ? "text-orange-700 dark:text-orange-400 bg-orange-50/50 dark:bg-orange-500/10"
                     : "text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-50 dark:hover:bg-slate-800/50",
                 )}
               >
-                <Circle className={cn("h-1 w-1 fill-current transition-opacity", pathname === item.href ? "opacity-100 text-orange-500" : "opacity-20 group-hover:opacity-60")} />
+                <div className={cn("h-1 w-1 rounded-full transition-all duration-300", pathname === item.href ? "bg-orange-500 scale-125 shadow-[0_0_8px_rgba(249,115,22,0.5)]" : "bg-slate-300 opacity-20 group-hover:opacity-60 group-hover:scale-110")} />
                 <span>{item.name}</span>
               </Link>
             ))}
@@ -286,13 +286,13 @@ export function Sidebar() {
                 key={item.href}
                 href={item.href}
                 className={cn(
-                  "flex items-center gap-2.5 rounded-md px-3 py-1.5 text-[12.5px] font-medium transition-all group",
+                  "flex items-center gap-2.5 rounded-md px-3 py-1 text-[12px] font-medium transition-all group",
                   pathname === item.href
                     ? "text-indigo-700 dark:text-indigo-400 bg-indigo-50/50 dark:bg-indigo-500/10"
                     : "text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-50 dark:hover:bg-slate-800/50",
                 )}
               >
-                <Circle className={cn("h-1 w-1 fill-current transition-opacity", pathname === item.href ? "opacity-100 text-indigo-500" : "opacity-20 group-hover:opacity-60")} />
+                <div className={cn("h-1 w-1 rounded-full transition-all duration-300", pathname === item.href ? "bg-indigo-500 scale-125 shadow-[0_0_8px_rgba(99,102,241,0.5)]" : "bg-slate-300 opacity-20 group-hover:opacity-60 group-hover:scale-110")} />
                 <span>{item.name}</span>
               </Link>
             ))}
@@ -322,13 +322,13 @@ export function Sidebar() {
                 key={item.href}
                 href={item.href}
                 className={cn(
-                  "flex items-center gap-2.5 rounded-md px-3 py-1.5 text-[12.5px] font-medium transition-all group",
+                  "flex items-center gap-2.5 rounded-md px-3 py-1 text-[12px] font-medium transition-all group",
                   pathname === item.href
                     ? "text-violet-700 dark:text-violet-400 bg-violet-50/50 dark:bg-violet-500/10"
                     : "text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-50 dark:hover:bg-slate-800/50",
                 )}
               >
-                <Circle className={cn("h-1 w-1 fill-current transition-opacity", pathname === item.href ? "opacity-100 text-violet-500" : "opacity-20 group-hover:opacity-60")} />
+                <div className={cn("h-1 w-1 rounded-full transition-all duration-300", pathname === item.href ? "bg-violet-500 scale-125 shadow-[0_0_8px_rgba(139,92,246,0.5)]" : "bg-slate-300 opacity-20 group-hover:opacity-60 group-hover:scale-110")} />
                 <span>{item.name}</span>
               </Link>
             ))}
