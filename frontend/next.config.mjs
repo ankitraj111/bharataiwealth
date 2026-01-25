@@ -1,11 +1,13 @@
 /** @type {import('next').NextConfig} */
+const isProd = process.env.NODE_ENV === 'production';
+const isGithubActions = process.env.GITHUB_ACTIONS === 'true';
+
 const nextConfig = {
-  // Re-triggering deployment to ensure GitHub Actions is synced.
-  ...(process.env.NODE_ENV === 'production' && {
-    output: 'export',
-    basePath: '/bharataiwealth',
-    assetPrefix: '/bharataiwealth',
-  }),
+  // Use export for both production builds and GitHub Actions
+  output: (isProd || isGithubActions) ? 'export' : undefined,
+  basePath: (isProd || isGithubActions) ? '/bharataiwealth' : '',
+  assetPrefix: (isProd || isGithubActions) ? '/bharataiwealth' : '',
+  trailingSlash: true,
   images: {
     unoptimized: true,
   },
