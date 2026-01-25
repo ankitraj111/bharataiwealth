@@ -100,7 +100,7 @@ function DashboardContent() {
   }, [])
 
   const quickActions = [
-    { name: "Portfolio", desc: "View holdings", href: "/portfolios/medium-risk", color: "blue", icon: Wallet },
+    { name: "Portfolios", desc: "View dashboard", href: "/portfolios", color: "blue", icon: Wallet },
     { name: "Family", desc: "Manage vault", href: "/family", color: "purple", icon: Target },
     { name: "AI Predict", desc: "Market edge", href: "/predictions", color: "orange", icon: Sparkles },
     { name: "Support", desc: "Expert help", href: "/support", color: "green", icon: Shield },

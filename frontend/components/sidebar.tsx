@@ -53,6 +53,7 @@ const mainNavItems = [
 
 // Portfolio Section
 const portfolioItems = [
+  { name: "Portfolios Dashboard", href: "/portfolios", icon: LayoutDashboard, color: "text-emerald-600" },
   { name: "Portfolio Management", href: "/portfolio", icon: Wallet, color: "text-blue-600" },
   { name: "Short-Term Forecast", href: "/portfolios/low-risk", icon: TrendingUp, color: "text-emerald-600" },
   { name: "Mid-Term Forecast", href: "/portfolios/medium-risk", icon: BarChart3, color: "text-amber-600" },
@@ -62,6 +63,7 @@ const portfolioItems = [
 
 // Crypto Hub Section
 const cryptoItems = [
+  { name: "Crypto Dashboard", href: "/crypto/dashboard", icon: LayoutDashboard, color: "text-orange-500" },
   { name: "Market Overview", href: "/crypto/market", icon: LayoutDashboard, color: "text-cyan-500" },
   { name: "Watchlist", href: "/crypto/watchlist", icon: Eye, color: "text-amber-400" },
   { name: "Crypto Portfolio", href: "/crypto/portfolio", icon: Wallet, color: "text-purple-500" },
@@ -110,7 +112,7 @@ const bottomNavItems = [
 export function Sidebar() {
   const pathname = usePathname()
   const [portfolioOpen, setPortfolioOpen] = useState(() =>
-    pathname === "/portfolio" || pathname.startsWith("/portfolios") || pathname === "/predictions"
+    pathname === "/portfolios" || pathname === "/portfolio" || pathname.startsWith("/portfolios/") || pathname === "/predictions"
   )
   const [cryptoOpen, setCryptoOpen] = useState(() => pathname.startsWith("/crypto"))
   const [mutualFundsOpen, setMutualFundsOpen] = useState(() => pathname === "/mf" || pathname === "/sip")
@@ -120,7 +122,7 @@ export function Sidebar() {
   )
 
   useEffect(() => {
-    if (pathname === "/portfolio" || pathname.startsWith("/portfolios") || pathname === "/predictions") setPortfolioOpen(true)
+    if (pathname === "/portfolios" || pathname === "/portfolio" || pathname.startsWith("/portfolios/") || pathname === "/predictions") setPortfolioOpen(true)
     if (pathname.startsWith("/crypto")) setCryptoOpen(true)
     if (pathname === "/mf" || pathname === "/sip") setMutualFundsOpen(true)
     if (pathname === "/emergency-fund" || pathname === "/tax") setToolsOpen(true)
