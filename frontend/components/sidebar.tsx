@@ -43,7 +43,7 @@ import {
   FileText,
   Users2,
 } from "lucide-react"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 
 // Main Navigation
 const mainNavItems = [
@@ -118,6 +118,14 @@ export function Sidebar() {
   const [updatesOpen, setUpdatesOpen] = useState(() =>
     pathname === "/alerts" || pathname === "/badges" || pathname === "/digest"
   )
+
+  useEffect(() => {
+    if (pathname === "/portfolio" || pathname.startsWith("/portfolios") || pathname === "/predictions") setPortfolioOpen(true)
+    if (pathname.startsWith("/crypto")) setCryptoOpen(true)
+    if (pathname === "/mf" || pathname === "/sip") setMutualFundsOpen(true)
+    if (pathname === "/emergency-fund" || pathname === "/tax") setToolsOpen(true)
+    if (pathname === "/alerts" || pathname === "/badges" || pathname === "/digest") setUpdatesOpen(true)
+  }, [pathname])
 
   return (
     <aside className="fixed left-0 top-0 z-40 h-screen w-[260px] border-r border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 flex-col hidden lg:flex shadow-sm">
