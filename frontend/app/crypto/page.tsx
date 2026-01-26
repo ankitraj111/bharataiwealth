@@ -214,8 +214,8 @@ function CryptoHubContent() {
                     ⚠️ High-Risk Asset Class - Advice Only
                   </p>
                   <p className="text-xs text-rose-800 dark:text-rose-200 leading-relaxed">
-                    Bharat AI Wealth does not provide crypto trading, wallet, or execution services. 
-                    Cryptocurrencies are highly volatile and suitable only for high-risk investors. 
+                    Bharat AI Wealth does not provide crypto trading, wallet, or execution services.
+                    Cryptocurrencies are highly volatile and suitable only for high-risk investors.
                     All insights are for educational and informational purposes only. Invest at your own risk.
                   </p>
                 </div>
@@ -321,8 +321,8 @@ function CryptoHubContent() {
                       AI Market Insight
                     </p>
                     <p className="text-xs text-blue-800 dark:text-blue-200 leading-relaxed">
-                      Crypto market currently in a high-volatility risk-on phase. Bitcoin dominance at {marketOverview.btcDominance}% 
-                      suggests capital rotation into altcoins. Fear & Greed Index at {marketOverview.fearGreedIndex} indicates 
+                      Crypto market currently in a high-volatility risk-on phase. Bitcoin dominance at {marketOverview.btcDominance}%
+                      suggests capital rotation into altcoins. Fear & Greed Index at {marketOverview.fearGreedIndex} indicates
                       potential overheating. Exercise caution with position sizing.
                     </p>
                   </div>
@@ -406,24 +406,22 @@ function CryptoHubContent() {
                       </td>
                       <td className="p-4 text-center">
                         <Badge
-                          className={`${
-                            crypto.risk === "Extreme"
+                          className={`${crypto.risk === "Extreme"
                               ? "bg-rose-500/10 dark:bg-rose-500/20 text-rose-600 dark:text-rose-400 border-rose-500/20 dark:border-rose-500/30"
                               : "bg-amber-500/10 dark:bg-amber-500/20 text-amber-600 dark:text-amber-400 border-amber-500/20 dark:border-amber-500/30"
-                          }`}
+                            }`}
                         >
                           {crypto.risk}
                         </Badge>
                       </td>
                       <td className="p-4 text-center">
                         <Badge
-                          className={`${
-                            crypto.signal === "Bullish"
+                          className={`${crypto.signal === "Bullish"
                               ? "bg-emerald-500/10 dark:bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 border-emerald-500/20 dark:border-emerald-500/30"
                               : crypto.signal === "Cautious"
-                              ? "bg-rose-500/10 dark:bg-rose-500/20 text-rose-600 dark:text-rose-400 border-rose-500/20 dark:border-rose-500/30"
-                              : "bg-slate-500/10 dark:bg-slate-500/20 text-slate-600 dark:text-slate-400 border-slate-500/20 dark:border-slate-500/30"
-                          }`}
+                                ? "bg-rose-500/10 dark:bg-rose-500/20 text-rose-600 dark:text-rose-400 border-rose-500/20 dark:border-rose-500/30"
+                                : "bg-slate-500/10 dark:bg-slate-500/20 text-slate-600 dark:text-slate-400 border-slate-500/20 dark:border-slate-500/30"
+                            }`}
                         >
                           {crypto.signal}
                         </Badge>
@@ -557,77 +555,7 @@ function CryptoHubContent() {
                       Current Price ({predictionData.asset})
                     </p>
                     <p className="text-4xl font-bold tabular-nums">
-                      ₹{(predictionData.c</CardContent>
-            </Card>
-          </motion.div>
-        </div>
-
-        {/* Continue in next part... */}
-      </motion.div>
-    </AppShell>
-  )
-}
-ink-0 mt-0.5" />
-                      <p className="text-xs text-amber-800 dark:text-amber-200 leading-relaxed">
-                        <span className="font-bold">Disclaimer:</span> Predictions are probabilistic and not guaranteed. 
-                        Crypto markets are highly volatile. Use for educational purposes only.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              
-                      <Info className="h-4 w-4 text-amber-600 flex-shrssName="text-right">
-                      <p className="text-xs font-bold text-muted-foreground uppercase tracking-wider mb-1">
-                        Model Used
-                      </p>
-                      <p className="text-xs font-bold">{predictionData.model}</p>
-                    </div>
-                  </div>
-
-                  <div className="p-3 rounded-xl bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-800">
-                    <div className="flex items-start gap-2">w-5" />
-                        {predictionData.trend}
-                      </p>
-                    </div>
-                    <div clarom-purple-50 to-pink-50 dark:from-purple-950/30 dark:to-pink-950/30 border border-purple-200 dark:border-purple-800">
-                    <div>
-                      <p className="text-xs font-bold text-muted-foreground uppercase tracking-wider mb-1">
-                        Trend Bias
-                      </p>
-                      <p className="text-lg font-bold text-emerald-600 flex items-center gap-2">
-                        <TrendingUp className="h-5       </div>
-
-                  <div className="flex items-center justify-between p-4 rounded-xl bg-gradient-to-r fssName="h-2 flex-1 bg-background rounded-full overflow-hidden">
-                          <div
-                            className="h-full bg-gradient-to-r from-purple-500 to-pink-500"
-                            style={{ width: `${predictionData.prediction7d.probability}%` }}
-                          />
-                        </div>
-                        <span className="text-xs font-bold">{predictionData.prediction7d.probability}%</span>
-                      </div>
-                    </div>
-                    </p>
-                      <div className="flex items-center gap-2">
-                        <div cla   </div>
-
-                    <div className="p-4 rounded-xl bg-muted/50 border border-border">
-                      <p className="text-xs font-bold text-muted-foreground uppercase tracking-wider mb-2">
-                        7-Day Forecast
-                      </p>
-                      <p className="text-sm font-bold mb-1">
-                        ₹{(predictionData.prediction7d.low / 100000).toFixed(2)}L - ₹{(predictionData.prediction7d.high / 100000).toFixed(2)}L
-              ion1d.probability}%</span>
-                      </div>
-                 
-                      <div className="flex items-center gap-2">
-                        <div className="h-2 flex-1 bg-background rounded-full overflow-hidden">
-                          <div
-                            className="h-full bg-gradient-to-r from-purple-500 to-pink-500"
-                            style={{ width: `${predictionData.prediction1d.probability}%` }}
-                          />
-                        </div>
-                        <span className="text-xs font-bold">{predictionData.predict}L - ₹{(predictionData.prediction1d.high / 100000).toFixed(2)}L
-                      </p>ction1d.low / 100000).toFixed(2)urrentPrice / 100000).toFixed(2)}L
+                      ₹{(predictionData.currentPrice / 100000).toFixed(2)}L
                     </p>
                   </div>
 
@@ -637,4 +565,71 @@ ink-0 mt-0.5" />
                         1-Day Forecast
                       </p>
                       <p className="text-sm font-bold mb-1">
-                        ₹{(predictionData.predi
+                        ₹{(predictionData.prediction1d.low / 100000).toFixed(2)}L - ₹{(predictionData.prediction1d.high / 100000).toFixed(2)}L
+                      </p>
+                      <div className="flex items-center gap-2">
+                        <div className="h-2 flex-1 bg-background rounded-full overflow-hidden">
+                          <div
+                            className="h-full bg-gradient-to-r from-purple-500 to-pink-500"
+                            style={{ width: `${predictionData.prediction1d.probability}%` }}
+                          />
+                        </div>
+                        <span className="text-xs font-bold">{predictionData.prediction1d.probability}%</span>
+                      </div>
+                    </div>
+
+                    <div className="p-4 rounded-xl bg-muted/50 border border-border">
+                      <p className="text-xs font-bold text-muted-foreground uppercase tracking-wider mb-2">
+                        7-Day Forecast
+                      </p>
+                      <p className="text-sm font-bold mb-1">
+                        ₹{(predictionData.prediction7d.low / 100000).toFixed(2)}L - ₹{(predictionData.prediction7d.high / 100000).toFixed(2)}L
+                      </p>
+                      <div className="flex items-center gap-2">
+                        <div className="h-2 flex-1 bg-background rounded-full overflow-hidden">
+                          <div
+                            className="h-full bg-gradient-to-r from-purple-500 to-pink-500"
+                            style={{ width: `${predictionData.prediction7d.probability}%` }}
+                          />
+                        </div>
+                        <span className="text-xs font-bold">{predictionData.prediction7d.probability}%</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center justify-between p-4 rounded-xl bg-gradient-to-r from-purple-50 to-pink-50 dark:from-purple-950/30 dark:to-pink-950/30 border border-purple-200 dark:border-purple-800">
+                    <div>
+                      <p className="text-xs font-bold text-muted-foreground uppercase tracking-wider mb-1">
+                        Trend Bias
+                      </p>
+                      <p className="text-lg font-bold text-emerald-600 flex items-center gap-2">
+                        <TrendingUp className="h-5 w-5" />
+                        {predictionData.trend}
+                      </p>
+                    </div>
+                    <div className="text-right">
+                      <p className="text-xs font-bold text-muted-foreground uppercase tracking-wider mb-1">
+                        Model Used
+                      </p>
+                      <p className="text-xs font-bold">{predictionData.model}</p>
+                    </div>
+                  </div>
+
+                  <div className="p-3 rounded-xl bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-800">
+                    <div className="flex items-start gap-2">
+                      <Info className="h-4 w-4 text-amber-600 flex-shrink-0 mt-0.5" />
+                      <p className="text-xs text-amber-800 dark:text-amber-200 leading-relaxed">
+                        <span className="font-bold">Disclaimer:</span> Predictions are probabilistic and not guaranteed.
+                        Crypto markets are highly volatile. Use for educational purposes only.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </motion.div>
+        </div>
+      </motion.div>
+    </AppShell>
+  )
+}
