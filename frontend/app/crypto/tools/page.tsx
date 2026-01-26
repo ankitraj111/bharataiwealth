@@ -41,12 +41,12 @@ export default function CryptoTools() {
                 <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
                     <div className="space-y-1">
                         <div className="flex items-center gap-3">
-                            <div className="p-2.5 rounded-xl bg-teal-50 text-teal-600">
+                            <div className="p-2.5 rounded-xl bg-teal-50 dark:bg-teal-950/30 text-teal-600 dark:text-teal-400">
                                 <Calculator className="h-6 w-6" />
                             </div>
-                            <h1 className="text-3xl font-bold text-gray-900">Crypto Tools</h1>
+                            <h1 className="text-3xl font-bold text-foreground">Crypto Tools</h1>
                         </div>
-                        <p className="text-gray-600 text-sm ml-12">Calculators and analysis tools</p>
+                        <p className="text-muted-foreground text-sm ml-12">Calculators and analysis tools</p>
                     </div>
                     <div className="flex items-center gap-3">
                         <Button variant="outline" className="rounded-lg border-gray-300">
@@ -56,7 +56,7 @@ export default function CryptoTools() {
                 </div>
 
                 <Tabs defaultValue="profit" className="space-y-8">
-                    <TabsList className="bg-gray-100 p-1.5 rounded-xl border border-gray-200 h-auto flex-wrap justify-start gap-1">
+                    <TabsList className="bg-muted p-1.5 rounded-xl border border-border h-auto flex-wrap justify-start gap-1">
                         <TabsTrigger value="profit" className="rounded-lg px-5 py-2.5 font-semibold text-xs data-[state=active]:bg-teal-600 data-[state=active]:text-white transition-all">
                             Profit/ROI Calculator
                         </TabsTrigger>
@@ -70,39 +70,39 @@ export default function CryptoTools() {
 
                     <TabsContent value="profit" className="space-y-6 animate-in fade-in slide-in-from-bottom-2 duration-500">
                         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                            <Card className="bg-white border border-gray-200 shadow-sm rounded-xl">
-                                <CardHeader className="border-b border-gray-100 pb-4">
-                                    <CardTitle className="text-sm font-bold text-teal-600">P/L Projections</CardTitle>
+                            <Card className="bg-card border border-border shadow-sm rounded-xl">
+                                <CardHeader className="border-b border-border pb-4">
+                                    <CardTitle className="text-sm font-bold text-teal-600 dark:text-teal-400">P/L Projections</CardTitle>
                                 </CardHeader>
                                 <CardContent className="p-6">
                                     <div className="space-y-6">
                                         <div className="space-y-2">
-                                            <label className="text-xs font-semibold text-gray-600">Initial Investment (USD)</label>
+                                            <label className="text-xs font-semibold text-muted-foreground">Initial Investment (USD)</label>
                                             <Input
                                                 value={profitIn}
                                                 onChange={(e) => setProfitIn(e.target.value)}
-                                                className="h-14 rounded-lg bg-white border-gray-300 text-xl font-bold text-gray-900 px-4 focus:border-teal-500 transition-all"
+                                                className="h-14 rounded-lg bg-background border-border text-xl font-bold text-foreground px-4 focus:border-teal-500 transition-all"
                                             />
                                         </div>
                                         <div className="grid grid-cols-2 gap-4">
                                             <div className="space-y-2">
-                                                <label className="text-xs font-semibold text-gray-600">Buy Price</label>
+                                                <label className="text-xs font-semibold text-muted-foreground">Buy Price</label>
                                                 <Input
                                                     value={buyPrice}
                                                     onChange={(e) => setBuyPrice(e.target.value)}
-                                                    className="h-12 rounded-lg bg-white border-gray-300 text-base font-bold text-gray-900 px-4 focus:border-teal-500 transition-all"
+                                                    className="h-12 rounded-lg bg-background border-border text-base font-bold text-foreground px-4 focus:border-teal-500 transition-all"
                                                 />
                                             </div>
                                             <div className="space-y-2">
-                                                <label className="text-xs font-semibold text-gray-600">Sell Price</label>
+                                                <label className="text-xs font-semibold text-muted-foreground">Sell Price</label>
                                                 <Input
                                                     value={sellPrice}
                                                     onChange={(e) => setSellPrice(e.target.value)}
-                                                    className="h-12 rounded-lg bg-white border-gray-300 text-base font-bold text-gray-900 px-4 focus:border-teal-500 transition-all"
+                                                    className="h-12 rounded-lg bg-background border-border text-base font-bold text-foreground px-4 focus:border-teal-500 transition-all"
                                                 />
                                             </div>
                                         </div>
-                                        <Button variant="ghost" className="w-full text-gray-600 hover:text-teal-600 font-semibold gap-2 py-5 rounded-lg border-dashed border-gray-300 border-2">
+                                        <Button variant="ghost" className="w-full text-muted-foreground hover:text-teal-600 dark:hover:text-teal-400 font-semibold gap-2 py-5 rounded-lg border-dashed border-border border-2">
                                             <RotateCcw className="h-4 w-4" /> Reset Parameters
                                         </Button>
                                     </div>
@@ -110,36 +110,36 @@ export default function CryptoTools() {
                             </Card>
 
                             <div className="space-y-6">
-                                <Card className="bg-white border border-gray-200 shadow-sm rounded-xl">
+                                <Card className="bg-card border border-border shadow-sm rounded-xl">
                                     <CardContent className="p-8 flex flex-col items-center justify-center text-center">
-                                        <p className="text-xs text-gray-600 font-semibold mb-3">Estimated Net Profit</p>
-                                        <h3 className={`text-5xl font-bold transition-all ${profit >= 0 ? 'text-gray-900' : 'text-red-600'}`}>
+                                        <p className="text-xs text-muted-foreground font-semibold mb-3">Estimated Net Profit</p>
+                                        <h3 className={`text-5xl font-bold transition-all ${profit >= 0 ? 'text-foreground' : 'text-red-600 dark:text-red-400'}`}>
                                             ${profit.toLocaleString(undefined, { maximumFractionDigits: 2 })}
                                         </h3>
                                         <div className="mt-5 flex items-center gap-3">
-                                            <Badge className={`rounded-full px-3.5 py-1.5 font-semibold text-xs ${profit >= 0 ? 'bg-green-100 text-green-700 border-green-200' : 'bg-red-100 text-red-700 border-red-200'}`}>
+                                            <Badge className={`rounded-full px-3.5 py-1.5 font-semibold text-xs ${profit >= 0 ? 'bg-green-100 dark:bg-green-950/30 text-green-700 dark:text-green-400 border-green-200 dark:border-green-800' : 'bg-red-100 dark:bg-red-950/30 text-red-700 dark:text-red-400 border-red-200 dark:border-red-800'}`}>
                                                 {roi.toFixed(2)}% ROI
                                             </Badge>
-                                            <span className="text-xs font-medium text-gray-500">Post-Execution</span>
+                                            <span className="text-xs font-medium text-muted-foreground">Post-Execution</span>
                                         </div>
                                     </CardContent>
                                 </Card>
 
-                                <Card className="bg-white border border-gray-200 shadow-sm rounded-xl">
-                                    <CardHeader className="border-b border-gray-100 pb-4">
-                                        <CardTitle className="text-sm font-bold text-gray-900 flex items-center gap-2">
+                                <Card className="bg-card border border-border shadow-sm rounded-xl">
+                                    <CardHeader className="border-b border-border pb-4">
+                                        <CardTitle className="text-sm font-bold text-foreground flex items-center gap-2">
                                             <PieChart className="h-4 w-4" /> Asset Breakdown
                                         </CardTitle>
                                     </CardHeader>
                                     <CardContent className="p-6">
                                         <div className="space-y-4">
-                                            <div className="flex justify-between items-center bg-gray-50 p-4 rounded-lg border border-gray-200">
-                                                <span className="text-xs font-semibold text-gray-600">Total Units</span>
-                                                <span className="text-base font-bold text-gray-900">{units.toFixed(6)}</span>
+                                            <div className="flex justify-between items-center bg-muted p-4 rounded-lg border border-border">
+                                                <span className="text-xs font-semibold text-muted-foreground">Total Units</span>
+                                                <span className="text-base font-bold text-foreground">{units.toFixed(6)}</span>
                                             </div>
-                                            <div className="flex justify-between items-center bg-gray-50 p-4 rounded-lg border border-gray-200">
-                                                <span className="text-xs font-semibold text-gray-600">Breakeven Price</span>
-                                                <span className="text-base font-bold text-gray-900">${bPrice.toLocaleString()}</span>
+                                            <div className="flex justify-between items-center bg-muted p-4 rounded-lg border border-border">
+                                                <span className="text-xs font-semibold text-muted-foreground">Breakeven Price</span>
+                                                <span className="text-base font-bold text-foreground">${bPrice.toLocaleString()}</span>
                                             </div>
                                         </div>
                                     </CardContent>
@@ -150,15 +150,15 @@ export default function CryptoTools() {
 
                     <TabsContent value="volatility" className="space-y-6 animate-in fade-in slide-in-from-right-2 duration-500">
                         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                            <Card className="lg:col-span-2 bg-white border border-gray-200 shadow-sm rounded-xl">
-                                <CardHeader className="border-b border-gray-100 pb-4">
+                            <Card className="lg:col-span-2 bg-card border border-border shadow-sm rounded-xl">
+                                <CardHeader className="border-b border-border pb-4">
                                     <div className="flex items-center gap-3">
-                                        <div className="p-2.5 rounded-lg bg-rose-50 text-rose-600">
+                                        <div className="p-2.5 rounded-lg bg-rose-50 dark:bg-rose-950/30 text-rose-600 dark:text-rose-400">
                                             <Activity className="h-5 w-5" />
                                         </div>
                                         <div>
-                                            <CardTitle className="text-lg font-bold text-gray-900">Neural Variance Scan</CardTitle>
-                                            <CardDescription className="text-xs text-gray-600">Asset Risk Distribution</CardDescription>
+                                            <CardTitle className="text-lg font-bold text-foreground">Neural Variance Scan</CardTitle>
+                                            <CardDescription className="text-xs text-muted-foreground">Asset Risk Distribution</CardDescription>
                                         </div>
                                     </div>
                                 </CardHeader>
@@ -172,7 +172,7 @@ export default function CryptoTools() {
                                             />
                                         ))}
                                     </div>
-                                    <div className="flex justify-between text-xs font-semibold text-gray-600">
+                                    <div className="flex justify-between text-xs font-semibold text-muted-foreground">
                                         <span>Low Variance Zone</span>
                                         <span>Volatility Extremes</span>
                                     </div>
@@ -180,30 +180,30 @@ export default function CryptoTools() {
                             </Card>
 
                             <div className="space-y-6">
-                                <Card className="bg-white border border-gray-200 shadow-sm rounded-xl">
+                                <Card className="bg-card border border-border shadow-sm rounded-xl">
                                     <CardContent className="p-8 text-center">
-                                        <BrainCircuit className="h-12 w-12 text-rose-500 mx-auto mb-4" />
-                                        <h4 className="text-base font-bold text-gray-900 mb-2">Liquidation Prob.</h4>
-                                        <p className="text-4xl font-bold text-rose-600">4.2%</p>
-                                        <p className="text-xs text-gray-600 mt-3">Based on 24H Price Action</p>
+                                        <BrainCircuit className="h-12 w-12 text-rose-500 dark:text-rose-400 mx-auto mb-4" />
+                                        <h4 className="text-base font-bold text-foreground mb-2">Liquidation Prob.</h4>
+                                        <p className="text-4xl font-bold text-rose-600 dark:text-rose-400">4.2%</p>
+                                        <p className="text-xs text-muted-foreground mt-3">Based on 24H Price Action</p>
                                     </CardContent>
                                 </Card>
 
-                                <Card className="bg-white border border-gray-200 shadow-sm rounded-xl">
-                                    <CardHeader className="border-b border-gray-100 pb-4">
-                                        <CardTitle className="text-sm font-bold text-gray-900 flex items-center gap-2">
+                                <Card className="bg-card border border-border shadow-sm rounded-xl">
+                                    <CardHeader className="border-b border-border pb-4">
+                                        <CardTitle className="text-sm font-bold text-foreground flex items-center gap-2">
                                             <ShieldCheck className="h-4 w-4" /> Safety Threshold
                                         </CardTitle>
                                     </CardHeader>
                                     <CardContent className="p-6">
                                         <div className="space-y-3">
-                                            <div className="p-4 rounded-lg bg-gray-50 border border-gray-200">
-                                                <p className="text-xs font-semibold text-gray-600 mb-1">Max Suggested Drawdown</p>
-                                                <p className="text-base font-bold text-gray-900">12% Portfolio</p>
+                                            <div className="p-4 rounded-lg bg-muted border border-border">
+                                                <p className="text-xs font-semibold text-muted-foreground mb-1">Max Suggested Drawdown</p>
+                                                <p className="text-base font-bold text-foreground">12% Portfolio</p>
                                             </div>
-                                            <div className="p-4 rounded-lg bg-gray-50 border border-gray-200">
-                                                <p className="text-xs font-semibold text-gray-600 mb-1">Vol-Adjusted Stop Loss</p>
-                                                <p className="text-base font-bold text-green-600">$58,240</p>
+                                            <div className="p-4 rounded-lg bg-muted border border-border">
+                                                <p className="text-xs font-semibold text-muted-foreground mb-1">Vol-Adjusted Stop Loss</p>
+                                                <p className="text-base font-bold text-green-600 dark:text-green-400">$58,240</p>
                                             </div>
                                         </div>
                                     </CardContent>

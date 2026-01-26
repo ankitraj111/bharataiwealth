@@ -33,12 +33,12 @@ export default function CryptoSentiment() {
                 <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
                     <div className="space-y-1">
                         <div className="flex items-center gap-3">
-                            <div className="p-2.5 rounded-xl bg-rose-50 text-rose-600">
+                            <div className="p-2.5 rounded-xl bg-rose-50 dark:bg-rose-950/30 text-rose-600 dark:text-rose-400">
                                 <Smile className="h-6 w-6" />
                             </div>
-                            <h1 className="text-3xl font-bold text-gray-900">Market Sentiment</h1>
+                            <h1 className="text-3xl font-bold text-foreground">Market Sentiment</h1>
                         </div>
-                        <p className="text-gray-600 text-sm ml-12">Social signals and crowd psychology analysis</p>
+                        <p className="text-muted-foreground text-sm ml-12">Social signals and crowd psychology analysis</p>
                     </div>
                     <div className="flex items-center gap-3">
                         <div className="px-4 py-2 rounded-lg bg-rose-50 border border-rose-200">
@@ -52,15 +52,15 @@ export default function CryptoSentiment() {
 
                 {/* Sentiment Score Grid */}
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <Card className="border border-gray-200 shadow-sm bg-white">
+                    <Card className="border border-border shadow-sm bg-card">
                         <CardContent className="p-8 flex flex-col items-center text-center">
-                            <p className="text-xs text-gray-600 font-semibold uppercase mb-6">Social Media Sentiment</p>
+                            <p className="text-xs text-muted-foreground font-semibold uppercase mb-6">Social Media Sentiment</p>
                             <div className="relative h-40 w-40 flex items-center justify-center mb-6">
                                 <svg className="h-full w-full -rotate-90">
-                                    <circle cx="80" cy="80" r="70" className="stroke-gray-200 fill-none" strokeWidth="12" />
+                                    <circle cx="80" cy="80" r="70" className="stroke-muted fill-none" strokeWidth="12" />
                                     <circle
                                         cx="80" cy="80" r="70"
-                                        className="stroke-green-500 fill-none transition-all duration-1000"
+                                        className="stroke-green-500 dark:stroke-green-400 fill-none transition-all duration-1000"
                                         strokeWidth="12"
                                         strokeLinecap="round"
                                         strokeDasharray="440"
@@ -68,18 +68,18 @@ export default function CryptoSentiment() {
                                     />
                                 </svg>
                                 <div className="absolute inset-0 flex flex-col items-center justify-center">
-                                    <span className="text-4xl font-bold text-gray-900">82%</span>
-                                    <span className="text-xs font-semibold text-green-600 uppercase">Bullish</span>
+                                    <span className="text-4xl font-bold text-foreground">82%</span>
+                                    <span className="text-xs font-semibold text-green-600 dark:text-green-400 uppercase">Bullish</span>
                                 </div>
                             </div>
                             <div className="flex gap-3">
-                                <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-blue-100 border border-blue-200">
-                                    <Twitter className="h-3 w-3 text-blue-600" />
-                                    <span className="text-xs font-semibold text-blue-700">Extreme</span>
+                                <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-blue-100 dark:bg-blue-950/30 border border-blue-200 dark:border-blue-800">
+                                    <Twitter className="h-3 w-3 text-blue-600 dark:text-blue-400" />
+                                    <span className="text-xs font-semibold text-blue-700 dark:text-blue-300">Extreme</span>
                                 </div>
-                                <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-orange-100 border border-orange-200">
-                                    <MessageSquare className="h-3 w-3 text-orange-600" />
-                                    <span className="text-xs font-semibold text-orange-700">Neutral</span>
+                                <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-orange-100 dark:bg-orange-950/30 border border-orange-200 dark:border-orange-800">
+                                    <MessageSquare className="h-3 w-3 text-orange-600 dark:text-orange-400" />
+                                    <span className="text-xs font-semibold text-orange-700 dark:text-orange-300">Neutral</span>
                                 </div>
                             </div>
                         </CardContent>

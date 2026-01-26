@@ -10,3 +10,4 @@ public class BharatAiWealthApplication {
         SpringApplication.run(BharatAiWealthApplication.class, args);
     }
 }
+  

@@ -35,12 +35,12 @@ export default function OnChainData() {
                 <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
                     <div className="space-y-1">
                         <div className="flex items-center gap-3">
-                            <div className="p-2.5 rounded-xl bg-green-50 text-green-600">
+                            <div className="p-2.5 rounded-xl bg-green-50 dark:bg-green-950/30 text-green-600 dark:text-green-400">
                                 <Link2 className="h-6 w-6" />
                             </div>
-                            <h1 className="text-3xl font-bold text-gray-900">On-Chain Intelligence</h1>
+                            <h1 className="text-3xl font-bold text-foreground">On-Chain Intelligence</h1>
                         </div>
-                        <p className="text-gray-600 text-sm ml-12">Real-time network activity, wallet flows, and institutional footprints</p>
+                        <p className="text-muted-foreground text-sm ml-12">Real-time network activity, wallet flows, and institutional footprints</p>
                     </div>
                     <div className="flex items-center gap-3">
                         <div className="px-4 py-2 rounded-lg bg-green-50 border border-green-200">

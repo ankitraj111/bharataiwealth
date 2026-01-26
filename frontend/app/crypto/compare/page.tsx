@@ -48,12 +48,12 @@ export default function CompareCoins() {
                 <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
                     <div className="space-y-1">
                         <div className="flex items-center gap-3">
-                            <div className="p-2.5 rounded-xl bg-indigo-50 text-indigo-600">
+                            <div className="p-2.5 rounded-xl bg-indigo-50 dark:bg-indigo-950/30 text-indigo-600 dark:text-indigo-400">
                                 <Repeat className="h-6 w-6" />
                             </div>
-                            <h1 className="text-3xl font-bold text-gray-900">Asset Comparison</h1>
+                            <h1 className="text-3xl font-bold text-foreground">Asset Comparison</h1>
                         </div>
-                        <p className="text-gray-600 text-sm ml-12">Compare cryptocurrencies side-by-side</p>
+                        <p className="text-muted-foreground text-sm ml-12">Compare cryptocurrencies side-by-side</p>
                     </div>
                     <div className="flex items-center gap-3">
                         <Button variant="outline" className="rounded-lg border-gray-300">

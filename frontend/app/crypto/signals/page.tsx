@@ -69,12 +69,12 @@ export default function CryptoSignals() {
                 <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
                     <div className="space-y-1">
                         <div className="flex items-center gap-3">
-                            <div className="p-2.5 rounded-xl bg-orange-50 text-orange-600">
+                            <div className="p-2.5 rounded-xl bg-orange-50 dark:bg-orange-950/30 text-orange-600 dark:text-orange-400">
                                 <Zap className="h-6 w-6" />
                             </div>
-                            <h1 className="text-3xl font-bold text-gray-900">Trading Signals</h1>
+                            <h1 className="text-3xl font-bold text-foreground">Trading Signals</h1>
                         </div>
-                        <p className="text-gray-600 text-sm ml-12">AI-powered buy/sell alerts and trade recommendations</p>
+                        <p className="text-muted-foreground text-sm ml-12">AI-powered buy/sell alerts and trade recommendations</p>
                     </div>
                     <div className="flex items-center gap-3">
                         <Button variant="outline" className="rounded-lg border-gray-300">
@@ -89,18 +89,18 @@ export default function CryptoSignals() {
                 {/* Live Signals Grid */}
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                     {signals.map((sig) => (
-                        <Card key={sig.id} className="bg-white border border-gray-200 shadow-sm rounded-xl overflow-hidden hover:border-gray-300 transition-colors">
-                            <CardHeader className="p-6 border-b border-gray-100 flex flex-row items-center justify-between bg-gray-50">
+                        <Card key={sig.id} className="bg-card border border-border shadow-sm rounded-xl overflow-hidden hover:border-border/80 transition-colors">
+                            <CardHeader className="p-6 border-b border-border flex flex-row items-center justify-between bg-muted/50">
                                 <div className="flex items-center gap-3">
-                                    <div className={`h-10 w-10 rounded-lg flex items-center justify-center font-bold text-xs ${sig.type === 'LONG' ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'
+                                    <div className={`h-10 w-10 rounded-lg flex items-center justify-center font-bold text-xs ${sig.type === 'LONG' ? 'bg-green-100 dark:bg-green-950/30 text-green-700 dark:text-green-400' : 'bg-red-100 dark:bg-red-950/30 text-red-700 dark:text-red-400'
                                         }`}>
                                         {sig.type}
                                     </div>
                                     <div>
-                                        <CardTitle className="text-xl font-bold text-gray-900">{sig.pair}</CardTitle>
+                                        <CardTitle className="text-xl font-bold text-foreground">{sig.pair}</CardTitle>
                                         <div className="flex items-center gap-2 mt-1">
-                                            <Clock className="h-3 w-3 text-gray-500" />
-                                            <span className="text-xs font-medium text-gray-600">{sig.time}</span>
+                                            <Clock className="h-3 w-3 text-muted-foreground" />
+                                            <span className="text-xs font-medium text-muted-foreground">{sig.time}</span>
                                         </div>
                                     </div>
                                 </div>

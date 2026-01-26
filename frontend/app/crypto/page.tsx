@@ -208,7 +208,7 @@ function CryptoHubContent() {
           <Card className="border-2 border-rose-500/50 bg-gradient-to-r from-rose-50 to-orange-50 dark:from-rose-950/30 dark:to-orange-950/30">
             <CardContent className="p-4">
               <div className="flex items-start gap-3">
-                <ShieldAlert className="h-5 w-5 text-rose-600 flex-shrink-0 mt-0.5" />
+                <ShieldAlert className="h-5 w-5 text-rose-600 dark:text-rose-400 flex-shrink-0 mt-0.5" />
                 <div>
                   <p className="text-sm font-bold text-rose-900 dark:text-rose-100 mb-1">
                     ⚠️ High-Risk Asset Class - Advice Only
@@ -315,7 +315,7 @@ function CryptoHubContent() {
               </div>
               <div className="mt-6 p-4 rounded-xl bg-blue-50 dark:bg-blue-950/30 border border-blue-200 dark:border-blue-800">
                 <div className="flex items-start gap-3">
-                  <Brain className="h-5 w-5 text-blue-600 flex-shrink-0 mt-0.5" />
+                  <Brain className="h-5 w-5 text-blue-600 dark:text-blue-400 flex-shrink-0 mt-0.5" />
                   <div>
                     <p className="text-sm font-bold text-blue-900 dark:text-blue-100 mb-1">
                       AI Market Insight
@@ -371,25 +371,25 @@ function CryptoHubContent() {
                     <tr key={i} className="border-b border-border/50 hover:bg-muted/30 transition-colors">
                       <td className="p-4">
                         <div className="flex items-center gap-3">
-                          <div className="h-10 w-10 rounded-full bg-gradient-to-br from-orange-500 to-rose-500 flex items-center justify-center text-white font-bold text-sm">
+                          <div className="h-10 w-10 rounded-full bg-gradient-to-br from-orange-500 to-rose-500 dark:from-orange-600 dark:to-rose-600 flex items-center justify-center text-white font-bold text-sm">
                             {crypto.symbol.slice(0, 2)}
                           </div>
                           <div>
-                            <p className="font-bold">{crypto.symbol}</p>
+                            <p className="font-bold text-foreground">{crypto.symbol}</p>
                             <p className="text-xs text-muted-foreground">{crypto.name}</p>
                           </div>
                         </div>
                       </td>
-                      <td className="p-4 text-right font-bold tabular-nums">
+                      <td className="p-4 text-right font-bold tabular-nums text-foreground">
                         ₹{crypto.price.toLocaleString("en-IN")}
                       </td>
                       <td className="p-4 text-right">
-                        <span className={`font-bold ${crypto.change24h >= 0 ? "text-emerald-600" : "text-rose-600"}`}>
+                        <span className={`font-bold ${crypto.change24h >= 0 ? "text-emerald-600 dark:text-emerald-400" : "text-rose-600 dark:text-rose-400"}`}>
                           {crypto.change24h >= 0 ? "+" : ""}{crypto.change24h}%
                         </span>
                       </td>
                       <td className="p-4 text-right">
-                        <span className={`font-bold ${crypto.change7d >= 0 ? "text-emerald-600" : "text-rose-600"}`}>
+                        <span className={`font-bold ${crypto.change7d >= 0 ? "text-emerald-600 dark:text-emerald-400" : "text-rose-600 dark:text-rose-400"}`}>
                           {crypto.change7d >= 0 ? "+" : ""}{crypto.change7d}%
                         </span>
                       </td>
@@ -408,8 +408,8 @@ function CryptoHubContent() {
                         <Badge
                           className={`${
                             crypto.risk === "Extreme"
-                              ? "bg-rose-500/10 text-rose-600 border-rose-500/20"
-                              : "bg-amber-500/10 text-amber-600 border-amber-500/20"
+                              ? "bg-rose-500/10 dark:bg-rose-500/20 text-rose-600 dark:text-rose-400 border-rose-500/20 dark:border-rose-500/30"
+                              : "bg-amber-500/10 dark:bg-amber-500/20 text-amber-600 dark:text-amber-400 border-amber-500/20 dark:border-amber-500/30"
                           }`}
                         >
                           {crypto.risk}
@@ -419,17 +419,17 @@ function CryptoHubContent() {
                         <Badge
                           className={`${
                             crypto.signal === "Bullish"
-                              ? "bg-emerald-500/10 text-emerald-600 border-emerald-500/20"
+                              ? "bg-emerald-500/10 dark:bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 border-emerald-500/20 dark:border-emerald-500/30"
                               : crypto.signal === "Cautious"
-                              ? "bg-rose-500/10 text-rose-600 border-rose-500/20"
-                              : "bg-slate-500/10 text-slate-600 border-slate-500/20"
+                              ? "bg-rose-500/10 dark:bg-rose-500/20 text-rose-600 dark:text-rose-400 border-rose-500/20 dark:border-rose-500/30"
+                              : "bg-slate-500/10 dark:bg-slate-500/20 text-slate-600 dark:text-slate-400 border-slate-500/20 dark:border-slate-500/30"
                           }`}
                         >
                           {crypto.signal}
                         </Badge>
                       </td>
                       <td className="p-4 text-center">
-                        <span className="font-bold text-sm">{crypto.confidence}%</span>
+                        <span className="font-bold text-sm text-foreground">{crypto.confidence}%</span>
                       </td>
                       <td className="p-4">
                         <div className="flex items-center justify-center gap-2">

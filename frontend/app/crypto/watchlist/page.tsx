@@ -33,12 +33,12 @@ export default function WatchlistPage() {
                 <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
                     <div className="space-y-1">
                         <div className="flex items-center gap-3">
-                            <div className="p-2.5 rounded-xl bg-amber-50 text-amber-600">
+                            <div className="p-2.5 rounded-xl bg-amber-50 dark:bg-amber-950/30 text-amber-600 dark:text-amber-400">
                                 <Eye className="h-6 w-6" />
                             </div>
-                            <h1 className="text-3xl font-bold text-gray-900">My Watchlist</h1>
+                            <h1 className="text-3xl font-bold text-foreground">My Watchlist</h1>
                         </div>
-                        <p className="text-gray-600 text-sm ml-12">Tracking {watchlistItems.length} assets with price alerts</p>
+                        <p className="text-muted-foreground text-sm ml-12">Tracking {watchlistItems.length} assets with price alerts</p>
                     </div>
                     <div className="flex items-center gap-3">
                         <Button className="rounded-lg bg-amber-600 hover:bg-amber-700 text-white font-semibold">

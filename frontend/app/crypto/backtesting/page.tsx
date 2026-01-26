@@ -37,12 +37,12 @@ export default function CryptoBacktesting() {
                 <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
                     <div className="space-y-1">
                         <div className="flex items-center gap-3">
-                            <div className="p-2.5 rounded-xl bg-gray-100 text-gray-600">
+                            <div className="p-2.5 rounded-xl bg-muted text-muted-foreground">
                                 <History className="h-6 w-6" />
                             </div>
-                            <h1 className="text-3xl font-bold text-gray-900">Backtesting Engine</h1>
+                            <h1 className="text-3xl font-bold text-foreground">Backtesting Engine</h1>
                         </div>
-                        <p className="text-gray-600 text-sm ml-12">Validate custom neural node strategies against historical tick data</p>
+                        <p className="text-muted-foreground text-sm ml-12">Validate custom neural node strategies against historical tick data</p>
                     </div>
                     <div className="flex items-center gap-3">
                         <Button variant="outline" className="rounded-lg border-gray-300">

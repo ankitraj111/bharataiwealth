@@ -34,12 +34,12 @@ export default function CryptoAnalysis() {
                 <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
                     <div className="space-y-1">
                         <div className="flex items-center gap-3">
-                            <div className="p-2.5 rounded-xl bg-blue-50 text-blue-600">
+                            <div className="p-2.5 rounded-xl bg-blue-50 dark:bg-blue-950/30 text-blue-600 dark:text-blue-400">
                                 <BrainCircuit className="h-6 w-6" />
                             </div>
-                            <h1 className="text-3xl font-bold text-gray-900">Crypto Analysis</h1>
+                            <h1 className="text-3xl font-bold text-foreground">Crypto Analysis</h1>
                         </div>
-                        <p className="text-gray-600 text-sm ml-12">Technical indicators and AI-driven market insights</p>
+                        <p className="text-muted-foreground text-sm ml-12">Technical indicators and AI-driven market insights</p>
                     </div>
                     <div className="flex items-center gap-3">
                         <div className="px-4 py-2 rounded-lg bg-blue-50 border border-blue-200">
@@ -52,14 +52,14 @@ export default function CryptoAnalysis() {
                 </div>
 
                 <Tabs defaultValue="technicals" className="space-y-6">
-                    <TabsList className="bg-gray-100 p-1 rounded-lg border border-gray-200">
-                        <TabsTrigger value="technicals" className="rounded-md px-4 py-2 text-sm font-semibold data-[state=active]:bg-white data-[state=active]:text-blue-600 data-[state=active]:shadow-sm">
+                    <TabsList className="bg-muted p-1 rounded-lg border border-border">
+                        <TabsTrigger value="technicals" className="rounded-md px-4 py-2 text-sm font-semibold data-[state=active]:bg-card data-[state=active]:text-blue-600 dark:data-[state=active]:text-blue-400 data-[state=active]:shadow-sm">
                             Technical Indicators
                         </TabsTrigger>
-                        <TabsTrigger value="ai-insights" className="rounded-md px-4 py-2 text-sm font-semibold data-[state=active]:bg-white data-[state=active]:text-blue-600 data-[state=active]:shadow-sm">
+                        <TabsTrigger value="ai-insights" className="rounded-md px-4 py-2 text-sm font-semibold data-[state=active]:bg-card data-[state=active]:text-blue-600 dark:data-[state=active]:text-blue-400 data-[state=active]:shadow-sm">
                             AI Insights
                         </TabsTrigger>
-                        <TabsTrigger value="support-resistance" className="rounded-md px-4 py-2 text-sm font-semibold data-[state=active]:bg-white data-[state=active]:text-blue-600 data-[state=active]:shadow-sm">
+                        <TabsTrigger value="support-resistance" className="rounded-md px-4 py-2 text-sm font-semibold data-[state=active]:bg-card data-[state=active]:text-blue-600 dark:data-[state=active]:text-blue-400 data-[state=active]:shadow-sm">
                             Support & Resistance
                         </TabsTrigger>
                     </TabsList>
@@ -67,15 +67,15 @@ export default function CryptoAnalysis() {
                     <TabsContent value="technicals" className="space-y-6">
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                             {[
-                                { name: "RSI (14)", val: "62.4", signal: "Neutral", color: "text-gray-600", bg: "bg-gray-100" },
-                                { name: "MACD", val: "Bullish Cross", signal: "Buy Signal", color: "text-green-700", bg: "bg-green-100" },
-                                { name: "EMA (20/50)", val: "Golden Cross", signal: "Strong Buy", color: "text-green-700", bg: "bg-green-100" },
-                                { name: "Bollinger", val: "Mid-Band", signal: "Neutral", color: "text-yellow-700", bg: "bg-yellow-100" },
+                                { name: "RSI (14)", val: "62.4", signal: "Neutral", color: "text-gray-600 dark:text-gray-400", bg: "bg-gray-100 dark:bg-gray-900" },
+                                { name: "MACD", val: "Bullish Cross", signal: "Buy Signal", color: "text-green-700 dark:text-green-400", bg: "bg-green-100 dark:bg-green-950/30" },
+                                { name: "EMA (20/50)", val: "Golden Cross", signal: "Strong Buy", color: "text-green-700 dark:text-green-400", bg: "bg-green-100 dark:bg-green-950/30" },
+                                { name: "Bollinger", val: "Mid-Band", signal: "Neutral", color: "text-yellow-700 dark:text-yellow-400", bg: "bg-yellow-100 dark:bg-yellow-950/30" },
                             ].map((ind, i) => (
-                                <Card key={i} className="border border-gray-200 shadow-sm hover:shadow-md transition-shadow">
+                                <Card key={i} className="border border-border shadow-sm hover:shadow-md transition-shadow">
                                     <CardContent className="p-5">
-                                        <p className="text-xs text-gray-500 font-medium mb-1">{ind.name}</p>
-                                        <h4 className="text-xl font-bold text-gray-900 mb-3">{ind.val}</h4>
+                                        <p className="text-xs text-muted-foreground font-medium mb-1">{ind.name}</p>
+                                        <h4 className="text-xl font-bold text-foreground mb-3">{ind.val}</h4>
                                         <Badge className={`border-0 font-semibold text-xs ${ind.bg} ${ind.color}`}>
                                             {ind.signal}
                                         </Badge>

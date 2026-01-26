@@ -40,12 +40,12 @@ export default function CryptoPortfolio() {
                 <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
                     <div className="space-y-1">
                         <div className="flex items-center gap-3">
-                            <div className="p-2.5 rounded-xl bg-purple-50 text-purple-600">
+                            <div className="p-2.5 rounded-xl bg-purple-50 dark:bg-purple-950/30 text-purple-600 dark:text-purple-400">
                                 <Wallet className="h-6 w-6" />
                             </div>
-                            <h1 className="text-3xl font-bold text-gray-900">Crypto Portfolio</h1>
+                            <h1 className="text-3xl font-bold text-foreground">Crypto Portfolio</h1>
                         </div>
-                        <p className="text-gray-600 text-sm ml-12">Track your assets and performance</p>
+                        <p className="text-muted-foreground text-sm ml-12">Track your assets and performance</p>
                     </div>
                     <div className="flex items-center gap-3">
                         <Button className="rounded-lg bg-purple-600 hover:bg-purple-700 text-white font-semibold">
@@ -59,24 +59,24 @@ export default function CryptoPortfolio() {
 
                 {/* Portfolio Stats Bar */}
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <Card className="border border-gray-200 shadow-sm">
+                    <Card className="border border-border shadow-sm">
                         <CardContent className="p-6">
-                            <p className="text-xs text-gray-500 font-medium mb-2">Total Portfolio Value</p>
+                            <p className="text-xs text-muted-foreground font-medium mb-2">Total Portfolio Value</p>
                             <div className="flex items-baseline gap-2">
-                                <h3 className="text-3xl font-bold text-gray-900">${totalValue.toLocaleString()}</h3>
-                                <Badge className="bg-green-100 text-green-700 border-0 font-semibold">Active</Badge>
+                                <h3 className="text-3xl font-bold text-foreground">${totalValue.toLocaleString()}</h3>
+                                <Badge className="bg-green-100 dark:bg-green-950/30 text-green-700 dark:text-green-400 border-0 font-semibold">Active</Badge>
                             </div>
                         </CardContent>
                     </Card>
 
-                    <Card className="border border-gray-200 shadow-sm">
+                    <Card className="border border-border shadow-sm">
                         <CardContent className="p-6">
-                            <p className="text-xs text-gray-500 font-medium mb-2">Total Profit/Loss</p>
+                            <p className="text-xs text-muted-foreground font-medium mb-2">Total Profit/Loss</p>
                             <div className="flex items-baseline gap-2">
-                                <h3 className={`text-3xl font-bold ${totalProfit >= 0 ? "text-green-600" : "text-red-600"}`}>
+                                <h3 className={`text-3xl font-bold ${totalProfit >= 0 ? "text-green-600 dark:text-green-400" : "text-red-600 dark:text-red-400"}`}>
                                     {totalProfit >= 0 ? "+" : ""}${Math.abs(totalProfit).toLocaleString()}
                                 </h3>
-                                <div className={`flex items-center gap-1 font-semibold text-sm ${avgChange >= 0 ? "text-green-600" : "text-red-600"}`}>
+                                <div className={`flex items-center gap-1 font-semibold text-sm ${avgChange >= 0 ? "text-green-600 dark:text-green-400" : "text-red-600 dark:text-red-400"}`}>
                                     {avgChange >= 0 ? <TrendingUp className="h-4 w-4" /> : <TrendingDown className="h-4 w-4" />}
                                     {avgChange}%
                                 </div>
@@ -84,10 +84,10 @@ export default function CryptoPortfolio() {
                         </CardContent>
                     </Card>
 
-                    <Card className="border border-gray-200 shadow-sm">
+                    <Card className="border border-border shadow-sm">
                         <CardContent className="p-6">
-                            <p className="text-xs text-gray-500 font-medium mb-3">Asset Allocation</p>
-                            <div className="flex h-3 w-full rounded-full bg-gray-100 overflow-hidden border border-gray-200">
+                            <p className="text-xs text-muted-foreground font-medium mb-3">Asset Allocation</p>
+                            <div className="flex h-3 w-full rounded-full bg-muted overflow-hidden border border-border">
                                 {holdings.map((h, i) => (
                                     <div
                                         key={i}
@@ -100,7 +100,7 @@ export default function CryptoPortfolio() {
                                 {holdings.map((h, i) => (
                                     <div key={i} className="flex items-center gap-1.5">
                                         <div className={`h-2 w-2 rounded-full ${h.color}`} />
-                                        <span className="text-xs font-medium text-gray-600">{h.symbol}</span>
+                                        <span className="text-xs font-medium text-muted-foreground">{h.symbol}</span>
                                     </div>
                                 ))}
                             </div>
@@ -110,14 +110,14 @@ export default function CryptoPortfolio() {
 
                 {/* Holdings List */}
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                    <Card className="lg:col-span-2 border border-gray-200 shadow-sm">
-                        <CardHeader className="border-b border-gray-100 bg-gray-50/50">
+                    <Card className="lg:col-span-2 border border-border shadow-sm">
+                        <CardHeader className="border-b border-border bg-muted/50">
                             <div className="flex flex-col md:flex-row md:items-center justify-between gap-3">
                                 <div>
-                                    <CardTitle className="text-lg font-bold text-gray-900">Your Holdings</CardTitle>
-                                    <CardDescription className="text-sm text-gray-600">Active positions in your portfolio</CardDescription>
+                                    <CardTitle className="text-lg font-bold text-foreground">Your Holdings</CardTitle>
+                                    <CardDescription className="text-sm text-muted-foreground">Active positions in your portfolio</CardDescription>
                                 </div>
-                                <Button variant="outline" size="sm" className="rounded-lg border-gray-300">
+                                <Button variant="outline" size="sm" className="rounded-lg border-border">
                                     <PieChart className="h-4 w-4 mr-2" /> Rebalance
                                 </Button>
                             </div>
