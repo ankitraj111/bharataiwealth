@@ -377,14 +377,19 @@ export function Topbar() {
         </SheetContent>
       </Sheet>
 
-      {/* Search - Clean Modern Design */}
+      {/* Search - Streamlined Design */}
       <div className="hidden flex-1 md:flex md:max-w-2xl">
         <form
           className="relative w-full group"
           onSubmit={handleSearch}
           role="search"
         >
-          {/* Input Field */}
+          {/* Subtle Search Icon (Left) */}
+          <div className="absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground/40 group-focus-within:text-primary transition-all duration-300">
+            <Search className="h-4 w-4" />
+          </div>
+
+          {/* Input Field - Compact Height and Better Spacing */}
           <input
             ref={searchInputRef}
             type="text"
@@ -393,16 +398,16 @@ export function Topbar() {
             onChange={handleSearchChange}
             onKeyDown={handleSearchKeyDown}
             onClick={handleInputClick}
-            placeholder="Search stocks, crypto, mutual funds..."
-            className="w-full h-14 bg-gradient-to-r from-secondary/40 to-secondary/30 
-                     border-2 border-border/40 pl-6 pr-32 rounded-2xl 
+            placeholder="Search Bharat AI Wealth..."
+            className="w-full h-12 bg-gradient-to-r from-secondary/40 to-secondary/30 
+                     border-2 border-border/40 pl-11 pr-28 rounded-xl 
                      focus:from-background focus:to-background/95
                      focus:border-primary/40 focus:ring-4 focus:ring-primary/5
                      hover:border-border/60 hover:shadow-lg
                      transition-all duration-300 
                      placeholder:text-muted-foreground/60 placeholder:font-medium
-                     outline-none text-base font-semibold
-                     shadow-md focus:shadow-xl"
+                     outline-none text-base font-medium
+                     shadow-sm focus:shadow-md"
             autoComplete="off"
             autoCorrect="off"
             autoCapitalize="off"
@@ -410,20 +415,20 @@ export function Topbar() {
             aria-label="Search for stocks and crypto assets"
           />
 
-          {/* Search Button */}
-          <div className="absolute right-2.5 top-1/2 -translate-y-1/2">
+          {/* Search Button - Compact and Clean */}
+          <div className="absolute right-1.5 top-1/2 -translate-y-1/2">
             <button
               type="submit"
-              className="flex items-center justify-center gap-2 h-9 px-5 rounded-xl 
+              className="flex items-center justify-center gap-2 h-9 px-4 rounded-lg 
                        bg-gradient-to-r from-primary to-primary/90 
-                       text-primary-foreground text-sm font-bold 
+                       text-primary-foreground text-xs font-bold 
                        hover:from-primary/90 hover:to-primary/80
                        active:scale-95 
                        transition-all duration-200 
-                       shadow-lg hover:shadow-xl
+                       shadow-md hover:shadow-lg
                        border border-primary/20"
             >
-              <Search className="h-4 w-4" />
+              <Search className="h-3.5 w-3.5" />
               <span>Search</span>
             </button>
           </div>
@@ -464,8 +469,8 @@ export function Topbar() {
               <div className="relative">
                 <div className={`absolute inset-0 rounded-full ${isListening ? 'animate-ping bg-primary/20' : ''}`} />
                 <div className={`relative flex items-center justify-center w-24 h-24 rounded-full transition-all ${isListening
-                    ? 'bg-primary/10 ring-4 ring-primary/20'
-                    : 'bg-secondary'
+                  ? 'bg-primary/10 ring-4 ring-primary/20'
+                  : 'bg-secondary'
                   }`}>
                   <Mic className={`w-12 h-12 transition-all ${isListening ? 'text-primary animate-pulse' : 'text-muted-foreground'
                     }`} />
