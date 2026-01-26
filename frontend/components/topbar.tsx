@@ -61,10 +61,39 @@ export function Topbar() {
     e.stopPropagation()
 
     const trimmedQuery = searchQuery.trim()
+    console.log('Search triggered:', trimmedQuery)
+
     if (trimmedQuery) {
       const upperQuery = trimmedQuery.toUpperCase()
+      console.log('Navigating to:', `/predictions?search=${encodeURIComponent(upperQuery)}`)
       router.push(`/predictions?search=${encodeURIComponent(upperQuery)}`)
       setSearchQuery("")
+      searchInputRef.current?.blur()
+    } else {
+      console.log('Empty search query')
+    }
+  }
+
+  // Handle input change
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value
+    console.log('Search input changed:', value)
+    setSearchQuery(value)
+  }
+
+  // Handle Enter key press
+  const handleSearchKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    console.log('Key pressed:', e.key)
+    if (e.key === 'Enter') {
+      e.preventDefault()
+      const trimmedQuery = searchQuery.trim()
+      if (trimmedQuery) {
+        const upperQuery = trimmedQuery.toUpperCase()
+        console.log('Enter key - Navigating to:', `/predictions?search=${encodeURIComponent(upperQuery)}`)
+        router.push(`/predictions?search=${encodeURIComponent(upperQuery)}`)
+        setSearchQuery("")
+        searchInputRef.current?.blur()
+      }
     }
   }
 
@@ -98,7 +127,7 @@ export function Topbar() {
     setVoiceDialogOpen(true)
     setTranscript("Starting...")
     setIsListening(false)
-    
+
     // Start listening after a brief delay to let dialog open
     setTimeout(() => {
       startListening()
@@ -132,13 +161,13 @@ export function Topbar() {
       const current = event.resultIndex
       const transcriptText = event.results[current][0].transcript.toLowerCase()
       setTranscript(`"${transcriptText}"`)
-      
+
       if (event.results[current].isFinal) {
         setIsListening(false)
-        
+
         // Voice Navigation Commands
         const command = transcriptText.toLowerCase().trim()
-        
+
         // Dashboard commands
         if (command.includes('dashboard') || command.includes('home')) {
           setTranscript('✓ Opening Dashboard...')
@@ -274,9 +303,9 @@ export function Topbar() {
 
     recognition.onerror = (event: any) => {
       setIsListening(false)
-      
+
       if (!hasReceivedSpeech) {
-        switch(event.error) {
+        switch (event.error) {
           case 'no-speech':
             setTranscript('😕 No speech detected. Try again.')
             break
@@ -348,38 +377,56 @@ export function Topbar() {
         </SheetContent>
       </Sheet>
 
-      {/* Search - Enhanced */}
-      <div className="hidden flex-1 md:flex md:max-w-lg">
+      {/* Search - Clean Modern Design */}
+      <div className="hidden flex-1 md:flex md:max-w-2xl">
         <form
           className="relative w-full group"
           onSubmit={handleSearch}
+          role="search"
         >
-          <Search className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground/60 transition-colors group-focus-within:text-primary pointer-events-none z-10" />
+          {/* Input Field */}
           <input
             ref={searchInputRef}
             type="text"
             name="search"
             value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
+            onChange={handleSearchChange}
+            onKeyDown={handleSearchKeyDown}
             onClick={handleInputClick}
-            placeholder="Search assets (e.g. RELIANCE.NS, BTC-USD)..."
-            className="w-full h-11 bg-secondary/40 border border-border/50 pl-11 pr-20 rounded-xl focus:bg-secondary/60 focus:border-primary/20 focus:ring-2 focus:ring-primary/10 transition-all placeholder:text-muted-foreground/60 outline-none text-sm"
+            placeholder="Search stocks, crypto, mutual funds..."
+            className="w-full h-14 bg-gradient-to-r from-secondary/40 to-secondary/30 
+                     border-2 border-border/40 pl-6 pr-32 rounded-2xl 
+                     focus:from-background focus:to-background/95
+                     focus:border-primary/40 focus:ring-4 focus:ring-primary/5
+                     hover:border-border/60 hover:shadow-lg
+                     transition-all duration-300 
+                     placeholder:text-muted-foreground/60 placeholder:font-medium
+                     outline-none text-base font-semibold
+                     shadow-md focus:shadow-xl"
             autoComplete="off"
-            style={{
-              WebkitAppearance: 'none',
-              MozAppearance: 'none',
-              appearance: 'none'
-            }}
+            autoCorrect="off"
+            autoCapitalize="off"
+            spellCheck="false"
+            aria-label="Search for stocks and crypto assets"
           />
-          <button
-            type="button"
-            onClick={() => searchInputRef.current?.focus()}
-            className="absolute right-3 top-1/2 -translate-y-1/2 flex items-center gap-1 text-muted-foreground/50 hover:text-muted-foreground transition-colors pointer-events-auto"
-          >
-            <kbd className="flex h-6 items-center gap-1 rounded-md border border-border/50 bg-muted/50 px-2 text-[10px] font-medium">
-              <Command className="h-3 w-3" />K
-            </kbd>
-          </button>
+
+          {/* Search Button */}
+          <div className="absolute right-2.5 top-1/2 -translate-y-1/2">
+            <button
+              type="submit"
+              className="flex items-center justify-center gap-2 h-9 px-5 rounded-xl 
+                       bg-gradient-to-r from-primary to-primary/90 
+                       text-primary-foreground text-sm font-bold 
+                       hover:from-primary/90 hover:to-primary/80
+                       active:scale-95 
+                       transition-all duration-200 
+                       shadow-lg hover:shadow-xl
+                       border border-primary/20"
+            >
+              <Search className="h-4 w-4" />
+              <span>Search</span>
+            </button>
+          </div>
         </form>
       </div>
 
@@ -416,22 +463,19 @@ export function Topbar() {
               {/* Animated Mic Icon - Shows status */}
               <div className="relative">
                 <div className={`absolute inset-0 rounded-full ${isListening ? 'animate-ping bg-primary/20' : ''}`} />
-                <div className={`relative flex items-center justify-center w-24 h-24 rounded-full transition-all ${
-                  isListening 
-                    ? 'bg-primary/10 ring-4 ring-primary/20' 
+                <div className={`relative flex items-center justify-center w-24 h-24 rounded-full transition-all ${isListening
+                    ? 'bg-primary/10 ring-4 ring-primary/20'
                     : 'bg-secondary'
-                }`}>
-                  <Mic className={`w-12 h-12 transition-all ${
-                    isListening ? 'text-primary animate-pulse' : 'text-muted-foreground'
-                  }`} />
+                  }`}>
+                  <Mic className={`w-12 h-12 transition-all ${isListening ? 'text-primary animate-pulse' : 'text-muted-foreground'
+                    }`} />
                 </div>
               </div>
 
               {/* Transcript Display */}
               <div className="w-full min-h-[60px] flex items-center justify-center px-4">
-                <p className={`text-center text-lg font-medium transition-all ${
-                  isListening ? 'text-primary' : 'text-foreground'
-                }`}>
+                <p className={`text-center text-lg font-medium transition-all ${isListening ? 'text-primary' : 'text-foreground'
+                  }`}>
                   {transcript}
                 </p>
               </div>
@@ -456,8 +500,8 @@ export function Topbar() {
               {/* Instructions */}
               <div className="text-center space-y-2">
                 <p className="text-sm text-muted-foreground">
-                  {isListening 
-                    ? '🎤 Listening... Speak clearly' 
+                  {isListening
+                    ? '🎤 Listening... Speak clearly'
                     : 'Ready to listen'
                   }
                 </p>
@@ -468,7 +512,7 @@ export function Topbar() {
                   <p>&quot;Show Goals&quot; • &quot;RELIANCE stock&quot;</p>
                 </div>
                 {!isListening && transcript.includes('Try again') && (
-                  <Button 
+                  <Button
                     onClick={startListening}
                     variant="outline"
                     size="sm"
@@ -507,7 +551,7 @@ export function Topbar() {
                 3 New
               </Badge>
             </div>
-            
+
             {/* Notifications List */}
             <div className="max-h-[450px] overflow-y-auto">
               {/* Notification 1 - New */}
@@ -585,8 +629,8 @@ export function Topbar() {
 
             {/* Footer */}
             <div className="px-5 py-3.5 border-t bg-muted/20">
-              <Button 
-                variant="ghost" 
+              <Button
+                variant="ghost"
                 className="w-full text-[13px] font-semibold text-primary hover:bg-primary/10 hover:text-primary h-9"
                 onClick={() => setNotificationOpen(false)}
               >
