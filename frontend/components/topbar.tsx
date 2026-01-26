@@ -61,35 +61,27 @@ export function Topbar() {
     e.stopPropagation()
 
     const trimmedQuery = searchQuery.trim()
-    console.log('Search triggered:', trimmedQuery)
 
     if (trimmedQuery) {
       const upperQuery = trimmedQuery.toUpperCase()
-      console.log('Navigating to:', `/predictions?search=${encodeURIComponent(upperQuery)}`)
       router.push(`/predictions?search=${encodeURIComponent(upperQuery)}`)
       setSearchQuery("")
       searchInputRef.current?.blur()
-    } else {
-      console.log('Empty search query')
     }
   }
 
   // Handle input change
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value
-    console.log('Search input changed:', value)
-    setSearchQuery(value)
+    setSearchQuery(e.target.value)
   }
 
   // Handle Enter key press
   const handleSearchKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    console.log('Key pressed:', e.key)
     if (e.key === 'Enter') {
       e.preventDefault()
       const trimmedQuery = searchQuery.trim()
       if (trimmedQuery) {
         const upperQuery = trimmedQuery.toUpperCase()
-        console.log('Enter key - Navigating to:', `/predictions?search=${encodeURIComponent(upperQuery)}`)
         router.push(`/predictions?search=${encodeURIComponent(upperQuery)}`)
         setSearchQuery("")
         searchInputRef.current?.blur()
@@ -385,7 +377,7 @@ export function Topbar() {
           role="search"
         >
           {/* Subtle Search Icon (Left) */}
-          <div className="absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground/40 group-focus-within:text-primary transition-all duration-300">
+          <div className="absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground/40 group-focus-within:text-primary transition-all duration-300 pointer-events-none z-10">
             <Search className="h-4 w-4" />
           </div>
 
@@ -398,7 +390,7 @@ export function Topbar() {
             onChange={handleSearchChange}
             onKeyDown={handleSearchKeyDown}
             onClick={handleInputClick}
-            placeholder="Search Bharat AI Wealth..."
+            placeholder="Search stocks, crypto, mutual funds..."
             className="w-full h-12 bg-gradient-to-r from-secondary/40 to-secondary/30 
                      border-2 border-border/40 pl-11 pr-28 rounded-xl 
                      focus:from-background focus:to-background/95
@@ -412,13 +404,14 @@ export function Topbar() {
             autoCorrect="off"
             autoCapitalize="off"
             spellCheck="false"
-            aria-label="Search for stocks and crypto assets"
+            aria-label="Search for stocks, crypto, and mutual funds"
           />
 
           {/* Search Button - Compact and Clean */}
           <div className="absolute right-1.5 top-1/2 -translate-y-1/2">
             <button
               type="submit"
+              aria-label="Search"
               className="flex items-center justify-center gap-2 h-9 px-4 rounded-lg 
                        bg-gradient-to-r from-primary to-primary/90 
                        text-primary-foreground text-xs font-bold 
