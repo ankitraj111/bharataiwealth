@@ -3,3 +3,4 @@ target/
 .next/
 .DS_Store
 .env
+frontend/out/
