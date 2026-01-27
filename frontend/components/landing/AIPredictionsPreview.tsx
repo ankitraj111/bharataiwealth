@@ -9,7 +9,7 @@ export function AIPredictionsPreview() {
         <section className="py-32 relative overflow-hidden bg-gradient-to-b from-slate-50 via-white to-slate-50 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900">
             {/* Background Effects */}
             <div className="absolute inset-0 bg-grid-pattern opacity-5" />
-            
+
             <div className="w-full px-6 md:px-12 lg:px-20 xl:px-32 relative z-10">
                 <div className="max-w-7xl mx-auto">
                     {/* Section Header */}
@@ -62,8 +62,8 @@ export function AIPredictionsPreview() {
                             {/* Content - Live Predictions Page */}
                             <div className="relative bg-gradient-to-br from-slate-50 to-white dark:from-slate-900 dark:to-slate-800">
                                 <div className="relative w-full h-[600px]">
-                                    <iframe 
-                                        src="/predictions?search=RELIANCE.NS" 
+                                    <iframe
+                                        src={`${process.env.NEXT_PUBLIC_BASE_PATH || ""}/predictions?search=RELIANCE.NS`}
                                         className="absolute inset-0 w-full h-full border-0"
                                         title="AI Asset Insights Preview"
                                         style={{

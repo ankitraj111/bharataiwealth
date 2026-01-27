@@ -14,6 +14,9 @@ const nextConfig = {
   compiler: {
     removeConsole: isProd ? { exclude: ['error', 'warn'] } : false,
   },
+  env: {
+    NEXT_PUBLIC_BASE_PATH: isGitHubPages ? '/bharataiwealth' : '',
+  },
 }
 
 export default nextConfig

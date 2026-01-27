@@ -644,7 +644,7 @@ export function Topbar() {
             >
               <div className="relative">
                 <Avatar className="h-8 w-8 ring-2 ring-border/50 ring-offset-2 ring-offset-background transition-all group-hover:ring-primary/50">
-                  <AvatarImage src="/indian-professional-man.png" alt={userName} />
+                  <AvatarImage src={`${process.env.NEXT_PUBLIC_BASE_PATH || ""}/indian-professional-man.png`} alt={userName} />
                   <AvatarFallback className="bg-gradient-to-br from-primary to-primary/80 text-primary-foreground text-xs font-semibold">
                     {userInitials}
                   </AvatarFallback>
@@ -667,7 +667,7 @@ export function Topbar() {
               <div className="flex flex-col space-y-2 p-1">
                 <div className="flex items-center gap-3">
                   <Avatar className="h-10 w-10 border border-border/50">
-                    <AvatarImage src="/indian-professional-man.png" alt={fullName} />
+                    <AvatarImage src={`${process.env.NEXT_PUBLIC_BASE_PATH || ""}/indian-professional-man.png`} alt={fullName} />
                     <AvatarFallback>{userInitials}</AvatarFallback>
                   </Avatar>
                   <div className="flex flex-col">

@@ -198,7 +198,7 @@ export function AppPreview() {
                                         {/* Tablet Image */}
                                         <div className="relative w-full aspect-[4/3] overflow-hidden rounded-b-xl">
                                             <Image
-                                                src="/tablet-mockup.png"
+                                                src={`${process.env.NEXT_PUBLIC_BASE_PATH || ""}/tablet-mockup.png`}
                                                 alt="AI Asset Insights Dashboard"
                                                 fill
                                                 className="object-cover object-top"
@@ -233,7 +233,7 @@ export function AppPreview() {
                                     {/* Mobile Image */}
                                     <div className="relative w-full aspect-[9/19] overflow-hidden">
                                         <Image
-                                            src="/mobile-mockup.png"
+                                            src={`${process.env.NEXT_PUBLIC_BASE_PATH || ""}/mobile-mockup.png`}
                                             alt="AI Insights Mobile App"
                                             fill
                                             className="object-cover"

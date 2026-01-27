@@ -89,7 +89,7 @@ function SettingsContent() {
               {/* Avatar */}
               <div className="flex items-center gap-4">
                 <Avatar className="h-20 w-20 border-2 border-primary/10">
-                  <AvatarImage src="/indian-professional-man.png" />
+                  <AvatarImage src={`${process.env.NEXT_PUBLIC_BASE_PATH || ""}/indian-professional-man.png`} />
                   <AvatarFallback className="bg-primary text-2xl text-primary-foreground font-bold">{userInitials}</AvatarFallback>
                 </Avatar>
                 <div>
