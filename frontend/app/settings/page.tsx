@@ -72,23 +72,23 @@ function SettingsContent() {
               <div className="grid gap-6 sm:grid-cols-2">
                 <div className="space-y-2">
                   <Label htmlFor="firstName" className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">First Name</Label>
-                  <Input id="firstName" defaultValue="Rajesh" className="bg-muted/50 font-bold" />
+                  <Input id="firstName" placeholder="First Name" className="bg-muted/50 font-bold" />
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="lastName" className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">Last Name</Label>
-                  <Input id="lastName" defaultValue="Kumar" className="bg-muted/50 font-bold" />
+                  <Input id="lastName" placeholder="Last Name" className="bg-muted/50 font-bold" />
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="email" className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">Email</Label>
-                  <Input id="email" type="email" defaultValue="rajesh@example.com" className="bg-muted/50 font-bold" />
+                  <Input id="email" type="email" placeholder="your.email@example.com" className="bg-muted/50 font-bold" />
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="phone" className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">Phone</Label>
-                  <Input id="phone" type="tel" defaultValue="+91 98765 43210" className="bg-muted/50 font-bold font-mono" />
+                  <Input id="phone" type="tel" placeholder="+91 XXXXX XXXXX" className="bg-muted/50 font-bold font-mono" />
                 </div>
                 <div className="space-y-2 sm:col-span-2">
                   <Label htmlFor="pan" className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">PAN Number</Label>
-                  <Input id="pan" defaultValue="ABCDE1234F" className="bg-muted/50 font-bold font-mono" />
+                  <Input id="pan" placeholder="ABCDE1234F" className="bg-muted/50 font-bold font-mono" />
                 </div>
               </div>
 
