@@ -9,11 +9,17 @@ export function AppShell({ children, noPadding = false }: { children: React.Reac
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-white via-sky-50 to-white dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 selection:bg-primary/20 selection:text-primary overflow-x-hidden">
-      <Sidebar />
-      <div className="lg:pl-[260px] relative z-0">
+      {/* Desktop Sidebar - Hidden on mobile */}
+      <div className="hidden lg:block">
+        <Sidebar />
+      </div>
+      
+      {/* Main Content Area */}
+      <div className="w-full lg:pl-[260px] relative z-0">
         <Topbar />
         <main className={`${noPadding ? "" : "p-3 sm:p-4 lg:p-6"} min-h-[calc(100vh-72px)]`}>{children}</main>
       </div>
+      
       <AssetInsightPanel
         asset={insightAsset || "RELIANCE"}
         isOpen={!!insightAsset}

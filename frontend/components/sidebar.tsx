@@ -130,9 +130,9 @@ export function Sidebar() {
   }, [pathname])
 
   return (
-    <aside className="fixed left-0 top-0 z-40 h-screen w-[260px] border-r border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 flex-col hidden lg:flex shadow-sm">
+    <aside className="fixed left-0 top-0 z-40 h-screen w-[260px] border-r border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 flex-col hidden lg:flex shadow-sm overflow-hidden">
       {/* Logo Section - Professional Theme-Aware Clean Version */}
-      <div className="flex h-[72px] items-center gap-3 px-5 border-b border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-950">
+      <div className="flex h-[72px] items-center gap-3 px-5 border-b border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-950 flex-shrink-0">
         <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-orange-500 shadow-sm shadow-orange-500/20">
           <Sparkles className="h-5 w-5 text-white" />
         </div>
