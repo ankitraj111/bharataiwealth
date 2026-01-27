@@ -28,9 +28,11 @@ import { useRouter } from "next/navigation"
 import { useState, useEffect, useRef } from "react"
 
 import { useAuth } from "@/contexts/AuthContext"
+import { useNotifications } from "@/contexts/NotificationContext"
 
 export function Topbar() {
   const { user, logout } = useAuth()
+  const { notifications, unreadCount, markAllAsRead } = useNotifications()
   const router = useRouter()
   const [searchQuery, setSearchQuery] = useState("")
   const [notificationOpen, setNotificationOpen] = useState(false)
@@ -588,84 +590,33 @@ export function Topbar() {
             {/* Header */}
             <div className="flex items-center justify-between px-5 py-4 border-b bg-muted/30">
               <h3 className="font-bold text-base">Notifications</h3>
-              <Badge variant="secondary" className="text-[11px] px-2.5 py-0.5 font-bold bg-primary/10 text-primary border-0">
-                3 New
-              </Badge>
+              {unreadCount > 0 && (
+                <Badge variant="secondary" className="text-[11px] px-2.5 py-0.5 font-bold bg-primary/10 text-primary border-0">
+                  {unreadCount} New
+                </Badge>
+              )}
             </div>
 
             {/* Notifications List */}
             <div className="max-h-[450px] overflow-y-auto">
-              {/* Notification 1 - New */}
-              <div className="px-5 py-4 hover:bg-muted/50 cursor-pointer transition-all border-b group">
-                <div className="flex gap-3.5">
-                  <div className="flex-shrink-0 mt-0.5">
-                    <div className="h-2.5 w-2.5 rounded-full bg-primary shadow-sm shadow-primary/50" />
-                  </div>
-                  <div className="flex-1 space-y-1.5">
-                    <p className="text-[15px] font-semibold leading-tight group-hover:text-primary transition-colors">
-                      SIP Installment Due
-                    </p>
-                    <p className="text-[13px] text-muted-foreground leading-relaxed">
-                      Your monthly SIP for &quot;Nifty 50 Index Fund&quot; is due tomorrow.
-                    </p>
-                    <p className="text-[11px] text-muted-foreground/70 font-medium">2 hours ago</p>
-                  </div>
-                </div>
-              </div>
-
-              {/* Notification 2 - New */}
-              <div className="px-5 py-4 hover:bg-muted/50 cursor-pointer transition-all border-b group">
-                <div className="flex gap-3.5">
-                  <div className="flex-shrink-0 mt-0.5">
-                    <div className="h-2.5 w-2.5 rounded-full bg-primary shadow-sm shadow-primary/50" />
-                  </div>
-                  <div className="flex-1 space-y-1.5">
-                    <p className="text-[15px] font-semibold leading-tight group-hover:text-primary transition-colors">
-                      Price Alert Triggered
-                    </p>
-                    <p className="text-[13px] text-muted-foreground leading-relaxed">
-                      RELIANCE has reached your target price of ₹2,850.
-                    </p>
-                    <p className="text-[11px] text-muted-foreground/70 font-medium">5 hours ago</p>
+              {notifications.map((notification) => (
+                <div key={notification.id} className={`px-5 py-4 hover:bg-muted/50 cursor-pointer transition-all border-b group ${notification.isRead ? 'opacity-50' : ''}`}>
+                  <div className="flex gap-3.5">
+                    <div className="flex-shrink-0 mt-0.5">
+                      <div className={`h-2.5 w-2.5 rounded-full ${notification.isRead ? 'bg-muted-foreground/40' : 'bg-primary shadow-sm shadow-primary/50'}`} />
+                    </div>
+                    <div className="flex-1 space-y-1.5">
+                      <p className="text-[15px] font-semibold leading-tight group-hover:text-primary transition-colors">
+                        {notification.title}
+                      </p>
+                      <p className="text-[13px] text-muted-foreground leading-relaxed">
+                        {notification.message}
+                      </p>
+                      <p className="text-[11px] text-muted-foreground/70 font-medium">{notification.time}</p>
+                    </div>
                   </div>
                 </div>
-              </div>
-
-              {/* Notification 3 - New */}
-              <div className="px-5 py-4 hover:bg-muted/50 cursor-pointer transition-all border-b group">
-                <div className="flex gap-3.5">
-                  <div className="flex-shrink-0 mt-0.5">
-                    <div className="h-2.5 w-2.5 rounded-full bg-primary shadow-sm shadow-primary/50" />
-                  </div>
-                  <div className="flex-1 space-y-1.5">
-                    <p className="text-[15px] font-semibold leading-tight group-hover:text-primary transition-colors">
-                      Weekly Report Ready
-                    </p>
-                    <p className="text-[13px] text-muted-foreground leading-relaxed">
-                      Your AI wealth digest for December Week 4 is now available.
-                    </p>
-                    <p className="text-[11px] text-muted-foreground/70 font-medium">Yesterday</p>
-                  </div>
-                </div>
-              </div>
-
-              {/* Notification 4 - Read */}
-              <div className="px-5 py-4 hover:bg-muted/50 cursor-pointer transition-all opacity-50 group">
-                <div className="flex gap-3.5">
-                  <div className="flex-shrink-0 mt-0.5">
-                    <div className="h-2.5 w-2.5 rounded-full bg-muted-foreground/40" />
-                  </div>
-                  <div className="flex-1 space-y-1.5">
-                    <p className="text-[15px] font-semibold leading-tight">
-                      Portfolio Rebalancing
-                    </p>
-                    <p className="text-[13px] text-muted-foreground leading-relaxed">
-                      AI suggests rebalancing based on market conditions.
-                    </p>
-                    <p className="text-[11px] text-muted-foreground/70 font-medium">2 days ago</p>
-                  </div>
-                </div>
-              </div>
+              ))}
             </div>
 
             {/* Footer */}
@@ -673,7 +624,7 @@ export function Topbar() {
               <Button
                 variant="ghost"
                 className="w-full text-[13px] font-semibold text-primary hover:bg-primary/10 hover:text-primary h-9"
-                onClick={() => setNotificationOpen(false)}
+                onClick={() => { markAllAsRead(); setNotificationOpen(false); }}
               >
                 Mark all as read
               </Button>
