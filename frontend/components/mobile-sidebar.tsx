@@ -8,98 +8,63 @@ import {
   Receipt,
   BarChart3,
   MessageSquareText,
-  FlaskConical,
   Calculator,
   Users,
   Bell,
   Settings,
   TrendingUp,
-  Zap,
   Target,
   Shield,
-  Trophy,
   Wallet,
-  Mail,
   Sparkles,
   HelpCircle,
   PiggyBank,
   Coins,
-  Clock,
-  Calendar,
-  Activity,
-  LineChart,
-  FileSearch,
-  BookOpen,
-  History,
-  Newspaper,
-  BookOpenCheck,
-  ShieldCheck,
-  Eye,
-  Link2,
-  Smile,
-  Repeat,
-  PenTool,
-  Scale,
-  FileText,
+  ChevronDown,
+  ChevronRight,
 } from "lucide-react"
+import { useState } from "react"
 
-const allNavItems = [
-  // Main Features
-  { name: "Dashboard", href: "/dashboard", icon: LayoutDashboard, section: "main" },
-  { name: "Expenses", href: "/expenses", icon: Receipt, section: "main" },
-  { name: "Analytics", href: "/analytics", icon: BarChart3, section: "main" },
-  { name: "AI Advisor", href: "/advisor", icon: MessageSquareText, section: "main" },
+// Simplified navigation for mobile
+const mainNavItems = [
+  { name: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
+  { name: "Expenses", href: "/expenses", icon: Receipt },
+  { name: "Analytics", href: "/analytics", icon: BarChart3 },
+  { name: "AI Advisor", href: "/advisor", icon: MessageSquareText },
+]
 
-  // Portfolio Management
-  { name: "Portfolio", href: "/portfolio", icon: Wallet, section: "portfolio" },
-  { name: "Low Risk", href: "/portfolios/low-risk", icon: TrendingUp, section: "portfolio" },
-  { name: "Medium Risk", href: "/portfolios/medium-risk", icon: BarChart3, section: "portfolio" },
-  { name: "Long-Term Forecast", href: "/portfolios/high-risk", icon: Zap, section: "portfolio" },
-  { name: "AI Predictions", href: "/predictions", icon: TrendingUp, section: "portfolio" },
+const portfolioItems = [
+  { name: "Portfolio", href: "/portfolio", icon: Wallet },
+  { name: "Predictions", href: "/predictions", icon: TrendingUp },
+  { name: "Portfolios", href: "/portfolios", icon: BarChart3 },
+]
 
-  // Crypto Hub
-  { name: "Crypto Market", href: "/crypto/market", icon: LayoutDashboard, section: "crypto" },
-  { name: "Watchlist", href: "/crypto/watchlist", icon: Eye, section: "crypto" },
-  { name: "Portfolio", href: "/crypto/portfolio", icon: Wallet, section: "crypto" },
-  { name: "Analysis", href: "/crypto/analysis", icon: LineChart, section: "crypto" },
-  { name: "Signals", href: "/crypto/signals", icon: Zap, section: "crypto" },
-  { name: "On-Chain", href: "/crypto/on-chain", icon: Link2, section: "crypto" },
-  { name: "Sentiment", href: "/crypto/sentiment", icon: Smile, section: "crypto" },
-  { name: "Tools", href: "/crypto/tools", icon: Calculator, section: "crypto" },
-  { name: "Compare", href: "/crypto/compare", icon: Repeat, section: "crypto" },
-  { name: "Strategy", href: "/crypto/strategy", icon: PenTool, section: "crypto" },
-  { name: "Backtesting", href: "/crypto/backtesting", icon: History, section: "crypto" },
-  { name: "Tax Hub", href: "/crypto/tax", icon: Scale, section: "crypto" },
-  { name: "Reports", href: "/crypto/reports", icon: FileText, section: "crypto" },
-  { name: "News", href: "/crypto/news", icon: Newspaper, section: "crypto" },
-  { name: "Learn", href: "/crypto/learn", icon: BookOpenCheck, section: "crypto" },
-  { name: "Security", href: "/crypto/security", icon: ShieldCheck, section: "crypto" },
+const cryptoItems = [
+  { name: "Crypto Dashboard", href: "/crypto/dashboard", icon: LayoutDashboard },
+  { name: "Market", href: "/crypto/market", icon: TrendingUp },
+  { name: "Portfolio", href: "/crypto/portfolio", icon: Wallet },
+]
 
-  // Mutual Funds
-  { name: "MF Explorer", href: "/mf", icon: Coins, section: "mf" },
-  { name: "SIP Planner", href: "/sip", icon: PiggyBank, section: "mf" },
-  { name: "Goal Funds", href: "/goals-mf", icon: Target, section: "mf" },
+const toolsItems = [
+  { name: "Goals", href: "/goals", icon: Target },
+  { name: "Emergency Fund", href: "/emergency-fund", icon: Shield },
+  { name: "Tax", href: "/tax", icon: Calculator },
+  { name: "Family", href: "/family", icon: Users },
+  { name: "MF Explorer", href: "/mf", icon: Coins },
+  { name: "SIP Planner", href: "/sip", icon: PiggyBank },
+]
 
-  // Tools
-  { name: "Goal Tracker", href: "/goals", icon: Target, section: "tools" },
-  { name: "Emergency Fund", href: "/emergency-fund", icon: Shield, section: "tools" },
-  { name: "Sandbox", href: "/sandbox", icon: FlaskConical, section: "tools" },
-  { name: "Tax & Insurance", href: "/tax", icon: Calculator, section: "tools" },
-  { name: "Family", href: "/family", icon: Users, section: "tools" },
-
-  // Engagement
-  { name: "Badges", href: "/badges", icon: Trophy, section: "engagement" },
-  { name: "SIP Reminders", href: "/sip-reminders", icon: Wallet, section: "engagement" },
-  { name: "Email Digest", href: "/digest", icon: Mail, section: "engagement" },
-
-  // Bottom
-  { name: "Alerts", href: "/alerts", icon: Bell, section: "bottom" },
-  { name: "Support", href: "/support", icon: HelpCircle, section: "bottom" },
-  { name: "Settings", href: "/settings", icon: Settings, section: "bottom" },
+const bottomItems = [
+  { name: "Alerts", href: "/alerts", icon: Bell },
+  { name: "Support", href: "/support", icon: HelpCircle },
+  { name: "Settings", href: "/settings", icon: Settings },
 ]
 
 export function MobileSidebar() {
   const pathname = usePathname()
+  const [portfolioOpen, setPortfolioOpen] = useState(false)
+  const [cryptoOpen, setCryptoOpen] = useState(false)
+  const [toolsOpen, setToolsOpen] = useState(false)
 
   return (
     <div className="flex h-full flex-col bg-background">
@@ -115,14 +80,122 @@ export function MobileSidebar() {
       </div>
 
       {/* Navigation */}
-      <nav className="flex-1 overflow-y-auto px-2 py-3">
-        <div className="space-y-0.5">
-          {allNavItems.map((item) => (
+      <nav className="flex-1 overflow-y-auto px-2 py-3 space-y-1">
+        {/* Main Items */}
+        {mainNavItems.map((item) => (
+          <Link
+            key={item.href}
+            href={item.href}
+            className={cn(
+              "flex items-center gap-2.5 rounded-lg px-3 py-2.5 text-sm font-medium transition-all",
+              pathname === item.href
+                ? "bg-primary/10 text-primary shadow-sm border border-primary/20"
+                : "text-muted-foreground hover:bg-secondary/80 hover:text-foreground",
+            )}
+          >
+            <item.icon className="h-4 w-4 flex-shrink-0" />
+            <span className="truncate">{item.name}</span>
+          </Link>
+        ))}
+
+        {/* Portfolio Section */}
+        <div className="pt-2">
+          <button
+            onClick={() => setPortfolioOpen(!portfolioOpen)}
+            className="flex w-full items-center justify-between rounded-lg px-3 py-2 text-sm font-semibold text-foreground hover:bg-secondary/80 transition-all"
+          >
+            <span>Portfolio</span>
+            {portfolioOpen ? <ChevronDown className="h-4 w-4" /> : <ChevronRight className="h-4 w-4" />}
+          </button>
+          {portfolioOpen && (
+            <div className="mt-1 space-y-0.5 pl-2">
+              {portfolioItems.map((item) => (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className={cn(
+                    "flex items-center gap-2.5 rounded-lg px-3 py-2 text-sm font-medium transition-all",
+                    pathname === item.href
+                      ? "bg-primary/10 text-primary"
+                      : "text-muted-foreground hover:bg-secondary/60",
+                  )}
+                >
+                  <item.icon className="h-3.5 w-3.5 flex-shrink-0" />
+                  <span className="truncate">{item.name}</span>
+                </Link>
+              ))}
+            </div>
+          )}
+        </div>
+
+        {/* Crypto Section */}
+        <div>
+          <button
+            onClick={() => setCryptoOpen(!cryptoOpen)}
+            className="flex w-full items-center justify-between rounded-lg px-3 py-2 text-sm font-semibold text-foreground hover:bg-secondary/80 transition-all"
+          >
+            <span>Crypto Hub</span>
+            {cryptoOpen ? <ChevronDown className="h-4 w-4" /> : <ChevronRight className="h-4 w-4" />}
+          </button>
+          {cryptoOpen && (
+            <div className="mt-1 space-y-0.5 pl-2">
+              {cryptoItems.map((item) => (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className={cn(
+                    "flex items-center gap-2.5 rounded-lg px-3 py-2 text-sm font-medium transition-all",
+                    pathname === item.href
+                      ? "bg-primary/10 text-primary"
+                      : "text-muted-foreground hover:bg-secondary/60",
+                  )}
+                >
+                  <item.icon className="h-3.5 w-3.5 flex-shrink-0" />
+                  <span className="truncate">{item.name}</span>
+                </Link>
+              ))}
+            </div>
+          )}
+        </div>
+
+        {/* Tools Section */}
+        <div>
+          <button
+            onClick={() => setToolsOpen(!toolsOpen)}
+            className="flex w-full items-center justify-between rounded-lg px-3 py-2 text-sm font-semibold text-foreground hover:bg-secondary/80 transition-all"
+          >
+            <span>Tools & More</span>
+            {toolsOpen ? <ChevronDown className="h-4 w-4" /> : <ChevronRight className="h-4 w-4" />}
+          </button>
+          {toolsOpen && (
+            <div className="mt-1 space-y-0.5 pl-2">
+              {toolsItems.map((item) => (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className={cn(
+                    "flex items-center gap-2.5 rounded-lg px-3 py-2 text-sm font-medium transition-all",
+                    pathname === item.href
+                      ? "bg-primary/10 text-primary"
+                      : "text-muted-foreground hover:bg-secondary/60",
+                  )}
+                >
+                  <item.icon className="h-3.5 w-3.5 flex-shrink-0" />
+                  <span className="truncate">{item.name}</span>
+                </Link>
+              ))}
+            </div>
+          )}
+        </div>
+
+        {/* Bottom Items */}
+        <div className="pt-4 mt-4 border-t border-border space-y-0.5">
+          {bottomItems.map((item) => (
             <Link
               key={item.href}
               href={item.href}
               className={cn(
-                "flex items-center gap-2.5 rounded-lg px-3 py-2 text-sm font-medium transition-all",
+                "flex items-center gap-2.5 rounded-lg px-3 py-2.5 text-sm font-medium transition-all",
                 pathname === item.href
                   ? "bg-primary/10 text-primary shadow-sm border border-primary/20"
                   : "text-muted-foreground hover:bg-secondary/80 hover:text-foreground",
