@@ -28,8 +28,6 @@ import { useState } from "react"
 // Simplified navigation for mobile
 const mainNavItems = [
   { name: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
-  { name: "Expenses", href: "/expenses", icon: Receipt },
-  { name: "Analytics", href: "/analytics", icon: BarChart3 },
   { name: "AI Advisor", href: "/advisor", icon: MessageSquareText },
 ]
 
