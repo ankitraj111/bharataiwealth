@@ -159,7 +159,7 @@ export default function LoginPage() {
                                                 <div className="relative group">
                                                     <Mail className="absolute left-3.5 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground group-focus-within:text-primary transition-colors duration-200" />
                                                     <Input
-                                                        placeholder="your.email@example.com"
+                                                        placeholder="your.example@gmail.com"
                                                         className="bg-secondary/40 border-border/50 h-12 pl-11 rounded-xl focus:ring-primary/20 transition-all font-medium"
                                                         {...field}
                                                     />
