@@ -12,6 +12,7 @@ import { Separator } from "@/components/ui/separator"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { User, Bell, Shield, Smartphone, CreditCard, LogOut, Camera, Check } from "lucide-react"
+import { useAuth } from "@/contexts/AuthContext"
 
 export default function SettingsPage() {
   return (
@@ -22,6 +23,7 @@ export default function SettingsPage() {
 }
 
 function SettingsContent() {
+  const { user } = useAuth()
   const [notifications, setNotifications] = useState({
     email: true,
     push: true,
@@ -30,6 +32,20 @@ function SettingsContent() {
     reports: true,
     marketing: false,
   })
+
+  // Get user initials for avatar
+  const getInitials = (name: string) => {
+    return name
+      .split(" ")
+      .map((n) => n[0])
+      .join("")
+      .toUpperCase()
+      .slice(0, 2)
+  }
+
+  const userInitials = user?.name ? getInitials(user.name) : "U"
+  const firstName = user?.name?.split(" ")[0] || ""
+  const lastName = user?.name?.split(" ").slice(1).join(" ") || ""
 
   return (
     <AppShell>
@@ -55,7 +71,7 @@ function SettingsContent() {
               <div className="flex items-center gap-4">
                 <Avatar className="h-20 w-20 border-2 border-primary/10">
                   <AvatarImage src="/indian-professional-man.png" />
-                  <AvatarFallback className="bg-primary text-2xl text-primary-foreground font-bold">RK</AvatarFallback>
+                  <AvatarFallback className="bg-primary text-2xl text-primary-foreground font-bold">{userInitials}</AvatarFallback>
                 </Avatar>
                 <div>
                   <Button variant="outline" className="gap-2 bg-transparent border-border/50 hover:bg-muted font-bold h-9">
@@ -72,15 +88,15 @@ function SettingsContent() {
               <div className="grid gap-6 sm:grid-cols-2">
                 <div className="space-y-2">
                   <Label htmlFor="firstName" className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">First Name</Label>
-                  <Input id="firstName" placeholder="First Name" className="bg-muted/50 font-bold" />
+                  <Input id="firstName" defaultValue={firstName} placeholder="First Name" className="bg-muted/50 font-bold" />
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="lastName" className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">Last Name</Label>
-                  <Input id="lastName" placeholder="Last Name" className="bg-muted/50 font-bold" />
+                  <Input id="lastName" defaultValue={lastName} placeholder="Last Name" className="bg-muted/50 font-bold" />
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="email" className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">Email</Label>
-                  <Input id="email" type="email" placeholder="your.email@example.com" className="bg-muted/50 font-bold" />
+                  <Input id="email" type="email" defaultValue={user?.email || ""} placeholder="your.email@example.com" className="bg-muted/50 font-bold" />
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="phone" className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">Phone</Label>
