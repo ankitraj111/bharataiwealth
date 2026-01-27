@@ -78,7 +78,7 @@ export function Footer() {
                                 <div className="w-8 h-8 rounded-lg bg-orange-50 dark:bg-orange-900/30 flex items-center justify-center">
                                     <MapPin className="w-4 h-4 text-orange-600 dark:text-orange-400" />
                                 </div>
-                                <span>Bangalore, India</span>
+                                <span>New Delhi, India</span>
                             </div>
                         </div>
 
