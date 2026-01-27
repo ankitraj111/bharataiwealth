@@ -34,6 +34,7 @@ export function Topbar() {
   const router = useRouter()
   const [searchQuery, setSearchQuery] = useState("")
   const [notificationOpen, setNotificationOpen] = useState(false)
+  const [mobileSearchOpen, setMobileSearchOpen] = useState(false)
   const [isListening, setIsListening] = useState(false)
   const [voiceDialogOpen, setVoiceDialogOpen] = useState(false)
   const [transcript, setTranscript] = useState("")
@@ -369,10 +370,22 @@ export function Topbar() {
         </SheetContent>
       </Sheet>
 
-      {/* Search - Streamlined Design */}
-      <div className="hidden flex-1 md:flex md:max-w-2xl">
+      {/* Search - Responsive Design */}
+      <div className="flex-1 flex items-center gap-2 max-w-2xl">
+        {/* Mobile Search Button */}
+        <Button
+          variant="ghost"
+          size="icon"
+          onClick={() => setMobileSearchOpen(true)}
+          className="md:hidden h-10 w-10 rounded-xl hover:bg-secondary/80 transition-all"
+        >
+          <Search className="h-5 w-5" />
+          <span className="sr-only">Search</span>
+        </Button>
+
+        {/* Desktop Search Bar */}
         <form
-          className="relative w-full group"
+          className="relative w-full group hidden md:flex"
           onSubmit={handleSearch}
           role="search"
         >
@@ -521,6 +534,36 @@ export function Topbar() {
                 )}
               </div>
             </div>
+          </DialogContent>
+        </Dialog>
+
+        {/* Mobile Search Dialog */}
+        <Dialog open={mobileSearchOpen} onOpenChange={setMobileSearchOpen}>
+          <DialogContent className="sm:max-w-md">
+            <DialogHeader>
+              <DialogTitle>Search Assets</DialogTitle>
+              <DialogDescription>
+                Search for stocks, crypto, and mutual funds
+              </DialogDescription>
+            </DialogHeader>
+            <form onSubmit={(e) => { handleSearch(e); setMobileSearchOpen(false); }} className="space-y-4">
+              <div className="relative">
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                <input
+                  ref={searchInputRef}
+                  type="text"
+                  value={searchQuery}
+                  onChange={handleSearchChange}
+                  placeholder="Search stocks, crypto, mutual funds..."
+                  className="w-full h-12 pl-10 pr-4 rounded-xl border-2 border-border bg-background focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all"
+                  autoFocus
+                />
+              </div>
+              <Button type="submit" className="w-full">
+                <Search className="h-4 w-4 mr-2" />
+                Search
+              </Button>
+            </form>
           </DialogContent>
         </Dialog>
 

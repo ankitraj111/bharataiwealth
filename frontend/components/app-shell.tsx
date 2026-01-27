@@ -12,7 +12,7 @@ export function AppShell({ children, noPadding = false }: { children: React.Reac
       <Sidebar />
       <div className="lg:pl-[260px] relative z-0">
         <Topbar />
-        <main className={`${noPadding ? "" : "p-4 lg:p-6"} min-h-[calc(100vh-72px)]`}>{children}</main>
+        <main className={`${noPadding ? "" : "p-3 sm:p-4 lg:p-6"} min-h-[calc(100vh-72px)]`}>{children}</main>
       </div>
       <AssetInsightPanel
         asset={insightAsset || "RELIANCE"}

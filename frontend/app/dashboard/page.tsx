@@ -139,16 +139,16 @@ function DashboardContent() {
   return (
     <AppShell noPadding>
       <MarketTicker />
-      <div className="p-6 md:p-8 space-y-8">
+      <div className="p-3 sm:p-4 md:p-6 lg:p-8 space-y-6 md:space-y-8">
         {/* Quick Actions - Moved to Top */}
-        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-8">
-          <div className="space-y-2">
-            <h2 className="text-2xl font-bold text-foreground">Quick Actions</h2>
-            <p className="text-sm text-muted-foreground">Access your most used features</p>
+        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 md:gap-8">
+          <div className="space-y-1 md:space-y-2">
+            <h2 className="text-xl md:text-2xl font-bold text-foreground">Quick Actions</h2>
+            <p className="text-xs md:text-sm text-muted-foreground">Access your most used features</p>
           </div>
 
           {/* Quick Actions Grid */}
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 md:gap-3">
             <Link href="/portfolios">
               <div className="group h-14 w-full sm:w-32 bg-white dark:bg-slate-800 hover:bg-blue-50 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-700 hover:border-blue-300 dark:hover:border-blue-600 rounded-xl p-2.5 px-3.5 flex items-center gap-2.5 transition-all cursor-pointer shadow-sm hover:shadow-md">
                 <div className="p-1.5 rounded-lg bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 group-hover:bg-blue-500 group-hover:text-white transition-all">
