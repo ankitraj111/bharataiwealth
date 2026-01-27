@@ -8,10 +8,15 @@ import { Button } from "@/components/ui/button"
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import { Badge } from "@/components/ui/badge"
 import { Progress } from "@/components/ui/progress"
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { cn } from "@/lib/utils"
 import { Users, TrendingUp, Target, Wallet, Plus, Loader2 } from "lucide-react"
 import { useAuth } from "@/contexts/AuthContext"
 import { fetchFamily } from "@/lib/api"
+import { toast } from "sonner"
 
 export default function FamilyPage() {
   return (
@@ -26,6 +31,19 @@ function FamilyContent() {
   const [familyMembers, setFamilyMembers] = useState<any[]>([])
   const [isLoading, setIsLoading] = useState(true)
   const [selectedMember, setSelectedMember] = useState<any>(null)
+  const [addMemberOpen, setAddMemberOpen] = useState(false)
+  const [addGoalOpen, setAddGoalOpen] = useState(false)
+  const [newMember, setNewMember] = useState({
+    name: "",
+    relation: "",
+    netWorth: "",
+    monthlyExpense: ""
+  })
+  const [newGoal, setNewGoal] = useState({
+    name: "",
+    target: "",
+    current: ""
+  })
 
   const getInitials = (name: string) => {
     return name
@@ -34,6 +52,53 @@ function FamilyContent() {
       .join("")
       .toUpperCase()
       .slice(0, 2)
+  }
+
+  const handleAddMember = () => {
+    if (!newMember.name || !newMember.relation) {
+      toast.error("Please fill in all required fields")
+      return
+    }
+
+    const member = {
+      id: Date.now().toString(),
+      name: newMember.name,
+      relation: newMember.relation,
+      avatar: getInitials(newMember.name),
+      netWorth: Number(newMember.netWorth) || 0,
+      monthlyExpense: Number(newMember.monthlyExpense) || 0,
+      goals: []
+    }
+
+    setFamilyMembers([...familyMembers, member])
+    setAddMemberOpen(false)
+    setNewMember({ name: "", relation: "", netWorth: "", monthlyExpense: "" })
+    toast.success(`${newMember.name} added successfully!`)
+  }
+
+  const handleAddGoal = () => {
+    if (!newGoal.name || !newGoal.target) {
+      toast.error("Please fill in goal name and target amount")
+      return
+    }
+
+    const goal = {
+      name: newGoal.name,
+      target: Number(newGoal.target) || 0,
+      current: Number(newGoal.current) || 0
+    }
+
+    const updatedMembers = familyMembers.map(m => 
+      m.id === selectedMember.id 
+        ? { ...m, goals: [...(m.goals || []), goal] }
+        : m
+    )
+
+    setFamilyMembers(updatedMembers)
+    setSelectedMember({ ...selectedMember, goals: [...(selectedMember.goals || []), goal] })
+    setAddGoalOpen(false)
+    setNewGoal({ name: "", target: "", current: "" })
+    toast.success(`Goal "${newGoal.name}" added successfully!`)
   }
 
   useEffect(() => {
@@ -95,7 +160,7 @@ function FamilyContent() {
             <h1 className="text-2xl font-bold text-foreground">Family Dashboard</h1>
             <p className="text-sm text-muted-foreground font-medium">Track and manage your family&apos;s finances</p>
           </div>
-          <Button className="gap-2 shadow-sm">
+          <Button className="gap-2 shadow-sm" onClick={() => setAddMemberOpen(true)}>
             <Plus className="h-4 w-4" />
             Add Member
           </Button>
@@ -252,13 +317,133 @@ function FamilyContent() {
                   </div>
                 )
               })}
-              <Button variant="outline" className="w-full gap-2 bg-transparent border-dashed border-border/50 hover:border-primary/50 hover:bg-primary/5 transition-all py-6 rounded-xl">
+              <Button variant="outline" className="w-full gap-2 bg-transparent border-dashed border-border/50 hover:border-primary/50 hover:bg-primary/5 transition-all py-6 rounded-xl" onClick={() => setAddGoalOpen(true)}>
                 <Plus className="h-4 w-4" />
                 Add Goal
               </Button>
             </CardContent>
           </Card>
         </div>
+
+        {/* Add Member Dialog */}
+        <Dialog open={addMemberOpen} onOpenChange={setAddMemberOpen}>
+          <DialogContent className="sm:max-w-md">
+            <DialogHeader>
+              <DialogTitle>Add Family Member</DialogTitle>
+              <DialogDescription>
+                Add a new member to track their financial goals
+              </DialogDescription>
+            </DialogHeader>
+            <div className="space-y-4 py-4">
+              <div className="space-y-2">
+                <Label htmlFor="name">Full Name *</Label>
+                <Input
+                  id="name"
+                  placeholder="Enter full name"
+                  value={newMember.name}
+                  onChange={(e) => setNewMember({ ...newMember, name: e.target.value })}
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="relation">Relation *</Label>
+                <Select value={newMember.relation} onValueChange={(value) => setNewMember({ ...newMember, relation: value })}>
+                  <SelectTrigger id="relation">
+                    <SelectValue placeholder="Select relation" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="Spouse">Spouse</SelectItem>
+                    <SelectItem value="Son">Son</SelectItem>
+                    <SelectItem value="Daughter">Daughter</SelectItem>
+                    <SelectItem value="Father">Father</SelectItem>
+                    <SelectItem value="Mother">Mother</SelectItem>
+                    <SelectItem value="Brother">Brother</SelectItem>
+                    <SelectItem value="Sister">Sister</SelectItem>
+                    <SelectItem value="Other">Other</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="netWorth">Net Worth (₹)</Label>
+                <Input
+                  id="netWorth"
+                  type="number"
+                  placeholder="0"
+                  value={newMember.netWorth}
+                  onChange={(e) => setNewMember({ ...newMember, netWorth: e.target.value })}
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="monthlyExpense">Monthly Expense (₹)</Label>
+                <Input
+                  id="monthlyExpense"
+                  type="number"
+                  placeholder="0"
+                  value={newMember.monthlyExpense}
+                  onChange={(e) => setNewMember({ ...newMember, monthlyExpense: e.target.value })}
+                />
+              </div>
+            </div>
+            <DialogFooter>
+              <Button variant="outline" onClick={() => setAddMemberOpen(false)}>
+                Cancel
+              </Button>
+              <Button onClick={handleAddMember}>
+                Add Member
+              </Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
+
+        {/* Add Goal Dialog */}
+        <Dialog open={addGoalOpen} onOpenChange={setAddGoalOpen}>
+          <DialogContent className="sm:max-w-md">
+            <DialogHeader>
+              <DialogTitle>Add Financial Goal</DialogTitle>
+              <DialogDescription>
+                Add a new goal for {selectedMember?.name}
+              </DialogDescription>
+            </DialogHeader>
+            <div className="space-y-4 py-4">
+              <div className="space-y-2">
+                <Label htmlFor="goalName">Goal Name *</Label>
+                <Input
+                  id="goalName"
+                  placeholder="e.g., Emergency Fund, House Down Payment"
+                  value={newGoal.name}
+                  onChange={(e) => setNewGoal({ ...newGoal, name: e.target.value })}
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="target">Target Amount (₹) *</Label>
+                <Input
+                  id="target"
+                  type="number"
+                  placeholder="0"
+                  value={newGoal.target}
+                  onChange={(e) => setNewGoal({ ...newGoal, target: e.target.value })}
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="current">Current Amount (₹)</Label>
+                <Input
+                  id="current"
+                  type="number"
+                  placeholder="0"
+                  value={newGoal.current}
+                  onChange={(e) => setNewGoal({ ...newGoal, current: e.target.value })}
+                />
+              </div>
+            </div>
+            <DialogFooter>
+              <Button variant="outline" onClick={() => setAddGoalOpen(false)}>
+                Cancel
+              </Button>
+              <Button onClick={handleAddGoal}>
+                Add Goal
+              </Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
       </div>
     </AppShell>
   )

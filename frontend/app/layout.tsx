@@ -2,6 +2,7 @@ import type React from "react"
 import type { Metadata, Viewport } from "next"
 import { Inter, Poppins, JetBrains_Mono } from "next/font/google"
 import { Providers } from "@/components/providers"
+import { Toaster } from "@/components/ui/sonner"
 import "./globals.css"
 import "./normalize-text.css"
 
@@ -60,6 +61,7 @@ export default function RootLayout({
       >
         <Providers>
           {children}
+          <Toaster />
         </Providers>
       </body>
     </html>
