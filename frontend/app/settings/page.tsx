@@ -32,6 +32,7 @@ function SettingsContent() {
     reports: true,
     marketing: false,
   })
+  const [saveMessage, setSaveMessage] = useState("")
 
   // Get user initials for avatar
   const getInitials = (name: string) => {
@@ -47,9 +48,27 @@ function SettingsContent() {
   const firstName = user?.name?.split(" ")[0] || ""
   const lastName = user?.name?.split(" ").slice(1).join(" ") || ""
 
+  const handleSaveProfile = () => {
+    setSaveMessage("Profile updated successfully!")
+    setTimeout(() => setSaveMessage(""), 3000)
+  }
+
+  const handleSaveNotifications = () => {
+    setSaveMessage("Notification preferences saved!")
+    setTimeout(() => setSaveMessage(""), 3000)
+  }
+
   return (
     <AppShell>
       <div className="space-y-6">
+        {/* Success Message */}
+        {saveMessage && (
+          <div className="bg-primary/10 border border-primary/20 text-primary p-4 rounded-xl font-semibold flex items-center gap-2 animate-in fade-in slide-in-from-top-2">
+            <Check className="h-5 w-5" />
+            {saveMessage}
+          </div>
+        )}
+
         {/* Header */}
         <div className="bg-muted/30 p-6 rounded-2xl border border-border/50">
           <h1 className="text-2xl font-bold text-foreground">Settings</h1>
@@ -108,7 +127,7 @@ function SettingsContent() {
                 </div>
               </div>
 
-              <Button className="gap-2 shadow-sm font-bold">
+              <Button onClick={handleSaveProfile} className="gap-2 shadow-sm font-bold">
                 <Check className="h-4 w-4" />
                 Save Changes
               </Button>
@@ -177,6 +196,12 @@ function SettingsContent() {
                   />
                 </div>
               ))}
+            </div>
+            <div className="mt-6">
+              <Button onClick={handleSaveNotifications} className="gap-2 shadow-sm font-bold">
+                <Check className="h-4 w-4" />
+                Save Notification Preferences
+              </Button>
             </div>
           </CardContent>
         </Card>
