@@ -1,6 +1,6 @@
 # Bharat AI Wealth
 
-AI-powered wealth management platform for Bharat.
+AI-powered wealth management platform for India.
 
 ## 🌐 Live Demo
 Check out the live application here: [https://ankitraj111.github.io/bharataiwealth/](https://ankitraj111.github.io/bharataiwealth/)
