@@ -214,11 +214,11 @@ export default function CryptoTools() {
                 </Tabs>
 
                 {/* Advisory Note */}
-                <Card className="bg-teal-50 border border-teal-200 rounded-xl p-6 flex items-start gap-4 shadow-sm">
-                    <div className="p-2.5 rounded-lg bg-teal-100"><Scale className="h-5 w-5 text-teal-600" /></div>
+                <Card className="bg-teal-50 dark:bg-teal-950/30 border border-teal-200 dark:border-teal-800 rounded-xl p-6 flex items-start gap-4 shadow-sm">
+                    <div className="p-2.5 rounded-lg bg-teal-100 dark:bg-teal-900/50"><Scale className="h-5 w-5 text-teal-600 dark:text-teal-400" /></div>
                     <div className="space-y-1">
-                        <h4 className="text-sm font-bold text-teal-700">Strategic Risk Disclosure</h4>
-                        <p className="text-xs text-teal-600 leading-relaxed">
+                        <h4 className="text-sm font-bold text-teal-700 dark:text-teal-400">Strategic Risk Disclosure</h4>
+                        <p className="text-xs text-teal-600 dark:text-teal-300 leading-relaxed">
                             Projections are mathematical estimates based on static inputs. Real-world results may vary due to exchange slippage, network fees (GAS), and high-frequency volatility. Always maintain a 5-10% buffer for liquidity events.
                         </p>
                     </div>

@@ -62,18 +62,18 @@ export default function CryptoBacktesting() {
                 {/* Results Overview */}
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                     {[
-                        { label: "Win Rate", val: "68.4%", change: "Neural Ideal", icon: Target, color: "text-green-600", bg: "bg-green-50" },
-                        { label: "Max Drawdown", val: "14.2%", change: "Within Limit", icon: TrendingDown, color: "text-red-600", bg: "bg-red-50" },
-                        { label: "Profit Factor", val: "2.4x", change: "Strong Alpha", icon: Zap, color: "text-amber-600", bg: "bg-amber-50" },
-                        { label: "Risk-Reward", val: "1:3.2", change: "Optimized", icon: ShieldCheck, color: "text-blue-600", bg: "bg-blue-50" },
+                        { label: "Win Rate", val: "68.4%", change: "Neural Ideal", icon: Target, color: "text-green-600 dark:text-green-400", bg: "bg-green-50 dark:bg-green-950/30" },
+                        { label: "Max Drawdown", val: "14.2%", change: "Within Limit", icon: TrendingDown, color: "text-red-600 dark:text-red-400", bg: "bg-red-50 dark:bg-red-950/30" },
+                        { label: "Profit Factor", val: "2.4x", change: "Strong Alpha", icon: Zap, color: "text-amber-600 dark:text-amber-400", bg: "bg-amber-50 dark:bg-amber-950/30" },
+                        { label: "Risk-Reward", val: "1:3.2", change: "Optimized", icon: ShieldCheck, color: "text-blue-600 dark:text-blue-400", bg: "bg-blue-50 dark:bg-blue-950/30" },
                     ].map((m, i) => (
-                        <Card key={i} className="bg-white border border-gray-200 shadow-sm rounded-xl p-6 hover:border-gray-300 transition-colors">
+                        <Card key={i} className="bg-card border border-border shadow-sm rounded-xl p-6 hover:border-border/80 transition-colors">
                             <div className={`p-2.5 rounded-lg w-fit mb-3 ${m.bg} ${m.color}`}>
                                 <m.icon className="h-5 w-5" />
                             </div>
-                            <p className="text-xs text-gray-600 font-semibold mb-1">{m.label}</p>
-                            <h3 className="text-2xl font-bold text-gray-900">{m.val}</h3>
-                            <Badge className={`mt-2 font-semibold text-xs px-2.5 py-0.5 rounded-full ${m.bg} ${m.color} border-${m.color.split('-')[1]}-200`}>
+                            <p className="text-xs text-muted-foreground font-semibold mb-1">{m.label}</p>
+                            <h3 className="text-2xl font-bold text-foreground">{m.val}</h3>
+                            <Badge className={`mt-2 font-semibold text-xs px-2.5 py-0.5 rounded-full ${m.bg} ${m.color} border-border`}>
                                 {m.change}
                             </Badge>
                         </Card>
@@ -82,20 +82,20 @@ export default function CryptoBacktesting() {
 
                 {/* Performance Chart Placeholder */}
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                    <Card className="lg:col-span-2 bg-white border border-gray-200 shadow-sm rounded-xl overflow-hidden">
-                        <CardHeader className="p-6 border-b border-gray-100 bg-gray-50">
+                    <Card className="lg:col-span-2 bg-card border border-border shadow-sm rounded-xl overflow-hidden">
+                        <CardHeader className="p-6 border-b border-border bg-muted/50">
                             <div className="flex items-center gap-3">
-                                <div className="p-2.5 rounded-lg bg-gray-100"><BarChart3 className="h-5 w-5 text-gray-600" /></div>
+                                <div className="p-2.5 rounded-lg bg-muted"><BarChart3 className="h-5 w-5 text-muted-foreground" /></div>
                                 <div>
-                                    <CardTitle className="text-lg font-bold text-gray-900">Equity Curve Projection</CardTitle>
-                                    <CardDescription className="text-xs text-gray-600">Historical performance vs Buy & Hold strategy</CardDescription>
+                                    <CardTitle className="text-lg font-bold text-foreground">Equity Curve Projection</CardTitle>
+                                    <CardDescription className="text-xs text-muted-foreground">Historical performance vs Buy & Hold strategy</CardDescription>
                                 </div>
                             </div>
                         </CardHeader>
-                        <CardContent className="h-[400px] flex items-center justify-center p-0 overflow-hidden relative bg-gray-50">
+                        <CardContent className="h-[400px] flex items-center justify-center p-0 overflow-hidden relative bg-muted/30">
                             <div className="space-y-4 text-center">
-                                <Activity className="h-12 w-12 text-gray-400 mx-auto" />
-                                <p className="text-xs font-semibold text-gray-600">Backtest Dataset: BTC-USD 2021-2026</p>
+                                <Activity className="h-12 w-12 text-muted-foreground mx-auto" />
+                                <p className="text-xs font-semibold text-muted-foreground">Backtest Dataset: BTC-USD 2021-2026</p>
                             </div>
                         </CardContent>
                     </Card>

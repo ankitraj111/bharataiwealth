@@ -167,11 +167,11 @@ export default function CryptoSignals() {
                 </div>
 
                 {/* Footer Note */}
-                <Card className="bg-rose-50 border border-rose-200 rounded-xl p-6 flex items-start gap-4 shadow-sm">
-                    <div className="p-2.5 rounded-lg bg-rose-100"><ShieldAlert className="h-5 w-5 text-rose-600" /></div>
+                <Card className="bg-rose-50 dark:bg-rose-950/30 border border-rose-200 dark:border-rose-800 rounded-xl p-6 flex items-start gap-4 shadow-sm">
+                    <div className="p-2.5 rounded-lg bg-rose-100 dark:bg-rose-900/50"><ShieldAlert className="h-5 w-5 text-rose-600 dark:text-rose-400" /></div>
                     <div className="space-y-1">
-                        <h4 className="text-sm font-bold text-rose-700">Execution Protocol Alpha</h4>
-                        <p className="text-xs text-rose-600 leading-relaxed">
+                        <h4 className="text-sm font-bold text-rose-700 dark:text-rose-400">Execution Protocol Alpha</h4>
+                        <p className="text-xs text-rose-600 dark:text-rose-300 leading-relaxed">
                             Signals are generated via high-confidence pattern matching. Past performance does not guarantee future results. Liquidation risks are inherent in leverage trading. Use suggested stop-loss levels.
                         </p>
                     </div>

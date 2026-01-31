@@ -85,15 +85,15 @@ export default function CryptoSentiment() {
                         </CardContent>
                     </Card>
 
-                    <Card className="border border-gray-200 shadow-sm bg-white">
+                    <Card className="border border-border shadow-sm bg-card">
                         <CardContent className="p-8 flex flex-col items-center text-center">
-                            <p className="text-xs text-gray-600 font-semibold uppercase mb-6">News Impact Score</p>
+                            <p className="text-xs text-muted-foreground font-semibold uppercase mb-6">News Impact Score</p>
                             <div className="relative h-40 w-40 flex items-center justify-center mb-6">
                                 <svg className="h-full w-full -rotate-90">
-                                    <circle cx="80" cy="80" r="70" className="stroke-gray-200 fill-none" strokeWidth="12" />
+                                    <circle cx="80" cy="80" r="70" className="stroke-muted fill-none" strokeWidth="12" />
                                     <circle
                                         cx="80" cy="80" r="70"
-                                        className="stroke-blue-500 fill-none transition-all duration-1000"
+                                        className="stroke-blue-500 dark:stroke-blue-400 fill-none transition-all duration-1000"
                                         strokeWidth="12"
                                         strokeLinecap="round"
                                         strokeDasharray="440"
@@ -101,43 +101,43 @@ export default function CryptoSentiment() {
                                     />
                                 </svg>
                                 <div className="absolute inset-0 flex flex-col items-center justify-center">
-                                    <span className="text-4xl font-bold text-gray-900">64</span>
-                                    <span className="text-xs font-semibold text-blue-600 uppercase">Positive</span>
+                                    <span className="text-4xl font-bold text-foreground">64</span>
+                                    <span className="text-xs font-semibold text-blue-600 dark:text-blue-400 uppercase">Positive</span>
                                 </div>
                             </div>
                             <div className="flex gap-3">
-                                <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-gray-100 border border-gray-200">
-                                    <Newspaper className="h-3 w-3 text-gray-600" />
-                                    <span className="text-xs font-semibold text-gray-700">High Volume</span>
+                                <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-muted border border-border">
+                                    <Newspaper className="h-3 w-3 text-muted-foreground" />
+                                    <span className="text-xs font-semibold text-foreground">High Volume</span>
                                 </div>
                             </div>
                         </CardContent>
                     </Card>
 
-                    <Card className="border border-gray-200 shadow-sm bg-white">
+                    <Card className="border border-border shadow-sm bg-card">
                         <CardContent className="p-8">
-                            <p className="text-xs text-gray-600 font-semibold uppercase mb-6">Market Psychology</p>
+                            <p className="text-xs text-muted-foreground font-semibold uppercase mb-6">Market Psychology</p>
                             <div className="space-y-6">
                                 <div>
                                     <div className="flex justify-between items-center mb-2">
-                                        <span className="text-xs font-semibold text-gray-600">FOMO Levels</span>
-                                        <span className="text-xs font-bold text-red-600">Intense</span>
+                                        <span className="text-xs font-semibold text-muted-foreground">FOMO Levels</span>
+                                        <span className="text-xs font-bold text-red-600 dark:text-red-400">Intense</span>
                                     </div>
-                                    <Progress value={85} className="h-2 bg-gray-100 rounded-full" />
+                                    <Progress value={85} className="h-2 bg-muted rounded-full" />
                                 </div>
                                 <div>
                                     <div className="flex justify-between items-center mb-2">
-                                        <span className="text-xs font-semibold text-gray-600">Panic Index</span>
-                                        <span className="text-xs font-bold text-green-600">Low</span>
+                                        <span className="text-xs font-semibold text-muted-foreground">Panic Index</span>
+                                        <span className="text-xs font-bold text-green-600 dark:text-green-400">Low</span>
                                     </div>
-                                    <Progress value={12} className="h-2 bg-gray-100 rounded-full" />
+                                    <Progress value={12} className="h-2 bg-muted rounded-full" />
                                 </div>
                                 <div>
                                     <div className="flex justify-between items-center mb-2">
-                                        <span className="text-xs font-semibold text-gray-600">Retail Excitement</span>
-                                        <span className="text-xs font-bold text-blue-600">Very High</span>
+                                        <span className="text-xs font-semibold text-muted-foreground">Retail Excitement</span>
+                                        <span className="text-xs font-bold text-blue-600 dark:text-blue-400">Very High</span>
                                     </div>
-                                    <Progress value={92} className="h-2 bg-gray-100 rounded-full" />
+                                    <Progress value={92} className="h-2 bg-muted rounded-full" />
                                 </div>
                             </div>
                         </CardContent>

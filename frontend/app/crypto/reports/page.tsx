@@ -54,27 +54,27 @@ export default function CryptoReports() {
                 </div>
 
                 {/* Top Feature Card */}
-                <Card className="bg-white border border-gray-200 shadow-sm rounded-xl overflow-hidden">
+                <Card className="bg-card border border-border shadow-sm rounded-xl overflow-hidden">
                     <div className="flex flex-col md:flex-row items-center gap-8 p-8">
-                        <div className="p-6 rounded-xl bg-sky-50 border border-sky-200 relative">
-                            <FileText className="h-20 w-20 text-sky-600" />
-                            <div className="absolute -bottom-2 -right-2 h-10 w-10 rounded-lg bg-white border border-sky-200 flex items-center justify-center shadow-sm">
-                                <FileCheck className="h-5 w-5 text-sky-600" />
+                        <div className="p-6 rounded-xl bg-sky-50 dark:bg-sky-950/30 border border-sky-200 dark:border-sky-800 relative">
+                            <FileText className="h-20 w-20 text-sky-600 dark:text-sky-400" />
+                            <div className="absolute -bottom-2 -right-2 h-10 w-10 rounded-lg bg-card border border-sky-200 dark:border-sky-800 flex items-center justify-center shadow-sm">
+                                <FileCheck className="h-5 w-5 text-sky-600 dark:text-sky-400" />
                             </div>
                         </div>
                         <div className="flex-1 space-y-4 text-center md:text-left">
                             <div>
-                                <Badge className="bg-sky-100 text-sky-700 border-sky-200 font-semibold px-3 py-1 rounded-full text-xs mb-3">LATEST PRESTIGE REPORT</Badge>
-                                <h2 className="text-2xl font-bold text-gray-900 leading-tight">Q1 2026 Crypto Market Intelligence</h2>
+                                <Badge className="bg-sky-100 dark:bg-sky-950/30 text-sky-700 dark:text-sky-400 border-sky-200 dark:border-sky-800 font-semibold px-3 py-1 rounded-full text-xs mb-3">LATEST PRESTIGE REPORT</Badge>
+                                <h2 className="text-2xl font-bold text-foreground leading-tight">Q1 2026 Crypto Market Intelligence</h2>
                             </div>
-                            <p className="text-sm text-gray-600 leading-relaxed max-w-2xl">
+                            <p className="text-sm text-muted-foreground leading-relaxed max-w-2xl">
                                 Deep dive into institutional flows, regulatory shifts, and neural price targets for the next 90 days. Professional analysis for high-net-worth positions.
                             </p>
                             <div className="flex flex-wrap gap-3 justify-center md:justify-start pt-2">
-                                <Button className="rounded-lg bg-sky-600 text-white font-semibold hover:bg-sky-700">
+                                <Button className="rounded-lg bg-sky-600 hover:bg-sky-700 text-white font-semibold">
                                     <Download className="h-4 w-4 mr-2" /> Download High-Res PDF
                                 </Button>
-                                <Button variant="outline" className="rounded-lg border-gray-300 font-semibold">
+                                <Button variant="outline" className="rounded-lg border-border font-semibold">
                                     <Eye className="h-4 w-4 mr-2" /> Online Viewer
                                 </Button>
                             </div>
@@ -84,42 +84,42 @@ export default function CryptoReports() {
 
                 {/* History / Archive Grid */}
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                    <Card className="lg:col-span-2 bg-white border border-gray-200 shadow-sm rounded-xl overflow-hidden">
-                        <CardHeader className="p-6 border-b border-gray-100 flex flex-row items-center justify-between bg-gray-50">
+                    <Card className="lg:col-span-2 bg-card border border-border shadow-sm rounded-xl overflow-hidden">
+                        <CardHeader className="p-6 border-b border-border flex flex-row items-center justify-between bg-muted/50">
                             <div>
-                                <CardTitle className="text-lg font-bold text-gray-900">Report Archive</CardTitle>
-                                <CardDescription className="text-xs text-gray-600">Access your historical generated intelligence</CardDescription>
+                                <CardTitle className="text-lg font-bold text-foreground">Report Archive</CardTitle>
+                                <CardDescription className="text-xs text-muted-foreground">Access your historical generated intelligence</CardDescription>
                             </div>
-                            <Button variant="ghost" className="text-gray-600 font-semibold text-xs hover:text-gray-900">View Full History</Button>
+                            <Button variant="ghost" className="text-muted-foreground font-semibold text-xs hover:text-foreground">View Full History</Button>
                         </CardHeader>
                         <CardContent className="p-0">
-                            <div className="divide-y divide-gray-100">
+                            <div className="divide-y divide-border">
                                 {reports.map((report) => (
-                                    <div key={report.id} className="p-6 flex items-center justify-between hover:bg-gray-50 transition-colors group">
+                                    <div key={report.id} className="p-6 flex items-center justify-between hover:bg-muted/50 transition-colors group">
                                         <div className="flex items-center gap-4">
-                                            <div className="h-12 w-12 rounded-lg bg-gray-100 flex items-center justify-center group-hover:bg-sky-50 transition-colors">
-                                                <FileText className="h-5 w-5 text-gray-600 group-hover:text-sky-600" />
+                                            <div className="h-12 w-12 rounded-lg bg-muted flex items-center justify-center group-hover:bg-sky-50 dark:group-hover:bg-sky-950/30 transition-colors">
+                                                <FileText className="h-5 w-5 text-muted-foreground group-hover:text-sky-600 dark:group-hover:text-sky-400" />
                                             </div>
                                             <div>
-                                                <h5 className="font-bold text-gray-900 text-base">{report.title}</h5>
+                                                <h5 className="font-bold text-foreground text-base">{report.title}</h5>
                                                 <div className="flex items-center gap-2 mt-1">
-                                                    <span className="text-xs text-gray-600">{report.date}</span>
-                                                    <span className="h-1 w-1 rounded-full bg-gray-400" />
-                                                    <span className="text-xs text-gray-600">{report.size}</span>
+                                                    <span className="text-xs text-muted-foreground">{report.date}</span>
+                                                    <span className="h-1 w-1 rounded-full bg-muted-foreground" />
+                                                    <span className="text-xs text-muted-foreground">{report.size}</span>
                                                 </div>
                                             </div>
                                         </div>
                                         <div className="flex items-center gap-3">
                                             <Badge className={cn(
                                                 "rounded-full px-2.5 py-0.5 font-semibold text-xs",
-                                                report.status === 'New' ? 'bg-orange-100 text-orange-700 border-orange-200' : 'bg-gray-100 text-gray-700 border-gray-200'
+                                                report.status === 'New' ? 'bg-orange-100 dark:bg-orange-950/30 text-orange-700 dark:text-orange-400 border-orange-200 dark:border-orange-800' : 'bg-muted text-muted-foreground border-border'
                                             )}>
                                                 {report.status}
                                             </Badge>
-                                            <Button variant="ghost" size="icon" className="h-10 w-10 rounded-lg text-gray-600 hover:text-gray-900 hover:bg-gray-100">
+                                            <Button variant="ghost" size="icon" className="h-10 w-10 rounded-lg text-muted-foreground hover:text-foreground hover:bg-muted">
                                                 <Download className="h-4 w-4" />
                                             </Button>
-                                            <Button variant="ghost" size="icon" className="h-10 w-10 rounded-lg text-gray-600 hover:text-gray-900 hover:bg-gray-100">
+                                            <Button variant="ghost" size="icon" className="h-10 w-10 rounded-lg text-muted-foreground hover:text-foreground hover:bg-muted">
                                                 <Share2 className="h-4 w-4" />
                                             </Button>
                                         </div>
@@ -173,11 +173,11 @@ export default function CryptoReports() {
                 </div>
 
                 {/* Footer Note */}
-                <Card className="bg-sky-50 border border-sky-200 rounded-xl p-6 flex items-start gap-4 shadow-sm">
-                    <div className="p-2.5 rounded-lg bg-sky-100 text-sky-600"><BarChart3 className="h-5 w-5" /></div>
+                <Card className="bg-sky-50 dark:bg-sky-950/30 border border-sky-200 dark:border-sky-800 rounded-xl p-6 flex items-start gap-4 shadow-sm">
+                    <div className="p-2.5 rounded-lg bg-sky-100 dark:bg-sky-900/50 text-sky-600 dark:text-sky-400"><BarChart3 className="h-5 w-5" /></div>
                     <div className="space-y-1">
-                        <h4 className="text-sm font-bold text-sky-700">Neural Research Integrity</h4>
-                        <p className="text-xs text-sky-600 leading-relaxed">
+                        <h4 className="text-sm font-bold text-sky-700 dark:text-sky-400">Neural Research Integrity</h4>
+                        <p className="text-xs text-sky-600 dark:text-sky-300 leading-relaxed">
                             Reports are synthesized from 400+ data points using LLM-V3 nodes. Research is educational and not financial advice. Past alpha performance is a signal of quality, not a prediction of future returns.
                         </p>
                     </div>

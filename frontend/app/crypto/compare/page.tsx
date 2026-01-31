@@ -63,45 +63,45 @@ export default function CompareCoins() {
                 </div>
 
                 {/* Comparison Selector Bar */}
-                <div className="flex flex-col md:flex-row items-center justify-center gap-6 py-8 bg-white rounded-2xl border-2 border-gray-200 shadow-sm px-10">
+                <div className="flex flex-col md:flex-row items-center justify-center gap-6 py-8 bg-card rounded-2xl border-2 border-border shadow-sm px-10">
                     <div className="flex-1 flex items-center gap-4 justify-end">
                         <div className="text-right">
-                            <h4 className="text-xl font-bold text-gray-900">Bitcoin</h4>
-                            <p className="text-xs text-gray-500">Digital Gold</p>
+                            <h4 className="text-xl font-bold text-foreground">Bitcoin</h4>
+                            <p className="text-xs text-muted-foreground">Digital Gold</p>
                         </div>
-                        <div className="h-14 w-14 rounded-xl bg-orange-50 border-2 border-orange-200 flex items-center justify-center text-2xl">₿</div>
+                        <div className="h-14 w-14 rounded-xl bg-orange-50 dark:bg-orange-950/30 border-2 border-orange-200 dark:border-orange-800 flex items-center justify-center text-2xl">₿</div>
                     </div>
 
-                    <div className="px-4 py-2 rounded-full bg-indigo-100 border-2 border-indigo-200 text-indigo-700 font-bold text-sm">VS</div>
+                    <div className="px-4 py-2 rounded-full bg-indigo-100 dark:bg-indigo-950/30 border-2 border-indigo-200 dark:border-indigo-800 text-indigo-700 dark:text-indigo-400 font-bold text-sm">VS</div>
 
                     <div className="flex-1 flex items-center gap-4 justify-start">
-                        <div className="h-14 w-14 rounded-xl bg-purple-50 border-2 border-purple-200 flex items-center justify-center text-2xl">Ξ</div>
+                        <div className="h-14 w-14 rounded-xl bg-purple-50 dark:bg-purple-950/30 border-2 border-purple-200 dark:border-purple-800 flex items-center justify-center text-2xl">Ξ</div>
                         <div className="text-left">
-                            <h4 className="text-xl font-bold text-gray-900">Ethereum</h4>
-                            <p className="text-xs text-gray-500">Smart Contracts</p>
+                            <h4 className="text-xl font-bold text-foreground">Ethereum</h4>
+                            <p className="text-xs text-muted-foreground">Smart Contracts</p>
                         </div>
                     </div>
                 </div>
 
                 {/* Main Comparison Grid */}
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                    <Card className="lg:col-span-2 border border-gray-200 shadow-sm">
-                        <CardHeader className="border-b border-gray-100 bg-gray-50/50">
+                    <Card className="lg:col-span-2 border border-border shadow-sm">
+                        <CardHeader className="border-b border-border bg-muted/50">
                             <div className="flex items-center justify-between">
                                 <div>
-                                    <CardTitle className="text-lg font-bold text-gray-900">Core Fundamentals</CardTitle>
-                                    <CardDescription className="text-sm text-gray-600">Network specifications comparison</CardDescription>
+                                    <CardTitle className="text-lg font-bold text-foreground">Core Fundamentals</CardTitle>
+                                    <CardDescription className="text-sm text-muted-foreground">Network specifications comparison</CardDescription>
                                 </div>
-                                <Badge className="bg-indigo-100 text-indigo-700 border-0 font-semibold text-xs">Verified Data</Badge>
+                                <Badge className="bg-indigo-100 dark:bg-indigo-950/30 text-indigo-700 dark:text-indigo-400 border-0 font-semibold text-xs">Verified Data</Badge>
                             </div>
                         </CardHeader>
                         <CardContent className="p-0">
-                            <div className="divide-y divide-gray-100">
+                            <div className="divide-y divide-border">
                                 {comparisonData.metrics.map((m, i) => (
-                                    <div key={i} className="grid grid-cols-3 p-5 hover:bg-gray-50 transition-all">
-                                        <div className="text-xs font-semibold text-gray-600 flex items-center">{m.label}</div>
-                                        <div className="text-center font-semibold text-gray-900">{m.btc}</div>
-                                        <div className="text-center font-semibold text-gray-900">{m.eth}</div>
+                                    <div key={i} className="grid grid-cols-3 p-5 hover:bg-muted/50 transition-all">
+                                        <div className="text-xs font-semibold text-muted-foreground flex items-center">{m.label}</div>
+                                        <div className="text-center font-semibold text-foreground">{m.btc}</div>
+                                        <div className="text-center font-semibold text-foreground">{m.eth}</div>
                                     </div>
                                 ))}
                             </div>

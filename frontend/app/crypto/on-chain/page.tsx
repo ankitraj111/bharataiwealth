@@ -55,18 +55,18 @@ export default function OnChainData() {
                 {/* Pro Metrics Grid */}
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                     {[
-                        { label: "Active Wallets (24H)", val: "1.24M", change: "+4.2%", icon: Users, color: "text-blue-600", bg: "bg-blue-50" },
-                        { label: "Network Fees", val: "$12.4M", change: "-12.5%", icon: Zap, color: "text-amber-600", bg: "bg-amber-50" },
-                        { label: "Exchange Reserve", val: "Stable", change: "Decreasing", icon: Wallet, color: "text-purple-600", bg: "bg-purple-50" },
-                        { label: "Hash Rate", val: "640 EH/s", change: "ATH", icon: Activity, color: "text-green-600", bg: "bg-green-50" },
+                        { label: "Active Wallets (24H)", val: "1.24M", change: "+4.2%", icon: Users, color: "text-blue-600 dark:text-blue-400", bg: "bg-blue-50 dark:bg-blue-950/30" },
+                        { label: "Network Fees", val: "$12.4M", change: "-12.5%", icon: Zap, color: "text-amber-600 dark:text-amber-400", bg: "bg-amber-50 dark:bg-amber-950/30" },
+                        { label: "Exchange Reserve", val: "Stable", change: "Decreasing", icon: Wallet, color: "text-purple-600 dark:text-purple-400", bg: "bg-purple-50 dark:bg-purple-950/30" },
+                        { label: "Hash Rate", val: "640 EH/s", change: "ATH", icon: Activity, color: "text-green-600 dark:text-green-400", bg: "bg-green-50 dark:bg-green-950/30" },
                     ].map((m, i) => (
-                        <Card key={i} className="bg-white border border-gray-200 shadow-sm rounded-xl p-6 hover:border-gray-300 transition-colors relative overflow-hidden">
+                        <Card key={i} className="bg-card border border-border shadow-sm rounded-xl p-6 hover:border-border/80 transition-colors relative overflow-hidden">
                             <div className={`absolute -right-4 -bottom-4 opacity-5 ${m.color}`}>
                                 <m.icon className="h-24 w-24" />
                             </div>
-                            <p className="text-xs text-gray-600 font-semibold mb-1">{m.label}</p>
-                            <h3 className="text-2xl font-bold text-gray-900">{m.val}</h3>
-                            <Badge className={`mt-2 font-semibold text-xs px-2.5 py-0.5 rounded-full ${m.bg} ${m.color} border-${m.color.split('-')[1]}-200`}>
+                            <p className="text-xs text-muted-foreground font-semibold mb-1">{m.label}</p>
+                            <h3 className="text-2xl font-bold text-foreground">{m.val}</h3>
+                            <Badge className={`mt-2 font-semibold text-xs px-2.5 py-0.5 rounded-full ${m.bg} ${m.color} border-border`}>
                                 {m.change}
                             </Badge>
                         </Card>
@@ -165,8 +165,8 @@ export default function OnChainData() {
                             </p>
                         </Card>
 
-                        <Card className="bg-gradient-to-br from-emerald-50 to-blue-50 border-slate-200/60 backdrop-blur-2xl shadow-[0_10px_40px_rgba(0,0,0,0.04)] rounded-[2.5rem] p-8 border-2">
-                            <h4 className="text-sm font-black text-white uppercase tracking-widest mb-6">Social Network Rank</h4>
+                        <Card className="bg-card border-border backdrop-blur-2xl shadow-[0_10px_40px_rgba(0,0,0,0.04)] rounded-[2.5rem] p-8 border-2">
+                            <h4 className="text-sm font-black text-foreground uppercase tracking-widest mb-6">Social Network Rank</h4>
                             <div className="space-y-4">
                                 {[
                                     { name: "Solana", rank: 1, score: 92 },
@@ -174,11 +174,11 @@ export default function OnChainData() {
                                     { name: "Ethereum", rank: 3, score: 72 },
                                 ].map((item, i) => (
                                     <div key={i} className="flex flex-col gap-2">
-                                        <div className="flex justify-between items-center text-[10px] font-black uppercase text-slate-300">
+                                        <div className="flex justify-between items-center text-[10px] font-black uppercase text-muted-foreground">
                                             <span>{item.name}</span>
                                             <span>Score: {item.score}</span>
                                         </div>
-                                        <Progress value={item.score} className="h-1.5 bg-slate-800 rounded-full border border-white/5" />
+                                        <Progress value={item.score} className="h-1.5 bg-muted rounded-full border border-border" />
                                     </div>
                                 ))}
                             </div>
