@@ -42,12 +42,11 @@ export function Hero() {
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ delay: 0.3 }}
                         >
-                            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-5xl xl:text-6xl font-semibold tracking-tight leading-[1.15]">
-                                <span className="text-slate-900 dark:text-white">
+                            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-5xl xl:text-6xl font-bold tracking-tight leading-[1.15] font-poppins">
+                                <span className="text-slate-900 dark:text-white block">
                                     Aage badho Bharat,
                                 </span>
-                                <br />
-                                <span className="text-blue-600 dark:text-blue-400">
+                                <span className="text-blue-600 dark:text-blue-400 block">
                                     AI Wealth ke saath
                                 </span>
                             </h1>

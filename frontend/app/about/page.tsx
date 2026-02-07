@@ -10,16 +10,13 @@ import {
     Users,
     TrendingUp,
     Shield,
-    Zap,
-    Globe,
     Award,
     Sparkles,
     Rocket,
     Brain,
     BarChart3,
     Lock,
-    Lightbulb,
-    CheckCircle2
+    Lightbulb
 } from "lucide-react"
 
 const stats = [
@@ -64,21 +61,21 @@ const team = [
         gradient: "from-blue-500 to-purple-600"
     },
     {
-        name: "Ritika Saxena",
+        name: ".................",
         role: "CTO",
-        bio: "Former ML Lead at Google. Built recommendation systems serving 100M+ users. PhD in AI from Stanford.",
+        bio:"...",
         gradient: "from-purple-500 to-pink-500"
     },
     {
-        name: "Amit Sharma",
+        name: "....",
         role: "Head of Product",
-        bio: "Ex-Fintech Product Manager. Passionate about making finance accessible to every Indian.",
+        bio: "....",
         gradient: "from-emerald-500 to-teal-500"
     },
     {
-        name: "Sneha Patel",
+        name: ".....",
         role: "Head of AI Research",
-        bio: "Published researcher in financial ML. Previously at JP Morgan's AI Lab. IIT Bombay alumna.",
+        bio: "......",
         gradient: "from-orange-500 to-red-500"
     }
 ]

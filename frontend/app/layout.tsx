@@ -32,6 +32,13 @@ export const metadata: Metadata = {
   generator: "v0.app",
   keywords: ["wealth management", "AI finance", "India fintech", "investment tracking", "expense management"],
   authors: [{ name: "Bharat AI Wealth" }],
+  icons: {
+    icon: [
+      { url: '/icon.svg', type: 'image/svg+xml' },
+      { url: '/icon-light-32x32.png', sizes: '32x32', type: 'image/png' }
+    ],
+    apple: '/apple-icon.png',
+  },
 }
 
 export const viewport: Viewport = {

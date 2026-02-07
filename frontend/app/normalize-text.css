@@ -1,12 +1,24 @@
-/* Override ALL bold text to normal weight */
-.font-black,
-.font-extrabold,
+/* Normalize text rendering for better clarity */
+/* Reduce excessive font weights that can cause rendering issues */
+
+.font-black {
+  font-weight: 700 !important;
+}
+
+.font-extrabold {
+  font-weight: 700 !important;
+}
+
 .font-bold {
-  font-weight: 500 !important;
+  font-weight: 600 !important;
 }
 
 h1, h2, h3, h4, h5, h6 {
   font-weight: 600 !important;
+  /* Improve text rendering */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
 }
 
 /* Normalize button text */
