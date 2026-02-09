@@ -63,7 +63,7 @@ const team = [
     {
         name: "Mrinal Kmahato",
         role: "CTO",
-        bio: "Former ML Lead at Google. Built recommendation systems serving 100M+ users. PhD in AI from Stanford.",
+        bio: "Former ML Lead at Google. Built recommendation systems serving 100M+ users. B.Tech in AI from IITG.",
         gradient: "from-purple-500 to-pink-500"
     },
     {
