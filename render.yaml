@@ -1,13 +1,7 @@
-databases:
-  - name: bharat-wealth-db
-    databaseName: wealthdb
-    user: bharatuser
-
 services:
-  # Backend Service (Spring Boot)
   - type: web
     name: bharat-wealth-backend
-    runtime: docker
+    env: docker
     dockerfilePath: ./bankend/Dockerfile
     dockerContext: ./bankend
     envVars:
@@ -32,10 +26,9 @@ services:
       - key: SPRING_PROFILES_ACTIVE
         value: prod
 
-  # ML Service (FastAPI Python)
   - type: web
     name: bharat-wealth-ml
-    runtime: docker
+    env: docker
     dockerfilePath: ./ml-service/Dockerfile
     dockerContext: ./ml-service
     envVars:
@@ -43,3 +36,8 @@ services:
         value: https://bharat-wealth-backend.onrender.com
       - key: PYTHONUNBUFFERED
         value: "1"
+
+databases:
+  - name: bharat-wealth-db
+    databaseName: wealthdb
+    user: bharatuser
