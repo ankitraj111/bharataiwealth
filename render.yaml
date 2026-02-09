@@ -1,7 +1,7 @@
 services:
   - type: web
     name: bharat-wealth-backend
-    env: docker
+    runtime: docker
     dockerfilePath: ./bankend/Dockerfile
     dockerContext: ./bankend
     envVars:
@@ -28,7 +28,7 @@ services:
 
   - type: web
     name: bharat-wealth-ml
-    env: docker
+    runtime: docker
     dockerfilePath: ./ml-service/Dockerfile
     dockerContext: ./ml-service
     envVars:
