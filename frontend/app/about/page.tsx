@@ -57,7 +57,7 @@ const team = [
     {
         name: "Ankit Raj",
         role: "Founder & CEO",
-        bio: "DRDO Intern with experience in quantitative analysis and algorithmic trading. B.Tech student at GGSIPU, focused on AI-driven finance and market risk analysis.",
+        bio: "DRDO Intern with expertise in quant analysis and algo trading.Building AI-driven financial systems and market risk models.",
         gradient: "from-blue-500 to-purple-600"
     },
     {
