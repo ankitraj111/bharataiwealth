@@ -61,9 +61,9 @@ const team = [
         gradient: "from-blue-500 to-purple-600"
     },
     {
-        name: ".................",
+        name: "Mrinal Kmahato",
         role: "CTO",
-        bio:"...",
+        bio: "Former ML Lead at Google. Built recommendation systems serving 100M+ users. PhD in AI from Stanford.",
         gradient: "from-purple-500 to-pink-500"
     },
     {
