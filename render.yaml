@@ -1,0 +1,52 @@
+databases:
+  - name: bharat-wealth-db
+    databaseName: wealthdb
+    user: bharatuser
+    plan: starter
+
+services:
+  # Backend Service (Spring Boot)
+  - type: web
+    name: bharat-wealth-backend
+    runtime: docker
+    dockerfilePath: ./bankend/Dockerfile
+    dockerContext: ./bankend
+    plan: starter
+    region: singapore
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: bharat-wealth-db
+          property: connectionString
+      - key: DATABASE_USERNAME
+        fromDatabase:
+          name: bharat-wealth-db
+          property: user
+      - key: DATABASE_PASSWORD
+        fromDatabase:
+          name: bharat-wealth-db
+          property: password
+      - key: JWT_SECRET
+        generateValue: true
+      - key: AUDIT_HMAC_KEY
+        generateValue: true
+      - key: ML_SERVICE_URL
+        value: https://bharat-wealth-ml.onrender.com
+      - key: SPRING_PROFILES_ACTIVE
+        value: prod
+    healthCheckPath: /actuator/health
+
+  # ML Service (FastAPI Python)
+  - type: web
+    name: bharat-wealth-ml
+    runtime: docker
+    dockerfilePath: ./ml-service/Dockerfile
+    dockerContext: ./ml-service
+    plan: starter
+    region: singapore
+    envVars:
+      - key: BACKEND_URL
+        value: https://bharat-wealth-backend.onrender.com
+      - key: PYTHONUNBUFFERED
+        value: 1
+    healthCheckPath: /health

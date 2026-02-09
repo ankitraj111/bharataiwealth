@@ -13,14 +13,24 @@ import yfinance as yf
 
 app = FastAPI(title="Bharat AI Wealth Prediction Engine")
 
+# Configure CORS for production
+allowed_origins = [
+    "http://localhost:3000",
+    "http://localhost:3001",
+    "https://ankitraj111.github.io",
+    "https://bharat-wealth-backend.onrender.com",
+    os.getenv("BACKEND_URL", ""),
+]
+
 # Add CORS Middleware
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"], # In production, replace with specific origins
+    allow_origins=[origin for origin in allowed_origins if origin],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
 
 engine = MLEngine()
 sentiment_engine = SentimentEngine()
