@@ -1,9 +1,0 @@
-1:"$Sreact.fragment"
-2:I[47257,["/bharataiwealth/_next/static/chunks/11610ed86f192b92.js","/bharataiwealth/_next/static/chunks/64c0a5e3a0354479.js","/bharataiwealth/_next/static/chunks/9661b6be9fc52b6c.js"],"ClientPageRoot"]
-3:I[69139,["/bharataiwealth/_next/static/chunks/d47b500cc16ab10d.js","/bharataiwealth/_next/static/chunks/a0ed068a40f0c302.js","/bharataiwealth/_next/static/chunks/68b61a08c691ae22.js","/bharataiwealth/_next/static/chunks/9661b6be9fc52b6c.js"],"default"]
-6:I[97367,["/bharataiwealth/_next/static/chunks/11610ed86f192b92.js","/bharataiwealth/_next/static/chunks/64c0a5e3a0354479.js","/bharataiwealth/_next/static/chunks/9661b6be9fc52b6c.js"],"OutletBoundary"]
-7:"$Sreact.suspense"
-0:{"buildId":"jYcoBtZ1WVJK3SOCNipOG","rsc":["$","$1","c",{"children":[["$","$L2",null,{"Component":"$3","serverProvidedParams":{"searchParams":{},"params":{},"promises":["$@4","$@5"]}}],[["$","script","script-0",{"src":"/bharataiwealth/_next/static/chunks/a0ed068a40f0c302.js","async":true}],["$","script","script-1",{"src":"/bharataiwealth/_next/static/chunks/68b61a08c691ae22.js","async":true}],["$","script","script-2",{"src":"/bharataiwealth/_next/static/chunks/9661b6be9fc52b6c.js","async":true}]],["$","$L6",null,{"children":["$","$7",null,{"name":"Next.MetadataOutlet","children":"$@8"}]}]]}],"loading":null,"isPartial":false}
-4:{}
-5:"$0:rsc:props:children:0:props:serverProvidedParams:params"
-8:null
