@@ -1,6 +1,7 @@
 "use client"
 
 import Link from "next/link"
+import Image from "next/image"
 import { motion } from "framer-motion"
 import { Mail, MapPin, Twitter, Linkedin, Instagram } from "lucide-react"
 

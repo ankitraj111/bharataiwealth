@@ -1,6 +1,7 @@
 "use client"
 
 import Link from "next/link"
+import Image from "next/image"
 import { usePathname } from "next/navigation"
 import { cn } from "@/lib/utils"
 import {
@@ -133,9 +134,9 @@ export function Sidebar() {
     <aside className="fixed left-0 top-0 z-40 h-screen w-[260px] border-r border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 flex-col hidden lg:flex shadow-sm overflow-hidden">
       {/* Logo Section - Professional Theme-Aware Clean Version */}
       <div className="flex h-[72px] items-center gap-3 px-5 border-b border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-950 flex-shrink-0">
-        <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-orange-500 shadow-sm shadow-orange-500/20">
-          <Sparkles className="h-5 w-5 text-white" />
-        </div>
+       <div className=" w-[76px]  flex items-center justify-center h-full  overflow-hidden">
+                               <img src="/logo2.png" className="h-[45px]  w-full "/>
+                    </div>
         <div className="flex flex-col">
           <span className="text-lg font-bold text-slate-900 dark:text-white tracking-tight">Bharat AI</span>
           <span className="text-[9px] font-bold uppercase tracking-widest text-slate-500 dark:text-slate-400">Wealth Management</span>

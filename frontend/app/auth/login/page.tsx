@@ -2,11 +2,12 @@
 
 import { useState, useEffect } from "react"
 import Link from "next/link"
+import Image from "next/image"
 import { useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import * as z from "zod"
-import { Eye, EyeOff, Lock, Mail, Sparkles, Loader2, Chrome, Smartphone, Info } from "lucide-react"
+import { Eye, EyeOff, Lock, Mail, Loader2, Chrome, Smartphone, Info } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import {
@@ -84,11 +85,18 @@ export default function LoginPage() {
                 </div>
                 <div className="absolute inset-0 bg-noise-pattern opacity-10 brightness-100 contrast-150 pointer-events-none z-0" />
 
-                <div className="relative z-10 flex items-center gap-3">
-                    <div className="h-10 w-10 flex items-center justify-center rounded-xl bg-primary shadow-lg shadow-primary/20">
-                        <Sparkles className="h-6 w-6 text-primary-foreground" />
+                <div className="relative z-10  flex items-center ">
+                    <div className=" w-[76px]  flex items-center justify-center h-full  overflow-hidden">
+                               <img src="/logo2.png" className="h-[45px]  w-full "/>
                     </div>
-                    <span className="text-2xl font-black tracking-tighter uppercase text-primary drop-shadow-sm">Bharat AI <span className="text-gradient-gold">Wealth</span></span>
+                    <div className="pl-2 text-2xl  text-bold leading-[20px] text-[#D4AF37] font-bold ">
+                        BHARAT <br /><span className="text-sm from-[#1E88E5] bg-gradient-to-r 
+ 
+via-[#8B64AA] 
+to-[#FFC107] 
+bg-clip-text 
+text-transparent   italic">AI Wealth</span>
+                    </div>
                 </div>
 
                 <div className="relative z-10 space-y-6 max-w-lg">
@@ -181,7 +189,7 @@ export default function LoginPage() {
                                                     <Lock className="absolute left-3.5 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground group-focus-within:text-primary transition-colors duration-200" />
                                                     <Input
                                                         type={showPassword ? "text" : "password"}
-                                                        placeholder="••••••••"
+                                                        placeholder="Password"
                                                         className="bg-secondary/40 border-border/50 h-12 pl-11 pr-11 rounded-xl focus:ring-primary/20 transition-all font-medium"
                                                         {...field}
                                                     />

@@ -2,10 +2,12 @@
 
 import { useState, useEffect } from "react"
 import Link from "next/link"
+import Image from "next/image"
 import { motion, AnimatePresence } from "framer-motion"
 import { Button } from "@/components/ui/button"
 import { ThemeToggle } from "@/components/theme-toggle"
 import { Menu, X, ChevronRight } from "lucide-react"
+
 
 const navLinks = [
     { name: "Features", href: "/features" },
@@ -36,15 +38,24 @@ export function Navbar() {
                     <div className="h-18 flex items-center justify-between py-4">
                         {/* Logo */}
                         <Link href="/" className="flex items-center gap-3 group">
-                            <motion.div
+                            {/* <motion.div
                                 className="w-12 h-12 rounded-[1rem] bg-gradient-to-br from-blue-600 to-blue-800 flex items-center justify-center shadow-lg shadow-blue-500/10"
                                 whileHover={{ scale: 1.05, rotate: 5 }}
                                 whileTap={{ scale: 0.95 }}
                             >
                                 <span className="text-white font-black text-xl">B</span>
-                            </motion.div>
-                            <span className="text-2xl font-black text-slate-900 dark:text-white tracking-tight">
-                                Bharat <span className="text-blue-600 dark:text-blue-400 italic">AI Wealth</span>
+                            </motion.div> */}
+                           <div className=" w-[70px]  flex items-center justify-center h-full  overflow-hidden">
+                               <img src="/logo2.png" className="h-[40px]  w-full "/>
+                    </div>
+                            <span className="text-2xl font-black text-[#1E3A8A] dark:text-[#D4AF37] tracking-tight">
+                                Bharat <span className="bg-gradient-to-r 
+from-[#1E88E5] 
+ 
+via-[#8B64AA] 
+to-[#FFC107] 
+bg-clip-text 
+text-transparent   italic">AI Wealth</span>
                             </span>
                         </Link>
 

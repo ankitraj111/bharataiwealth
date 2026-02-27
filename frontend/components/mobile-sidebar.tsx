@@ -1,6 +1,7 @@
 "use client"
 
 import Link from "next/link"
+import Image from "next/image"
 import { usePathname } from "next/navigation"
 import { cn } from "@/lib/utils"
 import {
@@ -68,9 +69,9 @@ export function MobileSidebar() {
     <div className="flex h-full flex-col bg-background">
       {/* Logo */}
       <div className="flex h-14 items-center gap-2.5 border-b border-border px-4 bg-gradient-to-r from-primary/10 to-primary/5">
-        <div className="relative flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-primary to-primary/80 shadow-md shadow-primary/20">
-          <Sparkles className="h-4 w-4 text-primary-foreground" />
-        </div>
+      <div className=" w-[76px]  flex items-center justify-center h-full  overflow-hidden">
+                               <img src="/logo2.png" className="h-[45px]  w-full "/>
+         </div>
         <div className="flex flex-col">
           <span className="font-serif text-base font-black tracking-tight text-foreground">Bharat AI</span>
           <span className="text-[9px] font-semibold uppercase tracking-[0.15em] text-primary">Wealth</span>

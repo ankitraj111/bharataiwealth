@@ -2,11 +2,12 @@
 
 import { useState, useEffect } from "react"
 import Link from "next/link"
+import Image from "next/image"
 import { useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import * as z from "zod"
-import { Eye, EyeOff, Lock, Mail, User, ShieldCheck, Sparkles, Loader2, ArrowLeft, Info } from "lucide-react"
+import { Eye, EyeOff, Lock, Mail, User, ShieldCheck, Loader2, ArrowLeft, Info } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import {
@@ -86,12 +87,16 @@ export default function SignupPage() {
                         <ArrowLeft className="mr-2 h-4 w-4 transition-transform group-hover:-translate-x-1" />
                         Back to Login
                     </Link>
-                    <div className="flex items-center gap-2">
-                        <div className="h-6 w-6 flex items-center justify-center rounded-lg bg-primary">
-                            <Sparkles className="h-4 w-4 text-primary-foreground" />
-                        </div>
-                        <span className="text-sm font-black tracking-tighter uppercase text-foreground">Bharat AI</span>
-                    </div>
+                    <Link href="/" className="flex items-center">
+                        <Image
+                            src="/logo.svg"
+                            alt="Bharta AI Wealth Logo"
+                            width={160}
+                            height={50}
+                            priority
+                            className="h-12 w-auto object-contain"
+                        />
+                    </Link>
                 </div>
 
                 <div className="space-y-2 text-center">

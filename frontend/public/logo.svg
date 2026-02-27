@@ -1,0 +1,32 @@
+<svg width="500" height="150" viewBox="0 0 500 150" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="goldGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#FFD700;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#FFA500;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#FF8C00;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Decorative elements (left side) -->
+  <path d="M 30 40 Q 35 35 40 40 Q 45 45 40 50 Q 35 55 30 50 Q 25 45 30 40 Z" fill="url(#goldGradient)" opacity="0.8"/>
+  <path d="M 25 60 Q 30 55 35 60 Q 40 65 35 70 Q 30 75 25 70 Q 20 65 25 60 Z" fill="url(#goldGradient)" opacity="0.8"/>
+  <path d="M 35 75 Q 40 70 45 75 Q 50 80 45 85 Q 40 90 35 85 Q 30 80 35 75 Z" fill="url(#goldGradient)" opacity="0.8"/>
+  
+  <!-- Chart bars with arrow -->
+  <rect x="55" y="80" width="12" height="40" fill="url(#goldGradient)" rx="2"/>
+  <rect x="72" y="65" width="12" height="55" fill="url(#goldGradient)" rx="2"/>
+  <rect x="89" y="50" width="12" height="70" fill="url(#goldGradient)" rx="2"/>
+  
+  <!-- Upward arrow -->
+  <path d="M 115 45 L 135 25 L 155 45 L 145 45 L 145 75 L 125 75 L 125 45 Z" fill="url(#goldGradient)"/>
+  
+  <!-- BHARTA text -->
+  <text x="180" y="90" font-family="Arial, sans-serif" font-size="52" font-weight="bold" fill="url(#goldGradient)">BHARTA</text>
+  
+  <!-- AI WEALTH text -->
+  <text x="180" y="120" font-family="Arial, sans-serif" font-size="24" font-weight="600" fill="url(#goldGradient)">AI WEALTH</text>
+  
+  <!-- Decorative lines -->
+  <line x1="180" y1="125" x2="220" y2="125" stroke="url(#goldGradient)" stroke-width="2"/>
+  <line x1="400" y1="125" x2="440" y2="125" stroke="url(#goldGradient)" stroke-width="2"/>
+</svg>
