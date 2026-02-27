@@ -24,6 +24,8 @@ import { useAuth } from "@/contexts/AuthContext"
 import { DotsBackground } from "@/components/ui/DotsBackground"
 import { cn } from "@/lib/utils"
 
+const basePath = process.env.NEXT_PUBLIC_BASE_PATH || '';
+
 const loginSchema = z.object({
     email: z.string().email({ message: "Invalid email address" }),
     password: z.string().min(6, { message: "Password must be at least 6 characters" }),
@@ -87,7 +89,7 @@ export default function LoginPage() {
 
                 <div className="relative z-10  flex items-center ">
                     <div className=" w-[76px]  flex items-center justify-center h-full  overflow-hidden">
-                               <img src="/logo2.png" className="h-[45px]  w-full "/>
+                               <img src={`${basePath}/logo2.png`} alt="Bharat AI Wealth" className="h-[45px]  w-full "/>
                     </div>
                     <div className="pl-2 text-2xl  text-bold leading-[20px] text-[#D4AF37] font-bold ">
                         BHARAT <br /><span className="text-sm from-[#1E88E5] bg-gradient-to-r 
