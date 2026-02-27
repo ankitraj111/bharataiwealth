@@ -1,9 +1,8 @@
 "use client"
 
-import { useState, useEffect } from "react"
 import { motion } from "framer-motion"
 import { TrendingUp, TrendingDown, Minus, RefreshCw } from "lucide-react"
-import { fetchMarketIndices } from "@/lib/api"
+import { useMarketData } from "@/hooks"
 
 const initialTickers = [
     { name: "NIFTY IT", value: "38,540.20", change: "-0.4%", status: "down" },
@@ -14,33 +13,16 @@ const initialTickers = [
 ]
 
 export function MarketTicker() {
-    const [tickers, setTickers] = useState(initialTickers)
-    const [isLoading, setIsLoading] = useState(true)
-
-    useEffect(() => {
-        const getIndices = async () => {
-            try {
-                const data = await fetchMarketIndices()
-                if (data && data.market_data) {
-                    const mapped = data.market_data.map((item: any) => ({
-                        name: item.name,
-                        value: item.value,
-                        change: (item.change >= 0 ? "+" : "") + item.change + "%",
-                        status: item.change > 0 ? "up" : item.change < 0 ? "down" : "flat"
-                    }))
-                    setTickers(mapped)
-                }
-            } catch (error) {
-                console.error("Failed to fetch market indices:", error)
-            } finally {
-                setIsLoading(false)
-            }
-        }
-
-        getIndices()
-        const interval = setInterval(getIndices, 30000) // Update every 30 seconds
-        return () => clearInterval(interval)
-    }, [])
+    const { data, isLoading, isError } = useMarketData()
+    
+    const tickers = data?.market_data 
+        ? data.market_data.map((item: any) => ({
+            name: item.name,
+            value: item.value,
+            change: (item.change >= 0 ? "+" : "") + item.change + "%",
+            status: item.change > 0 ? "up" : item.change < 0 ? "down" : "flat"
+        }))
+        : initialTickers
 
     return (
         <div className="w-full bg-slate-100/50 dark:bg-slate-900/50 border-y border-border/50 py-2 overflow-hidden relative group">
