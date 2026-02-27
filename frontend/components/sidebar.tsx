@@ -1,7 +1,6 @@
 "use client"
 
 import Link from "next/link"
-import Image from "next/image"
 import { usePathname } from "next/navigation"
 import { cn } from "@/lib/utils"
 import {
@@ -15,22 +14,14 @@ import {
   TrendingUp,
   Zap,
   ChevronDown,
-  Sparkles,
   Shield,
   Wallet,
   Mail,
   HelpCircle,
   PiggyBank,
   Coins,
-  BrainCircuit,
-  Clock,
-  Calendar,
   History,
   LineChart,
-  Activity,
-  FileSearch,
-  BookOpen,
-  Circle,
   Trophy,
   Newspaper,
   BookOpenCheck,
@@ -42,9 +33,10 @@ import {
   PenTool,
   Scale,
   FileText,
-  Users2,
 } from "lucide-react"
 import { useState, useEffect } from "react"
+
+const basePath = process.env.NEXT_PUBLIC_BASE_PATH || '';
 
 // Main Navigation
 const mainNavItems = [
@@ -135,7 +127,7 @@ export function Sidebar() {
       {/* Logo Section - Professional Theme-Aware Clean Version */}
       <div className="flex h-[72px] items-center gap-3 px-5 border-b border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-950 flex-shrink-0">
        <div className=" w-[76px]  flex items-center justify-center h-full  overflow-hidden">
-                               <img src="/logo2.png" className="h-[45px]  w-full "/>
+                               <img src={`${basePath}/logo2.png`} alt="Bharat AI Wealth" className="h-[45px]  w-full "/>
                     </div>
         <div className="flex flex-col">
           <span className="text-lg font-bold text-slate-900 dark:text-white tracking-tight">Bharat AI</span>

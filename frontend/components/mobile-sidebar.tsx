@@ -1,12 +1,10 @@
 "use client"
 
 import Link from "next/link"
-import Image from "next/image"
 import { usePathname } from "next/navigation"
 import { cn } from "@/lib/utils"
 import {
   LayoutDashboard,
-  Receipt,
   BarChart3,
   MessageSquareText,
   Calculator,
@@ -17,7 +15,6 @@ import {
   Target,
   Shield,
   Wallet,
-  Sparkles,
   HelpCircle,
   PiggyBank,
   Coins,
@@ -25,6 +22,8 @@ import {
   ChevronRight,
 } from "lucide-react"
 import { useState } from "react"
+
+const basePath = process.env.NEXT_PUBLIC_BASE_PATH || '';
 
 // Simplified navigation for mobile
 const mainNavItems = [
@@ -70,7 +69,7 @@ export function MobileSidebar() {
       {/* Logo */}
       <div className="flex h-14 items-center gap-2.5 border-b border-border px-4 bg-gradient-to-r from-primary/10 to-primary/5">
       <div className=" w-[76px]  flex items-center justify-center h-full  overflow-hidden">
-                               <img src="/logo2.png" className="h-[45px]  w-full "/>
+                               <img src={`${basePath}/logo2.png`} alt="Bharat AI Wealth" className="h-[45px]  w-full "/>
          </div>
         <div className="flex flex-col">
           <span className="font-serif text-base font-black tracking-tight text-foreground">Bharat AI</span>

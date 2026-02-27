@@ -5,6 +5,8 @@ import Image from "next/image"
 import { motion } from "framer-motion"
 import { Mail, MapPin, Twitter, Linkedin, Instagram } from "lucide-react"
 
+const basePath = process.env.NEXT_PUBLIC_BASE_PATH || '';
+
 export function Footer() {
     const currentYear = new Date().getFullYear()
 
@@ -53,7 +55,7 @@ export function Footer() {
                     <div className="col-span-2">
                         <Link href="/" className="inline-block mb-6">
                             <Image
-                                src="/logo2.png"
+                                src={`${basePath}/logo2.png`}
                                 alt="Bharat AI Wealth"
                                 width={200}
                                 height={62}

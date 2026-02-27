@@ -2,11 +2,12 @@
 
 import { useState, useEffect } from "react"
 import Link from "next/link"
-import Image from "next/image"
 import { motion, AnimatePresence } from "framer-motion"
 import { Button } from "@/components/ui/button"
 import { ThemeToggle } from "@/components/theme-toggle"
 import { Menu, X, ChevronRight } from "lucide-react"
+
+const basePath = process.env.NEXT_PUBLIC_BASE_PATH || '';
 
 
 const navLinks = [
@@ -46,7 +47,7 @@ export function Navbar() {
                                 <span className="text-white font-black text-xl">B</span>
                             </motion.div> */}
                            <div className=" w-[70px]  flex items-center justify-center h-full  overflow-hidden">
-                               <img src="/logo2.png" className="h-[40px]  w-full "/>
+                               <img src={`${basePath}/logo2.png`} alt="Bharat AI Wealth" className="h-[40px]  w-full "/>
                     </div>
                             <span className="text-2xl font-black text-[#1E3A8A] dark:text-[#D4AF37] tracking-tight">
                                 Bharat <span className="bg-gradient-to-r 
