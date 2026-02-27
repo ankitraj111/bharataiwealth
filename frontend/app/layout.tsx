@@ -5,6 +5,7 @@ import { Providers } from "@/components/providers"
 import { Toaster } from "@/components/ui/sonner"
 import "./globals.css"
 import "./normalize-text.css"
+import "./responsive.css"
 
 const inter = Inter({
   subsets: ["latin"],
@@ -55,8 +56,10 @@ export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   maximumScale: 5,
+  minimumScale: 1,
   userScalable: true,
-  viewportFit: "cover", // For mobile notches
+  viewportFit: "cover",
+  interactiveWidget: "resizes-visual",
 }
 
 export default function RootLayout({

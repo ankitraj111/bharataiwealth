@@ -38,25 +38,18 @@ export function Navbar() {
                 <div className="w-full px-4 sm:px-10 ">
                     <div className="h-18 flex items-center justify-between py-4">
                         {/* Logo */}
-                        <Link href="/" className="flex items-center gap-3 group">
-                            {/* <motion.div
-                                className="w-12 h-12 rounded-[1rem] bg-gradient-to-br from-blue-600 to-blue-800 flex items-center justify-center shadow-lg shadow-blue-500/10"
-                                whileHover={{ scale: 1.05, rotate: 5 }}
-                                whileTap={{ scale: 0.95 }}
-                            >
-                                <span className="text-white font-black text-xl">B</span>
-                            </motion.div> */}
-                           <div className=" w-[70px]  flex items-center justify-center h-full  overflow-hidden">
-                               <img src={`${basePath}/logo2.png`} alt="Bharat AI Wealth" className="h-[40px]  w-full "/>
+                        <Link href="/" className="flex items-center gap-2 sm:gap-3 group">
+                           <div className="w-[50px] sm:w-[60px] md:w-[70px] flex items-center justify-center h-full overflow-hidden">
+                               <img src={`${basePath}/logo2.png`} alt="Bharat AI Wealth" className="h-[30px] sm:h-[35px] md:h-[40px] w-full object-contain"/>
                     </div>
-                            <span className="text-2xl font-black text-[#1E3A8A] dark:text-[#D4AF37] tracking-tight">
+                            <span className="text-lg sm:text-xl md:text-2xl font-black text-[#1E3A8A] dark:text-[#D4AF37] tracking-tight">
                                 Bharat <span className="bg-gradient-to-r 
 from-[#1E88E5] 
  
 via-[#8B64AA] 
 to-[#FFC107] 
 bg-clip-text 
-text-transparent   italic">AI Wealth</span>
+text-transparent italic">AI Wealth</span>
                             </span>
                         </Link>
 

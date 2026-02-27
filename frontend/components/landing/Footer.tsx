@@ -49,20 +49,20 @@ export function Footer() {
             <div className="h-px bg-slate-200 dark:bg-slate-700" />
 
             {/* Main Footer */}
-            <div className="w-full px-6 md:px-12 lg:px-20 xl:px-32 py-20 relative z-10">
-                <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-12">
+            <div className="w-full px-4 sm:px-6 md:px-12 lg:px-20 xl:px-32 py-12 sm:py-16 md:py-20 relative z-10">
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-8 sm:gap-10 md:gap-12">
                     {/* Brand Column */}
-                    <div className="col-span-2">
-                        <Link href="/" className="inline-block mb-6">
+                    <div className="col-span-1 sm:col-span-2">
+                        <Link href="/" className="inline-block mb-4 sm:mb-6">
                             <Image
                                 src={`${basePath}/logo2.png`}
                                 alt="Bharat AI Wealth"
                                 width={200}
                                 height={62}
-                                className="h-12 w-auto"
+                                className="h-10 sm:h-12 w-auto"
                             />
                         </Link>
-                        <p className="text-slate-500 dark:text-slate-400 text-sm font-medium leading-relaxed mb-8 max-w-xs">
+                        <p className="text-slate-500 dark:text-slate-400 text-sm font-medium leading-relaxed mb-6 sm:mb-8 max-w-xs">
                             India&apos;s Next-Gen AI Financial Advisor. Smart investment insights, risk analysis, and institutional-grade personalized advice.
                         </p>
 
