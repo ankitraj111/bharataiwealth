@@ -1,144 +1,5 @@
 /* Responsive Utilities for All Devices */
 
-/* Mobile First - Base styles for mobile (320px+) */
-@media (max-width: 639px) {
-  /* Typography */
-  .responsive-heading {
-    @apply text-2xl;
-  }
-  
-  .responsive-subheading {
-    @apply text-lg;
-  }
-  
-  .responsive-body {
-    @apply text-sm;
-  }
-  
-  /* Spacing */
-  .responsive-container {
-    @apply px-4 py-4;
-  }
-  
-  .responsive-section {
-    @apply space-y-4;
-  }
-  
-  /* Cards */
-  .responsive-card {
-    @apply p-4 rounded-xl;
-  }
-  
-  /* Buttons */
-  .responsive-button {
-    @apply h-10 px-4 text-sm;
-  }
-  
-  /* Grid */
-  .responsive-grid {
-    @apply grid-cols-1 gap-3;
-  }
-}
-
-/* Tablet (640px - 1023px) */
-@media (min-width: 640px) and (max-width: 1023px) {
-  .responsive-heading {
-    @apply text-3xl;
-  }
-  
-  .responsive-subheading {
-    @apply text-xl;
-  }
-  
-  .responsive-body {
-    @apply text-base;
-  }
-  
-  .responsive-container {
-    @apply px-6 py-6;
-  }
-  
-  .responsive-section {
-    @apply space-y-6;
-  }
-  
-  .responsive-card {
-    @apply p-6 rounded-2xl;
-  }
-  
-  .responsive-button {
-    @apply h-12 px-6 text-base;
-  }
-  
-  .responsive-grid {
-    @apply grid-cols-2 gap-4;
-  }
-}
-
-/* Desktop (1024px+) */
-@media (min-width: 1024px) {
-  .responsive-heading {
-    @apply text-4xl;
-  }
-  
-  .responsive-subheading {
-    @apply text-2xl;
-  }
-  
-  .responsive-body {
-    @apply text-lg;
-  }
-  
-  .responsive-container {
-    @apply px-8 py-8;
-  }
-  
-  .responsive-section {
-    @apply space-y-8;
-  }
-  
-  .responsive-card {
-    @apply p-8 rounded-3xl;
-  }
-  
-  .responsive-button {
-    @apply h-14 px-8 text-lg;
-  }
-  
-  .responsive-grid {
-    @apply grid-cols-3 gap-6;
-  }
-}
-
-/* Touch-friendly targets for mobile */
-@media (hover: none) and (pointer: coarse) {
-  button, a, [role="button"] {
-    min-height: 44px;
-    min-width: 44px;
-  }
-}
-
-/* Landscape mobile optimization */
-@media (max-height: 500px) and (orientation: landscape) {
-  .hide-landscape {
-    @apply hidden;
-  }
-  
-  .compact-landscape {
-    @apply py-2;
-  }
-}
-
-/* Safe area for notched devices */
-@supports (padding: max(0px)) {
-  .safe-area-inset {
-    padding-left: max(1rem, env(safe-area-inset-left));
-    padding-right: max(1rem, env(safe-area-inset-right));
-    padding-top: max(1rem, env(safe-area-inset-top));
-    padding-bottom: max(1rem, env(safe-area-inset-bottom));
-  }
-}
-
 /* Prevent text size adjustment on orientation change */
 html {
   -webkit-text-size-adjust: 100%;
@@ -160,14 +21,21 @@ img {
   height: auto;
 }
 
-/* Responsive tables */
-@media (max-width: 639px) {
-  .responsive-table {
-    @apply block overflow-x-auto;
+/* Touch-friendly targets for mobile */
+@media (hover: none) and (pointer: coarse) {
+  button, a, [role="button"] {
+    min-height: 44px;
+    min-width: 44px;
   }
-  
-  .responsive-table table {
-    @apply min-w-full;
+}
+
+/* Safe area for notched devices */
+@supports (padding: max(0px)) {
+  .safe-area-inset {
+    padding-left: max(1rem, env(safe-area-inset-left));
+    padding-right: max(1rem, env(safe-area-inset-right));
+    padding-top: max(1rem, env(safe-area-inset-top));
+    padding-bottom: max(1rem, env(safe-area-inset-bottom));
   }
 }
 
@@ -216,4 +84,28 @@ img {
 
 .fluid-text-5xl {
   font-size: clamp(2.25rem, 1.875rem + 2vw, 3rem);
+}
+
+/* Landscape mobile optimization */
+@media (max-height: 500px) and (orientation: landscape) {
+  .hide-landscape {
+    display: none;
+  }
+  
+  .compact-landscape {
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+  }
+}
+
+/* Responsive tables */
+@media (max-width: 639px) {
+  .responsive-table {
+    display: block;
+    overflow-x: auto;
+  }
+  
+  .responsive-table table {
+    min-width: 100%;
+  }
 }
