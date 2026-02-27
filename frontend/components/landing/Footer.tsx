@@ -52,14 +52,13 @@ export function Footer() {
                     {/* Brand Column */}
                     <div className="col-span-2">
                         <Link href="/" className="inline-block mb-6">
-                            <div className="flex items-center gap-3">
-                                <div className="w-12 h-12 rounded-[1rem] bg-gradient-to-br from-blue-600 to-blue-800 flex items-center justify-center shadow-lg">
-                                    <span className="text-white font-black text-xl">B</span>
-                                </div>
-                                <span className="text-2xl font-black text-slate-900 dark:text-white tracking-tight">
-                                    Bharat <span className="text-blue-600 dark:text-blue-400 italic">AI Wealth</span>
-                                </span>
-                            </div>
+                            <Image
+                                src="/logo2.png"
+                                alt="Bharat AI Wealth"
+                                width={200}
+                                height={62}
+                                className="h-12 w-auto"
+                            />
                         </Link>
                         <p className="text-slate-500 dark:text-slate-400 text-sm font-medium leading-relaxed mb-8 max-w-xs">
                             India&apos;s Next-Gen AI Financial Advisor. Smart investment insights, risk analysis, and institutional-grade personalized advice.
