@@ -10,6 +10,8 @@ const inter = Inter({
   subsets: ["latin"],
   variable: "--font-inter",
   display: "swap",
+  preload: true,
+  fallback: ['system-ui', 'arial'],
 })
 
 const poppins = Poppins({
@@ -17,12 +19,16 @@ const poppins = Poppins({
   weight: ["400", "500", "600", "700", "800"],
   variable: "--font-poppins",
   display: "swap",
+  preload: true,
+  fallback: ['system-ui', 'arial'],
 })
 
 const jetbrainsMono = JetBrains_Mono({
   subsets: ["latin"],
   variable: "--font-jetbrains-mono",
   display: "swap",
+  preload: false,
+  fallback: ['monospace'],
 })
 
 const basePath = process.env.NEXT_PUBLIC_BASE_PATH || '';
