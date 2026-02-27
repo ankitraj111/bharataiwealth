@@ -23,13 +23,6 @@ const nextConfig = {
   swcMinify: true,
   reactStrictMode: true,
   
-  // Reduce bundle size
-  modularizeImports: {
-    'lucide-react': {
-      transform: 'lucide-react/dist/esm/icons/{{kebabCase member}}',
-    },
-  },
-  
   env: {
     NEXT_PUBLIC_BASE_PATH: isGitHubPages ? '/bharataiwealth' : '',
   },
