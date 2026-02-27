@@ -25,6 +25,8 @@ const jetbrainsMono = JetBrains_Mono({
   display: "swap",
 })
 
+const basePath = process.env.NEXT_PUBLIC_BASE_PATH || '';
+
 export const metadata: Metadata = {
   title: "Bharat AI Wealth | Future of Wealth. Built for Bharat.",
   description:
@@ -34,11 +36,12 @@ export const metadata: Metadata = {
   authors: [{ name: "Bharat AI Wealth" }],
   icons: {
     icon: [
-      { url: '/icon.svg', type: 'image/svg+xml' },
-      { url: '/icon-light-32x32.png', sizes: '32x32', type: 'image/png' }
+      { url: `${basePath}/icon.svg`, type: 'image/svg+xml' },
+      { url: `${basePath}/icon-light-32x32.png`, sizes: '32x32', type: 'image/png' }
     ],
-    apple: '/apple-icon.png',
+    apple: `${basePath}/apple-icon.png`,
   },
+  manifest: `${basePath}/manifest.json`,
 }
 
 export const viewport: Viewport = {
@@ -60,7 +63,6 @@ export default function RootLayout({
       <head>
         <link rel="preconnect" href="http://localhost:8080" />
         <link rel="dns-prefetch" href="http://localhost:8080" />
-        <link rel="manifest" href="/manifest.json" />
       </head>
       <body
         className={`${inter.variable} ${poppins.variable} ${jetbrainsMono.variable} font-sans antialiased`}
