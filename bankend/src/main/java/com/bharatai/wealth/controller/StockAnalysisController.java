@@ -14,7 +14,6 @@ import java.util.*;
 @RestController
 @RequestMapping("/api/stocks")
 @RequiredArgsConstructor
-@CrossOrigin(origins = { "http://localhost:3000", "https://ankitraj111.github.io" })
 public class StockAnalysisController {
 
     private final StockAnalysisService stockAnalysisService;

@@ -7,7 +7,6 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/advisor")
-@CrossOrigin(origins = "http://localhost:3000")
 public class AdvisorController {
     @GetMapping("/insights")
     public ResponseEntity<List<Map<String, String>>> getInsights() {

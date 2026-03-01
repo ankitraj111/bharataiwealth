@@ -10,11 +10,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.LockedException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 
 import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.Map;
 
 @ControllerAdvice
 @Slf4j
@@ -30,6 +33,7 @@ public class GlobalExceptionHandler {
         private String error;
         private String message;
         private String path;
+        private Map<String, String> fieldErrors;
     }
 
     @ExceptionHandler(BadCredentialsException.class)
@@ -47,19 +51,67 @@ public class GlobalExceptionHandler {
         return buildErrorResponse(HttpStatus.FORBIDDEN, ex.getMessage(), request);
     }
 
+    /**
+     * Handle validation errors from @Valid / @Validated annotations
+     */
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<ErrorResponse> handleValidationErrors(MethodArgumentNotValidException ex,
+            WebRequest request) {
+        Map<String, String> fieldErrors = new HashMap<>();
+        ex.getBindingResult().getFieldErrors()
+                .forEach(error -> fieldErrors.put(error.getField(), error.getDefaultMessage()));
+
+        String firstError = ex.getBindingResult().getFieldErrors().stream()
+                .findFirst()
+                .map(e -> e.getDefaultMessage())
+                .orElse("Validation failed");
+
+        ErrorResponse errorResponse = ErrorResponse.builder()
+                .timestamp(LocalDateTime.now())
+                .status(HttpStatus.BAD_REQUEST.value())
+                .error(HttpStatus.BAD_REQUEST.getReasonPhrase())
+                .message(firstError)
+                .path(request.getDescription(false).replace("uri=", ""))
+                .fieldErrors(fieldErrors)
+                .build();
+
+        return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
+    }
+
     @ExceptionHandler(RuntimeException.class)
     public ResponseEntity<ErrorResponse> handleRuntimeException(RuntimeException ex, WebRequest request) {
         log.error("Runtime exception: ", ex);
-        // Map common messages to proper status codes
-        if (ex.getMessage() != null && ex.getMessage().contains("locked")) {
-            return buildErrorResponse(HttpStatus.FORBIDDEN, ex.getMessage(), request);
-        }
-        if (ex.getMessage() != null
-                && (ex.getMessage().contains("Invalid email") || ex.getMessage().contains("Invalid MFA"))) {
-            return buildErrorResponse(HttpStatus.UNAUTHORIZED, ex.getMessage(), request);
+        String msg = ex.getMessage();
+
+        if (msg != null) {
+            // Account locked
+            if (msg.contains("locked")) {
+                return buildErrorResponse(HttpStatus.FORBIDDEN, msg, request);
+            }
+            // Auth failures
+            if (msg.contains("Invalid email") || msg.contains("Invalid MFA") || msg.contains("Invalid password")) {
+                return buildErrorResponse(HttpStatus.UNAUTHORIZED, msg, request);
+            }
+            // Duplicate resource
+            if (msg.contains("already exists")) {
+                return buildErrorResponse(HttpStatus.CONFLICT, msg, request);
+            }
+            // Resource not found
+            if (msg.contains("not found") || msg.contains("Not found")) {
+                return buildErrorResponse(HttpStatus.NOT_FOUND, msg, request);
+            }
+            // Session expired
+            if (msg.contains("expired") || msg.contains("Invalid refresh token")) {
+                return buildErrorResponse(HttpStatus.UNAUTHORIZED, msg, request);
+            }
+            // General validation/bad request
+            if (msg.contains("Invalid")) {
+                return buildErrorResponse(HttpStatus.BAD_REQUEST, msg, request);
+            }
         }
 
-        return buildErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, ex.getMessage(), request);
+        return buildErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR,
+                msg != null ? msg : "An unexpected error occurred", request);
     }
 
     @ExceptionHandler(Exception.class)

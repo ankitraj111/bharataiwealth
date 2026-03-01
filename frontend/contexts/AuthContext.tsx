@@ -52,9 +52,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
      * Login with email and password
      */
     const login = async (data: LoginRequest) => {
-        const isDemoEnv = typeof window !== 'undefined' &&
-            (window.location.hostname.includes('github.io') ||
-                window.location.pathname.includes('/bharataiwealth'));
+        // Demo credentials for local development when backend is not running
+        const DEMO_CREDENTIALS = [
+            { email: 'demo@bharatai.com', password: 'demo123', role: 'PREMIUM', name: 'Demo User' },
+            { email: 'admin@bharatai.com', password: 'admin123', role: 'ADMIN', name: 'Admin User' },
+        ];
 
         try {
             const response = await AuthService.login(data);
@@ -81,19 +83,34 @@ export function AuthProvider({ children }: { children: ReactNode }) {
                 router.push('/dashboard');
             }
         } catch (error: any) {
-            if (isDemoEnv) {
-                console.warn('Demo environment detected. API login failed, using demo fallback.', error);
-                // Mock success for demo
-                const demoUser: User = { id: 1, name: 'Demo User', email: data.email, role: 'USER', mfaEnabled: false };
-                TokenStorage.setAccessToken('demo-token');
-                TokenStorage.setUser(demoUser);
-                setToken('demo-token');
-                setUser(demoUser);
-                router.push('/dashboard');
-                return;
+            // Check if it's a network error (backend not running)
+            const isNetworkError = error?.status === 0 || error?.message?.includes('Network error') || error?.message?.includes('Failed to fetch');
+            const isDemoEnv = typeof window !== 'undefined' &&
+                (window.location.hostname.includes('github.io') ||
+                    window.location.pathname.includes('/bharataiwealth'));
+
+            // Use demo fallback if: network error on localhost OR demo environment
+            if (isNetworkError || isDemoEnv) {
+                const matchedDemo = DEMO_CREDENTIALS.find(
+                    c => c.email === data.email && c.password === data.password
+                );
+
+                if (matchedDemo) {
+                    console.warn('Backend not reachable — using demo credentials fallback.');
+                    const demoUser: User = { id: 1, name: matchedDemo.name, email: data.email, role: matchedDemo.role, mfaEnabled: false };
+                    TokenStorage.setAccessToken('demo-token-' + Date.now());
+                    TokenStorage.setUser(demoUser);
+                    setToken('demo-token-' + Date.now());
+                    setUser(demoUser);
+                    router.push('/dashboard');
+                    return;
+                } else if (isNetworkError) {
+                    // Backend is down and credentials don't match demo
+                    throw { message: 'Backend server is not running. Start the Spring Boot backend on port 8080, or use demo credentials: demo@bharatai.com / demo123', status: 0 };
+                }
             }
+
             console.error('Login error:', error.message || error);
-            console.dir(error);
             throw error;
         }
     };
@@ -123,13 +140,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
             router.push('/dashboard');
         } catch (error: any) {
-            if (isDemoEnv) {
-                console.warn('Demo environment detected. API registration failed, using demo fallback.', error);
-                // Mock success for demo
+            const isNetworkError = error?.status === 0 || error?.message?.includes('Network error') || error?.message?.includes('Failed to fetch');
+
+            if (isDemoEnv || isNetworkError) {
+                console.warn('Backend not reachable — using demo registration fallback.');
                 const demoUser: User = { id: 1, name: data.name, email: data.email, role: 'USER', mfaEnabled: false };
-                TokenStorage.setAccessToken('demo-token');
+                TokenStorage.setAccessToken('demo-token-' + Date.now());
                 TokenStorage.setUser(demoUser);
-                setToken('demo-token');
+                setToken('demo-token-' + Date.now());
                 setUser(demoUser);
                 router.push('/dashboard');
                 return;

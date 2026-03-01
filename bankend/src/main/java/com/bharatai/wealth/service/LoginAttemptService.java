@@ -26,13 +26,18 @@ public class LoginAttemptService {
     /**
      * Called when a user successfully logs in.
      * Resets failed login attempts counter.
+     * 
+     * DEVELOPMENT MODE: Account locking features disabled
      */
     @Transactional
     public void loginSucceeded(String email, String ipAddress) {
         userRepository.findByEmail(email).ifPresent(user -> {
-            user.setFailedLoginAttempts(0);
-            user.setAccountLocked(false);
-            user.setLockTime(null);
+            // DEVELOPMENT MODE: Skip failed attempts and lock tracking
+            // TODO: Re-enable for production
+            // user.setFailedLoginAttempts(0);
+            // user.setAccountLocked(false);
+            // user.setLockTime(null);
+            
             user.setLastLogin(LocalDateTime.now());
             user.setLastLoginIp(ipAddress);
             userRepository.save(user);

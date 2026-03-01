@@ -35,12 +35,12 @@ const loginSchema = z.object({
 export default function LoginPage() {
     const [showPassword, setShowPassword] = useState(false)
     const [error, setError] = useState<string | null>(null)
+    const [isBackendDown, setIsBackendDown] = useState(false)
     const [isStaticSite, setIsStaticSite] = useState(false)
     const { login, isLoading } = useAuth()
     const router = useRouter()
 
     useEffect(() => {
-        // Check if running on GitHub Pages
         if (typeof window !== 'undefined') {
             const isGitHubPages = window.location.hostname.includes('github.io') ||
                 window.location.pathname.includes('/bharataiwealth')
@@ -51,30 +51,38 @@ export default function LoginPage() {
     const form = useForm<z.infer<typeof loginSchema>>({
         resolver: zodResolver(loginSchema),
         defaultValues: {
-            email: "",
-            password: "",
+            email: "demo@bharatai.com",
+            password: "demo123",
             rememberMe: false,
         },
     })
 
     async function onSubmit(values: z.infer<typeof loginSchema>) {
         setError(null)
+        setIsBackendDown(false)
         try {
             await login({ email: values.email, password: values.password })
-            // Redirect handled by AuthContext (dashboard or MFA)
         } catch (e: any) {
-            setError(e.message || "Invalid credentials. Please try again.")
+            const msg: string = e.message || "Invalid credentials. Please try again."
+            // Detect backend-down errors
+            if (e.status === 0 || msg.includes('Network error') || msg.includes('Backend server')) {
+                setIsBackendDown(true)
+                setError(null)
+            } else {
+                setError(msg)
+            }
         }
     }
 
     const handleDemoLogin = async () => {
         setError(null)
+        setIsBackendDown(false)
         form.setValue('email', 'demo@bharatai.com')
         form.setValue('password', 'demo123')
         try {
             await login({ email: 'demo@bharatai.com', password: 'demo123' })
         } catch (e: any) {
-            setError("Demo login failed. Please register first.")
+            setError("Demo login failed. Please try again.")
         }
     }
 
@@ -89,7 +97,7 @@ export default function LoginPage() {
 
                 <div className="relative z-10  flex items-center ">
                     <div className=" w-[76px]  flex items-center justify-center h-full  overflow-hidden">
-                               <img src={`${basePath}/logo2.png`} alt="Bharat AI Wealth" className="h-[45px]  w-full "/>
+                        <img src={`${basePath}/logo2.png`} alt="Bharat AI Wealth" className="h-[45px]  w-full " />
                     </div>
                     <div className="pl-2 text-2xl  text-bold leading-[20px] text-[#D4AF37] font-bold ">
                         BHARAT <br /><span className="text-sm from-[#1E88E5] bg-gradient-to-r 
@@ -143,8 +151,31 @@ text-transparent   italic">AI Wealth</span>
                             <div>
                                 <p className="font-bold mb-1">Demo Mode Active</p>
                                 <p className="text-xs font-normal opacity-90">
-                                    You're viewing the static demo. Enter any email and password (min 6 chars) to explore the platform.
+                                    You're viewing the static demo. Use: <strong>demo@bharatai.com</strong> / <strong>demo123</strong>
                                 </p>
+                            </div>
+                        </div>
+                    )}
+
+                    {isBackendDown && (
+                        <div className="p-4 rounded-xl bg-blue-500/10 border border-blue-500/30 text-blue-400 text-sm font-semibold flex items-start gap-3">
+                            <Info className="h-5 w-5 mt-0.5 flex-shrink-0 text-blue-400" />
+                            <div>
+                                <p className="font-bold mb-1 text-blue-300">Backend Server Offline</p>
+                                <p className="text-xs font-normal opacity-90 mb-2">
+                                    Spring Boot backend is not running on port 8080. You can still login with demo credentials:
+                                </p>
+                                <p className="text-xs font-mono bg-blue-500/10 rounded px-2 py-1 inline-block">
+                                    demo@bharatai.com &nbsp;/&nbsp; demo123
+                                </p>
+                                <br/>
+                                <button
+                                    type="button"
+                                    onClick={handleDemoLogin}
+                                    className="mt-2 text-xs font-bold text-blue-300 underline hover:text-blue-100 transition-colors"
+                                >
+                                    → Click here to login with demo account
+                                </button>
                             </div>
                         </div>
                     )}

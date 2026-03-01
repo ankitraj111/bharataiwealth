@@ -2,6 +2,7 @@ package com.bharatai.wealth.config;
 
 import com.bharatai.wealth.security.JwtAuthenticationFilter;
 import com.bharatai.wealth.security.RateLimitingFilter;
+import com.bharatai.wealth.security.IpBlockingFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -29,6 +30,7 @@ public class SecurityConfig {
         private final JwtAuthenticationFilter jwtAuthFilter;
         private final AuthenticationProvider authenticationProvider;
         private final RateLimitingFilter rateLimitingFilter;
+        private final IpBlockingFilter ipBlockingFilter;
 
         @Bean
         public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -105,6 +107,7 @@ public class SecurityConfig {
 
                                 // ==================== Filters ====================
                                 .authenticationProvider(authenticationProvider)
+                                .addFilterBefore(ipBlockingFilter, UsernamePasswordAuthenticationFilter.class)
                                 .addFilterBefore(rateLimitingFilter, UsernamePasswordAuthenticationFilter.class)
                                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
 

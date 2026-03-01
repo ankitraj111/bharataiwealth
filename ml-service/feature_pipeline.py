@@ -9,17 +9,54 @@ import os
 import datetime
 
 class FeaturePipeline:
-    def __init__(self, clean_data_dir="data/clean"):
+    def __init__(self, clean_data_dir="data/clean", use_nse_api: bool = False):
         self.clean_data_dir = clean_data_dir
+        self.use_nse_api = use_nse_api
+        
         if not os.path.exists(self.clean_data_dir):
             os.makedirs(self.clean_data_dir, exist_ok=True)
+        
         self.scaler = MinMaxScaler(feature_range=(0, 1))
+        
+        # Initialize NSE fetcher if enabled
+        if self.use_nse_api:
+            try:
+                from nse_integration import NSEDataFetcher
+                self.nse_fetcher = NSEDataFetcher(use_yfinance_fallback=True)
+                print("NSE API integration enabled with yfinance fallback")
+            except Exception as e:
+                print(f"NSE API initialization failed: {e}, using yfinance only")
+                self.use_nse_api = False
+                self.nse_fetcher = None
+        else:
+            self.nse_fetcher = None
 
     def fetch_data(self, symbol: str, period="5y") -> pd.DataFrame:
-        """Fetch historical data using yfinance."""
-        ticker = f"{symbol}.NS" if symbol.isupper() and "." not in symbol else symbol
+        """
+        Fetch historical data using NSE API (if enabled) or yfinance
+        Hybrid approach with automatic fallback
+        """
+        # Remove .NS suffix for NSE API
+        clean_symbol = symbol.replace(".NS", "")
+        
+        # Try NSE API first if enabled
+        if self.use_nse_api and self.nse_fetcher:
+            try:
+                print(f"Attempting NSE API for {clean_symbol}...")
+                df = self.nse_fetcher.get_historical_data(clean_symbol, period=period)
+                if df is not None and not df.empty:
+                    print(f"✓ NSE API data fetched for {clean_symbol}")
+                    return df
+                else:
+                    print(f"NSE API returned empty data, falling back to yfinance")
+            except Exception as e:
+                print(f"NSE API error for {clean_symbol}: {e}, falling back to yfinance")
+        
+        # Fallback to yfinance (or primary if NSE disabled)
+        ticker = f"{clean_symbol}.NS" if clean_symbol.isupper() and "." not in clean_symbol else symbol
         try:
-            df = yf.download(ticker, period=period, interval="1d")
+            print(f"Fetching data via yfinance for {ticker}...")
+            df = yf.download(ticker, period=period, interval="1d", progress=False)
             if df.empty:
                 return pd.DataFrame()
             
@@ -28,6 +65,7 @@ class FeaturePipeline:
                 df.columns = df.columns.get_level_values(0)
             
             df = df.sort_index()
+            print(f"✓ yfinance data fetched for {ticker}")
             return df
         except Exception as e:
             print(f"Error fetching data for {symbol}: {e}")

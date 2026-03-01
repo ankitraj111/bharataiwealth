@@ -8,7 +8,6 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/goals")
 @RequiredArgsConstructor
-@CrossOrigin(origins = "http://localhost:3000")
 public class GoalsController {
 
     private final com.bharatai.wealth.repository.GoalRepository goalRepository;

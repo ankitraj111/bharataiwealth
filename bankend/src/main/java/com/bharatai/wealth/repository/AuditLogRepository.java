@@ -35,4 +35,15 @@ public interface AuditLogRepository extends JpaRepository<AuditLog, Long> {
             @Param("ip") String ipAddress,
             @Param("eventType") AuditLog.AuditEventType eventType,
             @Param("since") LocalDateTime since);
+    
+    // Admin panel methods
+    long countByEventTypeAndTimestampAfter(AuditLog.AuditEventType eventType, LocalDateTime timestamp);
+    
+    long countByTimestampAfter(LocalDateTime timestamp);
+    
+    Page<AuditLog> findByEventType(AuditLog.AuditEventType eventType, Pageable pageable);
+    
+    Page<AuditLog> findByEventTypeAndUserId(AuditLog.AuditEventType eventType, Long userId, Pageable pageable);
+    
+    List<AuditLog> findByEventTypeAndTimestampAfter(AuditLog.AuditEventType eventType, LocalDateTime timestamp);
 }

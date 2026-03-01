@@ -7,7 +7,6 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/sip")
-@CrossOrigin(origins = "http://localhost:3000")
 public class SipController {
     @GetMapping
     public ResponseEntity<List<Map<String, Object>>> getSips() {

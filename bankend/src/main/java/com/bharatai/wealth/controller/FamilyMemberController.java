@@ -14,7 +14,6 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/family")
 @RequiredArgsConstructor
-@CrossOrigin(origins = "http://localhost:3000")
 public class FamilyMemberController {
 
     private final FamilyMemberRepository familyMemberRepository;

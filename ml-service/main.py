@@ -7,6 +7,11 @@ from advisory_engine import AdvisoryEngine
 from mf_engine import MFEngine, SIPInput
 from ta_engine import TechnicalAnalysisEngine
 from fastapi.middleware.cors import CORSMiddleware
+from security_middleware import (
+    api_key_middleware,
+    rate_limit_middleware,
+    security_headers_middleware
+)
 import uvicorn
 import os
 import yfinance as yf
@@ -30,6 +35,11 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+# Add Security Middlewares
+app.middleware("http")(security_headers_middleware)
+app.middleware("http")(rate_limit_middleware)
+app.middleware("http")(api_key_middleware)
 
 
 engine = MLEngine()

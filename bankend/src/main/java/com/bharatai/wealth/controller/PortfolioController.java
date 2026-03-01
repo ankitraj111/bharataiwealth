@@ -14,28 +14,27 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/portfolio")
 @RequiredArgsConstructor
-@CrossOrigin(origins = "http://localhost:3000")
 public class PortfolioController {
 
-    private final PortfolioRepository portfolioRepository;
-    private final UserRepository userRepository;
+        private final PortfolioRepository portfolioRepository;
+        private final UserRepository userRepository;
 
-    @GetMapping
-    @org.springframework.cache.annotation.Cacheable(value = "portfolio", key = "#authentication.name")
-    public ResponseEntity<List<PortfolioItem>> getPortfolio(Authentication authentication) {
-        User user = userRepository.findByEmail(authentication.getName())
-                .orElseThrow(() -> new RuntimeException("User not found"));
-        return ResponseEntity.ok(portfolioRepository.findByUser(user));
-    }
+        @GetMapping
+        @org.springframework.cache.annotation.Cacheable(value = "portfolio", key = "#authentication.name")
+        public ResponseEntity<List<PortfolioItem>> getPortfolio(Authentication authentication) {
+                User user = userRepository.findByEmail(authentication.getName())
+                                .orElseThrow(() -> new RuntimeException("User not found"));
+                return ResponseEntity.ok(portfolioRepository.findByUser(user));
+        }
 
-    @PostMapping
-    @org.springframework.cache.annotation.CacheEvict(value = { "portfolio",
-            "dashboardSummary" }, key = "#authentication.name")
-    public ResponseEntity<PortfolioItem> addPortfolioItem(@RequestBody PortfolioItem item,
-            Authentication authentication) {
-        User user = userRepository.findByEmail(authentication.getName())
-                .orElseThrow(() -> new RuntimeException("User not found"));
-        item.setUser(user);
-        return ResponseEntity.ok(portfolioRepository.save(item));
-    }
+        @PostMapping
+        @org.springframework.cache.annotation.CacheEvict(value = { "portfolio",
+                        "dashboardSummary" }, key = "#authentication.name")
+        public ResponseEntity<PortfolioItem> addPortfolioItem(@RequestBody PortfolioItem item,
+                        Authentication authentication) {
+                User user = userRepository.findByEmail(authentication.getName())
+                                .orElseThrow(() -> new RuntimeException("User not found"));
+                item.setUser(user);
+                return ResponseEntity.ok(portfolioRepository.save(item));
+        }
 }

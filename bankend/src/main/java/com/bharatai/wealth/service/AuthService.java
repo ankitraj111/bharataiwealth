@@ -104,6 +104,9 @@ public class AuthService implements UserDetailsService {
                 String email = request.getEmail();
                 String ipAddress = getClientIp();
 
+                // DEVELOPMENT MODE: Rate limiting and account locking disabled
+                // TODO: Re-enable for production deployment
+                /*
                 // Check if account is locked
                 if (loginAttemptService.isAccountLocked(email)) {
                         long remainingMinutes = loginAttemptService.getRemainingLockTimeMinutes(email);
@@ -114,6 +117,7 @@ public class AuthService implements UserDetailsService {
                                         "Account locked");
                         throw new RuntimeException("Account is locked. Try again in " + remainingMinutes + " minutes.");
                 }
+                */
 
                 try {
                         // Authenticate credentials
@@ -146,8 +150,10 @@ public class AuthService implements UserDetailsService {
                         return completeLogin(user, ipAddress);
 
                 } catch (AuthenticationException e) {
-                        // Login failed - track attempt
-                        loginAttemptService.loginFailed(email);
+                        // DEVELOPMENT MODE: Failed login tracking disabled
+                        // TODO: Re-enable for production deployment
+                        // loginAttemptService.loginFailed(email);
+                        
                         auditService.logFailure(
                                         AuditEventType.LOGIN_FAILED,
                                         email,

@@ -14,7 +14,6 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/expenses")
 @RequiredArgsConstructor
-@CrossOrigin(origins = "http://localhost:3000")
 public class ExpenseController {
 
     private final ExpenseRepository expenseRepository;
