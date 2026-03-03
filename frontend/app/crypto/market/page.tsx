@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState } from "react"
 import { AppShell } from "@/components/app-shell"
 import { cn } from "@/lib/utils"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
@@ -10,237 +10,170 @@ import { Progress } from "@/components/ui/progress"
 import {
     TrendingUp,
     TrendingDown,
-    LayoutDashboard,
-    ChevronRight,
     Zap,
     Activity,
     Globe,
-    BarChart3,
     Search,
-    Filter,
     ArrowUpRight,
-    ArrowDownRight
+    PieChart
 } from "lucide-react"
 
 const topCryptos = [
-    { rank: 1, name: "Bitcoin", symbol: "BTC", price: 64231.42, change: 2.4, mcap: "1.25T", volume: "32.4B", icon: "₿" },
-    { rank: 2, name: "Ethereum", symbol: "ETH", price: 3452.18, change: -0.8, mcap: "415.2B", volume: "12.8B", icon: "Ξ" },
-    { rank: 3, name: "Solana", symbol: "SOL", price: 145.82, change: 5.2, mcap: "64.8B", volume: "3.2B", icon: "S" },
-    { rank: 4, name: "BNB", symbol: "BNB", price: 582.15, change: 1.2, mcap: "89.4B", volume: "1.5B", icon: "B" },
-    { rank: 5, name: "XRP", symbol: "XRP", price: 0.62, change: -1.4, mcap: "34.1B", volume: "1.1B", icon: "X" },
+    { rank: 1, name: "Bitcoin", symbol: "BTC", price: "$64,231.42", change: "+2.4%", mcap: "1.25T", vol: "32.4B" },
+    { rank: 2, name: "Ethereum", symbol: "ETH", price: "$3,452.18", change: "-0.8%", mcap: "415.2B", vol: "12.8B" },
+    { rank: 3, name: "Solana", symbol: "SOL", price: "$145.82", change: "+5.2%", mcap: "64.8B", vol: "3.2B" },
+    { rank: 4, name: "BNB", symbol: "BNB", price: "$582.15", change: "+1.2%", mcap: "89.4B", vol: "1.5B" },
+    { rank: 5, name: "XRP", symbol: "XRP", price: "$0.62", change: "-1.4%", mcap: "34.1B", vol: "1.1B" },
 ]
 
 export default function MarketOverview() {
-    const [fearGreedValue, setFearGreedValue] = useState(72)
-
     return (
         <AppShell>
-            <div className="flex flex-col gap-6 p-6 lg:p-8 max-w-[1600px] mx-auto">
-                {/* Header Section */}
+            <div className="flex flex-col gap-8 p-6 lg:p-10 max-w-[1600px] mx-auto min-h-screen bg-background/50">
+                {/* Header */}
                 <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
                     <div className="space-y-1">
                         <div className="flex items-center gap-3">
-                            <div className="p-2.5 rounded-xl bg-blue-50 dark:bg-blue-950/30 text-blue-600 dark:text-blue-400">
-                                <LayoutDashboard className="h-6 w-6" />
+                            <div className="p-2.5 rounded-xl bg-primary/10 text-primary shadow-[0_0_15px_rgba(var(--primary),0.2)]">
+                                <TrendingUp className="h-6 w-6" />
                             </div>
-                            <div>
-                                <h1 className="text-3xl font-bold text-foreground">Market Overview</h1>
-                                <div className="flex items-center gap-2 mt-0.5">
-                                    <div className="h-1.5 w-1.5 rounded-full bg-green-500 animate-pulse" />
-                                    <span className="text-xs font-medium text-green-600 dark:text-green-400">Live Data</span>
-                                </div>
-                            </div>
+                            <h1 className="text-3xl font-bold text-foreground tracking-tight">Market Overview</h1>
                         </div>
+                        <p className="text-muted-foreground text-sm ml-12 font-medium">Real-time cryptocurrency market data and global insights</p>
                     </div>
                     <div className="flex items-center gap-3">
-                        <div className="flex items-center gap-2 px-4 py-2 rounded-lg bg-green-50 dark:bg-green-950/30 border border-green-200 dark:border-green-800">
-                            <div className="h-2 w-2 rounded-full bg-green-500 animate-pulse" />
-                            <span className="text-xs font-semibold text-green-700 dark:text-green-400">Live Updates</span>
+                        <div className="px-4 py-2 rounded-xl bg-primary/5 border border-primary/20 backdrop-blur-md">
+                            <span className="text-xs font-bold text-primary uppercase tracking-widest">Live Data Tracking</span>
                         </div>
-                        <Button className="rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-semibold">
-                            <Search className="h-4 w-4 mr-2" /> Search Assets
+                        <Button variant="outline" className="rounded-xl border-border bg-card/40 text-muted-foreground hover:text-foreground hover:bg-accent transition-all font-bold">
+                            <Globe className="h-4 w-4 mr-2" /> All Markets
                         </Button>
                     </div>
                 </div>
 
                 {/* Global Stats Grid */}
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                    <Card className="border border-border shadow-sm hover:shadow-md transition-shadow">
-                        <CardContent className="p-6">
-                            <div className="flex items-center justify-between mb-4">
-                                <div className="p-2 rounded-lg bg-blue-50 dark:bg-blue-950/30">
-                                    <Globe className="h-5 w-5 text-blue-600 dark:text-blue-400" />
-                                </div>
-                                <Badge className="bg-green-100 dark:bg-green-950/30 text-green-700 dark:text-green-400 border-0 font-semibold">+1.2%</Badge>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    {[
+                        { label: "Market Cap", val: "$2.64T", change: "+1.2%", icon: Globe, color: "text-primary", bg: "bg-primary/10" },
+                        { label: "24h Volume", val: "$84.2B", change: "-5.4%", icon: Zap, color: "text-warning", bg: "bg-warning/10" },
+                        { label: "BTC Dominance", val: "52.4%", change: "+0.4%", icon: PieChart, color: "text-primary", bg: "bg-primary/10" },
+                        { label: "Fear & Greed", val: "72", change: "Greed", icon: Activity, color: "text-success", bg: "bg-success/10" },
+                    ].map((m, i) => (
+                        <Card key={i} className="bg-card/40 border-border/50 backdrop-blur-xl shadow-xl rounded-2xl p-6 hover:border-primary/20 transition-all relative overflow-hidden group">
+                            <div className={`absolute -right-4 -bottom-4 opacity-10 ${m.color} group-hover:scale-110 transition-transform duration-500`}>
+                                <m.icon className="h-24 w-24" />
                             </div>
-                            <p className="text-xs text-muted-foreground font-medium mb-1">Global Market Cap</p>
-                            <h3 className="text-2xl font-bold text-foreground">$2.45T</h3>
-                        </CardContent>
-                    </Card>
-
-                    <Card className="border border-border shadow-sm hover:shadow-md transition-shadow">
-                        <CardContent className="p-6">
-                            <div className="flex items-center justify-between mb-4">
-                                <div className="p-2 rounded-lg bg-purple-50 dark:bg-purple-950/30">
-                                    <Zap className="h-5 w-5 text-purple-600 dark:text-purple-400" />
-                                </div>
-                                <Badge className="bg-red-100 dark:bg-red-950/30 text-red-700 dark:text-red-400 border-0 font-semibold">-4.8%</Badge>
-                            </div>
-                            <p className="text-xs text-muted-foreground font-medium mb-1">24H Trading Volume</p>
-                            <h3 className="text-2xl font-bold text-foreground">$82.4B</h3>
-                        </CardContent>
-                    </Card>
-
-                    <Card className="border border-border shadow-sm hover:shadow-md transition-shadow">
-                        <CardContent className="p-6">
-                            <div className="flex items-center justify-between mb-4">
-                                <div className="p-2 rounded-lg bg-orange-50 dark:bg-orange-950/30">
-                                    <Activity className="h-5 w-5 text-orange-600 dark:text-orange-400" />
-                                </div>
-                                <Badge className="bg-green-100 dark:bg-green-950/30 text-green-700 dark:text-green-400 border-0 font-semibold">+0.5%</Badge>
-                            </div>
-                            <p className="text-xs text-muted-foreground font-medium mb-1">BTC Dominance</p>
-                            <h3 className="text-2xl font-bold text-foreground">52.4%</h3>
-                        </CardContent>
-                    </Card>
-
-                    <Card className="border border-border shadow-sm hover:shadow-md transition-shadow">
-                        <CardContent className="p-6">
-                            <div className="flex items-center justify-between mb-4">
-                                <div className="p-2 rounded-lg bg-green-50 dark:bg-green-950/30">
-                                    <BarChart3 className="h-5 w-5 text-green-600 dark:text-green-400" />
-                                </div>
-                                <Badge className="bg-green-100 dark:bg-green-950/30 text-green-700 dark:text-green-400 border-0 font-semibold">Greed</Badge>
-                            </div>
-                            <p className="text-xs text-muted-foreground font-medium mb-2">Fear & Greed Index</p>
-                            <div className="space-y-2">
-                                <h3 className="text-2xl font-bold text-foreground">{fearGreedValue}</h3>
-                                <div className="h-2 w-full bg-muted rounded-full overflow-hidden">
-                                    <div
-                                        className="h-full bg-gradient-to-r from-red-500 via-yellow-500 to-green-500 transition-all duration-1000"
-                                        style={{ width: `${fearGreedValue}%` }}
-                                    />
-                                </div>
-                            </div>
-                        </CardContent>
-                    </Card>
+                            <p className="text-[10px] text-muted-foreground font-black uppercase tracking-[0.15em] mb-1">{m.label}</p>
+                            <h3 className="text-2xl font-black text-foreground italic tabular-nums">{m.val}</h3>
+                            <Badge className={`mt-2 font-black text-[10px] uppercase tracking-widest px-2.5 py-1 rounded-full ${m.bg} ${m.color} border-0`}>
+                                {m.change}
+                            </Badge>
+                        </Card>
+                    ))}
                 </div>
 
-                {/* Market Table Section */}
-                <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                    <Card className="lg:col-span-2 border border-border shadow-sm">
-                        <CardHeader className="border-b border-border bg-muted/50">
-                            <div className="flex flex-col md:flex-row md:items-center justify-between gap-3">
-                                <div>
-                                    <CardTitle className="text-lg font-bold text-foreground">Top 100 Cryptocurrencies</CardTitle>
-                                    <CardDescription className="text-sm text-muted-foreground">Live data ranked by market cap</CardDescription>
-                                </div>
-                                <Button variant="outline" size="sm" className="rounded-lg border-border">
-                                    <Filter className="h-4 w-4 mr-2" /> Filter
-                                </Button>
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    {/* Top Cryptocurrencies Table */}
+                    <Card className="lg:col-span-2 bg-card/40 border-border/50 backdrop-blur-2xl shadow-xl rounded-[2.5rem] overflow-hidden border">
+                        <CardHeader className="p-8 border-b border-border/50 flex flex-row items-center justify-between bg-card/[0.01]">
+                            <div>
+                                <CardTitle className="text-xl font-bold text-foreground italic">Top Cryptocurrencies</CardTitle>
+                                <CardDescription className="font-bold text-muted-foreground uppercase tracking-widest text-[10px] mt-1">Live market data by capitalization</CardDescription>
                             </div>
+                            <Button variant="ghost" className="rounded-xl text-muted-foreground font-bold hover:text-foreground hover:bg-accent transition-all">
+                                <ArrowUpRight className="h-4 w-4 mr-2" /> Full Market
+                            </Button>
                         </CardHeader>
                         <CardContent className="p-0">
                             <div className="overflow-x-auto">
-                                <table className="w-full">
+                                <table className="w-full text-left">
                                     <thead>
-                                        <tr className="bg-muted/50 border-b border-border text-xs font-semibold text-muted-foreground">
-                                            <th className="text-left p-4"># Name</th>
-                                            <th className="text-left p-4">Price</th>
-                                            <th className="text-left p-4">24h %</th>
-                                            <th className="text-left p-4">Market Cap</th>
-                                            <th className="text-left p-4">Volume (24h)</th>
-                                            <th className="p-4"></th>
+                                        <tr className="bg-muted/50 border-b border-border/50 text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground">
+                                            <th className="p-6">Asset</th>
+                                            <th className="p-6">Price</th>
+                                            <th className="p-6">24h Change</th>
+                                            <th className="p-6">Market Cap</th>
+                                            <th className="p-6 text-right">Volume (24h)</th>
                                         </tr>
                                     </thead>
-                                    <tbody className="divide-y divide-border">
-                                        {topCryptos.map((coin) => (
-                                            <tr key={coin.symbol} className="hover:bg-muted/30 transition-colors group cursor-pointer">
-                                                <td className="p-4">
+                                    <tbody className="divide-y divide-border/50">
+                                        {topCryptos.map((coin, i) => (
+                                            <tr key={i} className="hover:bg-muted/20 transition-colors cursor-pointer group font-bold">
+                                                <td className="p-6">
                                                     <div className="flex items-center gap-3">
-                                                        <span className="text-xs font-medium text-muted-foreground w-4">{coin.rank}</span>
-                                                        <div className="h-10 w-10 rounded-lg bg-muted flex items-center justify-center text-lg font-semibold text-foreground group-hover:bg-blue-50 dark:group-hover:bg-blue-950/30 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
-                                                            {coin.icon}
+                                                        <div className="h-10 w-10 rounded-xl bg-card border border-border/50 flex items-center justify-center font-black text-xs text-foreground shadow-inner group-hover:scale-110 transition-all">
+                                                            {coin.symbol[0]}
                                                         </div>
                                                         <div>
-                                                            <div className="font-semibold text-foreground">{coin.name}</div>
-                                                            <div className="text-xs text-muted-foreground">{coin.symbol}</div>
+                                                            <div className="font-black text-foreground text-sm">{coin.name}</div>
+                                                            <div className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest">{coin.symbol}</div>
                                                         </div>
                                                     </div>
                                                 </td>
-                                                <td className="p-4">
-                                                    <span className="font-semibold text-foreground">${coin.price.toLocaleString()}</span>
-                                                </td>
-                                                <td className="p-4">
-                                                    <div className={cn(
-                                                        "inline-flex items-center gap-1 font-semibold text-sm px-2 py-1 rounded",
-                                                        coin.change >= 0 ? "text-green-700 dark:text-green-400 bg-green-50 dark:bg-green-950/30" : "text-red-700 dark:text-red-400 bg-red-50 dark:bg-red-950/30"
+                                                <td className="p-6 font-black text-foreground tabular-nums">{coin.price}</td>
+                                                <td className="p-6">
+                                                    <span className={cn(
+                                                        "font-black tabular-nums text-sm",
+                                                        coin.change.startsWith('+') ? "text-success" : "text-destructive"
                                                     )}>
-                                                        {coin.change >= 0 ? <ArrowUpRight className="h-3 w-3" /> : <ArrowDownRight className="h-3 w-3" />}
-                                                        {Math.abs(coin.change)}%
-                                                    </div>
+                                                        {coin.change}
+                                                    </span>
                                                 </td>
-                                                <td className="p-4">
-                                                    <span className="text-muted-foreground font-medium">${coin.mcap}</span>
-                                                </td>
-                                                <td className="p-4">
-                                                    <span className="text-muted-foreground font-medium">${coin.volume}</span>
-                                                </td>
-                                                <td className="p-4 text-right">
-                                                    <Button variant="ghost" size="icon" className="rounded-lg text-muted-foreground hover:text-blue-600 dark:hover:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-950/30">
-                                                        <ChevronRight className="h-4 w-4" />
-                                                    </Button>
-                                                </td>
+                                                <td className="p-6 font-black text-foreground text-sm tabular-nums">{coin.mcap}</td>
+                                                <td className="p-6 text-right font-black text-foreground text-sm tabular-nums">{coin.vol}</td>
                                             </tr>
                                         ))}
                                     </tbody>
                                 </table>
                             </div>
-                            <div className="p-4 border-t border-border bg-muted/50 flex justify-center">
-                                <Button className="bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg">
-                                    View All Assets <ArrowUpRight className="h-4 w-4 ml-2" />
-                                </Button>
-                            </div>
                         </CardContent>
                     </Card>
 
-                    <div className="space-y-4">
-                        <Card className="border border-border shadow-sm">
-                            <CardContent className="p-6">
-                                <h4 className="text-sm font-semibold text-foreground mb-4">Market Insights</h4>
-                                <div className="space-y-4">
-                                    <div className="p-4 rounded-lg bg-blue-50 dark:bg-blue-950/30 border border-blue-100 dark:border-blue-800">
-                                        <p className="text-xs text-blue-600 dark:text-blue-400 font-semibold mb-1">Dominance Shift</p>
-                                        <p className="text-sm text-foreground">
-                                            BTC consolidating near $64K. ETH/BTC rebounding from 2-year lows. Altcoin rotation likely in 72H.
-                                        </p>
-                                    </div>
-                                    <div className="space-y-3">
-                                        <div className="flex items-center justify-between p-3 rounded-lg bg-muted border border-border">
-                                            <span className="text-xs font-medium text-muted-foreground">Total Liquidations (24H)</span>
-                                            <span className="text-xs font-bold text-red-600 dark:text-red-400">$142.4M</span>
+                    {/* Market Insights */}
+                    <div className="space-y-8">
+                        <Card className="bg-card/40 border-border/50 backdrop-blur-2xl shadow-xl rounded-[2.5rem] p-8 border">
+                            <h4 className="text-[10px] font-black text-muted-foreground uppercase tracking-[0.3em] mb-6 italic">Market Insights</h4>
+                            <div className="space-y-6">
+                                {[
+                                    { text: "Institutional accumulation on BTC remains strong despite volatility.", importance: "High", type: "Bullish" },
+                                    { text: "Altcoin volume consolidation in Layer 1 sectors.", importance: "Med", type: "Neutral" },
+                                ].map((item, i) => (
+                                    <div key={i} className="flex flex-col gap-3">
+                                        <div className="flex justify-between items-center">
+                                            <Badge className={cn(
+                                                "rounded-full px-2.5 py-0.5 text-[8px] font-black uppercase tracking-widest border-0",
+                                                item.type === "Bullish" ? "bg-success/10 text-success" : "bg-muted text-muted-foreground"
+                                            )}>
+                                                {item.type}
+                                            </Badge>
+                                            <span className="text-[9px] font-bold text-muted-foreground/60 uppercase tracking-widest">Impact: {item.importance}</span>
                                         </div>
-                                        <div className="flex items-center justify-between p-3 rounded-lg bg-muted border border-border">
-                                            <span className="text-xs font-medium text-muted-foreground">Open Interest</span>
-                                            <span className="text-xs font-bold text-blue-600 dark:text-blue-400">$34.1B</span>
-                                        </div>
+                                        <p className="text-xs font-bold text-foreground leading-relaxed italic">"{item.text}"</p>
                                     </div>
-                                </div>
-                            </CardContent>
+                                ))}
+                            </div>
                         </Card>
 
-                        <Card className="border border-border shadow-sm">
-                            <CardContent className="p-6">
-                                <h4 className="text-sm font-semibold text-foreground mb-4">Trending Topics</h4>
-                                <div className="flex flex-wrap gap-2">
-                                    {["#Layer2", "#BitcoinETFs", "#SolanaSummer", "#DePin", "#RealWorldAssets", "#AIGaming"].map(tag => (
-                                        <Badge key={tag} variant="outline" className="bg-muted hover:bg-blue-50 dark:hover:bg-blue-950/30 text-foreground hover:text-blue-700 dark:hover:text-blue-400 border-border hover:border-blue-200 dark:hover:border-blue-800 font-medium cursor-pointer transition-colors">
-                                            {tag}
-                                        </Badge>
-                                    ))}
-                                </div>
-                            </CardContent>
-                        </Card>
+                        {/* Trending Topics */}
+                        <div className="p-8 rounded-[2.5rem] bg-card/40 border border-border/50 group hover:bg-card transition-all relative z-10">
+                            <p className="text-[9px] font-black text-muted-foreground uppercase tracking-[0.3em] mb-6">Trending Topics</p>
+                            <div className="flex flex-wrap gap-2">
+                                {["#Layer2Scaling", "#SolanaSummer", "#BTCETFs", "#DeFiProtocol", "#Web3Gaming"].map((tag, i) => (
+                                    <span key={i} className="px-4 py-2 rounded-xl bg-muted/50 border border-border/50 text-[10px] font-black text-foreground uppercase tracking-widest cursor-pointer hover:bg-primary hover:text-primary-foreground transition-all">
+                                        {tag}
+                                    </span>
+                                ))}
+                            </div>
+                        </div>
+
+                        <div className="flex items-center justify-between">
+                            <div className="px-5 py-3 rounded-2xl bg-success/5 border border-success/20 backdrop-blur-md">
+                                <span className="text-[10px] font-black text-success uppercase tracking-[0.2em]">Global Alpha Detected</span>
+                            </div>
+                            <Button variant="ghost" className="rounded-xl text-muted-foreground font-bold hover:text-foreground">
+                                <Search className="h-4 w-4 mr-2" /> All Topics
+                            </Button>
+                        </div>
                     </div>
                 </div>
             </div>

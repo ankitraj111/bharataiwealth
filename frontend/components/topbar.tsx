@@ -1,6 +1,7 @@
 "use client"
 
-import { Bell, Mic, Search, Menu, Command, User, CreditCard, Settings, Users, LifeBuoy, LogOut, Crown } from "lucide-react"
+import { Bell, Mic, Search, Menu, ChevronLeft, Command, User, CreditCard, Settings, Users, LifeBuoy, LogOut, Crown } from "lucide-react"
+import { useSidebar } from "@/contexts/SidebarContext"
 import { Button } from "@/components/ui/button"
 import {
   DropdownMenu,
@@ -33,6 +34,7 @@ import { useNotifications } from "@/contexts/NotificationContext"
 export function Topbar() {
   const { user, logout } = useAuth()
   const { notifications, unreadCount, markAllAsRead } = useNotifications()
+  const { isCollapsed, toggle } = useSidebar()
   const router = useRouter()
   const [searchQuery, setSearchQuery] = useState("")
   const [notificationOpen, setNotificationOpen] = useState(false)
@@ -357,7 +359,7 @@ export function Topbar() {
   }, [])
 
   return (
-    <header className="sticky top-0 z-30 flex h-[72px] items-center justify-between border-b border-border/50 bg-background/80 px-4 backdrop-blur-xl lg:px-6">
+    <header className="fixed top-0 left-0 w-full z-50 flex h-[72px] items-center justify-between border-b border-border/50 bg-background/80 px-4 backdrop-blur-xl lg:px-6">
       {/* Mobile Menu */}
       <Sheet>
         <SheetTrigger asChild>
@@ -371,6 +373,24 @@ export function Topbar() {
           <MobileSidebar />
         </SheetContent>
       </Sheet>
+
+      {/* Brand Identity — Unified top-plane brand */}
+      <Link
+        href="/dashboard"
+        className="flex items-center gap-2.5 flex-shrink-0 transition-premium hover:opacity-80"
+      >
+        <img
+          src={`${process.env.NEXT_PUBLIC_BASE_PATH || ""}/logo2.png`}
+          alt="Bharat AI Wealth"
+          className="h-10 w-10 object-contain"
+        />
+        <div className="flex flex-col leading-tight">
+          <span className="text-lg font-bold text-foreground tracking-tight">Bharat AI</span>
+          <span className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground hidden sm:block">Wealth Management</span>
+        </div>
+      </Link>
+
+
 
       {/* Search - Responsive Design */}
       <div className="flex-1 flex items-center gap-2 max-w-2xl">

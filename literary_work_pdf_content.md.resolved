@@ -1,0 +1,54 @@
+# Literary Work PDF Content: Bharat AI Wealth
+
+This document contains the structured content for your project report PDF. You can copy this content directly into your document.
+
+---
+
+## Page 1: Title Page
+
+**Project Title:** Bharat AI Wealth  
+**Developer Name:** Ankit Raj
+
+---
+
+## Page 2: Project Overview
+
+Bharat AI Wealth is a cutting-edge, AI-powered wealth management and financial tracking platform specifically designed for the Indian financial ecosystem. The project aims to bridge the gap between complex financial data and actionable investment insights for retail investors.
+
+By integrating real-time market data with advanced machine learning models, the platform provides users with a comprehensive dashboard to track their portfolios, analyze market trends, and receive AI-driven predictions for stocks and cryptocurrencies. The mission is to provide an institutional-grade investment experience with a focus on simplicity, security, and accuracy.
+
+---
+
+## Page 3: Key Features
+
+- **AI Predictions (XGBoost & LSTM):** High-accuracy forecasting for NSE stocks and major cryptocurrencies based on historical data and technical indicators.
+- **Dynamic Portfolio Tracker:** Real-time monitoring of investments across multiple asset classes with automated profit/loss calculations.
+- **Crypto Strategy Builder:** A dedicated hub for crypto enthusiasts to analyze trends, build strategies, and view technical analysis (TA).
+- **Enterprise-Grade Security:** "Bank-level" technical security including AES-256-GCM encryption, JWT-based MFA, and real-time fraud detection.
+- **Admin Command Center:** A robust management panel for monitoring system health, managing user roles, and auditing security logs.
+- **Omni-channel Experience:** A responsive, mobile-first design built with Next.js 14, providing a seamless experience across all devices.
+
+---
+
+## Page 4: System Description
+
+The system follows a modern, secure, and scalable micro-architecture consisting of three primary layers:
+
+1.  **Frontend (UI/UX):**
+    - Developed using **Next.js 14** and **TypeScript**.
+    - Utilizes **Tailwind CSS** for premium styling and **Framer Motion** for smooth, professional micro-animations.
+    - Implements client-side input validation and security headers for enhanced protection.
+
+2.  **Backend (Core API):**
+    - Built with **Spring Boot (Java)** for high-performance and reliable processing.
+    - Handles authentication via **JWT (JSON Web Tokens)** and role-based access control (RBAC).
+    - Manages data integrity using **PostgreSQL** with **Flyway** for database migrations.
+
+3.  **Machine Learning Service:**
+    - A specialized **FastAPI (Python)** service dedicated to data science and predictions.
+    - Runs predictive engines using **XGBoost** and **LSTM** models.
+    - Integrates with **yfinance** and **NSE** APIs for live market data ingestion and analysis.
+
+4.  **Security & Integration Layer:**
+    - Provides AES-256 encryption for sensitive data and HMAC-SHA256 for transaction signing.
+    - Deployed with automated CI/CD pipelines via **GitHub Actions**.

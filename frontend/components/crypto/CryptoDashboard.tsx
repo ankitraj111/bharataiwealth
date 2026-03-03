@@ -51,38 +51,41 @@ export function CryptoDashboardContent() {
       initial="hidden"
       animate="visible"
       variants={staggerContainer}
-      className="space-y-8 pb-20"
+      className="space-y-10 pb-20 bg-background/50 transition-colors duration-500"
     >
       {/* Header */}
-      <motion.div variants={scrollReveal} className="space-y-4">
-        <div className="flex items-center gap-3">
-          <div className="h-14 w-14 rounded-2xl bg-gradient-to-br from-orange-500 to-rose-500 flex items-center justify-center shadow-lg shadow-orange-500/20">
-            <Zap className="h-7 w-7 text-white" />
+      <motion.div variants={scrollReveal} className="space-y-6">
+        <div className="flex items-center gap-5">
+          <div className="h-16 w-16 rounded-2xl bg-primary shadow-[0_10px_30px_rgba(var(--primary),0.3)] flex items-center justify-center animate-pulse-slow">
+            <Zap className="h-8 w-8 text-primary-foreground" />
           </div>
           <div>
-            <h1 className="text-4xl font-extrabold tracking-tight text-foreground">
-              <span className="text-orange-600">Crypto</span> Hub Dashboard
+            <h1 className="text-4xl font-black tracking-tight text-foreground italic uppercase">
+              Neural <span className="text-primary italic">Alpha</span> Dashboard
             </h1>
-            <p className="text-muted-foreground flex items-center gap-2 text-sm mt-1">
-              <Flame className="h-3 w-3 text-rose-500" />
-              High-Risk Asset Analysis & ML Intelligence
+            <p className="text-muted-foreground flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.2em] mt-1 italic">
+              <Flame className="h-3.5 w-3.5 text-primary" />
+              Institutional-Grade ML Intelligence
             </p>
           </div>
         </div>
 
         {/* Critical Risk Warning Banner */}
-        <Card className="border-2 border-rose-500/50 bg-gradient-to-r from-rose-50 to-orange-50 dark:from-rose-950/30 dark:to-orange-950/30">
-          <CardContent className="p-4">
-            <div className="flex items-start gap-3">
-              <ShieldAlert className="h-5 w-5 text-rose-600 flex-shrink-0 mt-0.5" />
-              <div>
-                <p className="text-sm font-bold text-rose-900 dark:text-rose-100 mb-1">
-                  ⚠️ High-Risk Asset Class - Advice Only
+        <Card className="border-2 border-destructive/20 bg-destructive/5 backdrop-blur-xl rounded-[2rem] overflow-hidden group">
+          <CardContent className="p-6 relative">
+            <div className="absolute top-0 right-0 h-32 w-32 bg-destructive/5 rounded-full blur-3xl -mr-16 -mt-16 group-hover:bg-destructive/10 transition-all duration-700" />
+            <div className="flex items-start gap-5 relative z-10">
+              <div className="p-3 rounded-2xl bg-destructive/10">
+                <ShieldAlert className="h-6 w-6 text-destructive" />
+              </div>
+              <div className="flex-1">
+                <p className="text-sm font-black text-destructive mb-1 uppercase tracking-tight italic">
+                  EXECUTION PROTOCOL DIRECTIVE
                 </p>
-                <p className="text-xs text-rose-800 dark:text-rose-200 leading-relaxed">
-                  Bharat AI Wealth does not provide crypto trading, wallet, or execution services. 
-                  Cryptocurrencies are highly volatile and suitable only for high-risk investors. 
-                  All insights are for educational and informational purposes only.
+                <p className="text-xs text-muted-foreground font-bold leading-relaxed italic">
+                  Bharat AI Wealth provides informational analysis only.
+                  Digital assets are subject to high-velocity volatility and extreme market risk.
+                  All neural insights are for strategic validation and structural education only.
                 </p>
               </div>
             </div>
@@ -93,13 +96,13 @@ export function CryptoDashboardContent() {
       <CryptoSummary />
       <MarketOverview />
       <HoldingsTable />
-      
-      <div className="grid lg:grid-cols-2 gap-6">
+
+      <div className="grid lg:grid-cols-2 gap-8">
         <PerformanceChart />
         <MLPrediction />
       </div>
 
-      <div className="grid lg:grid-cols-2 gap-6">
+      <div className="grid lg:grid-cols-2 gap-8">
         <RiskPanel />
         <ExplainableAI />
       </div>

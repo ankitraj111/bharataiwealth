@@ -9,18 +9,15 @@ import { Button } from "@/components/ui/button"
 import { Progress } from "@/components/ui/progress"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import {
-    PenTool,
     RotateCcw,
     Play,
-    ChevronRight,
     ShieldCheck,
     Zap,
-    Activity,
-    Clock,
     History,
-    Target,
-    BarChart3,
-    Sparkles
+    Sparkles,
+    Cpu,
+    Settings,
+    BrainCircuit
 } from "lucide-react"
 
 export default function StrategyBuilder() {
@@ -28,137 +25,151 @@ export default function StrategyBuilder() {
 
     return (
         <AppShell>
-            <div className="flex flex-col gap-8 p-6 lg:p-10 max-w-[1600px] mx-auto min-h-screen">
+            <div className="flex flex-col gap-8 p-6 lg:p-10 max-w-[1600px] mx-auto min-h-screen bg-background/50 backdrop-blur-sm">
                 {/* Header */}
-                <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
                     <div className="space-y-1">
-                        <div className="flex items-center gap-3">
-                            <div className="p-2.5 rounded-xl bg-fuchsia-50 dark:bg-fuchsia-950/30 text-fuchsia-600 dark:text-fuchsia-400">
-                                <PenTool className="h-6 w-6" />
+                        <div className="flex items-center gap-4">
+                            <div className="p-3 rounded-2xl bg-primary shadow-lg shadow-primary/20">
+                                <Cpu className="h-7 w-7 text-primary-foreground" />
                             </div>
-                            <h1 className="text-3xl font-bold text-foreground">Strategy Builder</h1>
+                            <h1 className="text-4xl font-black text-foreground tracking-tighter italic uppercase">Alpha Strategy Builder</h1>
                         </div>
-                        <p className="text-muted-foreground text-sm ml-12">Create and backtest investment strategies</p>
+                        <p className="text-muted-foreground text-[11px] ml-16 font-black uppercase tracking-[0.2em] italic opacity-60">Deploy neural-optimized structural algorithms</p>
                     </div>
                     <div className="flex items-center gap-4">
-                        <Button variant="outline" className="rounded-lg border-gray-300 bg-white hover:bg-gray-50 text-gray-900 font-semibold h-11 px-5">
-                            <History className="h-4 w-4 mr-2 text-fuchsia-600" /> Past Models
+                        <Button variant="outline" className="h-12 rounded-2xl border-border bg-card/40 text-[10px] font-black uppercase tracking-widest px-6 hover:text-primary transition-all">
+                            <History className="h-4 w-4 mr-3 text-primary" /> Past Alpha Models
                         </Button>
-                        <Button className="rounded-lg bg-fuchsia-600 hover:bg-fuchsia-700 text-white font-semibold h-11 px-5 shadow-sm">
-                            <Play className="h-4 w-4 mr-2" /> Run Backtest
+                        <Button className="h-12 rounded-2xl bg-primary hover:bg-primary/90 text-primary-foreground font-black uppercase tracking-widest px-8 shadow-xl shadow-primary/20 border-0 transition-all hover:scale-105 active:scale-95 group">
+                            Run Structural Backtest <Play className="h-4 w-4 ml-3 fill-current transition-transform group-hover:translate-x-1" />
                         </Button>
                     </div>
                 </div>
 
-                <Tabs defaultValue="builder" className="space-y-8">
-                    <TabsList className="bg-muted p-1.5 rounded-xl border border-border h-auto flex-wrap justify-start gap-1">
-                        <TabsTrigger value="builder" className="rounded-lg px-5 py-2.5 font-semibold text-xs data-[state=active]:bg-fuchsia-600 data-[state=active]:text-white transition-all">
-                            Neural Strategy Builder
-                        </TabsTrigger>
-                        <TabsTrigger value="backtest" className="rounded-lg px-5 py-2.5 font-semibold text-xs data-[state=active]:bg-fuchsia-600 data-[state=active]:text-white transition-all">
-                            Deep Backtesting
-                        </TabsTrigger>
-                    </TabsList>
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    {/* Strategy Configuration */}
+                    <Card className="lg:col-span-2 bg-card/40 border-border/50 backdrop-blur-2xl shadow-2xl rounded-[3rem] p-8 border group overflow-hidden">
+                        <div className="absolute top-0 right-0 h-64 w-64 bg-primary/5 rounded-full blur-[80px] -mr-32 -mt-32 group-hover:bg-primary/10 transition-all" />
 
-                    <TabsContent value="builder" className="space-y-6 animate-in fade-in slide-in-from-bottom-2 duration-500">
-                        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                            <Card className="lg:col-span-2 bg-card border border-border shadow-sm rounded-xl">
-                                <CardHeader className="border-b border-border pb-4">
-                                    <CardTitle className="text-sm font-bold text-fuchsia-600 dark:text-fuchsia-400 flex items-center gap-2">
-                                        <Sparkles className="h-4 w-4" /> Policy Engine Configuration
-                                    </CardTitle>
-                                </CardHeader>
-                                <CardContent className="p-6">
-                                    <div className="space-y-8">
-                                        <div className="space-y-4">
-                                            <p className="text-xs font-semibold text-muted-foreground">Select Neural Risk Profile</p>
-                                            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                                                {[
-                                                    { id: "conservative", label: "Conservative", desc: "60% Stables / 40% Majors", icon: ShieldCheck, color: "text-green-600 dark:text-green-400" },
-                                                    { id: "moderate", label: "Moderate", desc: "40% Majors / 60% Alts", icon: Activity, color: "text-blue-600 dark:text-blue-400" },
-                                                    { id: "aggressive", label: "Aggressive", desc: "10% Majors / 90% Small-Caps", icon: Zap, color: "text-orange-600 dark:text-orange-400" },
-                                                ].map((p) => (
-                                                    <div
-                                                        key={p.id}
-                                                        onClick={() => setRiskProfile(p.id)}
-                                                        className={cn(
-                                                            "p-5 rounded-lg border-2 cursor-pointer transition-all space-y-3 group",
-                                                            riskProfile === p.id ? "bg-fuchsia-50 dark:bg-fuchsia-950/30 border-fuchsia-300 dark:border-fuchsia-700" : "bg-card border-border hover:border-border/80"
-                                                        )}
-                                                    >
-                                                        <div className={cn("p-2.5 rounded-lg w-fit transition-transform group-hover:scale-110 bg-muted", p.color)}>
-                                                            <p.icon className="h-5 w-5" />
-                                                        </div>
-                                                        <div>
-                                                            <p className="font-bold text-foreground">{p.label}</p>
-                                                            <p className="text-xs text-muted-foreground mt-1">{p.desc}</p>
-                                                        </div>
-                                                    </div>
-                                                ))}
-                                            </div>
+                        <Tabs defaultValue="parameters" className="w-full relative z-10">
+                            <TabsList className="bg-muted/40 p-1.5 rounded-2xl mb-10 w-fit gap-2 border border-border/50 shadow-inner">
+                                <TabsTrigger value="parameters" className="rounded-xl px-8 py-2.5 font-black text-[10px] uppercase tracking-widest data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:shadow-lg transition-all border-0 italic">Algorithm Setup</TabsTrigger>
+                                <TabsTrigger value="risk" className="rounded-xl px-8 py-2.5 font-black text-[10px] uppercase tracking-widest data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:shadow-lg transition-all border-0 italic">Alpha Guardrails</TabsTrigger>
+                                <TabsTrigger value="data" className="rounded-xl px-8 py-2.5 font-black text-[10px] uppercase tracking-widest data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:shadow-lg transition-all border-0 italic">Neural Data</TabsTrigger>
+                            </TabsList>
+
+                            <TabsContent value="parameters" className="space-y-10 mt-0 focus-visible:outline-none">
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                                    <div className="space-y-4 p-8 rounded-[2.5rem] bg-muted/30 border border-border/30 shadow-inner group/val">
+                                        <div className="flex justify-between items-center mb-2">
+                                            <span className="text-[10px] font-black text-muted-foreground uppercase tracking-widest italic opacity-60 group-hover/val:text-primary transition-colors">Base Alpha Asset</span>
+                                            <Badge className="text-[9px] font-black bg-primary/10 text-primary border-primary/20 px-3 uppercase italic tracking-widest">Top 10 Vector</Badge>
                                         </div>
-
-                                        <div className="space-y-4">
-                                            <p className="text-xs font-semibold text-muted-foreground">Neural Allocation Suggestion</p>
-                                            <div className="p-5 rounded-lg bg-muted border border-border space-y-6">
-                                                {[
-                                                    { name: "BTC / Blue-Chips", val: riskProfile === 'conservative' ? 70 : riskProfile === 'moderate' ? 40 : 15, color: "bg-orange-500" },
-                                                    { name: "Layer 1 Alts", val: riskProfile === 'conservative' ? 20 : riskProfile === 'moderate' ? 40 : 60, color: "bg-blue-500" },
-                                                    { name: "Speculative / AI Tokens", val: riskProfile === 'conservative' ? 10 : riskProfile === 'moderate' ? 20 : 25, color: "bg-fuchsia-500" },
-                                                ].map((item, i) => (
-                                                    <div key={i} className="space-y-2">
-                                                        <div className="flex justify-between items-center text-xs font-semibold text-gray-700">
-                                                            <span>{item.name}</span>
-                                                            <span>{item.val}%</span>
-                                                        </div>
-                                                        <Progress value={item.val} className="h-2 bg-gray-200 rounded-full" />
-                                                    </div>
-                                                ))}
-                                            </div>
+                                        <div className="flex items-center bg-card/60 rounded-xl p-4 border border-border/50 shadow-sm">
+                                            <span className="text-sm font-black text-foreground italic uppercase tracking-tighter">Bitcoin (BTC)</span>
+                                            <Settings className="ml-auto h-4 w-4 text-muted-foreground opacity-40" />
                                         </div>
                                     </div>
-                                </CardContent>
-                            </Card>
 
-                            <div className="space-y-6">
-                                <Card className="bg-card border border-border shadow-sm rounded-xl">
-                                    <CardContent className="p-6">
-                                        <h4 className="text-base font-bold text-foreground mb-4">Active Strategy AI Insight</h4>
-                                        <p className="text-sm text-muted-foreground leading-relaxed mb-6">
-                                            Based on your {riskProfile} profile, the neural engine suggests a 5% overweight on DePIN tokens for the current market cycle.
-                                        </p>
-                                        <Button className="w-full rounded-lg bg-fuchsia-600 hover:bg-fuchsia-700 text-white font-semibold hover:bg-fuchsia-700 py-5">
-                                            Deploy Strategy
-                                        </Button>
-                                    </CardContent>
-                                </Card>
-
-                                <Card className="bg-card border border-border shadow-sm rounded-xl">
-                                    <CardHeader className="border-b border-border pb-4">
-                                        <CardTitle className="text-sm font-bold text-foreground">Model Performance (Mock)</CardTitle>
-                                    </CardHeader>
-                                    <CardContent className="p-6">
-                                        <div className="space-y-5">
-                                            <div className="flex items-baseline justify-between">
-                                                <span className="text-xs font-semibold text-muted-foreground">Est. Annual Return</span>
-                                                <span className="text-2xl font-bold text-green-600 dark:text-green-400">42.5%</span>
-                                            </div>
-                                            <div className="flex items-baseline justify-between">
-                                                <span className="text-xs font-semibold text-muted-foreground">Max Drawdown</span>
-                                                <span className="text-xl font-bold text-red-600 dark:text-red-400">-18.4%</span>
-                                            </div>
-                                            <div className="h-20 flex items-end gap-1 mt-6">
-                                                {Array.from({ length: 12 }).map((_, i) => (
-                                                    <div key={i} className="flex-1 bg-fuchsia-200 dark:bg-fuchsia-800 rounded-t-sm" style={{ height: `${Math.random() * 80 + 20}%` }} />
-                                                ))}
-                                            </div>
+                                    <div className="space-y-4 p-8 rounded-[2.5rem] bg-muted/30 border border-border/30 shadow-inner group/val">
+                                        <div className="flex justify-between items-center mb-2">
+                                            <span className="text-[10px] font-black text-muted-foreground uppercase tracking-widest italic opacity-60 group-hover/val:text-primary transition-colors">Neural Signal Sensitivity</span>
+                                            <span className="text-[10px] font-black text-primary italic uppercase tracking-widest">Aggressive Alpha</span>
                                         </div>
-                                    </CardContent>
-                                </Card>
+                                        <div className="h-2 w-full bg-muted rounded-full overflow-hidden shadow-inner border border-border/20">
+                                            <div className="h-full bg-primary shadow-lg shadow-primary/30" style={{ width: '85%' }} />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div className="space-y-8">
+                                    <label className="text-[10px] font-black text-muted-foreground uppercase tracking-widest italic px-2 opacity-60">Neural Risk Profile Selector</label>
+                                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                                        {[
+                                            { id: "conservative", label: "Conservative", p: "Low Vol Alpha", icon: ShieldCheck, theme: "text-primary bg-primary/10 border-primary/20" },
+                                            { id: "moderate", label: "Structural Sync", p: "Medium Vol Alpha", icon: Zap, theme: "text-accent bg-accent/10 border-accent/20" },
+                                            { id: "aggressive", label: "Alpha Seeker", p: "High Vol Alpha", icon: Sparkles, theme: "text-success bg-success/10 border-success/20" },
+                                        ].map((p, i) => (
+                                            <div
+                                                key={i}
+                                                onClick={() => setRiskProfile(p.id)}
+                                                className={cn(
+                                                    "p-8 rounded-[2.5rem] border-2 transition-all cursor-pointer group/item relative overflow-hidden",
+                                                    riskProfile === p.id
+                                                        ? 'border-primary bg-primary/5 shadow-2xl scale-[1.02]'
+                                                        : 'border-border/50 bg-muted/20 hover:border-border hover:bg-muted/40'
+                                                )}
+                                            >
+                                                <div className={cn("p-4 rounded-2xl w-fit mb-6 shadow-lg transition-transform group-hover/item:scale-110", p.theme)}>
+                                                    <p.icon className="h-6 w-6" />
+                                                </div>
+                                                <h4 className="text-base font-black text-foreground uppercase tracking-tighter italic mb-1 shrink-0">{p.label}</h4>
+                                                <span className="text-[9px] font-black text-muted-foreground uppercase tracking-[0.2em] opacity-40">{p.p}</span>
+                                                {riskProfile === p.id && (
+                                                    <div className="absolute top-4 right-4 h-2 w-2 rounded-full bg-primary shadow-lg shadow-primary/50" />
+                                                )}
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+                            </TabsContent>
+
+                            <TabsContent value="risk" className="mt-0">
+                                <div className="p-10 rounded-[2.5rem] bg-muted/20 border border-dashed border-border/50 min-h-[400px] flex flex-col items-center justify-center text-center group/placeholder">
+                                    <ShieldCheck className="h-16 w-16 text-muted-foreground/20 mb-6 group-hover/placeholder:scale-110 transition-transform" />
+                                    <p className="text-muted-foreground/40 font-black uppercase tracking-[0.4em] italic text-xs">Structural Alpha Guardrails</p>
+                                </div>
+                            </TabsContent>
+
+                            <TabsContent value="data" className="mt-0">
+                                <div className="p-10 rounded-[2.5rem] bg-muted/20 border border-dashed border-border/50 min-h-[400px] flex flex-col items-center justify-center text-center group/placeholder">
+                                    <BrainCircuit className="h-16 w-16 text-muted-foreground/20 mb-6 group-hover/placeholder:scale-110 transition-transform" />
+                                    <p className="text-muted-foreground/40 font-black uppercase tracking-[0.4em] italic text-xs">Neural Data Feed Configuration</p>
+                                </div>
+                            </TabsContent>
+                        </Tabs>
+                    </Card>
+
+                    {/* AI Preview */}
+                    <div className="space-y-8">
+                        <Card className="bg-card/40 border-primary/20 backdrop-blur-3xl shadow-2xl rounded-[3rem] p-10 group overflow-hidden relative border">
+                            <div className="absolute top-0 right-0 h-48 w-48 bg-primary/5 rounded-full blur-3xl -mr-24 -mt-24 group-hover:scale-125 transition-transform duration-700" />
+                            <div className="relative z-10 text-center">
+                                <div className="h-16 w-16 rounded-[1.5rem] bg-primary/10 border border-primary/20 flex items-center justify-center mb-8 mx-auto shadow-xl backdrop-blur-md">
+                                    <BrainCircuit className="h-8 w-8 text-primary" />
+                                </div>
+                                <h4 className="text-lg font-black uppercase tracking-[0.2em] mb-3 italic text-muted-foreground opacity-60">Neural Alpha Score</h4>
+                                <div className="text-7xl font-black italic tracking-tighter mb-6 tabular-nums group-hover:scale-110 transition-all text-foreground drop-shadow-xl shadow-primary/20">92.4%</div>
+                                <p className="text-xs font-bold text-muted-foreground leading-relaxed italic mb-10 max-w-[200px] mx-auto">
+                                    Historical Monte Carlo simulations suggest a <span className="text-foreground">high fidelity structural interval</span> for current neural parameters.
+                                </p>
+                                <Button className="w-full h-14 rounded-2xl bg-primary text-primary-foreground font-black uppercase tracking-widest hover:bg-primary/90 transition-all shadow-xl shadow-primary/20 border-0">
+                                    Optimize Neural Weights
+                                </Button>
                             </div>
-                        </div>
-                    </TabsContent>
-                </Tabs>
+                        </Card>
+
+                        <Card className="bg-card/40 border-border/50 backdrop-blur-2xl shadow-2xl rounded-[3rem] p-10 border group overflow-hidden relative">
+                            <div className="absolute bottom-0 right-0 h-32 w-32 bg-success/5 rounded-full blur-2xl -mr-16 -mb-16 group-hover:bg-success/10 transition-all" />
+                            <CardTitle className="text-[10px] font-black text-muted-foreground uppercase tracking-[0.4em] mb-10 italic opacity-60">Structural Performance</CardTitle>
+                            <div className="space-y-8">
+                                {[
+                                    { l: "Expected Alpha APY", v: "42.8%", c: "text-success bg-success/10 shadow-success/10" },
+                                    { l: "Max Structural Drawdown", v: "-12.4%", c: "text-destructive bg-destructive/10 shadow-destructive/10" },
+                                    { l: "Neural Sharpe Ratio", v: "2.84", c: "text-primary bg-primary/10 shadow-primary/10" }
+                                ].map((item, i) => (
+                                    <div key={i} className="flex justify-between items-end border-b border-border/30 pb-6 last:border-0 last:pb-0 group/stat">
+                                        <span className="text-[10px] font-black text-muted-foreground uppercase tracking-widest italic opacity-60 group-hover/stat:text-foreground transition-colors">{item.l}</span>
+                                        <div className={cn("px-4 py-1.5 rounded-xl border border-transparent italic transition-all group-hover/stat:scale-110", item.c)}>
+                                            <span className="text-2xl font-black italic tabular-nums tracking-tighter">{item.v}</span>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </Card>
+                    </div>
+                </div>
             </div>
         </AppShell>
     )

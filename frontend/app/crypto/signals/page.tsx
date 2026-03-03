@@ -61,118 +61,106 @@ const signals = [
     },
 ]
 
-export default function CryptoSignals() {
+export default function TradingSignals() {
     return (
         <AppShell>
-            <div className="flex flex-col gap-8 p-6 lg:p-10 max-w-[1600px] mx-auto min-h-screen">
+            <div className="flex flex-col gap-8 p-6 lg:p-10 max-w-[1600px] mx-auto min-h-screen bg-background/50 transition-colors duration-500">
                 {/* Header */}
                 <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
                     <div className="space-y-1">
                         <div className="flex items-center gap-3">
-                            <div className="p-2.5 rounded-xl bg-orange-50 dark:bg-orange-950/30 text-orange-600 dark:text-orange-400">
-                                <Zap className="h-6 w-6" />
+                            <div className="p-2.5 rounded-xl bg-primary shadow-[0_0_20px_rgba(var(--primary),0.3)]">
+                                <Zap className="h-6 w-6 text-primary-foreground" />
                             </div>
-                            <h1 className="text-3xl font-bold text-foreground">Trading Signals</h1>
+                            <h1 className="text-3xl font-black text-foreground tracking-tight italic">Trading Alpha Signals</h1>
                         </div>
-                        <p className="text-muted-foreground text-sm ml-12">AI-powered buy/sell alerts and trade recommendations</p>
+                        <p className="text-muted-foreground text-sm ml-12 font-medium italic">Neural network pattern matching and institutional tape reading</p>
                     </div>
                     <div className="flex items-center gap-3">
-                        <Button variant="outline" className="rounded-lg border-gray-300">
-                            <Save className="h-4 w-4 mr-2" /> Saved Signals
-                        </Button>
-                        <Button className="rounded-lg bg-orange-600 hover:bg-orange-700 text-white font-semibold">
-                            <Bell className="h-4 w-4 mr-2" /> Alert Settings
-                        </Button>
+                        <div className="hidden lg:flex items-center px-4 py-2 rounded-xl bg-card/40 border border-border/50 backdrop-blur-md">
+                            <span className="text-[10px] font-black text-primary tracking-widest uppercase italic">Real-time Alpha Analysis</span>
+                        </div>
                     </div>
                 </div>
 
-                {/* Live Signals Grid */}
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                    {signals.map((sig) => (
-                        <Card key={sig.id} className="bg-card border border-border shadow-sm rounded-xl overflow-hidden hover:border-border/80 transition-colors">
-                            <CardHeader className="p-6 border-b border-border flex flex-row items-center justify-between bg-muted/50">
-                                <div className="flex items-center gap-3">
-                                    <div className={`h-10 w-10 rounded-lg flex items-center justify-center font-bold text-xs ${sig.type === 'LONG' ? 'bg-green-100 dark:bg-green-950/30 text-green-700 dark:text-green-400' : 'bg-red-100 dark:bg-red-950/30 text-red-700 dark:text-red-400'
-                                        }`}>
-                                        {sig.type}
-                                    </div>
-                                    <div>
-                                        <CardTitle className="text-xl font-bold text-foreground">{sig.pair}</CardTitle>
-                                        <div className="flex items-center gap-2 mt-1">
-                                            <Clock className="h-3 w-3 text-muted-foreground" />
-                                            <span className="text-xs font-medium text-muted-foreground">{sig.time}</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <Badge className={`font-semibold text-xs px-3 py-1 rounded-full ${sig.status === 'Active' ? 'bg-orange-100 text-orange-700 border-orange-200' : 'bg-green-100 text-green-700 border-green-200'
-                                    }`}>
-                                    {sig.status}
-                                </Badge>
-                            </CardHeader>
-                            <CardContent className="p-6">
-                                <div className="grid grid-cols-3 gap-6 mb-6">
-                                    <div className="space-y-1">
-                                        <p className="text-xs font-semibold text-gray-600">Entry Zone</p>
-                                        <p className="text-lg font-bold text-gray-900">{sig.entry}</p>
-                                    </div>
-                                    <div className="space-y-1">
-                                        <p className="text-xs font-semibold text-gray-600">Stop Loss</p>
-                                        <p className="text-lg font-bold text-red-600">{sig.stopLoss}</p>
-                                    </div>
-                                    <div className="space-y-1 text-right">
-                                        <p className="text-xs font-semibold text-gray-600">Confidence</p>
-                                        <p className="text-lg font-bold text-green-600">{sig.conviction}%</p>
-                                    </div>
-                                </div>
-
-                                <div className="p-4 rounded-lg bg-gray-50 border border-gray-200 space-y-3">
-                                    <p className="text-xs font-semibold text-gray-600">Take Profit Targets</p>
-                                    <div className="flex flex-wrap gap-2">
-                                        {sig.targets.map((t, i) => (
-                                            <div key={i} className="flex items-center gap-2 px-3 py-2 rounded-lg bg-white border border-gray-200">
-                                                <span className="text-xs font-semibold text-gray-600">T{i + 1}</span>
-                                                <span className="text-sm font-bold text-gray-900">{t}</span>
-                                                <div className="h-2 w-2 rounded-full bg-gray-300 border border-gray-400" />
-                                            </div>
-                                        ))}
-                                    </div>
-                                </div>
-
-                                <div className="mt-6 flex items-center justify-between">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    {/* Active Signals Grid */}
+                    {[
+                        { asset: "BTC", type: "Bullish Divergence", timeframe: "4H", strength: 84, trend: "Buy", color: "text-success", bg: "bg-success/5" },
+                        { asset: "ETH", type: "Institutional Sweep", timeframe: "1H", strength: 92, trend: "Strong Buy", color: "text-primary", bg: "bg-primary/5" },
+                        { asset: "SOL", type: "Liquidity Grab", timeframe: "15M", strength: 65, trend: "Scalp Long", color: "text-warning", bg: "bg-warning/5" },
+                        { asset: "XRP", type: "Trend Reversal", timeframe: "Daily", strength: 42, trend: "Neutral", color: "text-muted-foreground", bg: "bg-muted" },
+                        { asset: "ADA", type: "Breakout Pattern", timeframe: "1H", strength: 78, trend: "Buy", color: "text-success", bg: "bg-success/5" },
+                        { asset: "DOT", type: "Whale Accumulation", timeframe: "4H", strength: 88, trend: "Strong Buy", color: "text-primary", bg: "bg-primary/5" },
+                    ].map((signal, i) => (
+                        <Card key={i} className="bg-card/40 border-border/50 backdrop-blur-xl shadow-xl rounded-[2.5rem] p-8 border hover:border-primary/20 transition-all group overflow-hidden relative">
+                            <div className="absolute top-0 right-0 h-32 w-32 bg-primary/5 rounded-full blur-3xl -mr-16 -mt-16 group-hover:bg-primary/10 transition-all" />
+                            <div className="relative z-10">
+                                <div className="flex justify-between items-start mb-6">
                                     <div className="flex items-center gap-4">
-                                        <div className="flex flex-col gap-1">
-                                            <span className="text-xs font-semibold text-gray-600">Risk Level</span>
-                                            <Badge variant="outline" className={`rounded-lg px-2.5 py-0.5 font-semibold text-xs ${sig.risk === 'High' ? 'border-red-300 text-red-700' : 'border-amber-300 text-amber-700'
-                                                }`}>
-                                                {sig.risk} Risk
-                                            </Badge>
+                                        <div className="h-12 w-12 rounded-2xl bg-card border border-border/50 flex items-center justify-center font-black text-xl text-foreground shadow-inner transition-transform group-hover:scale-110 italic">
+                                            {signal.asset[0]}
+                                        </div>
+                                        <div>
+                                            <h3 className="text-xl font-black text-foreground italic tracking-tight">{signal.asset}/USDT</h3>
+                                            <span className="text-[10px] font-black text-muted-foreground uppercase tracking-widest leading-none">{signal.timeframe} Neural Scan</span>
                                         </div>
                                     </div>
-                                    <div className="flex gap-2">
-                                        <Button variant="ghost" size="icon" className="rounded-lg text-gray-600 hover:text-gray-900 hover:bg-gray-100"><History className="h-4 w-4" /></Button>
-                                        <Button className="rounded-lg bg-orange-600 text-white font-semibold hover:bg-orange-700">Execute Node</Button>
+                                    <Badge className={`${cn(
+                                        "rounded-xl border-0 font-black text-[9px] uppercase tracking-widest px-4 py-1.5",
+                                        signal.trend.includes('Buy') ? "bg-success/10 text-success" : "bg-muted text-muted-foreground"
+                                    )}`}>
+                                        {signal.trend}
+                                    </Badge>
+                                </div>
+
+                                <div className="space-y-6">
+                                    <div className="p-4 rounded-2xl bg-muted/30 border border-border/50">
+                                        <p className="text-[10px] font-black text-muted-foreground uppercase tracking-widest mb-1 italic">Scan Result</p>
+                                        <p className="text-sm font-black text-foreground italic line-clamp-1">{signal.type}</p>
+                                    </div>
+
+                                    <div className="space-y-2">
+                                        <div className="flex justify-between text-[10px] font-black uppercase tracking-widest italic">
+                                            <span className="text-muted-foreground">Neural Confidence</span>
+                                            <span className={signal.color}>{signal.strength}%</span>
+                                        </div>
+                                        <div className="h-2 w-full rounded-full bg-muted overflow-hidden border border-border/5">
+                                            <div className={cn("h-full transition-all duration-1000", signal.color.replace('text-', 'bg-'))} style={{ width: `${signal.strength}%` }} />
+                                        </div>
                                     </div>
                                 </div>
-                            </CardContent>
+
+                                <div className="mt-8 flex gap-3">
+                                    <Button className="flex-1 h-11 rounded-xl bg-primary text-primary-foreground font-black uppercase tracking-widest text-[10px] hover:scale-[1.02] transition-all shadow-lg border-0 group/btn">
+                                        Deploy Capital <ArrowUpRight className="h-4 w-4 ml-1.5 transition-transform group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5" />
+                                    </Button>
+                                    <Button variant="outline" className="h-11 w-11 rounded-xl border-border bg-card/40 text-muted-foreground p-0 hover:text-foreground transition-all">
+                                        <TrendingUp className="h-4 w-4" />
+                                    </Button>
+                                </div>
+                            </div>
                         </Card>
                     ))}
 
-                    <Card className="bg-white border-dashed border-gray-300 shadow-sm rounded-xl p-12 flex flex-col items-center justify-center text-center hover:border-gray-400 transition-colors cursor-pointer">
-                        <div className="h-16 w-16 rounded-lg bg-gray-100 flex items-center justify-center mb-6">
-                            <Target className="h-8 w-8 text-gray-600" />
+                    <Card className="bg-card/20 border-2 border-dashed border-border/50 shadow-inner rounded-[2.5rem] p-12 flex flex-col items-center justify-center text-center hover:border-primary/20 transition-all cursor-pointer group">
+                        <div className="h-20 w-20 rounded-[2rem] bg-card border border-border/50 flex items-center justify-center mb-8 shadow-xl transition-transform group-hover:scale-110">
+                            <Target className="h-10 w-10 text-muted-foreground group-hover:text-primary transition-colors" />
                         </div>
-                        <h3 className="text-lg font-bold text-gray-900">Neural Strategy Sync</h3>
-                        <p className="text-gray-600 font-medium max-w-xs mt-2">Connect your custom strategy builder to generate personalized alpha alerts.</p>
+                        <h3 className="text-xl font-black text-foreground uppercase tracking-tight italic">Neural Alpha Sync</h3>
+                        <p className="text-muted-foreground font-bold text-sm max-w-xs mt-3 leading-relaxed">Connect your custom strategy builder to generate personalized alpha alerts.</p>
                     </Card>
                 </div>
 
                 {/* Footer Note */}
-                <Card className="bg-rose-50 dark:bg-rose-950/30 border border-rose-200 dark:border-rose-800 rounded-xl p-6 flex items-start gap-4 shadow-sm">
-                    <div className="p-2.5 rounded-lg bg-rose-100 dark:bg-rose-900/50"><ShieldAlert className="h-5 w-5 text-rose-600 dark:text-rose-400" /></div>
-                    <div className="space-y-1">
-                        <h4 className="text-sm font-bold text-rose-700 dark:text-rose-400">Execution Protocol Alpha</h4>
-                        <p className="text-xs text-rose-600 dark:text-rose-300 leading-relaxed">
-                            Signals are generated via high-confidence pattern matching. Past performance does not guarantee future results. Liquidation risks are inherent in leverage trading. Use suggested stop-loss levels.
+                <Card className="bg-destructive/5 border border-destructive/10 backdrop-blur-md rounded-[2rem] p-8 flex items-start gap-6 shadow-xl">
+                    <div className="p-4 rounded-2xl bg-destructive/10 shadow-inner">
+                        <ShieldAlert className="h-6 w-6 text-destructive" />
+                    </div>
+                    <div className="space-y-2">
+                        <h4 className="text-sm font-black text-destructive uppercase tracking-[0.2em] italic">Risk Protocol Directive</h4>
+                        <p className="text-xs text-muted-foreground font-bold leading-relaxed max-w-4xl italic">
+                            Alpha signals are generated via high-velocity neural pattern matching. Past performance is not an indicator of future results. Liquidation risks are inherent in algorithmic trading. Deploy capital responsibly.
                         </p>
                     </div>
                 </Card>

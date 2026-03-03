@@ -7,6 +7,7 @@ import { Badge } from "@/components/ui/badge"
 import { Eye, Plus, Download, BarChart3, Calculator } from "lucide-react"
 import { scrollReveal } from "@/lib/animation-variants"
 import Link from "next/link"
+import { cn } from "@/lib/utils"
 
 const cryptoHoldings = [
   { symbol: "BTC", name: "Bitcoin", price: 3850000, change24h: 2.4, change7d: 8.2, volatility: 85, risk: "High", signal: "Bullish", confidence: 78 },
@@ -17,102 +18,102 @@ const cryptoHoldings = [
 
 export function HoldingsTable() {
   return (
-    <motion.div variants={scrollReveal}>
-      <div className="flex items-center justify-between mb-4">
-        <h2 className="text-xl font-bold flex items-center gap-2">
-          <Eye className="h-5 w-5 text-purple-600" />
-          Holdings & Watchlist
+    <motion.div variants={scrollReveal} className="w-full">
+      <div className="flex items-center justify-between mb-6">
+        <h2 className="text-[10px] font-black flex items-center gap-2 uppercase tracking-[0.3em] italic text-muted-foreground">
+          <Eye className="h-4 w-4 text-primary" />
+          Structural Alpha Holdings
         </h2>
-        <div className="flex gap-2">
-          <Button variant="outline" size="sm" className="gap-2">
-            <Plus className="h-4 w-4" />
-            Add to Watchlist
+        <div className="flex gap-3">
+          <Button variant="outline" size="sm" className="rounded-xl border-border bg-card/40 text-[10px] font-black uppercase tracking-widest px-4 py-2 h-auto hover:text-primary transition-all">
+            <Plus className="h-3 w-3 mr-2" />
+            Neural Watch
           </Button>
-          <Button variant="outline" size="sm" className="gap-2">
-            <Download className="h-4 w-4" />
-            Export
+          <Button variant="outline" size="sm" className="rounded-xl border-border bg-card/40 text-[10px] font-black uppercase tracking-widest px-4 py-2 h-auto hover:text-primary transition-all">
+            <Download className="h-3 w-3 mr-2" />
+            Neural Export
           </Button>
         </div>
       </div>
-      <Card className="glass-card overflow-hidden">
+      <Card className="bg-card/40 border-border/50 backdrop-blur-2xl shadow-xl rounded-[2.5rem] overflow-hidden border">
         <div className="overflow-x-auto">
-          <table className="w-full">
-            <thead className="bg-muted/50 border-b border-border">
-              <tr>
-                <th className="text-left p-4 text-xs font-bold uppercase tracking-wider">Asset</th>
-                <th className="text-right p-4 text-xs font-bold uppercase tracking-wider">Price</th>
-                <th className="text-right p-4 text-xs font-bold uppercase tracking-wider">24h</th>
-                <th className="text-right p-4 text-xs font-bold uppercase tracking-wider">7d</th>
-                <th className="text-center p-4 text-xs font-bold uppercase tracking-wider">Volatility</th>
-                <th className="text-center p-4 text-xs font-bold uppercase tracking-wider">Risk</th>
-                <th className="text-center p-4 text-xs font-bold uppercase tracking-wider">AI Signal</th>
-                <th className="text-center p-4 text-xs font-bold uppercase tracking-wider">Confidence</th>
-                <th className="text-center p-4 text-xs font-bold uppercase tracking-wider">Actions</th>
+          <table className="w-full border-collapse">
+            <thead>
+              <tr className="bg-muted/30 border-b border-border/50">
+                <th className="text-left p-6 text-[10px] font-black uppercase tracking-widest italic text-muted-foreground">Asset Vector</th>
+                <th className="text-right p-6 text-[10px] font-black uppercase tracking-widest italic text-muted-foreground">Neural Value</th>
+                <th className="text-right p-6 text-[10px] font-black uppercase tracking-widest italic text-muted-foreground">24h Alpha</th>
+                <th className="text-right p-6 text-[10px] font-black uppercase tracking-widest italic text-muted-foreground">7d Alpha</th>
+                <th className="text-center p-6 text-[10px] font-black uppercase tracking-widest italic text-muted-foreground">Volatility Matrix</th>
+                <th className="text-center p-6 text-[10px] font-black uppercase tracking-widest italic text-muted-foreground">Structural Risk</th>
+                <th className="text-center p-6 text-[10px] font-black uppercase tracking-widest italic text-muted-foreground">Neural Signal</th>
+                <th className="text-center p-6 text-[10px] font-black uppercase tracking-widest italic text-muted-foreground">Alpha Sync</th>
+                <th className="text-center p-6 text-[10px] font-black uppercase tracking-widest italic text-muted-foreground">Alpha Tools</th>
               </tr>
             </thead>
             <tbody>
               {cryptoHoldings.map((crypto, i) => (
-                <tr key={i} className="border-b border-border/50 hover:bg-muted/30 transition-colors">
-                  <td className="p-4">
-                    <div className="flex items-center gap-3">
-                      <div className="h-10 w-10 rounded-full bg-gradient-to-br from-orange-500 to-rose-500 flex items-center justify-center text-white font-bold text-sm">
+                <tr key={i} className="border-b border-border/30 hover:bg-muted/20 transition-all group">
+                  <td className="p-6">
+                    <div className="flex items-center gap-4">
+                      <div className="h-12 w-12 rounded-2xl bg-primary shadow-lg shadow-primary/20 flex items-center justify-center text-primary-foreground font-black text-sm italic group-hover:scale-110 transition-transform">
                         {crypto.symbol.slice(0, 2)}
                       </div>
                       <div>
-                        <p className="font-bold">{crypto.symbol}</p>
-                        <p className="text-xs text-muted-foreground">{crypto.name}</p>
+                        <p className="font-black text-foreground italic uppercase tracking-tighter">{crypto.symbol}</p>
+                        <p className="text-[10px] text-muted-foreground font-medium italic opacity-60">{crypto.name}</p>
                       </div>
                     </div>
                   </td>
-                  <td className="p-4 text-right font-bold tabular-nums">
+                  <td className="p-6 text-right font-black text-foreground italic tabular-nums">
                     ₹{crypto.price.toLocaleString("en-IN")}
                   </td>
-                  <td className="p-4 text-right">
-                    <span className={`font-bold ${crypto.change24h >= 0 ? "text-emerald-600" : "text-rose-600"}`}>
+                  <td className="p-6 text-right">
+                    <span className={cn("font-black italic tabular-nums", crypto.change24h >= 0 ? "text-success" : "text-destructive")}>
                       {crypto.change24h >= 0 ? "+" : ""}{crypto.change24h}%
                     </span>
                   </td>
-                  <td className="p-4 text-right">
-                    <span className={`font-bold ${crypto.change7d >= 0 ? "text-emerald-600" : "text-rose-600"}`}>
+                  <td className="p-6 text-right">
+                    <span className={cn("font-black italic tabular-nums", crypto.change7d >= 0 ? "text-success" : "text-destructive")}>
                       {crypto.change7d >= 0 ? "+" : ""}{crypto.change7d}%
                     </span>
                   </td>
-                  <td className="p-4 text-center">
-                    <div className="flex items-center justify-center gap-2">
-                      <div className="h-2 w-16 bg-muted rounded-full overflow-hidden">
+                  <td className="p-6 text-center">
+                    <div className="flex items-center justify-center gap-3">
+                      <div className="h-1.5 w-20 bg-muted rounded-full overflow-hidden border border-border/50">
                         <div
-                          className="h-full bg-gradient-to-r from-amber-500 to-rose-500"
+                          className="h-full bg-primary shadow-[0_0_10px_rgba(var(--primary),0.5)] transition-all duration-1000"
                           style={{ width: `${crypto.volatility}%` }}
                         />
                       </div>
-                      <span className="text-xs font-bold">{crypto.volatility}%</span>
+                      <span className="text-[10px] font-black text-primary italic tabular-nums">{crypto.volatility}%</span>
                     </div>
                   </td>
-                  <td className="p-4 text-center">
-                    <Badge className={crypto.risk === "Extreme" ? "bg-rose-500/10 text-rose-600 border-rose-500/20" : "bg-amber-500/10 text-amber-600 border-amber-500/20"}>
+                  <td className="p-6 text-center">
+                    <Badge className={cn("font-black text-[9px] uppercase tracking-widest px-3 py-1 rounded-lg border", crypto.risk === "Extreme" ? "bg-destructive/10 text-destructive border-destructive/20" : "bg-warning/10 text-warning border-warning/20")}>
                       {crypto.risk}
                     </Badge>
                   </td>
-                  <td className="p-4 text-center">
-                    <Badge className={
-                      crypto.signal === "Bullish" ? "bg-emerald-500/10 text-emerald-600 border-emerald-500/20" :
-                      crypto.signal === "Cautious" ? "bg-rose-500/10 text-rose-600 border-rose-500/20" :
-                      "bg-slate-500/10 text-slate-600 border-slate-500/20"
-                    }>
+                  <td className="p-6 text-center">
+                    <Badge className={cn("font-black text-[9px] uppercase tracking-widest px-3 py-1 rounded-lg border",
+                      crypto.signal === "Bullish" ? "bg-success/10 text-success border-success/20" :
+                        crypto.signal === "Cautious" ? "bg-destructive/10 text-destructive border-destructive/20" :
+                          "bg-muted text-muted-foreground border-border/50"
+                    )}>
                       {crypto.signal}
                     </Badge>
                   </td>
-                  <td className="p-4 text-center">
-                    <span className="font-bold text-sm">{crypto.confidence}%</span>
+                  <td className="p-6 text-center">
+                    <span className="font-black text-sm text-foreground italic tabular-nums">{crypto.confidence}%</span>
                   </td>
-                  <td className="p-4">
-                    <div className="flex items-center justify-center gap-2">
+                  <td className="p-6">
+                    <div className="flex items-center justify-center gap-3">
                       <Link href={`/crypto/analysis?symbol=${crypto.symbol}`}>
-                        <Button variant="ghost" size="sm" className="h-8 px-3">
+                        <Button variant="ghost" size="sm" className="h-9 w-9 p-0 rounded-xl hover:bg-primary/10 hover:text-primary transition-all">
                           <BarChart3 className="h-4 w-4" />
                         </Button>
                       </Link>
-                      <Button variant="ghost" size="sm" className="h-8 px-3">
+                      <Button variant="ghost" size="sm" className="h-9 w-9 p-0 rounded-xl hover:bg-primary/10 hover:text-primary transition-all">
                         <Calculator className="h-4 w-4" />
                       </Button>
                     </div>

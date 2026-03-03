@@ -14,6 +14,7 @@ import {
   TrendingUp,
   Zap,
   ChevronDown,
+  ChevronLeft,
   Shield,
   Wallet,
   Mail,
@@ -35,6 +36,7 @@ import {
   FileText,
 } from "lucide-react"
 import { useState, useEffect } from "react"
+import { useSidebar } from "@/contexts/SidebarContext"
 
 const basePath = process.env.NEXT_PUBLIC_BASE_PATH || '';
 
@@ -75,8 +77,6 @@ const cryptoItems = [
   { name: "Security Hub", href: "/crypto/security", icon: ShieldCheck, color: "text-rose-600" },
 ]
 
-
-
 // Mutual Funds Section
 const mutualFundItems = [
   { name: "MF Explorer", href: "/mf", icon: Coins, color: "text-orange-600" },
@@ -104,6 +104,8 @@ const bottomNavItems = [
 
 export function Sidebar() {
   const pathname = usePathname()
+  const { isCollapsed, toggle } = useSidebar()
+
   const [portfolioOpen, setPortfolioOpen] = useState(() =>
     pathname === "/portfolios" || pathname === "/portfolio" || pathname.startsWith("/portfolios/") || pathname === "/predictions"
   )
@@ -123,59 +125,66 @@ export function Sidebar() {
   }, [pathname])
 
   return (
-    <aside className="fixed left-0 top-0 z-40 h-screen w-[260px] border-r border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 flex-col hidden lg:flex shadow-sm overflow-hidden">
-      {/* Logo Section - Professional Theme-Aware Clean Version */}
-      <div className="flex h-[72px] items-center gap-3 px-5 border-b border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-950 flex-shrink-0">
-       <div className=" w-[76px]  flex items-center justify-center h-full  overflow-hidden">
-                               <img src={`${basePath}/logo2.png`} alt="Bharat AI Wealth" className="h-[45px]  w-full "/>
-                    </div>
-        <div className="flex flex-col">
-          <span className="text-lg font-bold text-slate-900 dark:text-white tracking-tight">Bharat AI</span>
-          <span className="text-[9px] font-bold uppercase tracking-widest text-slate-500 dark:text-slate-400">Wealth Management</span>
-        </div>
-      </div>
+    <aside
+      className={cn(
+        "fixed left-0 top-[72px] z-40 h-[calc(100vh-72px)] border-r border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 flex-col hidden lg:flex shadow-sm overflow-x-hidden",
+        "transition-[width] duration-300 ease-in-out",
+        isCollapsed ? "w-[64px]" : "w-[260px]"
+      )}
+    >
 
       {/* Navigation */}
-      <nav className="flex-1 overflow-y-auto px-3 py-4">
+      <nav className="flex-1 overflow-y-auto overflow-x-hidden px-2 py-4">
         {/* Main Nav */}
         <div className="space-y-0.5 mb-6">
           {mainNavItems.map((item) => (
             <Link
               key={item.href}
               href={item.href}
+              title={isCollapsed ? item.name : undefined}
               className={cn(
                 "flex items-center gap-3 rounded-lg px-3 py-2 text-[13px] font-medium transition-colors",
+                isCollapsed && "justify-center px-2",
                 pathname === item.href
                   ? "bg-orange-50 dark:bg-orange-900/30 text-orange-700 dark:text-orange-400 border border-orange-200 dark:border-orange-800"
                   : "text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white",
               )}
             >
-              <item.icon className="h-4 w-4" />
-              <span>{item.name}</span>
+              <item.icon className="h-4 w-4 flex-shrink-0" />
+              <span
+                className={cn(
+                  "transition-all duration-300 whitespace-nowrap overflow-hidden",
+                  isCollapsed ? "opacity-0 w-0" : "opacity-100"
+                )}
+              >
+                {item.name}
+              </span>
             </Link>
           ))}
         </div>
 
-
-
         {/* Portfolios Section */}
-        <div className="mb-3 px-2">
+        <div className="mb-3 px-1">
           <button
-            onClick={() => setPortfolioOpen(!portfolioOpen)}
+            onClick={() => !isCollapsed && setPortfolioOpen(!portfolioOpen)}
+            title={isCollapsed ? "Portfolios" : undefined}
             className={cn(
               "flex w-full items-center justify-between px-3 py-2 text-[10px] font-bold uppercase tracking-[0.15em] transition-all rounded-lg",
+              isCollapsed && "justify-center px-2",
               portfolioOpen
                 ? "text-emerald-600 dark:text-emerald-400 bg-emerald-50/30 dark:bg-emerald-500/5"
                 : "text-slate-400 hover:text-emerald-600 dark:hover:text-emerald-400 hover:bg-slate-50 dark:hover:bg-slate-800/50"
             )}
           >
-            <span className="flex items-center gap-2.5">
-              <TrendingUp className="h-4 w-4" />
-              Portfolios
+            <span className={cn("flex items-center gap-2.5", isCollapsed && "justify-center")}>
+              <TrendingUp className="h-4 w-4 flex-shrink-0" />
+              <span className={cn("transition-all duration-300 whitespace-nowrap overflow-hidden", isCollapsed ? "opacity-0 w-0" : "opacity-100")}>
+                Portfolios
+              </span>
             </span>
-            <ChevronDown className={cn("h-3 w-3 transition-transform opacity-40", portfolioOpen && "rotate-180")} />
+            {!isCollapsed && <ChevronDown className={cn("h-3 w-3 transition-transform opacity-40", portfolioOpen && "rotate-180")} />}
           </button>
-          <div className={cn("mt-1 ml-4 pl-3 border-l border-slate-100 dark:border-slate-800 space-y-0.5 overflow-hidden transition-all", portfolioOpen ? "max-h-[250px] opacity-100" : "max-h-0 opacity-0")}>
+          <div className={cn("mt-1 ml-4 pl-3 border-l border-slate-100 dark:border-slate-800 space-y-0.5 overflow-hidden transition-all", !isCollapsed && portfolioOpen ? "max-h-[250px] opacity-100" : "max-h-0 opacity-0")}>
             {portfolioItems.map((item) => (
               <Link
                 key={item.href}
@@ -187,33 +196,35 @@ export function Sidebar() {
                     : "text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-50 dark:hover:bg-slate-800/50",
                 )}
               >
-                <div className={cn("h-1 w-1 rounded-full transition-all duration-300", pathname === item.href ? "bg-emerald-500 scale-125 shadow-[0_0_8px_rgba(16,185,129,0.5)]" : "bg-slate-300 opacity-20 group-hover:opacity-60 group-hover:scale-110")} />
+                <div className={cn("h-1 w-1 rounded-full transition-all duration-300 flex-shrink-0", pathname === item.href ? "bg-emerald-500 scale-125 shadow-[0_0_8px_rgba(16,185,129,0.5)]" : "bg-slate-300 opacity-20 group-hover:opacity-60 group-hover:scale-110")} />
                 <span>{item.name}</span>
               </Link>
             ))}
           </div>
         </div>
 
-
-
         {/* Crypto Hub Section */}
-        <div className="mb-3 px-2">
+        <div className="mb-3 px-1">
           <button
-            onClick={() => setCryptoOpen(!cryptoOpen)}
+            onClick={() => !isCollapsed && setCryptoOpen(!cryptoOpen)}
+            title={isCollapsed ? "Crypto Hub" : undefined}
             className={cn(
               "flex w-full items-center justify-between px-3 py-2 text-[10px] font-bold uppercase tracking-[0.15em] transition-all rounded-lg",
+              isCollapsed && "justify-center px-2",
               cryptoOpen
                 ? "text-cyan-600 dark:text-cyan-400 bg-cyan-50/30 dark:bg-cyan-500/5"
                 : "text-slate-400 hover:text-cyan-600 dark:hover:text-cyan-400 hover:bg-slate-50 dark:hover:bg-slate-800/50"
             )}
           >
-            <span className="flex items-center gap-2.5">
-              <Coins className="h-4 w-4" />
-              Crypto Hub
+            <span className={cn("flex items-center gap-2.5", isCollapsed && "justify-center")}>
+              <Coins className="h-4 w-4 flex-shrink-0" />
+              <span className={cn("transition-all duration-300 whitespace-nowrap overflow-hidden", isCollapsed ? "opacity-0 w-0" : "opacity-100")}>
+                Crypto Hub
+              </span>
             </span>
-            <ChevronDown className={cn("h-3 w-3 transition-transform opacity-40", cryptoOpen && "rotate-180")} />
+            {!isCollapsed && <ChevronDown className={cn("h-3 w-3 transition-transform opacity-40", cryptoOpen && "rotate-180")} />}
           </button>
-          <div className={cn("mt-1 ml-4 pl-3 border-l border-slate-100 dark:border-slate-800 space-y-0.5 overflow-hidden transition-all", cryptoOpen ? "max-h-[500px] opacity-100" : "max-h-0 opacity-0")}>
+          <div className={cn("mt-1 ml-4 pl-3 border-l border-slate-100 dark:border-slate-800 space-y-0.5 overflow-hidden transition-all", !isCollapsed && cryptoOpen ? "max-h-[500px] opacity-100" : "max-h-0 opacity-0")}>
             {cryptoItems.map((item) => (
               <Link
                 key={item.href}
@@ -225,33 +236,35 @@ export function Sidebar() {
                     : "text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-50 dark:hover:bg-slate-800/50",
                 )}
               >
-                <div className={cn("h-1 w-1 rounded-full transition-all duration-300", pathname === item.href ? "bg-cyan-500 scale-125 shadow-[0_0_8px_rgba(6,182,212,0.5)]" : "bg-slate-300 opacity-20 group-hover:opacity-60 group-hover:scale-110")} />
+                <div className={cn("h-1 w-1 rounded-full transition-all duration-300 flex-shrink-0", pathname === item.href ? "bg-cyan-500 scale-125 shadow-[0_0_8px_rgba(6,182,212,0.5)]" : "bg-slate-300 opacity-20 group-hover:opacity-60 group-hover:scale-110")} />
                 <span>{item.name}</span>
               </Link>
             ))}
           </div>
         </div>
 
-
-
         {/* Mutual Funds Section */}
-        <div className="mb-3 px-2">
+        <div className="mb-3 px-1">
           <button
-            onClick={() => setMutualFundsOpen(!mutualFundsOpen)}
+            onClick={() => !isCollapsed && setMutualFundsOpen(!mutualFundsOpen)}
+            title={isCollapsed ? "Mutual Funds" : undefined}
             className={cn(
               "flex w-full items-center justify-between px-3 py-2 text-[10px] font-bold uppercase tracking-[0.15em] transition-all rounded-lg",
+              isCollapsed && "justify-center px-2",
               mutualFundsOpen
                 ? "text-orange-600 dark:text-orange-400 bg-orange-50/30 dark:bg-orange-500/5"
                 : "text-slate-400 hover:text-orange-600 dark:hover:text-orange-400 hover:bg-slate-50 dark:hover:bg-slate-800/50"
             )}
           >
-            <span className="flex items-center gap-2.5">
-              <Coins className="h-4 w-4" />
-              Mutual Funds
+            <span className={cn("flex items-center gap-2.5", isCollapsed && "justify-center")}>
+              <Coins className="h-4 w-4 flex-shrink-0" />
+              <span className={cn("transition-all duration-300 whitespace-nowrap overflow-hidden", isCollapsed ? "opacity-0 w-0" : "opacity-100")}>
+                Mutual Funds
+              </span>
             </span>
-            <ChevronDown className={cn("h-3 w-3 transition-transform opacity-40", mutualFundsOpen && "rotate-180")} />
+            {!isCollapsed && <ChevronDown className={cn("h-3 w-3 transition-transform opacity-40", mutualFundsOpen && "rotate-180")} />}
           </button>
-          <div className={cn("mt-1 ml-4 pl-3 border-l border-slate-100 dark:border-slate-800 space-y-0.5 overflow-hidden transition-all", mutualFundsOpen ? "max-h-[200px] opacity-100" : "max-h-0 opacity-0")}>
+          <div className={cn("mt-1 ml-4 pl-3 border-l border-slate-100 dark:border-slate-800 space-y-0.5 overflow-hidden transition-all", !isCollapsed && mutualFundsOpen ? "max-h-[200px] opacity-100" : "max-h-0 opacity-0")}>
             {mutualFundItems.map((item) => (
               <Link
                 key={item.href}
@@ -263,7 +276,7 @@ export function Sidebar() {
                     : "text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-50 dark:hover:bg-slate-800/50",
                 )}
               >
-                <div className={cn("h-1 w-1 rounded-full transition-all duration-300", pathname === item.href ? "bg-orange-500 scale-125 shadow-[0_0_8px_rgba(249,115,22,0.5)]" : "bg-slate-300 opacity-20 group-hover:opacity-60 group-hover:scale-110")} />
+                <div className={cn("h-1 w-1 rounded-full transition-all duration-300 flex-shrink-0", pathname === item.href ? "bg-orange-500 scale-125 shadow-[0_0_8px_rgba(249,115,22,0.5)]" : "bg-slate-300 opacity-20 group-hover:opacity-60 group-hover:scale-110")} />
                 <span>{item.name}</span>
               </Link>
             ))}
@@ -271,23 +284,27 @@ export function Sidebar() {
         </div>
 
         {/* Tools Section */}
-        <div className="mb-3 px-2">
+        <div className="mb-3 px-1">
           <button
-            onClick={() => setToolsOpen(!toolsOpen)}
+            onClick={() => !isCollapsed && setToolsOpen(!toolsOpen)}
+            title={isCollapsed ? "Tools" : undefined}
             className={cn(
               "flex w-full items-center justify-between px-3 py-2 text-[10px] font-bold uppercase tracking-[0.15em] transition-all rounded-lg",
+              isCollapsed && "justify-center px-2",
               toolsOpen
                 ? "text-indigo-600 dark:text-indigo-400 bg-indigo-50/30 dark:bg-indigo-500/5"
                 : "text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 hover:bg-slate-50 dark:hover:bg-slate-800/50"
             )}
           >
-            <span className="flex items-center gap-2.5">
-              <FlaskConical className="h-4 w-4" />
-              Tools
+            <span className={cn("flex items-center gap-2.5", isCollapsed && "justify-center")}>
+              <FlaskConical className="h-4 w-4 flex-shrink-0" />
+              <span className={cn("transition-all duration-300 whitespace-nowrap overflow-hidden", isCollapsed ? "opacity-0 w-0" : "opacity-100")}>
+                Tools
+              </span>
             </span>
-            <ChevronDown className={cn("h-3 w-3 transition-transform opacity-40", toolsOpen && "rotate-180")} />
+            {!isCollapsed && <ChevronDown className={cn("h-3 w-3 transition-transform opacity-40", toolsOpen && "rotate-180")} />}
           </button>
-          <div className={cn("mt-1 ml-4 pl-3 border-l border-slate-100 dark:border-slate-800 space-y-0.5 overflow-hidden transition-all", toolsOpen ? "max-h-[300px] opacity-100" : "max-h-0 opacity-0")}>
+          <div className={cn("mt-1 ml-4 pl-3 border-l border-slate-100 dark:border-slate-800 space-y-0.5 overflow-hidden transition-all", !isCollapsed && toolsOpen ? "max-h-[300px] opacity-100" : "max-h-0 opacity-0")}>
             {toolsNavItems.map((item) => (
               <Link
                 key={item.href}
@@ -299,7 +316,7 @@ export function Sidebar() {
                     : "text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-50 dark:hover:bg-slate-800/50",
                 )}
               >
-                <div className={cn("h-1 w-1 rounded-full transition-all duration-300", pathname === item.href ? "bg-indigo-500 scale-125 shadow-[0_0_8px_rgba(99,102,241,0.5)]" : "bg-slate-300 opacity-20 group-hover:opacity-60 group-hover:scale-110")} />
+                <div className={cn("h-1 w-1 rounded-full transition-all duration-300 flex-shrink-0", pathname === item.href ? "bg-indigo-500 scale-125 shadow-[0_0_8px_rgba(99,102,241,0.5)]" : "bg-slate-300 opacity-20 group-hover:opacity-60 group-hover:scale-110")} />
                 <span>{item.name}</span>
               </Link>
             ))}
@@ -307,23 +324,27 @@ export function Sidebar() {
         </div>
 
         {/* Updates Section */}
-        <div className="mb-3 px-2">
+        <div className="mb-3 px-1">
           <button
-            onClick={() => setUpdatesOpen(!updatesOpen)}
+            onClick={() => !isCollapsed && setUpdatesOpen(!updatesOpen)}
+            title={isCollapsed ? "Updates" : undefined}
             className={cn(
               "flex w-full items-center justify-between px-3 py-2 text-[10px] font-bold uppercase tracking-[0.15em] transition-all rounded-lg",
+              isCollapsed && "justify-center px-2",
               updatesOpen
                 ? "text-violet-600 dark:text-violet-400 bg-violet-50/30 dark:bg-violet-500/5"
                 : "text-slate-400 hover:text-violet-600 dark:hover:text-violet-400 hover:bg-slate-50 dark:hover:bg-slate-800/50"
             )}
           >
-            <span className="flex items-center gap-2.5">
-              <Bell className="h-4 w-4" />
-              Updates
+            <span className={cn("flex items-center gap-2.5", isCollapsed && "justify-center")}>
+              <Bell className="h-4 w-4 flex-shrink-0" />
+              <span className={cn("transition-all duration-300 whitespace-nowrap overflow-hidden", isCollapsed ? "opacity-0 w-0" : "opacity-100")}>
+                Updates
+              </span>
             </span>
-            <ChevronDown className={cn("h-3 w-3 transition-transform opacity-40", updatesOpen && "rotate-180")} />
+            {!isCollapsed && <ChevronDown className={cn("h-3 w-3 transition-transform opacity-40", updatesOpen && "rotate-180")} />}
           </button>
-          <div className={cn("mt-1 ml-4 pl-3 border-l border-slate-100 dark:border-slate-800 space-y-0.5 overflow-hidden transition-all", updatesOpen ? "max-h-[200px] opacity-100" : "max-h-0 opacity-0")}>
+          <div className={cn("mt-1 ml-4 pl-3 border-l border-slate-100 dark:border-slate-800 space-y-0.5 overflow-hidden transition-all", !isCollapsed && updatesOpen ? "max-h-[200px] opacity-100" : "max-h-0 opacity-0")}>
             {updateNavItems.map((item) => (
               <Link
                 key={item.href}
@@ -335,7 +356,7 @@ export function Sidebar() {
                     : "text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-50 dark:hover:bg-slate-800/50",
                 )}
               >
-                <div className={cn("h-1 w-1 rounded-full transition-all duration-300", pathname === item.href ? "bg-violet-500 scale-125 shadow-[0_0_8px_rgba(139,92,246,0.5)]" : "bg-slate-300 opacity-20 group-hover:opacity-60 group-hover:scale-110")} />
+                <div className={cn("h-1 w-1 rounded-full transition-all duration-300 flex-shrink-0", pathname === item.href ? "bg-violet-500 scale-125 shadow-[0_0_8px_rgba(139,92,246,0.5)]" : "bg-slate-300 opacity-20 group-hover:opacity-60 group-hover:scale-110")} />
                 <span>{item.name}</span>
               </Link>
             ))}
@@ -344,22 +365,55 @@ export function Sidebar() {
       </nav>
 
       {/* Bottom Section */}
-      <div className="px-3 py-3 space-y-0.5 border-t border-slate-100 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800/50">
+      <div className="px-2 py-3 space-y-0.5 border-t border-slate-100 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800/50">
         {bottomNavItems.map((item, i) => (
           <Link
             key={item.href}
             href={item.href}
-            className="flex items-center gap-3 rounded-lg px-3 py-2 text-[13px] font-medium text-slate-600 dark:text-slate-300 hover:bg-white dark:hover:bg-slate-700 hover:text-slate-900 dark:hover:text-white transition-colors"
+            title={isCollapsed ? item.name : undefined}
+            className={cn(
+              "flex items-center gap-3 rounded-lg px-3 py-2 text-[13px] font-medium text-slate-600 dark:text-slate-300 hover:bg-white dark:hover:bg-slate-700 hover:text-slate-900 dark:hover:text-white transition-colors",
+              isCollapsed && "justify-center px-2"
+            )}
           >
             {i === bottomNavItems.length - 1 ? (
-              <div className="h-6 w-6 rounded-full bg-gradient-to-br from-orange-500 to-orange-600 dark:from-orange-600 dark:to-orange-700 flex items-center justify-center text-white text-[10px] font-bold shadow-sm">N</div>
+              <div className="h-6 w-6 flex-shrink-0 rounded-full bg-gradient-to-br from-orange-500 to-orange-600 dark:from-orange-600 dark:to-orange-700 flex items-center justify-center text-white text-[10px] font-bold shadow-sm">N</div>
             ) : (
-              <item.icon className={cn("h-4 w-4", item.color)} />
+              <item.icon className={cn("h-4 w-4 flex-shrink-0", item.color)} />
             )}
-            <span>{item.name}</span>
+            <span
+              className={cn(
+                "transition-all duration-300 whitespace-nowrap overflow-hidden",
+                isCollapsed ? "opacity-0 w-0" : "opacity-100"
+              )}
+            >
+              {item.name}
+            </span>
           </Link>
         ))}
       </div>
-    </aside >
+
+      {/* Bottom Toggle Button — Desktop only */}
+      <button
+        onClick={toggle}
+        title={isCollapsed ? "Expand sidebar" : "Collapse sidebar"}
+        aria-label={isCollapsed ? "Expand sidebar" : "Collapse sidebar"}
+        className={cn(
+          "absolute bottom-6 z-50 flex items-center justify-center h-9 w-9 rounded-full",
+          "bg-white/90 dark:bg-slate-800/90 backdrop-blur-md border border-slate-200 dark:border-slate-700",
+          "text-slate-500 dark:text-slate-400 hover:text-orange-600 dark:hover:text-orange-400",
+          "hover:border-orange-300 dark:hover:border-orange-600 shadow-md hover:shadow-lg",
+          "transition-all duration-300 hover:scale-110 active:scale-95",
+          isCollapsed ? "left-1/2 -translate-x-1/2" : "right-6"
+        )}
+      >
+        <ChevronLeft
+          className={cn(
+            "h-5 w-5 transition-transform duration-500",
+            isCollapsed && "rotate-180"
+          )}
+        />
+      </button>
+    </aside>
   )
 }

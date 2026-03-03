@@ -12,10 +12,8 @@ import {
     Download,
     Share2,
     FileCheck,
-    TrendingUp,
     BarChart3,
     Clock,
-    ChevronRight,
     Eye,
     Mail,
     Zap,
@@ -23,59 +21,60 @@ import {
 } from "lucide-react"
 
 const reports = [
-    { id: 1, title: "Weekly Market Alpha Summary", date: "Jan 23, 2026", type: "Market Hub", size: "2.4 MB", status: "New" },
-    { id: 2, title: "Portfolio Performance Audit", date: "Jan 18, 2026", type: "Personal", size: "1.8 MB", status: "Downloaded" },
-    { id: 3, title: "Monthly Regulatory Compliance", date: "Dec 31, 2025", type: "Tax & Legal", size: "4.1 MB", status: "Archived" },
+    { id: 1, title: "Neural Market Alpha Summary", date: "Jan 23, 2026", type: "Alpha Hub", size: "2.4 MB", status: "Neural" },
+    { id: 2, title: "Structural Audit Sync", date: "Jan 18, 2026", type: "Structural", size: "1.8 MB", status: "Archived" },
+    { id: 3, title: "Macro Regulatory Compliance", date: "Dec 31, 2025", type: "Tax Vector", size: "4.1 MB", status: "Verified" },
 ]
 
 export default function CryptoReports() {
     return (
         <AppShell>
-            <div className="flex flex-col gap-8 p-6 lg:p-10 max-w-[1600px] mx-auto min-h-screen">
+            <div className="flex flex-col gap-8 p-6 lg:p-10 max-w-[1600px] mx-auto min-h-screen bg-background/50 backdrop-blur-sm">
                 {/* Header */}
-                <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
                     <div className="space-y-1">
-                        <div className="flex items-center gap-3">
-                            <div className="p-2.5 rounded-xl bg-sky-50 dark:bg-sky-950/30 text-sky-600 dark:text-sky-400">
-                                <FileText className="h-6 w-6" />
+                        <div className="flex items-center gap-4">
+                            <div className="p-3 rounded-2xl bg-primary shadow-lg shadow-primary/20">
+                                <FileText className="h-7 w-7 text-primary-foreground" />
                             </div>
-                            <h1 className="text-3xl font-bold text-foreground">Advisory Reports</h1>
+                            <h1 className="text-4xl font-black text-foreground tracking-tighter italic uppercase">Alpha Research</h1>
                         </div>
-                        <p className="text-muted-foreground text-sm ml-12">Professional-grade research, performance summaries, and PDF exports</p>
+                        <p className="text-muted-foreground text-[11px] ml-16 font-black uppercase tracking-[0.2em] italic opacity-60">High-Intelligence Synthesis & Structural Audits</p>
                     </div>
-                    <div className="flex items-center gap-3">
-                        <Button variant="outline" className="rounded-lg border-gray-300">
-                            <Mail className="h-4 w-4 mr-2 text-sky-600" /> Subscription Settings
+                    <div className="flex items-center gap-4">
+                        <Button variant="outline" className="h-12 rounded-2xl border-border bg-card/40 text-[10px] font-black uppercase tracking-widest px-6 hover:text-primary transition-all">
+                            <Mail className="h-4 w-4 mr-3 text-primary" /> Intel Settings
                         </Button>
-                        <Button className="rounded-lg bg-sky-600 hover:bg-sky-700 text-white font-semibold">
-                            <Zap className="h-4 w-4 mr-2" /> Generate Instant Audit
+                        <Button className="h-12 rounded-2xl bg-primary hover:bg-primary/90 text-primary-foreground font-black uppercase tracking-widest px-6 shadow-xl shadow-primary/20 border-0 transition-all hover:scale-105">
+                            <Zap className="h-4 w-4 mr-3" /> Instant Synthesis
                         </Button>
                     </div>
                 </div>
 
                 {/* Top Feature Card */}
-                <Card className="bg-card border border-border shadow-sm rounded-xl overflow-hidden">
-                    <div className="flex flex-col md:flex-row items-center gap-8 p-8">
-                        <div className="p-6 rounded-xl bg-sky-50 dark:bg-sky-950/30 border border-sky-200 dark:border-sky-800 relative">
-                            <FileText className="h-20 w-20 text-sky-600 dark:text-sky-400" />
-                            <div className="absolute -bottom-2 -right-2 h-10 w-10 rounded-lg bg-card border border-sky-200 dark:border-sky-800 flex items-center justify-center shadow-sm">
-                                <FileCheck className="h-5 w-5 text-sky-600 dark:text-sky-400" />
+                <Card className="bg-card/40 border-border/50 backdrop-blur-2xl shadow-2xl rounded-[3rem] overflow-hidden border group">
+                    <div className="flex flex-col md:flex-row items-center gap-10 p-10 relative">
+                        <div className="absolute top-0 right-0 h-40 w-40 bg-primary/5 rounded-full blur-[80px] -mr-20 -mt-20 group-hover:bg-primary/10 transition-all duration-700" />
+                        <div className="p-10 rounded-[2.5rem] bg-muted/40 border border-border/50 relative shadow-inner group-hover:scale-105 transition-transform">
+                            <FileText className="h-24 w-24 text-primary relative z-10" />
+                            <div className="absolute -bottom-4 -right-4 h-14 w-14 rounded-2xl bg-card border border-primary/20 flex items-center justify-center shadow-xl">
+                                <FileCheck className="h-7 w-7 text-primary" />
                             </div>
                         </div>
-                        <div className="flex-1 space-y-4 text-center md:text-left">
+                        <div className="flex-1 space-y-6 text-center md:text-left relative z-10">
                             <div>
-                                <Badge className="bg-sky-100 dark:bg-sky-950/30 text-sky-700 dark:text-sky-400 border-sky-200 dark:border-sky-800 font-semibold px-3 py-1 rounded-full text-xs mb-3">LATEST PRESTIGE REPORT</Badge>
-                                <h2 className="text-2xl font-bold text-foreground leading-tight">Q1 2026 Crypto Market Intelligence</h2>
+                                <Badge className="bg-primary/10 text-primary border-primary/20 font-black px-5 py-1.5 rounded-xl text-[10px] uppercase tracking-[0.3em] mb-4 italic shadow-lg shadow-primary/5">PRESTIGE INTELLIGENCE</Badge>
+                                <h2 className="text-3xl font-black text-foreground italic uppercase tracking-tighter leading-tight">Q1 2026 Crypto Neural Alpha</h2>
                             </div>
-                            <p className="text-sm text-muted-foreground leading-relaxed max-w-2xl">
-                                Deep dive into institutional flows, regulatory shifts, and neural price targets for the next 90 days. Professional analysis for high-net-worth positions.
+                            <p className="text-sm font-black text-muted-foreground leading-relaxed max-w-2xl italic opacity-70">
+                                Deep structural dive into institutional flows, regulatory shifts, and neural price trajectories for the next 90-day window. Professional-grade synthesis for high-net-worth positions.
                             </p>
-                            <div className="flex flex-wrap gap-3 justify-center md:justify-start pt-2">
-                                <Button className="rounded-lg bg-sky-600 hover:bg-sky-700 text-white font-semibold">
-                                    <Download className="h-4 w-4 mr-2" /> Download High-Res PDF
+                            <div className="flex flex-wrap gap-4 justify-center md:justify-start pt-4">
+                                <Button className="h-14 rounded-2xl bg-primary hover:bg-primary/90 text-primary-foreground font-black uppercase tracking-widest px-8 shadow-xl shadow-primary/30 transition-all border-0">
+                                    <Download className="h-5 w-5 mr-3" /> Download High-Res Alpha
                                 </Button>
-                                <Button variant="outline" className="rounded-lg border-border font-semibold">
-                                    <Eye className="h-4 w-4 mr-2" /> Online Viewer
+                                <Button variant="outline" className="h-14 rounded-2xl border-border bg-card/40 text-[11px] font-black uppercase tracking-widest px-8 hovr:bg-muted/50 transition-all">
+                                    <Eye className="h-5 w-5 mr-3" /> Structural Viewer
                                 </Button>
                             </div>
                         </div>
@@ -83,44 +82,47 @@ export default function CryptoReports() {
                 </Card>
 
                 {/* History / Archive Grid */}
-                <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                    <Card className="lg:col-span-2 bg-card border border-border shadow-sm rounded-xl overflow-hidden">
-                        <CardHeader className="p-6 border-b border-border flex flex-row items-center justify-between bg-muted/50">
-                            <div>
-                                <CardTitle className="text-lg font-bold text-foreground">Report Archive</CardTitle>
-                                <CardDescription className="text-xs text-muted-foreground">Access your historical generated intelligence</CardDescription>
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    <Card className="lg:col-span-2 bg-card/40 border-border/50 backdrop-blur-xl shadow-2xl rounded-[2.5rem] overflow-hidden border group">
+                        <CardHeader className="p-8 border-b border-border/30 bg-muted/20 relative">
+                            <div className="absolute top-0 right-0 h-24 w-24 bg-primary/5 rounded-full blur-2xl -mr-12 -mt-12 group-hover:bg-primary/10 transition-all" />
+                            <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 relative z-10">
+                                <div>
+                                    <CardTitle className="text-2xl font-black text-foreground italic uppercase tracking-tighter">Research Archive</CardTitle>
+                                    <CardDescription className="text-[10px] font-black text-muted-foreground uppercase tracking-widest italic opacity-60">Historical generated intelligence logs</CardDescription>
+                                </div>
+                                <Button variant="ghost" className="text-[10px] font-black text-primary hover:text-primary/80 transition-all uppercase tracking-widest italic h-auto p-0">View Structural Archive</Button>
                             </div>
-                            <Button variant="ghost" className="text-muted-foreground font-semibold text-xs hover:text-foreground">View Full History</Button>
                         </CardHeader>
                         <CardContent className="p-0">
-                            <div className="divide-y divide-border">
+                            <div className="divide-y divide-border/30">
                                 {reports.map((report) => (
-                                    <div key={report.id} className="p-6 flex items-center justify-between hover:bg-muted/50 transition-colors group">
-                                        <div className="flex items-center gap-4">
-                                            <div className="h-12 w-12 rounded-lg bg-muted flex items-center justify-center group-hover:bg-sky-50 dark:group-hover:bg-sky-950/30 transition-colors">
-                                                <FileText className="h-5 w-5 text-muted-foreground group-hover:text-sky-600 dark:group-hover:text-sky-400" />
+                                    <div key={report.id} className="p-8 flex items-center justify-between hover:bg-primary/5 transition-all group/item shadow-inner relative overflow-hidden">
+                                        <div className="flex items-center gap-6 relative z-10">
+                                            <div className="h-14 w-14 rounded-2xl bg-muted/40 border border-border/50 flex items-center justify-center group-hover/item:bg-primary/10 transition-all shadow-sm">
+                                                <FileText className="h-6 w-6 text-muted-foreground group-hover/item:text-primary transition-colors" />
                                             </div>
                                             <div>
-                                                <h5 className="font-bold text-foreground text-base">{report.title}</h5>
-                                                <div className="flex items-center gap-2 mt-1">
-                                                    <span className="text-xs text-muted-foreground">{report.date}</span>
-                                                    <span className="h-1 w-1 rounded-full bg-muted-foreground" />
-                                                    <span className="text-xs text-muted-foreground">{report.size}</span>
+                                                <h5 className="font-black text-foreground text-lg italic uppercase tracking-tight group-hover/item:text-primary transition-colors">{report.title}</h5>
+                                                <div className="flex items-center gap-3 mt-2">
+                                                    <span className="text-[10px] font-black text-muted-foreground uppercase tracking-widest italic opacity-60">{report.date}</span>
+                                                    <span className="h-1 w-1 rounded-full bg-border" />
+                                                    <span className="text-[10px] font-black text-primary uppercase tracking-widest italic opacity-80">{report.size}</span>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div className="flex items-center gap-3">
+                                        <div className="flex items-center gap-4 relative z-10">
                                             <Badge className={cn(
-                                                "rounded-full px-2.5 py-0.5 font-semibold text-xs",
-                                                report.status === 'New' ? 'bg-orange-100 dark:bg-orange-950/30 text-orange-700 dark:text-orange-400 border-orange-200 dark:border-orange-800' : 'bg-muted text-muted-foreground border-border'
+                                                "font-black text-[9px] uppercase tracking-widest px-4 py-2 rounded-xl border italic shadow-lg transition-transform group-hover/item:scale-105",
+                                                report.status === 'Neural' ? 'bg-primary/10 text-primary border-primary/20 shadow-primary/10' : 'bg-muted text-muted-foreground border-border/50 shadow-inner'
                                             )}>
                                                 {report.status}
                                             </Badge>
-                                            <Button variant="ghost" size="icon" className="h-10 w-10 rounded-lg text-muted-foreground hover:text-foreground hover:bg-muted">
-                                                <Download className="h-4 w-4" />
+                                            <Button variant="ghost" size="icon" className="h-12 w-12 rounded-2xl text-muted-foreground hover:text-primary hover:bg-primary/10 transition-all">
+                                                <Download className="h-5 w-5" />
                                             </Button>
-                                            <Button variant="ghost" size="icon" className="h-10 w-10 rounded-lg text-muted-foreground hover:text-foreground hover:bg-muted">
-                                                <Share2 className="h-4 w-4" />
+                                            <Button variant="ghost" size="icon" className="h-12 w-12 rounded-2xl text-muted-foreground hover:text-primary hover:bg-primary/10 transition-all">
+                                                <Share2 className="h-5 w-5" />
                                             </Button>
                                         </div>
                                     </div>
@@ -129,43 +131,45 @@ export default function CryptoReports() {
                         </CardContent>
                     </Card>
 
-                    <div className="space-y-6">
-                        <Card className="bg-white border border-gray-200 shadow-sm rounded-xl">
-                            <CardHeader className="border-b border-gray-100 pb-4">
-                                <div className="flex items-center gap-2">
-                                    <Clock className="h-4 w-4 text-sky-600" />
-                                    <CardTitle className="text-sm font-bold text-sky-600">Scheduled Intel</CardTitle>
+                    <div className="space-y-8">
+                        <Card className="bg-card/40 border-border/50 backdrop-blur-2xl shadow-xl rounded-[2.5rem] overflow-hidden border group/intel">
+                            <CardHeader className="p-6 border-b border-border/30 bg-muted/20">
+                                <div className="flex items-center gap-3">
+                                    <Clock className="h-4 w-4 text-primary" />
+                                    <CardTitle className="text-[10px] font-black text-primary uppercase tracking-[0.2em] italic">Scheduled Alpha Sync</CardTitle>
                                 </div>
                             </CardHeader>
-                            <CardContent className="p-6">
-                                <div className="space-y-6">
-                                    <div className="space-y-3">
-                                        <p className="text-xs font-semibold text-gray-600">Next Monthly Digest</p>
-                                        <div className="flex items-baseline gap-2">
-                                            <h3 className="text-4xl font-bold text-gray-900">07</h3>
-                                            <span className="font-semibold text-gray-600 text-base">Days Left</span>
+                            <CardContent className="p-8">
+                                <div className="space-y-8">
+                                    <div className="space-y-4">
+                                        <p className="text-[9px] font-black text-muted-foreground uppercase tracking-widest italic">Next Macro Digest</p>
+                                        <div className="flex items-baseline gap-3">
+                                            <h3 className="text-5xl font-black text-foreground italic tracking-tighter">07</h3>
+                                            <span className="font-black text-muted-foreground text-sm uppercase italic tracking-widest opacity-60">Neural Days</span>
                                         </div>
-                                        <Progress value={75} className="h-2 bg-gray-200 rounded-full" />
+                                        <Progress value={75} className="h-2 bg-muted rounded-full overflow-hidden border border-border/50 relative shadow-inner">
+                                            <div className="h-full bg-primary shadow-[0_0_10px_rgba(var(--primary),0.5)]" style={{ width: '75%' }} />
+                                        </Progress>
                                     </div>
-                                    <div className="p-4 rounded-lg bg-sky-50 border border-sky-200 text-sm text-sky-700 leading-relaxed">
-                                        Including exclusive data on Q1 2026 Layer-2 dominance shifts.
+                                    <div className="p-5 rounded-2xl bg-primary/5 border border-primary/10 text-[11px] text-muted-foreground font-bold italic leading-relaxed">
+                                        Structural inclusion of proprietary Layer-2 dominance alpha clusters.
                                     </div>
                                 </div>
                             </CardContent>
                         </Card>
 
-                        <Card className="bg-white border border-gray-200 shadow-sm rounded-xl">
-                            <CardHeader className="border-b border-gray-100 pb-4">
-                                <CardTitle className="text-sm font-bold text-green-600 flex items-center gap-2">
-                                    <ShieldCheck className="h-4 w-4" /> Proof of Reserve Export
+                        <Card className="bg-card/40 border-border/50 backdrop-blur-2xl shadow-xl rounded-[2.5rem] overflow-hidden border group/reserve">
+                            <CardHeader className="p-6 border-b border-border/30 bg-muted/20">
+                                <CardTitle className="text-[10px] font-black text-success uppercase tracking-[0.2em] italic flex items-center gap-3">
+                                    <ShieldCheck className="h-4 w-4" /> Structural Reserve Export
                                 </CardTitle>
                             </CardHeader>
-                            <CardContent className="p-6">
-                                <p className="text-xs text-gray-600 leading-relaxed mb-4">
-                                    Download a cryptographically signed report verifying your total assets across all integrated exchanges for auditing.
+                            <CardContent className="p-8">
+                                <p className="text-[11px] text-muted-foreground font-black italic leading-relaxed mb-6 opacity-70">
+                                    Finalize cryptographically signed Alpha structural report verifying total asset integrity across all integrated exchange vectors.
                                 </p>
-                                <Button className="w-full rounded-lg bg-green-600 text-white font-semibold hover:bg-green-700">
-                                    Verify & Export
+                                <Button className="w-full h-14 rounded-2xl bg-success text-success-foreground font-black uppercase tracking-widest shadow-xl shadow-success/20 transition-all hover:scale-[1.02] border-0">
+                                    Neural Verify & Export
                                 </Button>
                             </CardContent>
                         </Card>
@@ -173,12 +177,13 @@ export default function CryptoReports() {
                 </div>
 
                 {/* Footer Note */}
-                <Card className="bg-sky-50 dark:bg-sky-950/30 border border-sky-200 dark:border-sky-800 rounded-xl p-6 flex items-start gap-4 shadow-sm">
-                    <div className="p-2.5 rounded-lg bg-sky-100 dark:bg-sky-900/50 text-sky-600 dark:text-sky-400"><BarChart3 className="h-5 w-5" /></div>
-                    <div className="space-y-1">
-                        <h4 className="text-sm font-bold text-sky-700 dark:text-sky-400">Neural Research Integrity</h4>
-                        <p className="text-xs text-sky-600 dark:text-sky-300 leading-relaxed">
-                            Reports are synthesized from 400+ data points using LLM-V3 nodes. Research is educational and not financial advice. Past alpha performance is a signal of quality, not a prediction of future returns.
+                <Card className="bg-primary/10 border border-primary/20 backdrop-blur-xl rounded-[2.5rem] p-8 flex items-start gap-6 shadow-2xl relative overflow-hidden group/footer">
+                    <div className="absolute top-0 right-0 h-20 w-20 bg-primary/10 rounded-full blur-xl -mr-10 -mt-10 group-hover/footer:bg-primary/20 transition-all" />
+                    <div className="p-4 rounded-2xl bg-primary/20 shadow-lg shadow-primary/10 transition-transform group-hover/footer:scale-110"><BarChart3 className="h-6 w-6 text-primary" /></div>
+                    <div className="space-y-2 relative z-10">
+                        <h4 className="text-[10px] font-black text-primary uppercase tracking-[0.3em] italic">Neural Research Directive</h4>
+                        <p className="text-xs text-muted-foreground font-bold italic leading-relaxed opacity-80">
+                            Structural reports are synthesized from 400+ neural data nodes. Research clusters are educational and not financial advice. Past alpha performance is a signal of fidelity, not a prediction of future results.
                         </p>
                     </div>
                 </Card>

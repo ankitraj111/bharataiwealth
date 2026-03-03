@@ -6,13 +6,13 @@ import { ShieldCheck } from "lucide-react"
 export default function CryptoSecurity() {
     return (
         <AppShell>
-            <div className="flex flex-col items-center justify-center min-h-[80vh] text-center p-10">
-                <div className="p-6 rounded-xl bg-rose-50 dark:bg-rose-950/30 mb-6">
-                    <ShieldCheck className="h-16 w-16 text-rose-600 dark:text-rose-400" />
+            <div className="flex flex-col items-center justify-center min-h-[80vh] text-center p-10 bg-background/50">
+                <div className="p-8 rounded-[2rem] bg-destructive/10 border border-destructive/20 shadow-xl shadow-destructive/5 mb-8 animate-bounce-slow">
+                    <ShieldCheck className="h-20 w-20 text-destructive" />
                 </div>
-                <h1 className="text-3xl font-bold text-foreground mb-3">Security Protocol</h1>
-                <p className="text-muted-foreground max-w-md mx-auto leading-relaxed">
-                    Platform security disclosure and funds safety documentation. Institutional compliance framework coming soon.
+                <h1 className="text-4xl font-black text-foreground mb-4 italic uppercase tracking-tight">Security Alpha Protocol</h1>
+                <p className="text-muted-foreground max-w-lg mx-auto leading-relaxed font-medium italic">
+                    Platform security disclosure and funds safety documentation. Institutional compliance framework and neural-grade protection protocols coming soon.
                 </p>
             </div>
         </AppShell>

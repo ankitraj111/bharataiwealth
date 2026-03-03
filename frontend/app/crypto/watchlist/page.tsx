@@ -11,110 +11,114 @@ import {
     Filter,
     ArrowUpRight,
     ArrowDownRight,
-    MoreHorizontal,
     Bell,
     Trash2,
     TrendingUp,
     Activity
 } from "lucide-react"
+import { cn } from "@/lib/utils"
 
 const watchlistItems = [
-    { rank: 1, name: "Bitcoin", symbol: "BTC", price: 64231.42, change: 2.4, mcap: "1.25T", status: "Bullish", alert: "$65,000" },
-    { rank: 3, name: "Solana", symbol: "SOL", price: 145.82, change: 5.2, mcap: "64.8B", status: "Overbought", alert: "$160" },
-    { rank: 12, name: "Chainlink", symbol: "LINK", price: 18.25, change: -1.2, mcap: "10.4B", status: "Neutral", alert: "$20" },
-    { rank: 54, name: "Render", symbol: "RNDR", price: 10.42, change: 8.5, mcap: "4.2B", status: "Strong Bull", alert: "$12" },
+    { rank: 1, name: "Bitcoin", symbol: "BTC", price: 64231.42, change: 2.4, mcap: "1.25T", status: "Neural Bull", alert: "$65,000", theme: "primary" },
+    { rank: 3, name: "Solana", symbol: "SOL", price: 145.82, change: 5.2, mcap: "64.8B", status: "Overbought", alert: "$160", theme: "warning" },
+    { rank: 12, name: "Chainlink", symbol: "LINK", price: 18.25, change: -1.2, mcap: "10.4B", status: "Neutral Sync", alert: "$20", theme: "muted" },
+    { rank: 54, name: "Render", symbol: "RNDR", price: 10.42, change: 8.5, mcap: "4.2B", status: "Structural Bull", alert: "$12", theme: "success" },
 ]
 
 export default function WatchlistPage() {
     return (
         <AppShell>
-            <div className="flex flex-col gap-8 p-6 lg:p-10 max-w-[1600px] mx-auto min-h-screen">
+            <div className="flex flex-col gap-8 p-6 lg:p-10 max-w-[1600px] mx-auto min-h-screen bg-background/50 backdrop-blur-sm">
                 {/* Header */}
-                <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
                     <div className="space-y-1">
-                        <div className="flex items-center gap-3">
-                            <div className="p-2.5 rounded-xl bg-amber-50 dark:bg-amber-950/30 text-amber-600 dark:text-amber-400">
-                                <Eye className="h-6 w-6" />
+                        <div className="flex items-center gap-4">
+                            <div className="p-3 rounded-2xl bg-primary shadow-lg shadow-primary/20">
+                                <Eye className="h-7 w-7 text-primary-foreground" />
                             </div>
-                            <h1 className="text-3xl font-bold text-foreground">My Watchlist</h1>
+                            <h1 className="text-4xl font-black text-foreground tracking-tighter italic uppercase">Alpha Watch</h1>
                         </div>
-                        <p className="text-muted-foreground text-sm ml-12">Tracking {watchlistItems.length} assets with price alerts</p>
+                        <p className="text-muted-foreground text-[11px] ml-16 font-black uppercase tracking-[0.2em] italic opacity-60">Tracking {watchlistItems.length} neural vectors with price alerts</p>
                     </div>
-                    <div className="flex items-center gap-3">
-                        <Button className="rounded-lg bg-amber-600 hover:bg-amber-700 text-white font-semibold">
-                            <Search className="h-4 w-4 mr-2" /> Add Asset
+                    <div className="flex items-center gap-4">
+                        <Button className="h-12 rounded-2xl bg-primary hover:bg-primary/90 text-primary-foreground font-black uppercase tracking-widest px-8 shadow-xl shadow-primary/20 border-0 transition-all hover:scale-105 active:scale-95">
+                            <Search className="h-5 w-5 mr-3" /> Add Alpha Vector
                         </Button>
                     </div>
                 </div>
 
                 {/* Watchlist Table */}
-                <Card className="bg-white/90 border-amber-500/20 backdrop-blur-2xl shadow-[0_10px_40px_rgba(0,0,0,0.04)] rounded-[2.5rem] overflow-hidden border-2">
-                    <CardHeader className="p-8 border-b border-white/5 flex flex-row items-center justify-between bg-white/[0.02]">
-                        <div>
-                            <CardTitle className="text-xl font-black text-slate-900">Active Monitors</CardTitle>
-                            <CardDescription className="font-bold text-slate-500">Real-time alerts and sentiment status</CardDescription>
+                <Card className="bg-card/40 border-border/50 backdrop-blur-2xl shadow-2xl rounded-[3rem] overflow-hidden border group">
+                    <CardHeader className="p-10 border-b border-border/30 flex flex-col md:flex-row items-center justify-between bg-muted/20 relative">
+                        <div className="absolute top-0 right-0 h-24 w-24 bg-primary/5 rounded-full blur-2xl -mr-12 -mt-12 group-hover:bg-primary/10 transition-all" />
+                        <div className="relative z-10 text-center md:text-left">
+                            <CardTitle className="text-2xl font-black text-foreground italic uppercase tracking-tighter">Neural Monitors</CardTitle>
+                            <CardDescription className="text-[10px] font-black text-muted-foreground uppercase tracking-widest italic opacity-60 mt-1">Real-time alerts and high-fidelity sentiment sync</CardDescription>
                         </div>
-                        <div className="flex gap-2">
-                            <Button variant="ghost" size="sm" className="rounded-xl text-slate-400 hover:text-white font-bold">
-                                <Filter className="h-4 w-4 mr-2" /> Sort
+                        <div className="flex gap-4 relative z-10 mt-6 md:mt-0">
+                            <Button variant="outline" size="sm" className="rounded-xl border-border bg-card/40 text-[10px] font-black uppercase tracking-widest px-6 h-10 hover:text-primary transition-all">
+                                <Filter className="h-4 w-4 mr-3" /> Alpha Sort
                             </Button>
                         </div>
                     </CardHeader>
                     <CardContent className="p-0">
                         <div className="overflow-x-auto">
-                            <table className="w-full text-left">
+                            <table className="w-full text-left border-collapse">
                                 <thead>
-                                    <tr className="bg-white/5 border-b border-white/5 text-[10px] font-black uppercase tracking-[0.2em] text-slate-500">
-                                        <th className="p-6">Asset</th>
-                                        <th className="p-6">Price</th>
-                                        <th className="p-6">24h Change</th>
-                                        <th className="p-6">Next Alert</th>
-                                        <th className="p-6">Sentiment</th>
-                                        <th className="p-6">Actions</th>
+                                    <tr className="bg-muted/30 border-b border-border/30 text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground italic">
+                                        <th className="p-8">Asset Vector</th>
+                                        <th className="p-8">Neural Value</th>
+                                        <th className="p-8">24h Alpha Delta</th>
+                                        <th className="p-8">Next Structural Alert</th>
+                                        <th className="p-8 text-center">Neural Sentiment</th>
+                                        <th className="p-8">Alpha Actions</th>
                                     </tr>
                                 </thead>
-                                <tbody className="divide-y divide-white/5">
+                                <tbody className="divide-y divide-border/30 font-black italic">
                                     {watchlistItems.map((item) => (
-                                        <tr key={item.symbol} className="hover:bg-amber-500/[0.02] transition-colors group">
-                                            <td className="p-6">
-                                                <div className="flex items-center gap-4">
-                                                    <div className="h-10 w-10 rounded-2xl bg-slate-800 border border-white/5 flex items-center justify-center font-black text-amber-500 shadow-inner group-hover:scale-110 transition-transform">
+                                        <tr key={item.symbol} className="hover:bg-primary/5 transition-all group/row cursor-pointer text-foreground">
+                                            <td className="p-8">
+                                                <div className="flex items-center gap-6">
+                                                    <div className="h-14 w-14 rounded-2xl bg-muted/40 border border-border/50 flex items-center justify-center font-black text-primary text-lg shadow-inner group-hover/row:scale-110 group-hover/row:bg-primary/10 transition-all italic">
                                                         {item.symbol[0]}
                                                     </div>
                                                     <div className="flex flex-col">
-                                                        <span className="font-black text-slate-900">{item.name}</span>
-                                                        <span className="text-[10px] font-black text-slate-500 tracking-widest">{item.symbol}</span>
+                                                        <span className="font-black text-lg text-foreground uppercase tracking-tighter leading-tight">{item.name}</span>
+                                                        <span className="text-[10px] font-black text-muted-foreground tracking-widest uppercase opacity-60">{item.symbol}</span>
                                                     </div>
                                                 </div>
                                             </td>
-                                            <td className="p-6">
-                                                <span className="font-black text-slate-900 tabular-nums">${item.price.toLocaleString()}</span>
+                                            <td className="p-8">
+                                                <span className="text-xl font-black text-foreground tabular-nums">${item.price.toLocaleString()}</span>
                                             </td>
-                                            <td className="p-6">
-                                                <div className={`flex items-center gap-1 font-black tabular-nums text-xs ${item.change >= 0 ? "text-emerald-500" : "text-rose-500"}`}>
-                                                    {item.change >= 0 ? <ArrowUpRight className="h-3 w-3" /> : <ArrowDownRight className="h-3 w-3" />}
-                                                    {Math.abs(item.change)}%
+                                            <td className="p-8">
+                                                <div className={cn("flex items-center gap-2 font-black tabular-nums text-sm", item.change >= 0 ? "text-success" : "text-destructive")}>
+                                                    {item.change >= 0 ? <ArrowUpRight className="h-4 w-4" /> : <ArrowDownRight className="h-4 w-4" />}
+                                                    {Math.abs(item.change)}% Alpha
                                                 </div>
                                             </td>
-                                            <td className="p-6">
-                                                <Badge variant="outline" className="rounded-full border-amber-500/20 text-amber-500 bg-amber-500/5 font-bold tabular-nums">
-                                                    <Bell className="h-3 w-3 mr-1" /> {item.alert}
+                                            <td className="p-8">
+                                                <Badge className="rounded-xl border-dashed border-primary/30 bg-primary/5 text-primary font-black px-4 py-2 tabular-nums text-[10px] uppercase tracking-widest shadow-lg shadow-primary/5">
+                                                    <Bell className="h-3.5 w-3.5 mr-2 opacity-60" /> {item.alert} SYNC
                                                 </Badge>
                                             </td>
-                                            <td className="p-6 text-center">
-                                                <Badge className={`font-black text-[9px] uppercase tracking-widest py-1 px-3 rounded-full ${item.status.includes('Bull') ? 'bg-emerald-500/10 text-emerald-500' :
-                                                    item.status === 'Overbought' ? 'bg-amber-500/10 text-amber-500' : 'bg-slate-500/10 text-slate-400'
-                                                    }`}>
+                                            <td className="p-8 text-center">
+                                                <Badge className={cn("font-black text-[9px] uppercase tracking-widest py-2 px-4 rounded-xl border italic shadow-xl transition-transform group-hover/row:scale-110",
+                                                    item.theme === 'primary' ? 'bg-primary/10 text-primary border-primary/20 shadow-primary/10' :
+                                                        item.theme === 'warning' ? 'bg-warning/10 text-warning border-warning/20 shadow-warning/10' :
+                                                            item.theme === 'success' ? 'bg-success/10 text-success border-success/20 shadow-success/10' :
+                                                                'bg-muted/30 text-muted-foreground border-border/50'
+                                                )}>
                                                     {item.status}
                                                 </Badge>
                                             </td>
-                                            <td className="p-6">
-                                                <div className="flex items-center gap-2">
-                                                    <Button variant="ghost" size="icon" className="h-9 w-9 rounded-xl text-slate-600 hover:text-white hover:bg-white/10">
-                                                        <TrendingUp className="h-4 w-4" />
+                                            <td className="p-8">
+                                                <div className="flex items-center gap-4">
+                                                    <Button variant="ghost" size="icon" className="h-11 w-11 rounded-2xl text-muted-foreground hover:text-primary hover:bg-primary/10 transition-all shadow-sm border border-transparent hover:border-primary/20">
+                                                        <TrendingUp className="h-5 w-5" />
                                                     </Button>
-                                                    <Button variant="ghost" size="icon" className="h-9 w-9 rounded-xl text-slate-600 hover:text-rose-500 hover:bg-rose-500/10">
-                                                        <Trash2 className="h-4 w-4" />
+                                                    <Button variant="ghost" size="icon" className="h-11 w-11 rounded-2xl text-muted-foreground hover:text-destructive hover:bg-destructive/10 transition-all shadow-sm border border-transparent hover:border-destructive/20">
+                                                        <Trash2 className="h-5 w-5" />
                                                     </Button>
                                                 </div>
                                             </td>
@@ -124,32 +128,35 @@ export default function WatchlistPage() {
                             </table>
                         </div>
                         {watchlistItems.length === 0 && (
-                            <div className="p-20 text-center flex flex-col items-center">
-                                <div className="h-16 w-16 rounded-3xl bg-amber-500/10 flex items-center justify-center mb-4">
-                                    <Eye className="h-8 w-8 text-amber-500/40" />
+                            <div className="p-32 text-center flex flex-col items-center group/empty">
+                                <div className="h-24 w-24 rounded-[2rem] bg-muted/40 flex items-center justify-center mb-8 border-2 border-dashed border-border/50 group-hover/empty:scale-110 transition-transform">
+                                    <Eye className="h-10 w-10 text-muted-foreground/30" />
                                 </div>
-                                <h3 className="text-lg font-black text-slate-900">Watchlist Empty</h3>
-                                <p className="text-slate-500 font-bold mt-1">Start adding assets to track their technical updates.</p>
+                                <h3 className="text-2xl font-black text-foreground italic uppercase tracking-tighter leading-tight">Neural Watch Cache Empty</h3>
+                                <p className="text-muted-foreground font-black mt-3 italic text-[11px] uppercase tracking-widest opacity-60">Inject alpha vectors to begin structural monitoring synthesis.</p>
                             </div>
                         )}
                     </CardContent>
                 </Card>
 
                 {/* Retention Analytics */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <Card className="bg-white/90 border-amber-500/20 backdrop-blur-2xl shadow-[0_10px_40px_rgba(0,0,0,0.04)] rounded-[2.5rem] p-8 border-2">
-                        <div className="flex justify-between items-start mb-6">
-                            <h4 className="text-sm font-black text-amber-500 uppercase tracking-widest">Global Volatility Alert</h4>
-                            <div className="p-2 rounded-xl bg-rose-500/10"><Activity className="h-4 w-4 text-rose-500" /></div>
-                        </div>
-                        <p className="text-sm font-black text-slate-700 leading-relaxed">
-                            Watchlist average volatility is up 18% in the last 4 hours. Market is approaching a high-conviction liquidity sweep zone.
-                        </p>
-                        <div className="mt-6 flex items-center gap-4">
-                            <div className="flex -space-x-3">
-                                {[1, 2, 3].map(i => <div key={i} className="h-8 w-8 rounded-full border-2 border-slate-900 bg-slate-800" />)}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+                    <Card className="bg-card/40 border-border/50 backdrop-blur-2xl shadow-2xl rounded-[3rem] p-10 border group/alert">
+                        <div className="flex justify-between items-start mb-8 relative">
+                            <div className="absolute inset-0 bg-destructive/5 blur-3xl rounded-full" />
+                            <h4 className="text-[10px] font-black text-primary uppercase tracking-[0.3em] italic opacity-60 relative z-10">Global Structural Variance alert</h4>
+                            <div className="p-3 rounded-2xl bg-destructive/10 shadow-inner group-hover/alert:scale-110 transition-transform relative z-10">
+                                <Activity className="h-5 w-5 text-destructive" />
                             </div>
-                            <span className="text-[10px] font-black text-slate-500 uppercase">12.4k others tracking similar assets</span>
+                        </div>
+                        <p className="text-sm font-black text-muted-foreground leading-relaxed italic opacity-80 mb-10 relative z-10">
+                            Watchlist average structural volatility is up 18% in the last 4 hours. Macro cycle is approaching a high-conviction liquidity sweep zone. Calibrate entry vectors.
+                        </p>
+                        <div className="flex items-center gap-6 relative z-10">
+                            <div className="flex -space-x-5">
+                                {[1, 2, 3, 4].map(i => <div key={i} className="h-10 w-10 rounded-2xl border-2 border-background bg-muted shadow-xl shadow-black/20" />)}
+                            </div>
+                            <span className="text-[10px] font-black text-muted-foreground uppercase tracking-[0.2em] italic opacity-40">12.4k others tracking similar structural assets</span>
                         </div>
                     </Card>
                 </div>

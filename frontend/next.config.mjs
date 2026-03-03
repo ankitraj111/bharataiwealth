@@ -8,30 +8,40 @@ const nextConfig = {
   basePath: isGitHubPages ? '/bharataiwealth' : '',
   assetPrefix: isGitHubPages ? '/bharataiwealth' : '',
   trailingSlash: true,
-  
+
   // Performance optimizations
   images: {
     unoptimized: true,
     formats: ['image/webp'],
   },
-  
+
   compiler: {
     removeConsole: isProd ? { exclude: ['error', 'warn'] } : false,
   },
-  
+
   // Optimize production builds
   swcMinify: true,
   reactStrictMode: true,
-  
+
   env: {
     NEXT_PUBLIC_BASE_PATH: isGitHubPages ? '/bharataiwealth' : '',
   },
-  
+
   // Enable compression
   compress: true,
-  
+
   // Optimize fonts
   optimizeFonts: true,
+
+  // ==================== REWRITES ====================
+  async rewrites() {
+    return [
+      {
+        source: '/api/:path*',
+        destination: `${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080'}/api/:path*`,
+      },
+    ];
+  },
 
   // ==================== SECURITY HEADERS ====================
   async headers() {
