@@ -20,7 +20,6 @@ const nextConfig = {
   },
 
   // Optimize production builds
-  swcMinify: true,
   reactStrictMode: true,
 
   env: {
@@ -29,9 +28,6 @@ const nextConfig = {
 
   // Enable compression (not used in static export mode)
   compress: !isGitHubPages,
-
-  // Optimize fonts
-  optimizeFonts: true,
 
   // ==================== REWRITES ====================
   // NOTE: rewrites() are NOT supported in static export mode (GitHub Pages)

@@ -12,6 +12,7 @@ from security_middleware import (
     rate_limit_middleware,
     security_headers_middleware
 )
+from coingecko_service import get_coingecko_service
 import uvicorn
 import os
 import yfinance as yf
@@ -457,6 +458,179 @@ async def get_goal_based_portfolio(
         raise
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+
+# =====================
+# COINGECKO CRYPTO ENDPOINTS
+# =====================
+
+@app.get("/crypto/listings")
+async def crypto_listings(
+    limit: int = Query(20, ge=1, le=100, description="Number of top coins to return"),
+    convert: str = Query("USD", description="Currency to convert prices to (USD, INR, EUR)"),
+    sort: str = Query("market_cap_desc", description="Sort by: market_cap_desc, volume_desc, etc.")
+):
+    """
+    Get top cryptocurrency listings from CoinGecko.
+    Real-time prices, market cap, volume, and price changes.
+    """
+    try:
+        svc = get_coingecko_service()
+        coins = svc.get_crypto_listings(limit=limit, convert=convert, sort=sort)
+        if not coins:
+            raise HTTPException(status_code=503, detail="CoinGecko data unavailable")
+        return {
+            "data": coins,
+            "count": len(coins),
+            "convert": convert,
+            "source": "coingecko",
+            "note": "Advice only. Not a trading recommendation."
+        }
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.get("/crypto/quotes")
+async def crypto_quotes(
+    symbols: str = Query(..., description="Comma-separated symbols, e.g. BTC,ETH,SOL,MATIC"),
+    convert: str = Query("USD", description="Quote currency")
+):
+    """
+    Get real-time quotes for specific crypto symbols from CoinGecko.
+    """
+    try:
+        svc = get_coingecko_service()
+        symbol_list = [s.strip().upper() for s in symbols.split(",")]
+        quotes = svc.get_crypto_quotes(symbol_list, convert=convert)
+        if not quotes:
+            raise HTTPException(status_code=503, detail="CoinGecko quotes unavailable")
+        return {
+            "data": quotes,
+            "convert": convert,
+            "source": "coingecko",
+        }
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.get("/crypto/global")
+async def crypto_global_metrics(convert: str = Query("USD", description="Quote currency")):
+    """
+    Get global crypto market metrics: total market cap, volume, BTC dominance, etc.
+    """
+    try:
+        svc = get_coingecko_service()
+        metrics = svc.get_global_metrics(convert=convert)
+        fear_greed = svc.get_fear_greed_index()
+        return {
+            "market": metrics,
+            "fear_greed": fear_greed,
+            "source": "coingecko",
+        }
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.get("/crypto/fear-greed")
+async def crypto_fear_greed():
+    """
+    Get the current Crypto Fear & Greed Index from Alternative.me API.
+    """
+    try:
+        svc = get_coingecko_service()
+        return svc.get_fear_greed_index()
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.get("/crypto/trending")
+async def crypto_trending(limit: int = Query(10, ge=1, le=20)):
+    """
+    Get top trending coins from CoinGecko.
+    """
+    try:
+        svc = get_coingecko_service()
+        coins = svc.get_trending_coins(limit=limit)
+        return {
+            "trending": coins,
+            "count": len(coins),
+            "source": "coingecko",
+        }
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.get("/crypto/info")
+async def crypto_info(
+    symbols: str = Query(..., description="Comma-separated symbols, e.g. BTC,ETH")
+):
+    """
+    Get detailed info (description, website) for given crypto symbols.
+    """
+    try:
+        svc = get_coingecko_service()
+        symbol_list = [s.strip().upper() for s in symbols.split(",")]
+        info = svc.get_crypto_info(symbol_list)
+        return {"data": info, "source": "coingecko"}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+# =====================
+# COINMARKETCAP CURRENCY / FOREX ENDPOINTS
+# =====================
+
+@app.get("/currency/rates")
+async def fiat_exchange_rates(
+    base: str = Query("USD", description="Base currency, e.g. USD, INR, EUR"),
+    targets: Optional[str] = Query(
+        None,
+        description="Comma-separated target currencies (default: INR,EUR,GBP,JPY,AED,SGD,AUD,CAD)"
+    )
+):
+    """
+    Get live fiat / forex exchange rates using CoinMarketCap price conversion.
+    Useful for multi-currency portfolio valuation.
+    """
+    try:
+        svc = get_cmc_service()
+        target_list = None
+        if targets:
+            target_list = [t.strip().upper() for t in targets.split(",")]
+        rates = svc.get_fiat_exchange_rates(base=base.upper(), targets=target_list)
+        return rates
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.get("/currency/convert")
+async def currency_convert(
+    amount: float = Query(..., description="Amount to convert"),
+    from_symbol: str = Query(..., description="Source symbol, e.g. BTC, USD, INR"),
+    to_symbol: str = Query(..., description="Target symbol, e.g. INR, ETH, USD")
+):
+    """
+    Convert any amount between crypto and fiat currencies using CoinMarketCap.
+    Supports crypto-to-crypto, crypto-to-fiat, fiat-to-fiat conversions.
+    """
+    try:
+        svc = get_cmc_service()
+        result = svc.convert_currency(
+            amount=amount,
+            from_symbol=from_symbol.upper(),
+            to_symbol=to_symbol.upper()
+        )
+        if "error" in result:
+            raise HTTPException(status_code=400, detail=result["error"])
+        return result
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
 
 if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=8000)

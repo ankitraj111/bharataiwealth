@@ -1,0 +1,223 @@
+﻿
+> my-v0-project@0.1.1 build
+> next build
+
+node.exe : 
+[baseline-browser-mapping] 
+The data in this module is 
+over two months old.  To 
+ensure accurate Baseline 
+data, please update: `npm 
+i baseline-browser-mapping@
+latest -D`
+At line:1 char:1
++ & "C:\Program 
+Files\nodejs/node.exe" 
+"C:\Program 
+Files\nodejs/node_mo ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~
+    + CategoryInfo         
+     : NotSpecifi    ed: 
+([baseline-bro    
+ws...ping@latest -    
+D`:String) [], Rem    
+oteException
+    + FullyQualifiedEr    
+rorId : NativeComm    
+andError
+ 
+ ΓÜá Invalid 
+next.config.mjs options 
+detected: 
+ ΓÜá     Unrecognized 
+key(s) in object: 
+'swcMinify', 
+'optimizeFonts'
+ ΓÜá See more info here: ht
+tps://nextjs.org/docs/messa
+ges/invalid-next-config
+   Γû▓ Next.js 16.0.7 (Turbopack)
+   - Environments: .env.local
+
+   Creating an optimized production build ...
+[baseline-browser-mapping] 
+The data in this module is 
+over two months old.  To 
+ensure accurate Baseline 
+data, please update: `npm 
+i baseline-browser-mapping@
+latest -D`
+ Γ£ô Compiled successfully in 11.3s
+   Running TypeScript ...
+   Collecting page data using 11 workers ...
+[baseline-browser-mapping] 
+The data in this module is 
+over two months old.  To 
+ensure accurate Baseline 
+data, please update: `npm 
+i baseline-browser-mapping@
+latest -D`
+[baseline-browser-mapping] 
+The data in this module is 
+over two months old.  To 
+ensure accurate Baseline 
+data, please update: `npm 
+i baseline-browser-mapping@
+latest -D`
+[baseline-browser-mapping] 
+The data in this module is 
+over two months old.  To 
+ensure accurate Baseline 
+data, please update: `npm 
+i baseline-browser-mapping@
+latest -D`
+[baseline-browser-mapping] 
+The data in this module is 
+over two months old.  To 
+ensure accurate Baseline 
+data, please update: `npm 
+i baseline-browser-mapping@
+latest -D`
+[baseline-browser-mapping] 
+The data in this module is 
+over two months old.  To 
+ensure accurate Baseline 
+data, please update: `npm 
+i baseline-browser-mapping@
+latest -D`
+[baseline-browser-mapping] 
+The data in this module is 
+over two months old.  To 
+ensure accurate Baseline 
+data, please update: `npm 
+i baseline-browser-mapping@
+latest -D`
+[baseline-browser-mapping] 
+The data in this module is 
+over two months old.  To 
+ensure accurate Baseline 
+data, please update: `npm 
+i baseline-browser-mapping@
+latest -D`
+[baseline-browser-mapping] 
+The data in this module is 
+over two months old.  To 
+ensure accurate Baseline 
+data, please update: `npm 
+i baseline-browser-mapping@
+latest -D`
+[baseline-browser-mapping] 
+The data in this module is 
+over two months old.  To 
+ensure accurate Baseline 
+data, please update: `npm 
+i baseline-browser-mapping@
+latest -D`
+[baseline-browser-mapping] 
+The data in this module is 
+over two months old.  To 
+ensure accurate Baseline 
+data, please update: `npm 
+i baseline-browser-mapping@
+latest -D`
+[baseline-browser-mapping] 
+The data in this module is 
+over two months old.  To 
+ensure accurate Baseline 
+data, please update: `npm 
+i baseline-browser-mapping@
+latest -D`
+   Generating static pages using 11 workers (0/70) ...
+[baseline-browser-mapping] 
+The data in this module is 
+over two months old.  To 
+ensure accurate Baseline 
+data, please update: `npm 
+i baseline-browser-mapping@
+latest -D`
+[baseline-browser-mapping] 
+The data in this module is 
+over two months old.  To 
+ensure accurate Baseline 
+data, please update: `npm 
+i baseline-browser-mapping@
+latest -D`
+[baseline-browser-mapping] 
+The data in this module is 
+over two months old.  To 
+ensure accurate Baseline 
+data, please update: `npm 
+i baseline-browser-mapping@
+latest -D`
+   Generating static pages using 11 workers (17/70) 
+   Generating static pages using 11 workers (34/70) 
+   Generating static pages using 11 workers (52/70) 
+ Γ£ô Generating static pages using 11 workers (70/70) in 1936.8ms
+   Finalizing page optimization ...
+
+Route (app)
+Γöî Γùï /
+Γö£ Γùï /_not-found
+Γö£ Γùï /about
+Γö£ Γùï /admin
+Γö£ Γùï /advisor
+Γö£ Γùï /alerts
+Γö£ Γùï /analytics
+Γö£ Γùï /auth/login
+Γö£ Γùï /auth/signup
+Γö£ Γùï /badges
+Γö£ Γùï /contact
+Γö£ Γùï /crypto
+Γö£ Γùï /crypto/analysis
+Γö£ Γùï /crypto/backtesting
+Γö£ Γùï /crypto/compare
+Γö£ Γùï /crypto/dashboard
+Γö£ Γùï /crypto/learn
+Γö£ Γùï /crypto/market
+Γö£ Γùï /crypto/news
+Γö£ Γùï /crypto/on-chain
+Γö£ Γùï /crypto/portfolio
+Γö£ Γùï /crypto/reports
+Γö£ Γùï /crypto/security
+Γö£ Γùï /crypto/sentiment
+Γö£ Γùï /crypto/signals
+Γö£ Γùï /crypto/strategy
+Γö£ Γùï /crypto/tax
+Γö£ Γùï /crypto/tools
+Γö£ Γùï /crypto/watchlist
+Γö£ Γùï /dashboard
+Γö£ Γùï /digest
+Γö£ Γùï /emergency-fund
+Γö£ Γùï /expenses
+Γö£ Γùï /family
+Γö£ Γùï /faq
+Γö£ Γùï /features
+Γö£ Γùï /goals
+Γö£ Γùï /goals-mf
+Γö£ Γùï /how-it-works
+Γö£ Γùï /mf
+Γö£ Γùï /portfolio
+Γö£ Γùï /portfolios
+Γö£ Γùï /portfolios/high-risk
+Γö£ Γùï /portfolios/low-risk
+Γö£ Γùï /portfolios/medium-risk
+Γö£ Γùï /predictions
+Γö£ Γùï /pricing
+Γö£ Γùï /sandbox
+Γö£ Γùï /settings
+Γö£ Γùï /sip
+Γö£ Γùï /sip-reminders
+Γö£ ΓùÅ /stocks/[symbol]
+Γöé Γö£ /stocks/RELIANCE
+Γöé Γö£ /stocks/TCS
+Γöé Γö£ /stocks/HDFCBANK
+Γöé Γöö [+13 more paths]
+Γö£ Γùï /support
+Γöö Γùï /tax
+
+
+Γùï  (Static)  prerendered as static content
+ΓùÅ  (SSG)     prerendered as static HTML (uses generateStaticParams)
+

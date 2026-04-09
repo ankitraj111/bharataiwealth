@@ -13,7 +13,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
+import java.time.LocalDate;     
 
 @Component
 @RequiredArgsConstructor
@@ -30,7 +30,7 @@ public class DataInitializer implements CommandLineRunner {
         // Create demo user if not exists
         if (!userRepository.existsByEmail("demo@bharatai.com")) {
             User demoUser = User.builder()
-                    .name("Rajesh Kumar")
+                    .name("Ankit Raj")
                     .email("demo@bharatai.com")
                     .password(passwordEncoder.encode("demo123"))
                     .role(User.Role.PREMIUM)
