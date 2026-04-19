@@ -25,6 +25,8 @@ allowed_origins = [
     "http://localhost:3001",
     "https://ankitraj111.github.io",
     "https://bharat-wealth-backend.onrender.com",
+    "https://bharataiwealth-blush.vercel.app",
+    os.getenv("FRONTEND_URL", ""),
     os.getenv("BACKEND_URL", ""),
 ]
 

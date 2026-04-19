@@ -34,6 +34,8 @@ services:
     envVars:
       - key: BACKEND_URL
         value: https://bharat-wealth-backend.onrender.com
+      - key: FRONTEND_URL
+        value: https://bharataiwealth-blush.vercel.app
       - key: PYTHONUNBUFFERED
         value: "1"
 
