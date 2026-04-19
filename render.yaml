@@ -23,7 +23,7 @@ services:
       - key: AUDIT_HMAC_KEY
         generateValue: true
       - key: ML_SERVICE_URL
-        value: https://bharataiwealth.onrender.com
+        value: https://bharat-wealth-ml.onrender.com
       - key: SPRING_PROFILES_ACTIVE
         value: prod
 
@@ -35,7 +35,7 @@ services:
     dockerContext: ./ml-service
     envVars:
       - key: BACKEND_URL
-        value: https://bharataiwealth.onrender.com
+        value: https://bharat-wealth-backend.onrender.com
       - key: FRONTEND_URL
         value: https://bharataiwealth-blush.vercel.app
       - key: PYTHONUNBUFFERED
