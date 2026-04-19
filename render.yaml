@@ -1,6 +1,7 @@
 services:
   - type: web
     name: bharat-wealth-backend
+    plan: free
     runtime: docker
     dockerfilePath: ./bankend/Dockerfile
     dockerContext: ./bankend
@@ -28,6 +29,7 @@ services:
 
   - type: web
     name: bharat-wealth-ml
+    plan: free
     runtime: docker
     dockerfilePath: ./ml-service/Dockerfile
     dockerContext: ./ml-service
@@ -41,5 +43,6 @@ services:
 
 databases:
   - name: bharat-wealth-db
+    plan: free
     databaseName: wealthdb
     user: bharatuser
