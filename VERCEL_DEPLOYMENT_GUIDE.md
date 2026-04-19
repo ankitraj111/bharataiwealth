@@ -11,14 +11,16 @@ This guide will help you deploy the frontend of the Bharat AI Wealth platform to
 ## 🛠️ Step 1: Connect your Repository to Vercel
 
 1.  Go to the [Vercel Dashboard](https://vercel.com/dashboard).
-2.  Click **"Add New..."** → **"Project"**.
-3.  Connect your GitHub account and select the **`bharat-ai-wealth-ui`** repository.
+2.  Ensure you are in the **"ankitraj147101-6438's projects"** team scope.
+3.  Click **"Add New..."** → **"Project"**.
+4.  Connect your GitHub account and select the **`bharat-ai-wealth-ui`** repository.
 
 ## ⚙️ Step 2: Configure Project Settings
 
 When the "Import Project" screen appears, follow these settings:
 
-1.  **Framework Preset**: Select **Next.js**.
+- **Team/Scope**: `ankitraj147101-6438's projects` (Team ID: `team_giIQKCmLrHzKR5EzoL4w3rwC`)
+- **Framework Preset**: Select **Next.js**.
 2.  **Root Directory**: Click "Edit" and select the **`frontend`** folder.
 3.  **Build and Output Settings**: 
     - Build Command: `npm run build`
