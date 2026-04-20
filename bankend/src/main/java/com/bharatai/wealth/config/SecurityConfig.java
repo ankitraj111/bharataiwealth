@@ -85,6 +85,7 @@ public class SecurityConfig {
                                 .authorizeHttpRequests(auth -> auth
                                                 // Public endpoints
                                                 .requestMatchers(
+                                                                "/",
                                                                 "/api/auth/**",
                                                                 "/api/health/**",
                                                                 "/api/public/**",
@@ -124,7 +125,8 @@ public class SecurityConfig {
                                 "https://*.github.io",
                                 "https://ankitraj111.github.io",
                                 "https://bharataiwealth.com",
-                                "https://*.bharataiwealth.com"));
+                                "https://*.bharataiwealth.com",
+                                "https://*.vercel.app"));
 
                 // Allowed HTTP methods
                 configuration.setAllowedMethods(Arrays.asList(

@@ -40,6 +40,7 @@ Z:\bharat-ai-wealth-ui (1)\bankend\src\main\java\com\bharatai\wealth\model\Portf
 Z:\bharat-ai-wealth-ui (1)\bankend\src\main\java\com\bharatai\wealth\exception\GlobalExceptionHandler.java
 Z:\bharat-ai-wealth-ui (1)\bankend\src\main\java\com\bharatai\wealth\repository\UserRepository.java
 Z:\bharat-ai-wealth-ui (1)\bankend\src\main\java\com\bharatai\wealth\controller\ExpenseController.java
+Z:\bharat-ai-wealth-ui (1)\bankend\src\main\java\com\bharatai\wealth\controller\RootController.java
 Z:\bharat-ai-wealth-ui (1)\bankend\src\main\java\com\bharatai\wealth\controller\StockAnalysisController.java
 Z:\bharat-ai-wealth-ui (1)\bankend\src\main\java\com\bharatai\wealth\model\AuditLog.java
 Z:\bharat-ai-wealth-ui (1)\bankend\src\main\java\com\bharatai\wealth\controller\EmergencyFundController.java
