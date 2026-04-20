@@ -7,6 +7,18 @@ services:
     dockerContext: ./bankend
     healthCheckPath: /api/health
     envVars:
+      - key: DB_HOST
+        fromDatabase:
+          name: bharat-wealth-db
+          property: host
+      - key: DB_PORT
+        fromDatabase:
+          name: bharat-wealth-db
+          property: port
+      - key: DB_NAME
+        fromDatabase:
+          name: bharat-wealth-db
+          property: database
       - key: DATABASE_URL
         fromDatabase:
           name: bharat-wealth-db
