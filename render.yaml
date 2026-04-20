@@ -5,6 +5,7 @@ services:
     runtime: docker
     dockerfilePath: ./bankend/Dockerfile
     dockerContext: ./bankend
+    healthCheckPath: /api/health
     envVars:
       - key: DATABASE_URL
         fromDatabase:

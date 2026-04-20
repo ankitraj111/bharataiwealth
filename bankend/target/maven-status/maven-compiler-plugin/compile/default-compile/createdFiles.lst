@@ -25,6 +25,7 @@ com\bharatai\wealth\security\JwtAuthenticationFilter.class
 com\bharatai\wealth\dto\AuthDTO$ChangePasswordRequest$ChangePasswordRequestBuilder.class
 com\bharatai\wealth\dto\StockAnalysisDTO$Valuation$ValuationBuilder.class
 com\bharatai\wealth\dto\AuthDTO$UserDTO.class
+com\bharatai\wealth\controller\NewsController.class
 com\bharatai\wealth\model\User$Role.class
 com\bharatai\wealth\controller\EmergencyFundController.class
 com\bharatai\wealth\dto\StockAnalysisDTO$EarningsTrend$EarningsTrendBuilder.class
