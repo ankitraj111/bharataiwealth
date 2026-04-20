@@ -1,3 +1,14 @@
+import os
+import logging
+
+# ======================================================
+# FORCE CPU-ONLY EXECUTION (must be set before any import)
+# Prevents TensorFlow & PyTorch from probing CUDA in GPU-less environments
+# ======================================================
+os.environ["CUDA_VISIBLE_DEVICES"] = "-1"
+os.environ["TF_CPP_MIN_LOG_LEVEL"] = "3"  # Suppress TF logs (0=all, 3=errors only)
+os.environ["TF_FORCE_GPU_ALLOW_GROWTH"] = "false"
+
 from fastapi import FastAPI, HTTPException, Query, Body
 from typing import List, Dict, Optional
 from ml_engine import MLEngine
@@ -14,10 +25,21 @@ from security_middleware import (
 )
 from coingecko_service import get_coingecko_service
 import uvicorn
-import os
 import yfinance as yf
 
-app = FastAPI(title="Bharat AI Wealth Prediction Engine")
+# Configure logging
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s [%(levelname)s] %(name)s: %(message)s",
+    datefmt="%Y-%m-%d %H:%M:%S",
+)
+logger = logging.getLogger("bharat-ai-ml")
+
+app = FastAPI(
+    title="Bharat AI Wealth Prediction Engine",
+    description="AI-powered financial prediction and advisory engine for the Indian market.",
+    version="1.0.0",
+)
 
 # Configure CORS for production
 allowed_origins = [
@@ -51,14 +73,26 @@ risk_engine = RiskEngine()
 advisory_engine = AdvisoryEngine()
 mf_engine = MFEngine()
 ta_engine = TechnicalAnalysisEngine()
+logger.info("All ML engines initialized successfully.")
 
 @app.on_event("shutdown")
 def shutdown_event():
-    pass
+    logger.info("ML Service shutting down.")
 
 # =====================
-# ADVISORY ENDPOINTS (Recommendation Only)
+# ROOT / HEALTH ENDPOINTS
 # =====================
+
+@app.get("/", tags=["Health"])
+async def root():
+    """Root endpoint — confirms the service is running."""
+    return {
+        "service": "Bharat AI Wealth - ML Prediction Engine",
+        "status": "running",
+        "version": "1.0.0",
+        "docs": "/docs",
+    }
+
 
 @app.get("/rebalance/suggest")
 async def get_rebalance_suggestions(

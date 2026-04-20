@@ -1,0 +1,79 @@
+name: Sync ML Service to Hugging Face Space
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'ml-service/**'
+  workflow_dispatch:  # Allow manual trigger
+
+jobs:
+  sync-to-huggingface:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          lfs: true
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install huggingface_hub
+        run: pip install huggingface_hub
+
+      - name: Push ml-service to Hugging Face Space
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+        run: |
+          python - <<'EOF'
+          import os
+          from huggingface_hub import HfApi
+
+          api = HfApi()
+          token = os.environ["HF_TOKEN"]
+          repo_id = "Ankit0101111/bharat-ai-ml-service"
+
+          # Create repo if it doesn't exist
+          api.create_repo(
+              repo_id=repo_id,
+              repo_type="space",
+              space_sdk="docker",
+              exist_ok=True,
+              token=token
+          )
+
+          # Upload the entire ml-service directory
+          api.upload_folder(
+              folder_path="ml-service",
+              repo_id=repo_id,
+              repo_type="space",
+              token=token,
+              ignore_patterns=[
+                  "__pycache__/*",
+                  "*.pyc",
+                  ".env",
+                  ".dockerignore",
+                  "README.md",
+                  "hf_upload.py",
+                  "integration_test.py",
+                  "test_*.py",
+                  "*_DEPRECATED.py",
+              ]
+          )
+
+          # Upload README.md with HF Space metadata
+          api.upload_file(
+              path_or_fileobj="ml-service/README.md",
+              path_in_repo="README.md",
+              repo_id=repo_id,
+              repo_type="space",
+              token=token
+          )
+
+          print(f"[SUCCESS] Deployed to: https://huggingface.co/spaces/{repo_id}")
+          EOF
