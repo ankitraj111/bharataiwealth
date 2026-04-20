@@ -1,10 +1,12 @@
 import os
 import json
+import logging
 import datetime
 import redis
-import psycopg2
 from pydantic import BaseModel, Field
 from typing import Dict, Any, Optional
+
+logger = logging.getLogger(__name__)
 
 # --- Input Models ---
 class ProfileInput(BaseModel):
@@ -53,11 +55,15 @@ class RiskEngine:
 
     def get_pg_connection(self):
         try:
+            import psycopg2  # Optional dependency — only needed if POSTGRES_URL is configured
             if not self.pg_conn or self.pg_conn.closed:
                 self.pg_conn = psycopg2.connect(self.postgres_url)
             return self.pg_conn
+        except ImportError:
+            logger.warning("psycopg2 not installed. Postgres persistence disabled.")
+            return None
         except Exception as e:
-            print(f"Warning: Postgres connection failed: {e}")
+            logger.warning(f"Postgres connection failed: {e}")
             return None
 
     def calculate_score(self, data: RiskInput) -> Dict[str, Any]:
