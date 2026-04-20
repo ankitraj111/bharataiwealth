@@ -16,13 +16,14 @@ yfinance==0.2.36
 ta==0.11.0
 requests==2.31.0
 
-# NLP / Sentiment (Lazy-loaded, CPU-only)
+# NLP / Sentiment (Lazy-loaded at request time, not startup)
+# torch installed via CPU-only index in Dockerfile
+torch==2.2.0
 transformers==4.37.2
-torch==2.2.0+cpu
 nltk==3.8.1
 
-# Deep learning (CPU-only, for LSTM models)
-tensorflow-cpu
+# Deep learning (CPU-only for LSTM models)
+tensorflow-cpu==2.16.1
 
 # Caching (optional, graceful fallback if not available)
 redis==5.0.1

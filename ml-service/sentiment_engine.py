@@ -4,14 +4,12 @@ import pandas as pd
 import numpy as np
 from datetime import datetime, timedelta
 import re
-import nltk
-from nltk.corpus import stopwords
-from nltk.stem import WordNetLemmatizer
-from transformers import AutoTokenizer, AutoModelForSequenceClassification
-import torch
-import redis
 import json
 import os
+import logging
+
+logger = logging.getLogger(__name__)
+
 
 class SentimentEngine:
     def __init__(self, redis_host='localhost', redis_port=6379, finnhub_api_key=None):
@@ -20,32 +18,44 @@ class SentimentEngine:
         self.tokenizer = None
         self.model = None
         self.redis_client = None
-        
-        # Initialize NLTK
+        self.stop_words = set()
+        self.lemmatizer = None
+
+        # Initialize NLTK lazily
         try:
+            import nltk
             nltk.download('stopwords', quiet=True)
             nltk.download('wordnet', quiet=True)
+            from nltk.corpus import stopwords
+            from nltk.stem import WordNetLemmatizer
             self.stop_words = set(stopwords.words('english'))
             self.lemmatizer = WordNetLemmatizer()
-        except:
-            self.stop_words = set()
-            self.lemmatizer = None
+        except Exception:
+            logger.warning("NLTK resources not available. Text preprocessing will be basic.")
 
-        # Try connecting to Redis
+        # Try connecting to Redis (optional, graceful fallback)
         try:
+            import redis
             self.redis_client = redis.Redis(host=redis_host, port=redis_port, decode_responses=True)
             self.redis_client.ping()
-        except:
-            print("Redis not available, caching will be disabled.")
+            logger.info("Redis connected for sentiment caching.")
+        except Exception:
+            logger.info("Redis not available — sentiment caching disabled.")
             self.redis_client = None
 
     def _load_model(self):
-        """Lazy load FinBERT."""
+        """Lazy load FinBERT model (only when /sentiment is called)."""
         if self.model is None:
-            print("Loading FinBERT model...")
-            self.tokenizer = AutoTokenizer.from_pretrained(self.model_name)
-            self.model = AutoModelForSequenceClassification.from_pretrained(self.model_name)
-            self.model.eval()
+            logger.info("Loading FinBERT model on first /sentiment request...")
+            try:
+                from transformers import AutoTokenizer, AutoModelForSequenceClassification
+                self.tokenizer = AutoTokenizer.from_pretrained(self.model_name)
+                self.model = AutoModelForSequenceClassification.from_pretrained(self.model_name)
+                self.model.eval()
+                logger.info("FinBERT loaded successfully.")
+            except Exception as e:
+                logger.error(f"Failed to load FinBERT: {e}")
+                raise
 
     def clean_text(self, text):
         """Preprocess text for NLP."""
@@ -96,20 +106,20 @@ class SentimentEngine:
         """Analyze sentiment of list of texts using FinBERT."""
         if not texts:
             return 0.5
-        
+
         self._load_model()
-        
+
+        import torch  # Lazy import — only loaded when sentiment is called
         scores = []
         with torch.no_grad():
             for text in texts:
                 inputs = self.tokenizer(text, return_tensors="pt", padding=True, truncation=True, max_length=512)
                 outputs = self.model(**inputs)
-                # FinBERT output: [positive, negative, neutral]
                 probs = torch.nn.functional.softmax(outputs.logits, dim=-1)
-                sentiment_val = probs[0][0].item() - probs[0][1].item() # pos - neg
-                normalized = (sentiment_val + 1) / 2 # map [-1, 1] to [0, 1]
+                sentiment_val = probs[0][0].item() - probs[0][1].item()
+                normalized = (sentiment_val + 1) / 2
                 scores.append(normalized)
-        
+
         return scores
 
     @lru_cache(maxsize=128)

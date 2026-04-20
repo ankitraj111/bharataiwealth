@@ -2,9 +2,6 @@ import os
 import logging
 import warnings
 
-# Force CPU-only (env vars set in main.py before this import)
-import tensorflow as tf
-from tensorflow.keras.models import load_model
 from feature_pipeline import FeaturePipeline
 from functools import lru_cache
 import yfinance as yf
@@ -53,12 +50,16 @@ class MLEngine:
         except Exception as e:
             logger.warning(f"Could not load medium-risk model: {e}. Will use fallback predictions.")
 
-        # High-risk: TensorFlow LSTM (CPU-only)
+        # High-risk: TensorFlow LSTM (CPU-only, lazy import)
         try:
             high_path = os.path.join(self.models_dir, "high_lstm.h5")
             if os.path.exists(high_path):
+                import tensorflow as tf  # Lazy import — only load if model file exists
+                from tensorflow.keras.models import load_model
                 self.models["high"] = load_model(high_path, compile=False)
                 logger.info("Loaded high-risk model (LSTM) on CPU.")
+            else:
+                logger.info("No LSTM model found. High-risk will use fallback predictions.")
         except Exception as e:
             logger.warning(f"Could not load high-risk model: {e}. Will use fallback predictions.")
 
