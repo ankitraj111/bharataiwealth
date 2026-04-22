@@ -164,15 +164,25 @@ function SIPPlannerContent() {
         <AppShell>
             <div className="max-w-7xl mx-auto space-y-8 pb-12">
 
+                {/* Page Header */}
+                <div className="space-y-2">
+                    <h1 className="text-3xl font-black text-foreground tracking-tight flex items-center gap-3">
+                        <div className="h-10 w-10 rounded-2xl bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center shadow-lg">
+                            <Calculator className="h-5 w-5 text-white" />
+                        </div>
+                        SIP Planner
+                    </h1>
+                    <p className="text-muted-foreground font-medium">Plan your systematic investments with AI-powered projections</p>
+                </div>
 
                 {/* Main Content Grid */}
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
                     {/* Left: Interactive Controls */}
                     <div className="lg:col-span-5 space-y-6">
-                        <Card className="border-white/10 bg-card/40 backdrop-blur-2xl shadow-2xl overflow-hidden rounded-[2rem]">
-                            <CardHeader className="bg-white/5 border-b border-white/5 py-5 px-8">
-                                <CardTitle className="flex items-center gap-3 text-xl font-black text-white">
-                                    <TrendingUp className="h-6 w-6 text-accent" />
+                        <Card className="border-border/50 bg-card backdrop-blur-2xl shadow-2xl overflow-hidden rounded-[2rem]">
+                            <CardHeader className="bg-muted/30 border-b border-border/50 py-5 px-8">
+                                <CardTitle className="flex items-center gap-3 text-xl font-black text-foreground">
+                                    <TrendingUp className="h-6 w-6 text-primary" />
                                     Wealth Parameters
                                 </CardTitle>
                             </CardHeader>
@@ -180,8 +190,8 @@ function SIPPlannerContent() {
                                 {/* Monthly SIP */}
                                 <div className="space-y-6">
                                     <div className="flex items-center justify-between">
-                                        <Label className="text-xs font-bold uppercase tracking-[0.2em] text-slate-400">Monthly Contribution</Label>
-                                        <div className="text-2xl font-black text-accent font-mono tabular-nums">
+                                        <Label className="text-xs font-bold uppercase tracking-[0.2em] text-muted-foreground">Monthly Contribution</Label>
+                                        <div className="text-2xl font-black text-primary font-mono tabular-nums">
                                             ₹{monthlyAmount.toLocaleString("en-IN")}
                                         </div>
                                     </div>
@@ -193,7 +203,7 @@ function SIPPlannerContent() {
                                         step={500}
                                         className="py-2"
                                     />
-                                    <div className="flex justify-between text-[10px] text-slate-500 font-bold tracking-widest uppercase">
+                                    <div className="flex justify-between text-[10px] text-muted-foreground font-bold tracking-widest uppercase">
                                         <span>₹500</span>
                                         <span>₹2,00,000</span>
                                     </div>
@@ -202,8 +212,8 @@ function SIPPlannerContent() {
                                 {/* Expected Return */}
                                 <div className="space-y-6">
                                     <div className="flex items-center justify-between">
-                                        <Label className="text-xs font-bold uppercase tracking-[0.2em] text-slate-400">Growth Expectation (p.a.)</Label>
-                                        <div className="text-2xl font-black text-white font-mono tabular-nums">
+                                        <Label className="text-xs font-bold uppercase tracking-[0.2em] text-muted-foreground">Growth Expectation (p.a.)</Label>
+                                        <div className="text-2xl font-black text-foreground font-mono tabular-nums">
                                             {expectedReturn}%
                                         </div>
                                     </div>
@@ -215,7 +225,7 @@ function SIPPlannerContent() {
                                         step={0.5}
                                         className="py-2"
                                     />
-                                    <div className="flex justify-between text-[10px] text-slate-500 font-bold tracking-widest uppercase">
+                                    <div className="flex justify-between text-[10px] text-muted-foreground font-bold tracking-widest uppercase">
                                         <span>1%</span>
                                         <span>30%</span>
                                     </div>
@@ -224,8 +234,8 @@ function SIPPlannerContent() {
                                 {/* Horizon */}
                                 <div className="space-y-6">
                                     <div className="flex items-center justify-between">
-                                        <Label className="text-xs font-bold uppercase tracking-[0.2em] text-slate-400">Investment Horizon</Label>
-                                        <div className="text-2xl font-black text-white font-mono tabular-nums">
+                                        <Label className="text-xs font-bold uppercase tracking-[0.2em] text-muted-foreground">Investment Horizon</Label>
+                                        <div className="text-2xl font-black text-foreground font-mono tabular-nums">
                                             {goalYears} Years
                                         </div>
                                     </div>
@@ -237,26 +247,26 @@ function SIPPlannerContent() {
                                         step={1}
                                         className="py-2"
                                     />
-                                    <div className="flex justify-between text-[10px] text-slate-500 font-bold tracking-widest uppercase">
+                                    <div className="flex justify-between text-[10px] text-muted-foreground font-bold tracking-widest uppercase">
                                         <span>1 Year</span>
                                         <span>40 Years</span>
                                     </div>
                                 </div>
 
                                 {/* Step-Up Feature */}
-                                <div className="space-y-6 p-6 rounded-3xl bg-accent/5 border border-accent/10 relative overflow-hidden">
+                                <div className="space-y-6 p-6 rounded-3xl bg-primary/5 border border-primary/10 relative overflow-hidden">
                                     <div className="absolute top-0 right-0 p-4 opacity-10">
-                                        <ArrowUpRight className="h-12 w-12 text-accent" />
+                                        <ArrowUpRight className="h-12 w-12 text-primary" />
                                     </div>
                                     <div className="flex items-center justify-between relative z-10">
                                         <div className="space-y-1">
-                                            <Label className="text-sm font-bold text-white flex items-center gap-2">
+                                            <Label className="text-sm font-bold text-foreground flex items-center gap-2">
                                                 Annual Step-up
-                                                <Badge variant="outline" className="text-[10px] py-0 border-accent/30 text-accent font-black">PRO</Badge>
+                                                <Badge variant="outline" className="text-[10px] py-0 border-primary/30 text-primary font-black">PRO</Badge>
                                             </Label>
-                                            <p className="text-xs text-slate-500 leading-relaxed font-medium">Auto-increase contribution yearly.</p>
+                                            <p className="text-xs text-muted-foreground leading-relaxed font-medium">Auto-increase contribution yearly.</p>
                                         </div>
-                                        <div className="text-xl font-black text-accent font-mono">
+                                        <div className="text-xl font-black text-primary font-mono">
                                             {stepUpPercent}%
                                         </div>
                                     </div>
@@ -272,7 +282,7 @@ function SIPPlannerContent() {
 
                                 {/* Risk Level */}
                                 <div className="space-y-4">
-                                    <Label className="text-xs font-bold uppercase tracking-[0.2em] text-slate-400">Risk Profile</Label>
+                                    <Label className="text-xs font-bold uppercase tracking-[0.2em] text-muted-foreground">Risk Profile</Label>
                                     <div className="grid grid-cols-3 gap-3">
                                         {(["low", "medium", "high"] as const).map((risk) => (
                                             <Button
@@ -280,8 +290,8 @@ function SIPPlannerContent() {
                                                 variant={riskLevel === risk ? "default" : "outline"}
                                                 onClick={() => setRiskLevel(risk)}
                                                 className={`capitalize h-12 rounded-xl text-xs font-black transition-all duration-500 ${riskLevel === risk
-                                                    ? 'bg-accent text-background shadow-[0_0_20px_rgba(212,175,55,0.3)] scale-105 hover:bg-accent hover:opacity-90'
-                                                    : 'border-white/10 hover:bg-white/5 text-slate-400'
+                                                    ? 'bg-primary text-primary-foreground shadow-lg scale-105 hover:bg-primary hover:opacity-90'
+                                                    : 'border-border/50 hover:bg-muted text-muted-foreground'
                                                     }`}
                                             >
                                                 {risk}
@@ -293,7 +303,7 @@ function SIPPlannerContent() {
                                 <Button
                                     onClick={handleCalculate}
                                     disabled={loading}
-                                    className="w-full h-16 rounded-2xl text-lg font-black bg-gradient-to-r from-accent to-accent/70 text-background hover:shadow-[0_0_30px_rgba(212,175,55,0.4)] transition-all duration-500 group"
+                                    className="w-full h-16 rounded-2xl text-lg font-black bg-gradient-to-r from-blue-600 to-purple-600 text-white hover:shadow-xl transition-all duration-500 group"
                                 >
                                     {loading ? (
                                         <Loader2 className="h-6 w-6 animate-spin" />
@@ -316,10 +326,10 @@ function SIPPlannerContent() {
                                 initial={{ opacity: 0, x: 20 }}
                                 animate={{ opacity: 1, x: 0 }}
                                 transition={{ delay: 0.1 }}
-                                className="p-8 rounded-[2rem] bg-card/40 border border-white/10 backdrop-blur-xl shadow-xl hover:border-accent/30 transition-colors group"
+                                className="p-8 rounded-[2rem] bg-card border border-border/50 backdrop-blur-xl shadow-xl hover:border-primary/30 transition-colors group"
                             >
-                                <p className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-2">Total Wealth</p>
-                                <p className="text-3xl font-black text-white group-hover:text-accent transition-colors">{formatCurrency(calculations.totalWealth)}</p>
+                                <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest mb-2">Total Wealth</p>
+                                <p className="text-3xl font-black text-foreground group-hover:text-primary transition-colors">{formatCurrency(calculations.totalWealth)}</p>
                                 <div className="mt-3 flex items-center gap-1 text-emerald-400 text-xs font-black">
                                     <CheckCircle2 className="h-3 w-3" />
                                     Wealth Created
@@ -330,40 +340,40 @@ function SIPPlannerContent() {
                                 initial={{ opacity: 0, x: 20 }}
                                 animate={{ opacity: 1, x: 0 }}
                                 transition={{ delay: 0.2 }}
-                                className="p-8 rounded-[2rem] bg-card/40 border border-white/10 backdrop-blur-xl shadow-xl"
+                                className="p-8 rounded-[2rem] bg-card border border-border/50 backdrop-blur-xl shadow-xl"
                             >
-                                <p className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-2">Total Invested</p>
-                                <p className="text-3xl font-black text-slate-400">{formatCurrency(calculations.totalInvested)}</p>
-                                <p className="mt-3 text-slate-500 text-xs font-bold">In {goalYears} Years</p>
+                                <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest mb-2">Total Invested</p>
+                                <p className="text-3xl font-black text-muted-foreground">{formatCurrency(calculations.totalInvested)}</p>
+                                <p className="mt-3 text-muted-foreground text-xs font-bold">In {goalYears} Years</p>
                             </motion.div>
 
                             <motion.div
                                 initial={{ opacity: 0, x: 20 }}
                                 animate={{ opacity: 1, x: 0 }}
                                 transition={{ delay: 0.3 }}
-                                className="p-8 rounded-[2rem] bg-accent/10 border border-accent/20 backdrop-blur-xl shadow-xl relative overflow-hidden"
+                                className="p-8 rounded-[2rem] bg-primary/10 border border-primary/20 backdrop-blur-xl shadow-xl relative overflow-hidden"
                             >
-                                <div className="absolute top-0 right-0 w-24 h-24 bg-accent/20 blur-3xl rounded-full -mr-12 -mt-12" />
-                                <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-2">Wealth Multiple</p>
-                                <p className="text-3xl font-black text-accent relative z-10">{calculations.multiple.toFixed(2)}x</p>
-                                <p className="mt-3 text-accent/60 text-xs font-black">Performance Factor</p>
+                                <div className="absolute top-0 right-0 w-24 h-24 bg-primary/20 blur-3xl rounded-full -mr-12 -mt-12" />
+                                <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest mb-2">Wealth Multiple</p>
+                                <p className="text-3xl font-black text-primary relative z-10">{calculations.multiple.toFixed(2)}x</p>
+                                <p className="mt-3 text-primary/60 text-xs font-black">Performance Factor</p>
                             </motion.div>
                         </div>
 
                         {/* Chart Area */}
-                        <Card className="border-white/10 bg-card/40 backdrop-blur-2xl shadow-2xl overflow-hidden rounded-[2.5rem]">
+                        <Card className="border-border/50 bg-card backdrop-blur-2xl shadow-2xl overflow-hidden rounded-[2.5rem]">
                             <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-                                <CardHeader className="bg-white/5 border-b border-white/5 flex flex-col md:flex-row md:items-center justify-between py-6 px-8 gap-4">
+                                <CardHeader className="bg-muted/30 border-b border-border/50 flex flex-col md:flex-row md:items-center justify-between py-6 px-8 gap-4">
                                     <div className="space-y-1">
-                                        <CardTitle className="text-xl font-black text-white flex items-center gap-3">
-                                            <BarChart3 className="h-6 w-6 text-accent" />
+                                        <CardTitle className="text-xl font-black text-foreground flex items-center gap-3">
+                                            <BarChart3 className="h-6 w-6 text-primary" />
                                             Wealth Projection
                                         </CardTitle>
-                                        <CardDescription className="text-sm text-slate-400 font-medium">Trajectory of your financial growth</CardDescription>
+                                        <CardDescription className="text-sm text-muted-foreground font-medium">Trajectory of your financial growth</CardDescription>
                                     </div>
-                                    <TabsList className="bg-black/40 border border-white/10 rounded-2xl h-12 p-1.5 w-full md:w-auto">
-                                        <TabsTrigger value="growth" className="rounded-xl px-6 font-black text-xs data-[state=active]:bg-accent data-[state=active]:text-background">Visual</TabsTrigger>
-                                        <TabsTrigger value="breakdown" className="rounded-xl px-6 font-black text-xs data-[state=active]:bg-accent data-[state=active]:text-background">Data</TabsTrigger>
+                                    <TabsList className="bg-muted border border-border/50 rounded-2xl h-12 p-1.5 w-full md:w-auto">
+                                        <TabsTrigger value="growth" className="rounded-xl px-6 font-black text-xs data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">Visual</TabsTrigger>
+                                        <TabsTrigger value="breakdown" className="rounded-xl px-6 font-black text-xs data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">Data</TabsTrigger>
                                     </TabsList>
                                 </CardHeader>
                                 <CardContent className="p-8">
@@ -444,21 +454,21 @@ function SIPPlannerContent() {
                                         </div>
                                     </TabsContent>
                                     <TabsContent value="breakdown" className="mt-0 outline-none">
-                                        <div className="overflow-x-auto mt-4 rounded-3xl border border-white/10 bg-black/20">
+                                        <div className="overflow-x-auto mt-4 rounded-3xl border border-border/50 bg-muted/30">
                                             <table className="w-full text-left text-sm border-collapse">
-                                                <thead className="bg-white/5 text-slate-500 font-black uppercase tracking-widest text-[10px]">
+                                                <thead className="bg-muted/50 text-muted-foreground font-black uppercase tracking-widest text-[10px]">
                                                     <tr>
                                                         <th className="px-8 py-5">Time Period</th>
                                                         <th className="px-8 py-5">Invested</th>
                                                         <th className="px-8 py-5">Projected Wealth</th>
                                                     </tr>
                                                 </thead>
-                                                <tbody className="divide-y divide-white/5">
+                                                <tbody className="divide-y divide-border/50">
                                                     {calculations.chartData.map((item, idx) => (
-                                                        <tr key={idx} className="hover:bg-white/5 transition-colors group">
-                                                            <td className="px-8 py-5 font-black text-white group-hover:text-accent transition-colors">{item.name}</td>
-                                                            <td className="px-8 py-5 text-slate-400 font-mono tracking-tight">{formatCurrency(item.invested)}</td>
-                                                            <td className="px-8 py-5 text-accent font-black font-mono tracking-tight">{formatCurrency(item.wealth)}</td>
+                                                        <tr key={idx} className="hover:bg-muted/30 transition-colors group">
+                                                            <td className="px-8 py-5 font-black text-foreground group-hover:text-primary transition-colors">{item.name}</td>
+                                                            <td className="px-8 py-5 text-muted-foreground font-mono tracking-tight">{formatCurrency(item.invested)}</td>
+                                                            <td className="px-8 py-5 text-primary font-black font-mono tracking-tight">{formatCurrency(item.wealth)}</td>
                                                         </tr>
                                                     ))}
                                                 </tbody>
@@ -479,8 +489,8 @@ function SIPPlannerContent() {
                                     className="space-y-8"
                                 >
                                     <div className="flex items-center justify-between px-2">
-                                        <h3 className="text-2xl font-black text-white flex items-center gap-3">
-                                            <Sparkles className="h-6 w-6 text-accent" />
+                                        <h3 className="text-2xl font-black text-foreground flex items-center gap-3">
+                                            <Sparkles className="h-6 w-6 text-primary" />
                                             Optimal Fund Mix
                                         </h3>
                                         <Badge className={`px-5 py-2 rounded-xl border text-[10px] font-black uppercase tracking-widest ${getRiskColor(riskLevel)}`}>
@@ -495,34 +505,34 @@ function SIPPlannerContent() {
                                                 initial={{ opacity: 0, scale: 0.95 }}
                                                 animate={{ opacity: 1, scale: 1 }}
                                                 transition={{ delay: index * 0.1 }}
-                                                className="group relative p-8 rounded-[2.5rem] bg-card/60 border border-white/5 hover:border-accent/30 hover:bg-card transition-all duration-500 shadow-xl overflow-hidden"
+                                                className="group relative p-8 rounded-[2.5rem] bg-card border border-border/50 hover:border-primary/30 hover:bg-muted/30 transition-all duration-500 shadow-xl overflow-hidden"
                                             >
-                                                <div className="absolute top-0 right-0 w-32 h-32 bg-accent/5 blur-3xl rounded-full -mr-16 -mt-16 group-hover:bg-accent/10 transition-colors" />
+                                                <div className="absolute top-0 right-0 w-32 h-32 bg-primary/5 blur-3xl rounded-full -mr-16 -mt-16 group-hover:bg-primary/10 transition-colors" />
 
                                                 <div className="flex items-start justify-between gap-6 mb-8 relative z-10">
                                                     <div className="space-y-2 overflow-hidden">
-                                                        <p className="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em]">{fund.category}</p>
-                                                        <h4 className="text-xl font-black text-white leading-tight truncate group-hover:text-accent transition-colors">{fund.scheme_name}</h4>
+                                                        <p className="text-[10px] font-black text-muted-foreground uppercase tracking-[0.2em]">{fund.category}</p>
+                                                        <h4 className="text-xl font-black text-foreground leading-tight truncate group-hover:text-primary transition-colors">{fund.scheme_name}</h4>
                                                     </div>
-                                                    <div className="h-14 w-14 rounded-2xl bg-accent/10 flex flex-col items-center justify-center shrink-0 border border-accent/20 group-hover:scale-110 transition-transform">
-                                                        <span className="text-[9px] font-black text-accent leading-none mb-1">ALLOC</span>
-                                                        <span className="text-lg font-black text-accent">{fund.allocation_percent}%</span>
+                                                    <div className="h-14 w-14 rounded-2xl bg-primary/10 flex flex-col items-center justify-center shrink-0 border border-primary/20 group-hover:scale-110 transition-transform">
+                                                        <span className="text-[9px] font-black text-primary leading-none mb-1">ALLOC</span>
+                                                        <span className="text-lg font-black text-primary">{fund.allocation_percent}%</span>
                                                     </div>
                                                 </div>
 
-                                                <div className="flex items-center justify-between pt-6 border-t border-white/5 relative z-10">
+                                                <div className="flex items-center justify-between pt-6 border-t border-border/50 relative z-10">
                                                     <div className="space-y-1">
-                                                        <p className="text-[9px] font-bold text-slate-500 uppercase tracking-widest">Monthly</p>
-                                                        <p className="text-lg font-black text-slate-200 font-mono tracking-tighter">{formatCurrency((monthlyAmount * fund.allocation_percent) / 100)}</p>
+                                                        <p className="text-[9px] font-bold text-muted-foreground uppercase tracking-widest">Monthly</p>
+                                                        <p className="text-lg font-black text-foreground font-mono tracking-tighter">{formatCurrency((monthlyAmount * fund.allocation_percent) / 100)}</p>
                                                     </div>
                                                     <div className="text-right space-y-1">
-                                                        <p className="text-[9px] font-bold text-slate-500 uppercase tracking-widest">Projection</p>
+                                                        <p className="text-[9px] font-bold text-muted-foreground uppercase tracking-widest">Projection</p>
                                                         <p className="text-lg font-black text-emerald-400 font-mono tracking-tighter">{fund.expected_cagr}% <span className="text-[10px]">p.a.</span></p>
                                                     </div>
                                                 </div>
 
-                                                <button className="absolute bottom-6 right-6 h-10 w-10 rounded-full bg-white/5 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all hover:bg-accent hover:scale-110">
-                                                    <ChevronRight className="h-5 w-5 text-white group-hover:text-background" />
+                                                <button className="absolute bottom-6 right-6 h-10 w-10 rounded-full bg-muted flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all hover:bg-primary hover:scale-110" aria-label="View fund details">
+                                                    <ChevronRight className="h-5 w-5 text-foreground" />
                                                 </button>
                                             </motion.div>
                                         ))}
@@ -530,11 +540,11 @@ function SIPPlannerContent() {
 
                                     {/* Action Footer */}
                                     <div className="flex flex-col md:flex-row gap-6 pt-4">
-                                        <Button className="flex-1 h-16 rounded-[1.5rem] bg-white text-black hover:bg-accent hover:text-black font-black text-lg gap-3 shadow-2xl transition-all duration-500">
+                                        <Button className="flex-1 h-16 rounded-[1.5rem] bg-gradient-to-r from-blue-600 to-purple-600 text-white hover:shadow-xl font-black text-lg gap-3 shadow-2xl transition-all duration-500">
                                             Execute Wealth Plan
                                             <ArrowRight className="h-5 w-5" />
                                         </Button>
-                                        <Button variant="outline" className="h-16 px-10 rounded-[1.5rem] border-white/10 bg-white/5 hover:bg-white/10 text-white font-black text-lg gap-3 transition-all">
+                                        <Button variant="outline" className="h-16 px-10 rounded-[1.5rem] border-border/50 bg-muted/50 hover:bg-muted text-foreground font-black text-lg gap-3 transition-all">
                                             <Download className="h-5 w-5" />
                                             Report
                                         </Button>
@@ -544,15 +554,15 @@ function SIPPlannerContent() {
                         </AnimatePresence>
 
                         {/* Informative Alert */}
-                        <div className="p-8 rounded-[2.5rem] bg-card/30 border border-accent/10 flex flex-col md:flex-row gap-6 items-start md:items-center relative overflow-hidden shadow-2xl">
-                            <div className="absolute top-0 right-0 w-64 h-64 bg-accent/5 blur-[100px] rounded-full" />
-                            <div className="h-14 w-14 rounded-2xl bg-accent/10 flex items-center justify-center shrink-0 border border-accent/20 relative z-10">
-                                <Zap className="h-7 w-7 text-accent" />
+                        <div className="p-8 rounded-[2.5rem] bg-card border border-primary/10 flex flex-col md:flex-row gap-6 items-start md:items-center relative overflow-hidden shadow-2xl">
+                            <div className="absolute top-0 right-0 w-64 h-64 bg-primary/5 blur-[100px] rounded-full" />
+                            <div className="h-14 w-14 rounded-2xl bg-primary/10 flex items-center justify-center shrink-0 border border-primary/20 relative z-10">
+                                <Zap className="h-7 w-7 text-primary" />
                             </div>
                             <div className="space-y-2 relative z-10">
-                                <p className="text-lg font-black text-white">The Power of Step-Up</p>
-                                <p className="text-sm text-slate-400 leading-relaxed font-medium">
-                                    A <span className="text-accent font-black">{stepUpPercent}%</span> yearly increase grows your wealth <span className="text-emerald-400 font-black">
+                                <p className="text-lg font-black text-foreground">The Power of Step-Up</p>
+                                <p className="text-sm text-muted-foreground leading-relaxed font-medium">
+                                    A <span className="text-primary font-black">{stepUpPercent}%</span> yearly increase grows your wealth <span className="text-emerald-500 font-black">
                                         {(() => {
                                             const withoutStepUp = monthlyAmount * (((Math.pow(1 + (expectedReturn / 12 / 100), goalYears * 12) - 1) / (expectedReturn / 12 / 100)) * (1 + (expectedReturn / 12 / 100)))
                                             return `${((calculations.totalWealth / withoutStepUp)).toFixed(1)}x`
