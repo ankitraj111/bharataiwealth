@@ -97,7 +97,14 @@ export default function LoginPage() {
 
                 <div className="relative z-10  flex items-center ">
                     <div className=" w-[76px]  flex items-center justify-center h-full  overflow-hidden">
-                        <img src={`${basePath}/logo2.png`} alt="Bharat AI Wealth" className="h-[45px]  w-full " />
+                        <Image 
+                            src={`${basePath}/logo2.png`} 
+                            alt="Bharat AI Wealth" 
+                            width={76} 
+                            height={45} 
+                            className="h-[45px] w-auto object-contain"
+                            priority
+                        />
                     </div>
                     <div className="pl-2 text-2xl  text-bold leading-[20px] text-[#D4AF37] font-bold ">
                         BHARAT <br /><span className="text-sm from-[#1E88E5] bg-gradient-to-r 
@@ -230,6 +237,7 @@ text-transparent   italic">AI Wealth</span>
                                                         type="button"
                                                         onClick={() => setShowPassword(!showPassword)}
                                                         className="absolute right-3 top-1/2 -translate-y-1/2 p-1.5 hover:bg-secondary rounded-lg transition-colors text-muted-foreground hover:text-foreground"
+                                                        aria-label={showPassword ? "Hide password" : "Show password"}
                                                     >
                                                         {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                                                     </button>
