@@ -59,6 +59,7 @@ export function Chatbot() {
                 initial={{ opacity: 0, y: 50 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 1 }}
+                aria-label="Open Chat"
             >
                 <MessageCircle className="w-6 h-6" />
             </motion.button>
@@ -86,6 +87,7 @@ export function Chatbot() {
                             <button
                                 onClick={() => setIsOpen(false)}
                                 className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center hover:bg-white/30 transition-colors"
+                                aria-label="Close Chat"
                             >
                                 <X className="w-4 h-4 text-white" />
                             </button>

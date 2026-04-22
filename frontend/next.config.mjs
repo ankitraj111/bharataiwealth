@@ -11,7 +11,7 @@ const nextConfig = {
 
   // Performance optimizations
   images: {
-    unoptimized: true,
+    unoptimized: isGitHubPages,
     formats: ['image/webp'],
   },
 

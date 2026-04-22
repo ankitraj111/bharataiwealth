@@ -6,6 +6,7 @@ import { motion, AnimatePresence } from "framer-motion"
 import { Button } from "@/components/ui/button"
 import { ThemeToggle } from "@/components/theme-toggle"
 import { Menu, X, ChevronRight } from "lucide-react"
+import Image from "next/image"
 
 const basePath = process.env.NEXT_PUBLIC_BASE_PATH || '';
 
@@ -40,7 +41,14 @@ export function Navbar() {
                         {/* Logo */}
                         <Link href="/" className="flex items-center gap-2 sm:gap-3 group">
                            <div className="w-[50px] sm:w-[60px] md:w-[70px] flex items-center justify-center h-full overflow-hidden">
-                               <img src={`${basePath}/logo2.png`} alt="Bharat AI Wealth" className="h-[30px] sm:h-[35px] md:h-[40px] w-full object-contain"/>
+                               <Image 
+                                 src={`${basePath}/logo2.png`} 
+                                 alt="Bharat AI Wealth" 
+                                 width={140} 
+                                 height={40} 
+                                 className="h-[30px] sm:h-[35px] md:h-[40px] w-auto object-contain"
+                                 priority
+                               />
                     </div>
                             <span className="text-lg sm:text-xl md:text-2xl font-black text-[#1E3A8A] dark:text-[#D4AF37] tracking-tight">
                                 Bharat <span className="bg-gradient-to-r 
@@ -91,6 +99,7 @@ text-transparent italic">AI Wealth</span>
                             <button
                                 onClick={() => setIsOpen(!isOpen)}
                                 className="p-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300"
+                                aria-label={isOpen ? "Close menu" : "Open menu"}
                             >
                                 {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
                             </button>

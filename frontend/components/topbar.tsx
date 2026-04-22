@@ -27,6 +27,7 @@ import { Badge } from "@/components/ui/badge"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { useState, useEffect, useRef } from "react"
+import Image from "next/image"
 
 import { useAuth } from "@/contexts/AuthContext"
 import { useNotifications } from "@/contexts/NotificationContext"
@@ -379,9 +380,11 @@ export function Topbar() {
         href="/dashboard"
         className="flex items-center gap-2.5 flex-shrink-0 transition-premium hover:opacity-80"
       >
-        <img
+        <Image
           src={`${process.env.NEXT_PUBLIC_BASE_PATH || ""}/logo2.png`}
           alt="Bharat AI Wealth"
+          width={40}
+          height={40}
           className="h-10 w-10 object-contain"
         />
         <div className="flex flex-col leading-tight">
