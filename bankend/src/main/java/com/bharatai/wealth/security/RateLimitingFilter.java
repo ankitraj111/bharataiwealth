@@ -29,7 +29,7 @@ public class RateLimitingFilter extends OncePerRequestFilter {
     // Different rate limits for different endpoint types
     private static final Map<String, RateLimitConfig> ENDPOINT_CONFIGS = Map.of(
             "/api/auth/login", new RateLimitConfig(5, Duration.ofMinutes(15)), // Strict for login
-            "/api/auth/register", new RateLimitConfig(3, Duration.ofMinutes(15)), // Very strict for registration
+            "/api/auth/register", new RateLimitConfig(10, Duration.ofMinutes(15)), // Very strict for registration
             "/api/auth", new RateLimitConfig(10, Duration.ofMinutes(1)), // General auth endpoints
             "default", new RateLimitConfig(100, Duration.ofMinutes(1)) // Default for other endpoints
     );

@@ -35,6 +35,7 @@ export default function SignupPage() {
     const [showPassword, setShowPassword] = useState(false)
     const [error, setError] = useState<string | null>(null)
     const [isSubmitting, setIsSubmitting] = useState(false)
+    const [showSlowMessage, setShowSlowMessage] = useState(false)
     const [isStaticSite, setIsStaticSite] = useState(false)
     const { register } = useAuth()
     const router = useRouter()
@@ -61,12 +62,21 @@ export default function SignupPage() {
     async function onSubmit(values: z.infer<typeof signupSchema>) {
         setError(null)
         setIsSubmitting(true)
+        setShowSlowMessage(false)
+
+        const slowTimer = setTimeout(() => {
+            setShowSlowMessage(true)
+        }, 3000)
+
         try {
             await register({ name: values.name, email: values.email, password: values.password })
+            clearTimeout(slowTimer)
             // Redirect handled by AuthContext
         } catch (e: any) {
+            clearTimeout(slowTimer)
             setError(e.message || "Something went wrong. Please try again.")
             setIsSubmitting(false)
+            setShowSlowMessage(false)
         }
     }
 
@@ -230,9 +240,16 @@ export default function SignupPage() {
                                 className="w-full h-12 rounded-xl bg-primary hover:bg-primary/90 text-primary-foreground font-black text-base shadow-xl shadow-primary/20 transition-all active:scale-[0.98] mt-4"
                             >
                                 {isSubmitting ? (
-                                    <div className="flex items-center gap-2">
-                                        <Loader2 className="h-5 w-5 animate-spin" />
-                                        Creating Account...
+                                    <div className="flex flex-col items-center gap-1">
+                                        <div className="flex items-center gap-2">
+                                            <Loader2 className="h-5 w-5 animate-spin" />
+                                            {showSlowMessage ? "Securing Your Vault..." : "Creating Account..."}
+                                        </div>
+                                        {showSlowMessage && (
+                                            <span className="text-[10px] font-medium animate-pulse opacity-70">
+                                                Connecting to Bharat AI secure network
+                                            </span>
+                                        )}
                                     </div>
                                 ) : "Start Wealth Journey"}
                             </Button>

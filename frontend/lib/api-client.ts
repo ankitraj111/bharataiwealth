@@ -89,8 +89,19 @@ export class ApiClient {
             headers,
         };
 
+        // Implementation of timeout
+        const timeout = options.signal ? 0 : 10000; // 10 seconds default timeout
+        let timeoutId: any;
+
+        if (timeout > 0) {
+            const controller = new AbortController();
+            requestOptions.signal = controller.signal;
+            timeoutId = setTimeout(() => controller.abort(), timeout);
+        }
+
         try {
             let response = await fetch(url, requestOptions);
+            if (timeoutId) clearTimeout(timeoutId);
 
             // Handle 401 Unauthorized - token expired
             if (response.status === 401 && token) {
@@ -152,6 +163,13 @@ export class ApiClient {
                     status: 0,
                 };
                 throw networkError;
+            }
+            if (error.name === 'AbortError') {
+                const timeoutError: ApiError = {
+                    message: 'Request timed out. Please try again or use demo mode.',
+                    status: 408,
+                };
+                throw timeoutError;
             }
             throw error;
         }

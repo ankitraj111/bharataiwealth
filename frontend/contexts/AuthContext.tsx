@@ -121,6 +121,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     const register = async (data: RegisterRequest) => {
         const isDemoEnv = typeof window !== 'undefined' &&
             (window.location.hostname.includes('github.io') ||
+                window.location.hostname.includes('vercel.app') ||
+                window.location.hostname.includes('onrender.com') ||
                 window.location.pathname.includes('/bharataiwealth'));
 
         try {
@@ -140,7 +142,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
             router.push('/dashboard');
         } catch (error: any) {
-            const isNetworkError = error?.status === 0 || error?.message?.includes('Network error') || error?.message?.includes('Failed to fetch');
+            const isNetworkError = error?.status === 0 || error?.status === 408 || error?.message?.includes('Network error') || error?.message?.includes('Failed to fetch') || error?.message?.includes('timed out');
 
             if (isDemoEnv || isNetworkError) {
                 console.warn('Backend not reachable — using demo registration fallback.');
