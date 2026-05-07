@@ -13,7 +13,6 @@ const basePath = process.env.NEXT_PUBLIC_BASE_PATH || '';
 
 const navLinks = [
     { name: "Features", href: "/features" },
-    { name: "How It Works", href: "#how-it-works" },
     { name: "Pricing", href: "/pricing" },
     { name: "About", href: "/about" }
 ]
@@ -85,12 +84,7 @@ text-transparent italic">AI Wealth</span>
                                     Login
                                 </Button>
                             </Link>
-                            <Link href="/dashboard">
-                                <Button className="h-12 px-8 text-[11px] font-black uppercase tracking-[0.2em] bg-blue-600 hover:bg-blue-700 text-white shadow-xl shadow-blue-500/20 rounded-[1rem] transition-all hover:scale-[1.03]">
-                                    Get Started
-                                    <ChevronRight className="w-4 h-4 ml-2" />
-                                </Button>
-                            </Link>
+
                         </div>
 
                         {/* Mobile Menu Button */}
@@ -142,12 +136,7 @@ text-transparent italic">AI Wealth</span>
                                             Login
                                         </Button>
                                     </Link>
-                                    <Link href="/dashboard" onClick={() => setIsOpen(false)}>
-                                        <Button className="w-full h-12 font-semibold bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-xl mt-3">
-                                            Get Started Free
-                                            <ChevronRight className="w-4 h-4 ml-1" />
-                                        </Button>
-                                    </Link>
+
                                 </div>
                             </div>
                         </div>

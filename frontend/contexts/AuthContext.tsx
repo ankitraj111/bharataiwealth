@@ -16,6 +16,7 @@ interface AuthContextType {
     mfaRequired: boolean;
     tempToken: string | null;
     login: (data: LoginRequest) => Promise<void>;
+    googleLogin: (credential: string) => Promise<void>;
     register: (data: RegisterRequest) => Promise<void>;
     verifyMfa: (code: string) => Promise<void>;
     logout: () => Promise<void>;
@@ -219,6 +220,26 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         }
     };
 
+    /**
+     * Login with Google credential (ID token from Google Identity Services)
+     */
+    const googleLogin = async (credential: string) => {
+        try {
+            const response = await AuthService.googleLogin(credential);
+            TokenStorage.setAccessToken(response.token);
+            if (response.refreshToken) TokenStorage.setRefreshToken(response.refreshToken);
+            TokenStorage.setUser(response.user);
+            setToken(response.token);
+            setUser(response.user);
+            setMfaRequired(false);
+            setTempToken(null);
+            router.push('/dashboard');
+        } catch (error: any) {
+            console.error('Google login error:', error);
+            throw error;
+        }
+    };
+
     const value = {
         user,
         token,
@@ -227,6 +248,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         mfaRequired,
         tempToken,
         login,
+        googleLogin,
         register,
         verifyMfa,
         logout,

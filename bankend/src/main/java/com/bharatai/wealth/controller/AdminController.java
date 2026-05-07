@@ -74,21 +74,42 @@ public class AdminController {
 
     @GetMapping("/users")
     public ResponseEntity<Page<UserDTO>> getAllUsers(
-            @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "20") int size,
-            @RequestParam(defaultValue = "createdAt") String sortBy,
-            @RequestParam(defaultValue = "DESC") String sortDir
+            @RequestParam(defaultValue = "0")          int page,
+            @RequestParam(defaultValue = "20")         int size,
+            @RequestParam(defaultValue = "createdAt")  String sortBy,
+            @RequestParam(defaultValue = "DESC")       String sortDir,
+            @RequestParam(required = false)            String search,
+            @RequestParam(required = false)            String role
     ) {
-        Sort sort = sortDir.equalsIgnoreCase("ASC") 
-            ? Sort.by(sortBy).ascending() 
+        Sort sort = sortDir.equalsIgnoreCase("ASC")
+            ? Sort.by(sortBy).ascending()
             : Sort.by(sortBy).descending();
-        
-        PageRequest pageRequest = PageRequest.of(page, size, sort);
-        Page<User> users = userRepository.findAll(pageRequest);
-        
-        Page<UserDTO> userDTOs = users.map(this::convertToDTO);
-        
-        return ResponseEntity.ok(userDTOs);
+
+        PageRequest pageRequest = PageRequest.of(page, Math.min(size, 100), sort);
+
+        // Resolve optional role filter
+        User.Role roleFilter = null;
+        if (role != null && !role.isBlank()) {
+            try {
+                roleFilter = User.Role.valueOf(role.toUpperCase());
+            } catch (IllegalArgumentException ignored) {
+                // Unknown role — treat as no filter
+            }
+        }
+
+        // Apply search and/or role filter
+        Page<User> users;
+        if (search != null && !search.isBlank() && roleFilter != null) {
+            users = userRepository.findByEmailContainingIgnoreCaseAndRole(search, roleFilter, pageRequest);
+        } else if (search != null && !search.isBlank()) {
+            users = userRepository.findByEmailContainingIgnoreCase(search, pageRequest);
+        } else if (roleFilter != null) {
+            users = userRepository.findByRole(roleFilter, pageRequest);
+        } else {
+            users = userRepository.findAll(pageRequest);
+        }
+
+        return ResponseEntity.ok(users.map(this::convertToDTO));
     }
 
     @GetMapping("/users/{userId}")

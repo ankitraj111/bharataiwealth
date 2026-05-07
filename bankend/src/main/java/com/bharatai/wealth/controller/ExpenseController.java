@@ -1,92 +1,65 @@
 package com.bharatai.wealth.controller;
 
-import com.bharatai.wealth.model.Expense;
-import com.bharatai.wealth.model.User;
-import com.bharatai.wealth.repository.ExpenseRepository;
-import com.bharatai.wealth.repository.UserRepository;
+import com.bharatai.wealth.dto.ExpenseRequest;
+import com.bharatai.wealth.dto.ExpenseResponse;
+import com.bharatai.wealth.dto.PageResponse;
+import com.bharatai.wealth.service.ExpenseService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
+/**
+ * Thin controller — delegates all business logic to {@link ExpenseService}.
+ */
 @RestController
 @RequestMapping("/api/expenses")
 @RequiredArgsConstructor
 public class ExpenseController {
 
-    private final ExpenseRepository expenseRepository;
-    private final UserRepository userRepository;
+    private final ExpenseService expenseService;
 
     @GetMapping
-    @org.springframework.cache.annotation.Cacheable(value = "expenses", key = "#authentication.name")
-    public ResponseEntity<List<Expense>> getExpenses(Authentication authentication) {
-        User user = userRepository.findByEmail(authentication.getName())
-                .orElseThrow(() -> new RuntimeException("User not found"));
-        return ResponseEntity.ok(expenseRepository.findByUserAndIsDeletedFalseOrderByDateDesc(user));
+    @PreAuthorize("hasAuthority('EXPENSE_READ')")
+    public ResponseEntity<PageResponse<ExpenseResponse>> getExpenses(
+            Authentication auth,
+            @RequestParam(defaultValue = "0")    int page,
+            @RequestParam(defaultValue = "20")   int size,
+            @RequestParam(defaultValue = "date") String sortBy,
+            @RequestParam(defaultValue = "DESC") String sortDir
+    ) {
+        Sort sort = sortDir.equalsIgnoreCase("ASC") ? Sort.by(sortBy).ascending() : Sort.by(sortBy).descending();
+        PageRequest pageRequest = PageRequest.of(page, Math.min(size, 100), sort);
+        return ResponseEntity.ok(PageResponse.of(expenseService.getExpenses(auth.getName(), pageRequest)));
     }
 
     @PostMapping
-    @org.springframework.cache.annotation.CacheEvict(value = { "expenses",
-            "dashboardSummary" }, key = "#authentication.name")
-    public ResponseEntity<Expense> addExpense(@RequestBody Expense expense, Authentication authentication) {
-        User user = userRepository.findByEmail(authentication.getName())
-                .orElseThrow(() -> new RuntimeException("User not found"));
-        expense.setUser(user);
-        return ResponseEntity.ok(expenseRepository.save(expense));
+    @PreAuthorize("hasAuthority('EXPENSE_WRITE')")
+    public ResponseEntity<ExpenseResponse> addExpense(
+            @Valid @RequestBody ExpenseRequest request,
+            Authentication auth
+    ) {
+        return ResponseEntity.ok(expenseService.createExpense(request, auth.getName()));
     }
 
-    @PatchMapping("/{id}")
-    @org.springframework.cache.annotation.CacheEvict(value = { "expenses",
-            "dashboardSummary" }, key = "#authentication.name")
-    public ResponseEntity<Expense> updateExpense(
+    @PutMapping("/{id}")
+    @PreAuthorize("hasAuthority('EXPENSE_WRITE')")
+    public ResponseEntity<ExpenseResponse> updateExpense(
             @PathVariable Long id,
-            @RequestBody java.util.Map<String, Object> updates,
-            Authentication authentication) {
-
-        Expense expense = expenseRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Expense not found"));
-
-        if (!expense.getUser().getEmail().equals(authentication.getName())) {
-            return ResponseEntity.status(403).build();
-        }
-
-        if (updates.containsKey("category")) {
-            expense.setCategory(Expense.Category.valueOf((String) updates.get("category")));
-        }
-        if (updates.containsKey("description")) {
-            expense.setDescription((String) updates.get("description"));
-        }
-        if (updates.containsKey("amount")) {
-            expense.setAmount(new java.math.BigDecimal(updates.get("amount").toString()));
-        }
-        if (updates.containsKey("date")) {
-            expense.setDate(java.time.LocalDate.parse((String) updates.get("date")));
-        }
-        if (updates.containsKey("merchantName")) {
-            expense.setMerchantName((String) updates.get("merchantName"));
-        }
-
-        return ResponseEntity.ok(expenseRepository.save(expense));
+            @Valid @RequestBody ExpenseRequest request,
+            Authentication auth
+    ) {
+        return ResponseEntity.ok(expenseService.updateExpense(id, request, auth.getName()));
     }
 
     @DeleteMapping("/{id}")
-    @org.springframework.cache.annotation.CacheEvict(value = { "expenses",
-            "dashboardSummary" }, key = "#authentication.name")
-    public ResponseEntity<Void> deleteExpense(
-            @PathVariable Long id,
-            Authentication authentication) {
-
-        Expense expense = expenseRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Expense not found"));
-
-        if (!expense.getUser().getEmail().equals(authentication.getName())) {
-            return ResponseEntity.status(403).build();
-        }
-
-        expense.setDeleted(true);
-        expenseRepository.save(expense);
+    @PreAuthorize("hasAuthority('EXPENSE_DELETE')")
+    public ResponseEntity<Void> deleteExpense(@PathVariable Long id, Authentication auth) {
+        expenseService.deleteExpense(id, auth.getName());
         return ResponseEntity.noContent().build();
     }
 }

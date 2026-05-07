@@ -9,10 +9,8 @@ const ValueProposition = dynamic(() => import("@/components/landing/ValueProposi
 const StatsCounter = dynamic(() => import("@/components/landing/StatsCounter").then(m => m.StatsCounter))
 const ProblemSolution = dynamic(() => import("@/components/landing/ProblemSolution").then(m => m.ProblemSolution))
 const AIPredictionsPreview = dynamic(() => import("@/components/landing/AIPredictionsPreview").then(m => m.AIPredictionsPreview))
-const AppPreview = dynamic(() => import("@/components/landing/AppPreview").then(m => m.AppPreview))
 const SocialProof = dynamic(() => import("@/components/landing/SocialProof").then(m => m.SocialProof))
 const HowItWorks = dynamic(() => import("@/components/landing/HowItWorks").then(m => m.HowItWorks))
-const ScientificInvesting = dynamic(() => import("@/components/landing/ScientificInvesting").then(m => m.ScientificInvesting))
 const FAQ = dynamic(() => import("@/components/landing/FAQ").then(m => m.FAQ))
 const BlogPreview = dynamic(() => import("@/components/landing/BlogPreview").then(m => m.BlogPreview))
 const SecurityTrust = dynamic(() => import("@/components/landing/SecurityTrust").then(m => m.SecurityTrust))
@@ -53,9 +51,6 @@ export default function LandingPage() {
                 {/* 5️⃣ Why Choose Us - Key differentiators */}
                 <WhyChooseUs />
 
-                {/* 6️⃣ App Preview - Device mockups */}
-                <AppPreview />
-
                 {/* 7️⃣ Social Proof - Testimonials + Stats */}
                 <SocialProof />
 
@@ -67,9 +62,6 @@ export default function LandingPage() {
 
                 {/* 8️⃣ How It Works - 3 steps */}
                 <HowItWorks />
-
-                {/* 9️⃣ Scientific Investing - The science of wealth */}
-                <ScientificInvesting />
 
                 {/* 1️⃣1️⃣ FAQ - Common questions */}
                 <FAQ />

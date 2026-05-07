@@ -41,12 +41,12 @@ export function BlogPreview() {
     return (
         <section id="blog" className="py-32 relative overflow-hidden bg-gradient-to-b from-white via-slate-50 to-white dark:from-slate-900 dark:via-slate-800 dark:to-slate-900">
             {/* Animated Background Elements */}
-            <motion.div 
+            <motion.div
                 className="absolute top-20 left-10 w-96 h-96 bg-blue-500/5 rounded-full blur-3xl"
                 animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.5, 0.3] }}
                 transition={{ duration: 8, repeat: Infinity }}
             />
-            <motion.div 
+            <motion.div
                 className="absolute bottom-20 right-10 w-96 h-96 bg-purple-500/5 rounded-full blur-3xl"
                 animate={{ scale: [1, 1.3, 1], opacity: [0.2, 0.4, 0.2] }}
                 transition={{ duration: 10, repeat: Infinity, delay: 1 }}
@@ -133,7 +133,7 @@ export function BlogPreview() {
 
                                     {/* Image Placeholder */}
                                     <div className={`h-56 bg-gradient-to-br ${post.gradient} flex items-center justify-center relative overflow-hidden`}>
-                                        <motion.span 
+                                        <motion.span
                                             className="text-8xl"
                                             whileHover={{ scale: 1.2, rotate: 5 }}
                                             transition={{ type: "spring" }}
@@ -141,7 +141,7 @@ export function BlogPreview() {
                                             {post.image}
                                         </motion.span>
                                         {/* Animated Overlay */}
-                                        <motion.div 
+                                        <motion.div
                                             className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"
                                             whileHover={{ opacity: 0.5 }}
                                         />
@@ -150,7 +150,7 @@ export function BlogPreview() {
                                     {/* Content */}
                                     <div className="p-8">
                                         {/* Category */}
-                                        <motion.span 
+                                        <motion.span
                                             className={`inline-block px-4 py-2 text-xs font-black rounded-xl bg-gradient-to-r ${post.gradient} text-white uppercase tracking-wider mb-4 shadow-lg`}
                                             whileHover={{ scale: 1.05 }}
                                         >

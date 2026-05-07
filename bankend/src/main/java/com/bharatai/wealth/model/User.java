@@ -8,7 +8,10 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDateTime;
 import java.util.Collection;
+import java.util.EnumSet;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "users")
@@ -73,10 +76,25 @@ public class User implements UserDetails {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
+    // ==================== Permissions ====================
+
+    /**
+     * Derive the set of fine-grained permissions from this user's Role.
+     * Used by @PreAuthorize("hasAuthority('EXPENSE_READ')") etc.
+     */
+    public Set<Permission> getPermissions() {
+        return role.getPermissions();
+    }
+
     // ==================== UserDetails Implementation ====================
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority("ROLE_" + role.name()));
+        // Include the role itself + all derived permissions as authorities
+        Set<GrantedAuthority> authorities = new java.util.HashSet<>();
+        authorities.add(new SimpleGrantedAuthority("ROLE_" + role.name()));
+        role.getPermissions().forEach(p ->
+                authorities.add(new SimpleGrantedAuthority(p.name())));
+        return authorities;
     }
 
     @Override
@@ -122,6 +140,36 @@ public class User implements UserDetails {
     }
 
     public enum Role {
-        USER, PREMIUM, ANALYST, ADMIN
+        USER,
+        PREMIUM,
+        ANALYST,
+        ADMIN;
+
+        /**
+         * Returns the set of permissions granted to this role.
+         * Higher roles inherit all permissions of lower roles.
+         */
+        public Set<Permission> getPermissions() {
+            return switch (this) {
+                case USER -> EnumSet.of(
+                        Permission.EXPENSE_READ, Permission.EXPENSE_WRITE, Permission.EXPENSE_DELETE,
+                        Permission.PORTFOLIO_READ, Permission.PORTFOLIO_WRITE, Permission.PORTFOLIO_DELETE,
+                        Permission.GOAL_READ, Permission.GOAL_WRITE, Permission.GOAL_DELETE
+                );
+                case PREMIUM -> EnumSet.of(
+                        Permission.EXPENSE_READ, Permission.EXPENSE_WRITE, Permission.EXPENSE_DELETE,
+                        Permission.PORTFOLIO_READ, Permission.PORTFOLIO_WRITE, Permission.PORTFOLIO_DELETE,
+                        Permission.GOAL_READ, Permission.GOAL_WRITE, Permission.GOAL_DELETE,
+                        Permission.ANALYTICS_READ
+                );
+                case ANALYST -> EnumSet.of(
+                        Permission.EXPENSE_READ,
+                        Permission.PORTFOLIO_READ,
+                        Permission.GOAL_READ,
+                        Permission.ANALYTICS_READ
+                );
+                case ADMIN -> EnumSet.allOf(Permission.class);
+            };
+        }
     }
 }

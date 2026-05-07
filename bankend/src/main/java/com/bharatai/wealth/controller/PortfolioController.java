@@ -1,40 +1,55 @@
 package com.bharatai.wealth.controller;
 
-import com.bharatai.wealth.model.PortfolioItem;
-import com.bharatai.wealth.model.User;
-import com.bharatai.wealth.repository.PortfolioRepository;
-import com.bharatai.wealth.repository.UserRepository;
+import com.bharatai.wealth.dto.PageResponse;
+import com.bharatai.wealth.dto.PortfolioRequest;
+import com.bharatai.wealth.dto.PortfolioResponse;
+import com.bharatai.wealth.service.PortfolioService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
+/**
+ * Thin controller — delegates all business logic to {@link PortfolioService}.
+ */
 @RestController
 @RequestMapping("/api/portfolio")
 @RequiredArgsConstructor
 public class PortfolioController {
 
-        private final PortfolioRepository portfolioRepository;
-        private final UserRepository userRepository;
+    private final PortfolioService portfolioService;
 
-        @GetMapping
-        @org.springframework.cache.annotation.Cacheable(value = "portfolio", key = "#authentication.name")
-        public ResponseEntity<List<PortfolioItem>> getPortfolio(Authentication authentication) {
-                User user = userRepository.findByEmail(authentication.getName())
-                                .orElseThrow(() -> new RuntimeException("User not found"));
-                return ResponseEntity.ok(portfolioRepository.findByUser(user));
-        }
+    @GetMapping
+    @PreAuthorize("hasAuthority('PORTFOLIO_READ')")
+    public ResponseEntity<PageResponse<PortfolioResponse>> getPortfolio(
+            Authentication auth,
+            @RequestParam(defaultValue = "0")            int page,
+            @RequestParam(defaultValue = "20")           int size,
+            @RequestParam(defaultValue = "currentPrice") String sortBy,
+            @RequestParam(defaultValue = "DESC")         String sortDir
+    ) {
+        Sort sort = sortDir.equalsIgnoreCase("ASC") ? Sort.by(sortBy).ascending() : Sort.by(sortBy).descending();
+        PageRequest pageRequest = PageRequest.of(page, Math.min(size, 100), sort);
+        return ResponseEntity.ok(PageResponse.of(portfolioService.getPortfolio(auth.getName(), pageRequest)));
+    }
 
-        @PostMapping
-        @org.springframework.cache.annotation.CacheEvict(value = { "portfolio",
-                        "dashboardSummary" }, key = "#authentication.name")
-        public ResponseEntity<PortfolioItem> addPortfolioItem(@RequestBody PortfolioItem item,
-                        Authentication authentication) {
-                User user = userRepository.findByEmail(authentication.getName())
-                                .orElseThrow(() -> new RuntimeException("User not found"));
-                item.setUser(user);
-                return ResponseEntity.ok(portfolioRepository.save(item));
-        }
+    @PostMapping
+    @PreAuthorize("hasAuthority('PORTFOLIO_WRITE')")
+    public ResponseEntity<PortfolioResponse> addPortfolioItem(
+            @Valid @RequestBody PortfolioRequest request,
+            Authentication auth
+    ) {
+        return ResponseEntity.ok(portfolioService.addItem(request, auth.getName()));
+    }
+
+    @DeleteMapping("/{id}")
+    @PreAuthorize("hasAuthority('PORTFOLIO_DELETE')")
+    public ResponseEntity<Void> deletePortfolioItem(@PathVariable Long id, Authentication auth) {
+        portfolioService.deleteItem(id, auth.getName());
+        return ResponseEntity.noContent().build();
+    }
 }

@@ -108,6 +108,13 @@ export class AuthService {
             console.error('Logout error:', error);
         }
     }
+
+    /**
+     * Login with Google ID token (from Google Identity Services)
+     */
+    static async googleLogin(credential: string): Promise<AuthResponse> {
+        return ApiClient.post<AuthResponse>(config.AUTH_ENDPOINTS.GOOGLE_LOGIN, { credential });
+    }
 }
 
 export default AuthService;

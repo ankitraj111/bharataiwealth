@@ -1,5 +1,6 @@
 package com.bharatai.wealth.exception;
 
+import com.bharatai.wealth.config.CorrelationIdFilter;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -7,6 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.LockedException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -19,6 +21,20 @@ import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * FAANG-level global exception handler.
+ *
+ * Every error response follows this shape:
+ * {
+ *   "timestamp":     "2026-05-07T16:30:00",
+ *   "status":        404,
+ *   "code":          "RESOURCE_NOT_FOUND",
+ *   "message":       "Expense not found with id: 42",
+ *   "path":          "/api/expenses/42",
+ *   "correlationId": "abc12345",
+ *   "fieldErrors":   null
+ * }
+ */
 @ControllerAdvice
 @Slf4j
 public class GlobalExceptionHandler {
@@ -30,30 +46,49 @@ public class GlobalExceptionHandler {
     public static class ErrorResponse {
         private LocalDateTime timestamp;
         private int status;
-        private String error;
+        private String code;
         private String message;
         private String path;
+        private String correlationId;
         private Map<String, String> fieldErrors;
     }
 
+    // ── Typed business exceptions ────────────────────────────────
+
+    @ExceptionHandler(BusinessException.class)
+    public ResponseEntity<ErrorResponse> handleBusinessException(BusinessException ex, WebRequest request) {
+        ErrorCode code = ex.getErrorCode();
+        log.warn("[{}] BusinessException: {} — {}", correlationId(), code.name(), ex.getMessage());
+        return buildErrorResponse(code.getHttpStatus(), code.name(), ex.getMessage(), request);
+    }
+
+    // ── Spring Security exceptions ───────────────────────────────
+
     @ExceptionHandler(BadCredentialsException.class)
     public ResponseEntity<ErrorResponse> handleBadCredentials(BadCredentialsException ex, WebRequest request) {
-        return buildErrorResponse(HttpStatus.UNAUTHORIZED, "Invalid email or password", request);
+        return buildErrorResponse(HttpStatus.UNAUTHORIZED, "INVALID_CREDENTIALS",
+                "Invalid email or password", request);
     }
 
     @ExceptionHandler(UsernameNotFoundException.class)
     public ResponseEntity<ErrorResponse> handleUsernameNotFound(UsernameNotFoundException ex, WebRequest request) {
-        return buildErrorResponse(HttpStatus.UNAUTHORIZED, "Invalid email or password", request);
+        return buildErrorResponse(HttpStatus.UNAUTHORIZED, "INVALID_CREDENTIALS",
+                "Invalid email or password", request);
     }
 
     @ExceptionHandler(LockedException.class)
     public ResponseEntity<ErrorResponse> handleLockedException(LockedException ex, WebRequest request) {
-        return buildErrorResponse(HttpStatus.FORBIDDEN, ex.getMessage(), request);
+        return buildErrorResponse(HttpStatus.FORBIDDEN, "ACCOUNT_LOCKED", ex.getMessage(), request);
     }
 
-    /**
-     * Handle validation errors from @Valid / @Validated annotations
-     */
+    @ExceptionHandler(AccessDeniedException.class)
+    public ResponseEntity<ErrorResponse> handleAccessDenied(AccessDeniedException ex, WebRequest request) {
+        return buildErrorResponse(HttpStatus.FORBIDDEN, "ACCESS_DENIED",
+                "You do not have permission to perform this action", request);
+    }
+
+    // ── Validation exceptions ────────────────────────────────────
+
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ErrorResponse> handleValidationErrors(MethodArgumentNotValidException ex,
             WebRequest request) {
@@ -69,67 +104,68 @@ public class GlobalExceptionHandler {
         ErrorResponse errorResponse = ErrorResponse.builder()
                 .timestamp(LocalDateTime.now())
                 .status(HttpStatus.BAD_REQUEST.value())
-                .error(HttpStatus.BAD_REQUEST.getReasonPhrase())
+                .code("VALIDATION_FAILED")
                 .message(firstError)
-                .path(request.getDescription(false).replace("uri=", ""))
+                .path(extractPath(request))
+                .correlationId(correlationId())
                 .fieldErrors(fieldErrors)
                 .build();
 
         return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
     }
 
+    // ── Catch-all for unhandled RuntimeExceptions ────────────────
+
     @ExceptionHandler(RuntimeException.class)
     public ResponseEntity<ErrorResponse> handleRuntimeException(RuntimeException ex, WebRequest request) {
-        log.error("Runtime exception: ", ex);
-        String msg = ex.getMessage();
+        log.error("[{}] Unhandled RuntimeException: ", correlationId(), ex);
 
+        // Still support legacy string-matching for backward compatibility
+        String msg = ex.getMessage();
         if (msg != null) {
-            // Account locked
-            if (msg.contains("locked")) {
-                return buildErrorResponse(HttpStatus.FORBIDDEN, msg, request);
-            }
-            // Auth failures
-            if (msg.contains("Invalid email") || msg.contains("Invalid MFA") || msg.contains("Invalid password")) {
-                return buildErrorResponse(HttpStatus.UNAUTHORIZED, msg, request);
-            }
-            // Duplicate resource
-            if (msg.contains("already exists")) {
-                return buildErrorResponse(HttpStatus.CONFLICT, msg, request);
-            }
-            // Resource not found
             if (msg.contains("not found") || msg.contains("Not found")) {
-                return buildErrorResponse(HttpStatus.NOT_FOUND, msg, request);
+                return buildErrorResponse(HttpStatus.NOT_FOUND, "RESOURCE_NOT_FOUND", msg, request);
             }
-            // Session expired
-            if (msg.contains("expired") || msg.contains("Invalid refresh token")) {
-                return buildErrorResponse(HttpStatus.UNAUTHORIZED, msg, request);
+            if (msg.contains("already exists")) {
+                return buildErrorResponse(HttpStatus.CONFLICT, "RESOURCE_ALREADY_EXISTS", msg, request);
             }
-            // General validation/bad request
-            if (msg.contains("Invalid")) {
-                return buildErrorResponse(HttpStatus.BAD_REQUEST, msg, request);
+            if (msg.contains("locked")) {
+                return buildErrorResponse(HttpStatus.FORBIDDEN, "ACCOUNT_LOCKED", msg, request);
             }
         }
 
-        return buildErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR,
+        return buildErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, "INTERNAL_ERROR",
                 msg != null ? msg : "An unexpected error occurred", request);
     }
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorResponse> handleGlobalException(Exception ex, WebRequest request) {
-        log.error("Global exception: ", ex);
-        String message = ex.getMessage() != null ? ex.getMessage() : "An unexpected error occurred";
-        return buildErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, message, request);
+        log.error("[{}] Unhandled Exception: ", correlationId(), ex);
+        return buildErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, "INTERNAL_ERROR",
+                "An unexpected error occurred", request);
     }
 
-    private ResponseEntity<ErrorResponse> buildErrorResponse(HttpStatus status, String message, WebRequest request) {
+    // ── Helpers ──────────────────────────────────────────────────
+
+    private ResponseEntity<ErrorResponse> buildErrorResponse(HttpStatus status, String code,
+            String message, WebRequest request) {
         ErrorResponse errorResponse = ErrorResponse.builder()
                 .timestamp(LocalDateTime.now())
                 .status(status.value())
-                .error(status.getReasonPhrase())
+                .code(code)
                 .message(message)
-                .path(request.getDescription(false).replace("uri=", ""))
+                .path(extractPath(request))
+                .correlationId(correlationId())
                 .build();
 
         return new ResponseEntity<>(errorResponse, status);
+    }
+
+    private String extractPath(WebRequest request) {
+        return request.getDescription(false).replace("uri=", "");
+    }
+
+    private String correlationId() {
+        return CorrelationIdFilter.getCurrentCorrelationId();
     }
 }

@@ -90,7 +90,10 @@ public class SecurityConfig {
                                                                 "/api/health/**",
                                                                 "/api/public/**",
                                                                 "/error",
-                                                                "/actuator/health")
+                                                                "/actuator/health",
+                                                                "/swagger-ui.html",
+                                                                "/swagger-ui/**",
+                                                                "/v3/api-docs/**")
                                                 .permitAll()
 
                                                 // Admin only endpoints

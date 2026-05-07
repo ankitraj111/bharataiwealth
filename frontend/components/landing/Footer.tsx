@@ -21,25 +21,25 @@ export function Footer() {
                         <Link href="/" className="text-2xl font-bold tracking-tight bg-gradient-to-r from-amber-600 via-yellow-500 to-amber-600 dark:from-amber-400 dark:via-yellow-300 dark:to-amber-400 bg-clip-text text-transparent">
                             Bharat AI Wealth
                         </Link>
-                        
+
                         {/* Option 2: Royal Gold (Uncomment to use)
                         <Link href="/" className="text-2xl font-bold tracking-tight bg-gradient-to-r from-yellow-600 via-amber-500 to-yellow-700 dark:from-yellow-400 dark:via-amber-300 dark:to-yellow-500 bg-clip-text text-transparent">
                             Bharat AI Wealth
                         </Link>
                         */}
-                        
+
                         {/* Option 3: Elegant Navy Blue (Uncomment to use)
                         <Link href="/" className="text-2xl font-bold tracking-tight bg-gradient-to-r from-blue-700 via-indigo-600 to-blue-800 dark:from-blue-400 dark:via-indigo-300 dark:to-blue-500 bg-clip-text text-transparent">
                             Bharat AI Wealth
                         </Link>
                         */}
-                        
+
                         {/* Option 4: Emerald Green (Uncomment to use)
                         <Link href="/" className="text-2xl font-bold tracking-tight bg-gradient-to-r from-emerald-600 via-green-500 to-emerald-700 dark:from-emerald-400 dark:via-green-300 dark:to-emerald-500 bg-clip-text text-transparent">
                             Bharat AI Wealth
                         </Link>
                         */}
-                        
+
                         {/* Option 5: Deep Purple (Uncomment to use)
                         <Link href="/" className="text-2xl font-bold tracking-tight bg-gradient-to-r from-purple-700 via-violet-600 to-purple-800 dark:from-purple-400 dark:via-violet-300 dark:to-purple-500 bg-clip-text text-transparent">
                             Bharat AI Wealth

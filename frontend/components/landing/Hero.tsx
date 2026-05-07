@@ -28,7 +28,7 @@ export function Hero() {
 
             <div className="w-full px-4 sm:px-10  xl:px-10 relative z-10">
                 <div className="grid lg:grid-cols-2 gap-8 sm:gap-12 lg:gap-24 items-center min-h-[85vh] sm:min-h-[90vh] max-w-[1800px] mx-auto">
-                    
+
                     {/* Left Content */}
                     <motion.div
                         className="space-y-4 sm:space-y-6 lg:pr-12"
@@ -69,18 +69,6 @@ export function Hero() {
                             transition={{ delay: 0.6 }}
                             className="flex flex-col sm:flex-row flex-wrap items-stretch sm:items-center gap-3 sm:gap-4 pt-2 sm:pt-4"
                         >
-                            <Button
-                                asChild
-                                size="lg"
-                                className="group h-12 sm:h-14 px-6 sm:px-8 text-sm sm:text-base font-semibold bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white rounded-xl sm:rounded-2xl shadow-2xl shadow-blue-500/30 hover:shadow-blue-500/50 transition-all duration-300 border-0"
-                            >
-                                <Link href="/dashboard">
-                                    <div className="flex items-center justify-center">
-                                        Start Free
-                                        <ArrowRight className="ml-2 h-4 w-4 sm:h-5 sm:w-5 group-hover:translate-x-1 transition-transform" />
-                                    </div>
-                                </Link>
-                            </Button>
                             <Button
                                 size="lg"
                                 variant="ghost"

@@ -6,6 +6,7 @@ export const config = {
     API_BASE_URL: process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080',
     API_TIMEOUT: parseInt(process.env.NEXT_PUBLIC_API_TIMEOUT || '30000'),
     ENABLE_MFA: process.env.NEXT_PUBLIC_ENABLE_MFA === 'true',
+    GOOGLE_CLIENT_ID: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID || '',
 
     // Auth Configuration
     TOKEN_REFRESH_INTERVAL: 14 * 60 * 1000, // 14 minutes (access token expires in 15)
@@ -24,6 +25,7 @@ export const config = {
         MFA_DISABLE: '/api/auth/mfa/disable',
         MFA_STATUS: '/api/auth/mfa/status',
         LOGOUT: '/api/auth/logout',
+        GOOGLE_LOGIN: '/api/auth/google',
     },
 
     // Default Headers
