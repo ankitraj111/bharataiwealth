@@ -1,13 +1,12 @@
 "use client"
 
-import { useState, useEffect, useRef } from "react"
+import { useState, useEffect, useRef, useCallback } from "react"
 import Link from "next/link"
-import Image from "next/image"
 import { useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import * as z from "zod"
-import { Eye, EyeOff, Lock, Mail, Loader2, Info } from "lucide-react"
+import { Eye, EyeOff, Lock, Mail, Loader2, Chrome, Smartphone, Info } from "lucide-react"
 import Script from "next/script"
 
 import { Button } from "@/components/ui/button"
@@ -33,7 +32,6 @@ const loginSchema = z.object({
     rememberMe: z.boolean().default(false).optional(),
 })
 
-// Extend window for Google Identity Services
 declare global {
     interface Window {
         google?: {
@@ -41,11 +39,11 @@ declare global {
                 id: {
                     initialize: (config: object) => void
                     renderButton: (element: HTMLElement, config: object) => void
-                    prompt: () => void
+                    prompt: (callback?: (notification: any) => void) => void
+                    cancel: () => void
                 }
             }
         }
-        handleGoogleCallback?: (response: { credential: string }) => void
     }
 }
 
@@ -53,44 +51,13 @@ export default function LoginPage() {
     const [showPassword, setShowPassword] = useState(false)
     const [error, setError] = useState<string | null>(null)
     const [isBackendDown, setIsBackendDown] = useState(false)
-    const [isStaticSite, setIsStaticSite] = useState(false)
     const [isGoogleLoading, setIsGoogleLoading] = useState(false)
     const googleButtonRef = useRef<HTMLDivElement>(null)
+    const isGsiInitialized = useRef(false)
     const { login, googleLogin, isLoading } = useAuth()
     const router = useRouter()
 
-    useEffect(() => {
-        if (typeof window !== 'undefined') {
-            const isGitHubPages = window.location.hostname.includes('github.io') ||
-                window.location.pathname.includes('/bharataiwealth')
-            setIsStaticSite(isGitHubPages)
-        }
-    }, [])
-
-    // Initialize Google Identity Services once the script loads
-    const initializeGoogleSignIn = () => {
-        const clientId = config.GOOGLE_CLIENT_ID
-        if (!clientId || !window.google || !googleButtonRef.current) return
-
-        window.google.accounts.id.initialize({
-            client_id: clientId,
-            callback: handleGoogleCallback,
-            auto_select: false,
-            use_fedcm_for_prompt: true,
-            itp_support: true
-        })
-
-        window.google.accounts.id.renderButton(googleButtonRef.current, {
-            theme: "outline",
-            size: "large",
-            type: "standard",
-            text: "continue_with",
-            shape: "rectangular",
-            width: googleButtonRef.current.offsetWidth || 300,
-        })
-    }
-
-    const handleGoogleCallback = async (response: { credential: string }) => {
+    const handleGoogleCallback = useCallback(async (response: { credential: string }) => {
         setIsGoogleLoading(true)
         setError(null)
         try {
@@ -100,7 +67,46 @@ export default function LoginPage() {
         } finally {
             setIsGoogleLoading(false)
         }
-    }
+    }, [googleLogin])
+
+    const initializeGoogleSignIn = useCallback(() => {
+        const clientId = config.GOOGLE_CLIENT_ID?.trim()
+        if (!clientId || !window.google || isGsiInitialized.current) return
+
+        try {
+            window.google.accounts.id.initialize({
+                client_id: clientId,
+                callback: handleGoogleCallback,
+                auto_select: false,
+                use_fedcm_for_prompt: false, // Standard popup mode
+                itp_support: true,
+                context: "signin"
+            })
+
+            if (googleButtonRef.current) {
+                window.google.accounts.id.renderButton(googleButtonRef.current, {
+                    theme: "outline",
+                    size: "large",
+                    type: "standard",
+                    text: "continue_with",
+                    shape: "rectangular",
+                    ux_mode: "popup", // Popup is more stable for localhost
+                    width: googleButtonRef.current.offsetWidth || 300,
+                })
+            }
+            
+            isGsiInitialized.current = true
+        } catch (err) {
+            console.error("GSI Init Error:", err)
+        }
+    }, [handleGoogleCallback])
+
+    useEffect(() => {
+        // If script is already loaded (e.g. from previous visit)
+        if (window.google) {
+            initializeGoogleSignIn()
+        }
+    }, [initializeGoogleSignIn])
 
     const form = useForm<z.infer<typeof loginSchema>>({
         resolver: zodResolver(loginSchema),
@@ -120,147 +126,66 @@ export default function LoginPage() {
             const msg: string = e.message || "Invalid credentials. Please try again."
             if (e.status === 0 || msg.includes('Network error') || msg.includes('Backend server')) {
                 setIsBackendDown(true)
-                setError(null)
             } else {
                 setError(msg)
             }
         }
     }
 
-    const handleDemoLogin = async () => {
-        setError(null)
-        setIsBackendDown(false)
-        form.setValue('email', 'demo@bharatai.com')
-        form.setValue('password', 'demo123')
-        try {
-            await login({ email: 'demo@bharatai.com', password: 'demo123' })
-        } catch (e: any) {
-            setError("Demo login failed. Please try again.")
-        }
-    }
-
     return (
         <>
-            {/* Google Identity Services Script */}
             <Script
                 src="https://accounts.google.com/gsi/client"
                 onLoad={initializeGoogleSignIn}
                 strategy="afterInteractive"
             />
 
-            <div className="min-h-screen grid lg:grid-cols-2 bg-background overflow-hidden font-sans">
-                {/* Left Side: Branding/Visuals */}
-                <div className="hidden lg:flex flex-col justify-between p-12 bg-gradient-to-br from-primary/20 via-background to-secondary/20 relative">
-                    <div className="absolute inset-0 z-0">
-                        <DotsBackground />
-                    </div>
-                    <div className="absolute inset-0 bg-noise-pattern opacity-10 brightness-100 contrast-150 pointer-events-none z-0" />
-
-                    <div className="relative z-10  flex items-center ">
-                        <div className=" w-[76px]  flex items-center justify-center h-full  overflow-hidden">
-                            <Image
-                                src={`${basePath}/logo2.png`}
-                                alt="Bharat AI Wealth"
-                                width={76}
-                                height={45}
-                                className="h-[45px] w-auto object-contain"
-                                priority
-                            />
-                        </div>
-                        <div className="pl-2 text-2xl  text-bold leading-[20px] text-[#D4AF37] font-bold ">
-                            BHARAT <br /><span className="text-sm from-[#1E88E5] bg-gradient-to-r 
- 
-via-[#8B64AA] 
-to-[#FFC107] 
-bg-clip-text 
-text-transparent   italic">AI Wealth</span>
-                        </div>
-                    </div>
-
-                    <div className="relative z-10 space-y-6 max-w-lg">
-                        <h1 className="text-5xl font-black tracking-tighter leading-tight text-foreground">
-                            Aage badho Bharat, <br />
-                            <span className="text-primary italic">AI Wealth</span> ke saath.
-                        </h1>
-                        <p className="text-lg text-muted-foreground font-medium leading-relaxed">
-                            The next generation of financial intelligence for India. Secure, automated, and built for your future.
-                        </p>
-                        <div className="flex items-center gap-4 py-4">
-                            <div className="flex -space-x-3">
-                                {[1, 2, 3, 4].map((i) => (
-                                    <div key={i} className="h-10 w-10 rounded-full border-2 border-background bg-secondary/80" />
-                                ))}
-                            </div>
-                            <span className="text-sm font-semibold text-muted-foreground tracking-wide">Joined by 10k+ investors this month</span>
-                        </div>
-                    </div>
-
-                    <div className="relative z-10 text-sm text-muted-foreground flex items-center gap-6">
-                        <span>&copy; 2026 Bharat AI Wealth</span>
-                        <Link href="/privacy" className="hover:text-primary transition-colors">Privacy Policy</Link>
-                        <Link href="/terms" className="hover:text-primary transition-colors">Terms of Service</Link>
-                    </div>
+            <div className="min-h-screen relative flex items-center justify-center bg-background overflow-hidden font-sans p-4 sm:p-6">
+                <div className="absolute inset-0 z-0">
+                    <DotsBackground />
                 </div>
+                <div className="absolute inset-0 bg-noise-pattern opacity-10 brightness-100 contrast-150 pointer-events-none z-0" />
 
-                {/* Right Side: Login Form */}
-                <div className="flex items-center justify-center p-6 lg:p-12 relative">
-                    <div className="absolute inset-0 z-0">
-                        <DotsBackground />
+                <div className="w-full max-w-md space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-700 relative z-10">
+                    <div className="flex flex-col items-center gap-4 mb-8">
+                        <Link href="/" className="flex items-center">
+                            <div className="w-[60px] flex items-center justify-center overflow-hidden">
+                                <img src={`${basePath}/logo2.png`} alt="Bharat AI Wealth" className="h-[35px] w-full" />
+                            </div>
+                            <div className="pl-2 text-xl text-bold leading-[18px] text-[#D4AF37] font-bold">
+                                BHARAT <br /><span className="text-xs from-[#1E88E5] bg-gradient-to-r via-[#8B64AA] to-[#FFC107] bg-clip-text text-transparent italic">AI Wealth</span>
+                            </div>
+                        </Link>
                     </div>
-                    <div className="w-full max-w-md space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-700 relative z-10">
-                        <div className="space-y-2 text-center lg:text-left">
-                            <h2 className="text-3xl font-black tracking-tighter text-foreground uppercase">Welcome Back</h2>
-                            <p className="text-muted-foreground font-medium">Please enter your details to access your wealth.</p>
+
+                    <div className="space-y-2 text-center">
+                        <h2 className="text-3xl font-black tracking-tighter text-foreground uppercase">Welcome Back</h2>
+                        <p className="text-muted-foreground font-medium">Please enter your details to access your wealth.</p>
+                    </div>
+
+                    {isBackendDown && (
+                        <div className="p-4 rounded-xl bg-blue-500/10 border border-blue-500/20 text-blue-400 text-sm font-semibold flex items-start gap-3">
+                            <Info className="h-5 w-5 mt-0.5 flex-shrink-0 text-blue-400" />
+                            <div>
+                                <p className="font-bold mb-1 text-blue-300">Backend Server Offline</p>
+                                <p className="text-xs font-normal opacity-90">
+                                    Spring Boot backend is not running on port 8080. Please start the backend server to proceed.
+                                </p>
+                            </div>
                         </div>
+                    )}
 
-                        {isStaticSite && (
-                            <div className="p-4 rounded-xl bg-primary/10 border border-primary/20 text-primary text-sm font-semibold flex items-start gap-3">
-                                <Info className="h-5 w-5 mt-0.5 flex-shrink-0" />
-                                <div>
-                                    <p className="font-bold mb-1">Demo Mode Active</p>
-                                    <p className="text-xs font-normal opacity-90">
-                                        You're viewing the static demo. Use: <strong>demo@bharatai.com</strong> / <strong>demo123</strong>
-                                    </p>
-                                </div>
-                            </div>
-                        )}
+                    {error && (
+                        <div className="p-4 rounded-xl bg-destructive/10 border border-destructive/20 text-destructive text-sm font-semibold flex items-center gap-3 animate-shake">
+                            <div className="h-2 w-2 rounded-full bg-destructive animate-pulse" />
+                            {error}
+                        </div>
+                    )}
 
-                        {isBackendDown && (
-                            <div className="p-4 rounded-xl bg-blue-500/10 border border-blue-500/30 text-blue-400 text-sm font-semibold flex items-start gap-3">
-                                <Info className="h-5 w-5 mt-0.5 flex-shrink-0 text-blue-400" />
-                                <div>
-                                    <p className="font-bold mb-1 text-blue-300">Backend Server Offline</p>
-                                    <p className="text-xs font-normal opacity-90 mb-2">
-                                        Spring Boot backend is not running on port 8080. You can still login with demo credentials:
-                                    </p>
-                                    <p className="text-xs font-mono bg-blue-500/10 rounded px-2 py-1 inline-block">
-                                        demo@bharatai.com &nbsp;/&nbsp; demo123
-                                    </p>
-                                    <br />
-                                    <button
-                                        type="button"
-                                        onClick={handleDemoLogin}
-                                        className="mt-2 text-xs font-bold text-blue-300 underline hover:text-blue-100 transition-colors"
-                                    >
-                                        → Click here to login with demo account
-                                    </button>
-                                </div>
-                            </div>
-                        )}
-
-                        {error && (
-                            <div className="p-4 rounded-xl bg-destructive/10 border border-destructive/20 text-destructive text-sm font-semibold flex items-center gap-3 animate-shake">
-                                <div className="h-2 w-2 rounded-full bg-destructive animate-pulse" />
-                                {error}
-                            </div>
-                        )}
-
-                        {/* Google Sign-In Section */}
-                        <div className="space-y-3">
-                            {/* Hidden Google button (for SDK rendering) */}
+                    <div className="bg-background/40 backdrop-blur-md border border-border/50 p-8 rounded-2xl shadow-xl">
+                        {/* Custom Styled Google Button */}
+                        <div className="mb-6">
                             <div ref={googleButtonRef} className="hidden" />
-
-                            {/* Custom styled button matching input boxes */}
                             <button
                                 type="button"
                                 disabled={isGoogleLoading}
@@ -271,7 +196,7 @@ text-transparent   italic">AI Wealth</span>
                                         setError("Google Sign-In is not configured.")
                                     }
                                 }}
-                                className="w-full h-12 rounded-xl border border-border/50 bg-secondary/40 font-semibold text-foreground/80 hover:bg-secondary/60 transition-all flex items-center pl-4 pr-4 gap-3 active:scale-[0.98] focus:outline-none focus:ring-2 focus:ring-primary/20"
+                                className="w-full h-12 rounded-xl border border-border/50 bg-secondary/40 font-semibold text-foreground/80 hover:bg-secondary/60 transition-all flex items-center px-4 gap-3 active:scale-[0.98] focus:outline-none focus:ring-2 focus:ring-primary/20"
                             >
                                 {isGoogleLoading ? (
                                     <Loader2 className="h-5 w-5 animate-spin text-primary" />
@@ -283,11 +208,11 @@ text-transparent   italic">AI Wealth</span>
                                         <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335" />
                                     </svg>
                                 )}
-                                <span className="flex-1 text-center">Continue with Google</span>
+                                <span className="flex-1 text-center pr-5">Continue with Google</span>
                             </button>
                         </div>
 
-                        <div className="relative">
+                        <div className="relative mb-6">
                             <div className="absolute inset-0 flex items-center">
                                 <span className="w-full border-t border-border/50" />
                             </div>
@@ -341,7 +266,6 @@ text-transparent   italic">AI Wealth</span>
                                                             type="button"
                                                             onClick={() => setShowPassword(!showPassword)}
                                                             className="absolute right-3 top-1/2 -translate-y-1/2 p-1.5 hover:bg-secondary rounded-lg transition-colors text-muted-foreground hover:text-foreground"
-                                                            aria-label={showPassword ? "Hide password" : "Show password"}
                                                         >
                                                             {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                                                         </button>
@@ -355,11 +279,10 @@ text-transparent   italic">AI Wealth</span>
 
                                 <div className="flex items-center justify-between">
                                     <div className="flex items-center space-x-2">
-                                        <Checkbox id="remember" className="rounded-md border-border/50 data-[state=checked]:bg-primary data-[state=checked]:border-primary" />
+                                        <Checkbox id="remember" className="rounded-md border-border/50" />
                                         <label htmlFor="remember" className="text-sm font-semibold text-muted-foreground cursor-pointer select-none">Remember me</label>
                                     </div>
-                                    {/* <Link href="/auth/forgot" className="text-sm font-bold text-[#1E88E5] hover:text-[#1E88E5]/80 transition-colors">Forgot password?</Link> */}
-                                                                        <Link href="/auth/forgot" className="text-sm font-bold text-primary hover:text-primary/80 transition-colors">Forgot password?</Link>
+                                    <Link href="/auth/forgot" className="text-sm font-bold text-[#1E88E5] hover:text-[#1E88E5]/80 transition-colors">Forgot password?</Link>
                                 </div>
 
                                 <Button
@@ -376,13 +299,19 @@ text-transparent   italic">AI Wealth</span>
                                 </Button>
                             </form>
                         </Form>
+                    </div>
 
-                        <p className="text-center text-sm font-semibold text-muted-foreground tracking-tight">
-                            Don't have an account?{" "}
-                            <Link href="/auth/signup" className="text-primary hover:text-primary/80 transition-all font-black">
-                                Sign up for free
-                            </Link>
-                        </p>
+                    <p className="text-center text-sm font-semibold text-muted-foreground tracking-tight">
+                        Don't have an account?{" "}
+                        <Link href="/auth/signup" className="text-primary hover:text-primary/80 transition-all font-black">
+                            Sign up for free
+                        </Link>
+                    </p>
+
+                    <div className="text-center text-xs text-muted-foreground flex items-center justify-center gap-6 mt-8">
+                        <span>&copy; 2026 Bharat AI Wealth</span>
+                        <Link href="/privacy" className="hover:text-primary transition-colors">Privacy Policy</Link>
+                        <Link href="/terms" className="hover:text-primary transition-colors">Terms of Service</Link>
                     </div>
                 </div>
             </div>
