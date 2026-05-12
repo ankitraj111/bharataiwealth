@@ -4,7 +4,7 @@
 export const config = {
     // API Configuration
     API_BASE_URL: process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080',
-    API_TIMEOUT: parseInt(process.env.NEXT_PUBLIC_API_TIMEOUT || '30000'),
+    API_TIMEOUT: parseInt(process.env.NEXT_PUBLIC_API_TIMEOUT || '60000'), // Increased to 60s for cold starts
     ENABLE_MFA: process.env.NEXT_PUBLIC_ENABLE_MFA === 'true',
     GOOGLE_CLIENT_ID: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID || '',
 

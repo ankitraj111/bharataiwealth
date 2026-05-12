@@ -93,7 +93,8 @@ This platform implements **enterprise-grade technical security**:
 
 ## Recent Fixes
 - **Login Issues Resolved**: Fixed a critical 500 error related to NULL boolean flags in the User entity.
-- **Demo Mode**: Added a default demo user (`demo@bharatai.com` / `demo123`) for easy evaluation.
+- **Google OAuth Integration**: Any Gmail user can now sign in using "Continue with Google" button - no restrictions!
+- **Increased Timeout**: API timeout increased to 60 seconds to handle Render cold starts gracefully.
 - **Frontend Logging**: Improved console error reporting for better transparency of API failures.
 - **🛡️ Enterprise Security**: Implemented enterprise-grade technical security including AES-256 encryption, transaction signing, fraud detection, and device fingerprinting. Security score: 75/100 - excellent for startup stage!
 

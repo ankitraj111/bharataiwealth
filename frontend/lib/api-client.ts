@@ -89,8 +89,8 @@ export class ApiClient {
             headers,
         };
 
-        // Implementation of timeout
-        const timeout = options.signal ? 0 : 10000; // 10 seconds default timeout
+        // Implementation of timeout — respects NEXT_PUBLIC_API_TIMEOUT (default 30s for Render cold-start)
+        const timeout = options.signal ? 0 : config.API_TIMEOUT;
         let timeoutId: any;
 
         if (timeout > 0) {
@@ -166,7 +166,7 @@ export class ApiClient {
             }
             if (error.name === 'AbortError') {
                 const timeoutError: ApiError = {
-                    message: 'Request timed out. Please try again or use demo mode.',
+                    message: 'Request timed out. The server may be starting up. Please wait 30 seconds and try again.',
                     status: 408,
                 };
                 throw timeoutError;

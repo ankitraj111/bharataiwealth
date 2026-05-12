@@ -60,10 +60,22 @@ export default function LoginPage() {
     const handleGoogleCallback = useCallback(async (response: { credential: string }) => {
         setIsGoogleLoading(true)
         setError(null)
+        setIsBackendDown(false)
         try {
             await googleLogin(response.credential)
         } catch (e: any) {
-            setError(e.message || "Google login failed. Please try again.")
+            const isNetworkOrTimeout =
+                e?.status === 0 ||
+                e?.status === 408 ||
+                e?.message?.includes('Network error') ||
+                e?.message?.includes('Failed to fetch') ||
+                e?.message?.includes('timed out') ||
+                e?.message?.includes('slow to respond')
+            if (isNetworkOrTimeout) {
+                setIsBackendDown(true)
+            } else {
+                setError(e.message || "Google login failed. Please try again.")
+            }
         } finally {
             setIsGoogleLoading(false)
         }
@@ -194,21 +206,21 @@ export default function LoginPage() {
                             </div>
 
                             {isBackendDown && (
-                                <div className="p-4 rounded-xl bg-blue-500/10 border border-blue-500/20 text-blue-400 text-sm font-semibold flex items-start gap-3">
-                                    <Info className="h-5 w-5 mt-0.5 flex-shrink-0 text-blue-400" />
-                                    <div>
-                                        <p className="font-bold mb-1 text-blue-300">Backend Server Offline</p>
+                                <div className="p-4 rounded-xl bg-amber-500/10 border border-amber-500/20 text-amber-400 text-sm font-semibold flex items-start gap-3">
+                                    <Info className="h-5 w-5 mt-0.5 flex-shrink-0 text-amber-400" />
+                                    <div className="flex-1">
+                                        <p className="font-bold mb-1 text-amber-300">Server is warming up...</p>
                                         <p className="text-xs font-normal opacity-90">
-                                            Spring Boot backend is not running on port 8080. Please start the backend server to proceed.
+                                            Our backend is starting up — this can take up to 60 seconds. Please wait a moment and try signing in again.
                                         </p>
                                     </div>
                                 </div>
                             )}
 
                             {error && (
-                                <div className="p-4 rounded-xl bg-destructive/10 border border-destructive/20 text-destructive text-sm font-semibold flex items-center gap-3 animate-shake">
-                                    <div className="h-2 w-2 rounded-full bg-destructive animate-pulse" />
-                                    {error}
+                                <div className="p-4 rounded-xl bg-destructive/10 border border-destructive/20 text-destructive text-sm font-semibold flex items-center gap-3">
+                                    <div className="h-2 w-2 rounded-full bg-destructive animate-pulse flex-shrink-0" />
+                                    <span>{error}</span>
                                 </div>
                             )}
 
