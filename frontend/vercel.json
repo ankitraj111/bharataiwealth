@@ -2,5 +2,9 @@
   "version": 2,
   "framework": "nextjs",
   "buildCommand": "npm run build",
-  "outputDirectory": ".next"
+  "outputDirectory": ".next",
+  "alias": [
+    "www.bharataiwealth.com",
+    "bharataiwealth.com"
+  ]
 }
