@@ -159,14 +159,14 @@ export class ApiClient {
             // Network errors
             if (error.name === 'TypeError' && error.message === 'Failed to fetch') {
                 const networkError: ApiError = {
-                    message: 'Network error. Please check your connection.',
+                    message: 'Unable to connect to Bharat AI servers. Please check your internet connection.',
                     status: 0,
                 };
                 throw networkError;
             }
             if (error.name === 'AbortError') {
                 const timeoutError: ApiError = {
-                    message: 'Request timed out. The server may be starting up. Please wait 30 seconds and try again.',
+                    message: "Secure connection is taking longer than expected. Our systems are initializing. Please try again in a moment.",
                     status: 408,
                 };
                 throw timeoutError;

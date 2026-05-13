@@ -63,6 +63,10 @@ const nextConfig = {
       },
     ],
   }),
+  // Allow development access from specific IP
+  experimental: {
+    allowedDevOrigins: ['172.168.0.127'],
+  },
 }
 
 export default nextConfig

@@ -43,6 +43,13 @@ export interface MfaSetupResponse {
 
 export class AuthService {
     /**
+     * Check backend health (useful for waking up cold starts)
+     */
+    static async checkHealth(): Promise<any> {
+        return ApiClient.get('/api/health');
+    }
+
+    /**
      * Register a new user
      */
     static async register(data: RegisterRequest): Promise<AuthResponse> {

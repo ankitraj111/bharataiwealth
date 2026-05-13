@@ -23,6 +23,7 @@ import { Checkbox } from "@/components/ui/checkbox"
 import { useAuth } from "@/contexts/AuthContext"
 import { DotsBackground } from "@/components/ui/DotsBackground"
 import config from "@/lib/config"
+import AuthService from "@/services/auth.service"
 
 const basePath = process.env.NEXT_PUBLIC_BASE_PATH || '';
 
@@ -116,6 +117,11 @@ export default function LoginPage() {
     }, [handleGoogleCallback])
 
     useEffect(() => {
+        // Proactive wake-up call for the backend (handles Render cold-starts)
+        AuthService.checkHealth().catch(() => {
+            console.log("Backend is initializing in background...");
+        });
+
         if (window.google) {
             initializeGoogleSignIn()
         }
@@ -205,18 +211,7 @@ export default function LoginPage() {
                                 <p className="text-muted-foreground font-medium">Please enter your details to access your wealth.</p>
                             </div>
 
-                            {isBackendDown && (
-                                <div className="p-4 rounded-xl bg-amber-500/10 border border-amber-500/20 text-amber-400 text-sm font-semibold flex items-start gap-3">
-                                    <Info className="h-5 w-5 mt-0.5 flex-shrink-0 text-amber-400" />
-                                    <div className="flex-1">
-                                        <p className="font-bold mb-1 text-amber-300">Server is warming up...</p>
-                                        <p className="text-xs font-normal opacity-90">
-                                            Our backend is starting up — this can take up to 60 seconds. Please wait a moment and try signing in again.
-                                        </p>
-                                    </div>
-                                </div>
-                            )}
-
+                            {/* Subtle error message if credentials fail */}
                             {error && (
                                 <div className="p-4 rounded-xl bg-destructive/10 border border-destructive/20 text-destructive text-sm font-semibold flex items-center gap-3">
                                     <div className="h-2 w-2 rounded-full bg-destructive animate-pulse flex-shrink-0" />
@@ -346,6 +341,14 @@ export default function LoginPage() {
                                             </div>
                                         ) : "Sign In"}
                                     </Button>
+
+                                    {/* Subtle Connection Status */}
+                                    {isBackendDown && (
+                                        <div className="flex items-center justify-center gap-2 text-amber-500/60 animate-in fade-in slide-in-from-top-1 duration-500">
+                                            <Loader2 className="h-3 w-3 animate-spin" />
+                                            <span className="text-[10px] font-bold uppercase tracking-[0.2em]">Secure AI Connection Initializing...</span>
+                                        </div>
+                                    )}
                                 </form>
                             </Form>
 

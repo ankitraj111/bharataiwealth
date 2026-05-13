@@ -3,9 +3,20 @@
 import { ThemeProvider } from "@/components/theme-provider"
 import { AuthProvider } from "@/contexts/AuthContext"
 import { NotificationProvider } from "@/contexts/NotificationContext"
-import { ReactNode, useState } from "react"
+import { ReactNode, useState, useEffect } from "react"
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools"
+import AuthService from "@/services/auth.service"
+
+function BackendWarmup() {
+    useEffect(() => {
+        // Proactive wake-up call for the backend on any page load
+        AuthService.checkHealth().catch(() => {
+            console.log("Bharat AI Backend is initializing...");
+        });
+    }, []);
+    return null;
+}
 
 export function Providers({ children }: { children: ReactNode }) {
     const [queryClient] = useState(() => new QueryClient({
@@ -29,6 +40,7 @@ export function Providers({ children }: { children: ReactNode }) {
             <QueryClientProvider client={queryClient}>
                 <AuthProvider>
                     <NotificationProvider>
+                        <BackendWarmup />
                         {children}
                     </NotificationProvider>
                 </AuthProvider>

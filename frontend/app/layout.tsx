@@ -70,10 +70,8 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link rel="preconnect" href="http://localhost:8080" />
-        <link rel="dns-prefetch" href="http://localhost:8080" />
+        <link rel="preconnect" href="https://bharat-wealth-backend.onrender.com" />
+        <link rel="dns-prefetch" href="https://bharat-wealth-backend.onrender.com" />
       </head>
       <body
         className={`${inter.variable} ${poppins.variable} ${jetbrainsMono.variable} font-sans antialiased`}
