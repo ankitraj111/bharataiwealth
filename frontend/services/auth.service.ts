@@ -118,9 +118,21 @@ export class AuthService {
 
     /**
      * Login with Google ID token (from Google Identity Services)
+     * Includes automatic retry for cold starts
      */
-    static async googleLogin(credential: string): Promise<AuthResponse> {
-        return ApiClient.post<AuthResponse>(config.AUTH_ENDPOINTS.GOOGLE_LOGIN, { credential });
+    static async googleLogin(credential: string, retryCount = 0): Promise<AuthResponse> {
+        try {
+            return await ApiClient.post<AuthResponse>(config.AUTH_ENDPOINTS.GOOGLE_LOGIN, { credential });
+        } catch (error: any) {
+            // If it's a timeout or network error (status 0 or 408) and we haven't retried yet, 
+            // wait a few seconds and try again while the backend warms up.
+            if (retryCount < 1 && (error.status === 0 || error.status === 408)) {
+                console.log('Google login encounterd cold start, retrying in 3 seconds...');
+                await new Promise(resolve => setTimeout(resolve, 3000));
+                return this.googleLogin(credential, retryCount + 1);
+            }
+            throw error;
+        }
     }
 }
 
