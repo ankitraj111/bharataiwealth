@@ -45,6 +45,7 @@ jobs:
           GITHUB_ACTIONS: "true"
           NODE_ENV: production
           NEXT_PUBLIC_API_URL: https://bharat-wealth-backend.onrender.com
+          NEXT_PUBLIC_GOOGLE_CLIENT_ID: 1075300655845-f4jlsfernfjgte8tmdbc4f3ukr403d91.apps.googleusercontent.com
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3

@@ -128,6 +128,7 @@ public class SecurityConfig {
                                 "https://*.github.io",
                                 "https://ankitraj111.github.io",
                                 "https://bharataiwealth.com",
+                                "https://www.bharataiwealth.com",
                                 "https://*.bharataiwealth.com",
                                 "https://*.vercel.app"));
 
