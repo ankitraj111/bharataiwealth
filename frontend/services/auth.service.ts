@@ -126,9 +126,9 @@ export class AuthService {
         } catch (error: any) {
             // If it's a timeout or network error (status 0 or 408) and we haven't retried yet, 
             // wait a few seconds and try again while the backend warms up.
-            if (retryCount < 1 && (error.status === 0 || error.status === 408)) {
-                console.log('Google login encounterd cold start, retrying in 3 seconds...');
-                await new Promise(resolve => setTimeout(resolve, 3000));
+            if (retryCount < 3 && (error.status === 0 || error.status === 408)) {
+                console.log(`Google login encounterd cold start (attempt ${retryCount + 1}), retrying in 5 seconds...`);
+                await new Promise(resolve => setTimeout(resolve, 5000));
                 return this.googleLogin(credential, retryCount + 1);
             }
             throw error;

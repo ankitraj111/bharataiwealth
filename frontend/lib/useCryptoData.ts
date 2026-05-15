@@ -5,9 +5,9 @@
  */
 
 import { useState, useEffect, useCallback } from "react"
+import config from "./config"
 
-const ML_SERVICE_URL =
-    process.env.NEXT_PUBLIC_ML_SERVICE_URL || "http://localhost:8000"
+const ML_SERVICE_URL = config.ML_SERVICE_URL;
 
 // ─────────── Types ───────────
 

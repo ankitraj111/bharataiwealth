@@ -31,6 +31,9 @@ public class SecurityConfig {
         private final AuthenticationProvider authenticationProvider;
         private final RateLimitingFilter rateLimitingFilter;
         private final IpBlockingFilter ipBlockingFilter;
+        
+        @org.springframework.beans.factory.annotation.Value("${cors.allowed-origins:http://localhost:3000}")
+        private String allowedOrigins;
 
         @Bean
         public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -122,15 +125,16 @@ public class SecurityConfig {
         public CorsConfigurationSource corsConfigurationSource() {
                 CorsConfiguration configuration = new CorsConfiguration();
 
-                // Explicitly define allowed origins (no wildcards for production)
-                configuration.setAllowedOriginPatterns(Arrays.asList(
-                                "http://localhost:*",
-                                "https://*.github.io",
-                                "https://ankitraj111.github.io",
-                                "https://bharataiwealth.com",
-                                "https://www.bharataiwealth.com",
-                                "https://*.bharataiwealth.com",
-                                "https://*.vercel.app"));
+                // Explicitly define allowed origins from properties
+                List<String> originsList = new java.util.ArrayList<>(Arrays.asList(allowedOrigins.split(",")));
+                
+                // Add patterns for subdomains
+                originsList.add("http://localhost:*");
+                originsList.add("https://*.github.io");
+                originsList.add("https://*.bharataiwealth.com");
+                originsList.add("https://*.vercel.app");
+                
+                configuration.setAllowedOriginPatterns(originsList);
 
                 // Allowed HTTP methods
                 configuration.setAllowedMethods(Arrays.asList(

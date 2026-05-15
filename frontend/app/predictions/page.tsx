@@ -14,6 +14,7 @@ import { Badge } from "@/components/ui/badge"
 import { Progress } from "@/components/ui/progress"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { fetchPrediction, fetchSentiment } from "@/lib/api"
+import config from "@/lib/config"
 
 // Lazy load Recharts with loading states
 const ResponsiveContainer = dynamic(() => import("recharts").then(m => m.ResponsiveContainer), { ssr: false })
@@ -272,7 +273,7 @@ function PredictionsContent() {
         // Fetch live trending assets data
         const fetchTrendingData = async () => {
             try {
-                const ML_URL = process.env.NEXT_PUBLIC_ML_SERVICE_URL || "http://localhost:8000"
+                const ML_URL = config.ML_SERVICE_URL;
                 const symbols = defaultTrendingAssets.map(a => a.symbol).join(',')
 
                 const res = await fetch(`${ML_URL}/analyze/portfolio?symbols=${encodeURIComponent(symbols)}`, {

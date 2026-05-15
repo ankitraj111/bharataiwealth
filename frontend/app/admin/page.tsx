@@ -2,6 +2,7 @@
 
 import { useEffect, useState, useRef, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
+import config from '@/lib/config';
 
 interface DashboardStats {
   totalUsers: number;
@@ -141,7 +142,7 @@ export default function AdminDashboard() {
     try {
       const token = localStorage.getItem('token');
       if (!token) { router.push('/auth/login'); return; }
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/admin/dashboard`, {
+      const res = await fetch(`${config.API_BASE_URL}/api/admin/dashboard`, {
         headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
       });
       if (res.status === 403) { setAuthError('Access denied. Admin privileges required.'); setLoading(false); return; }

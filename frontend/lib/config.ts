@@ -3,10 +3,13 @@
 
 export const config = {
     // API Configuration
-    API_BASE_URL: process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080',
+    API_BASE_URL: process.env.NEXT_PUBLIC_API_URL || 
+        (process.env.NODE_ENV === 'production' ? 'https://bharat-wealth-backend.onrender.com' : 'http://localhost:8080'),
     API_TIMEOUT: parseInt(process.env.NEXT_PUBLIC_API_TIMEOUT || '60000'), // Increased to 60s for cold starts
     ENABLE_MFA: process.env.NEXT_PUBLIC_ENABLE_MFA === 'true',
     GOOGLE_CLIENT_ID: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID || '',
+    ML_SERVICE_URL: process.env.NEXT_PUBLIC_ML_SERVICE_URL || 
+        (process.env.NODE_ENV === 'production' ? 'https://bharat-wealth-ml.onrender.com' : 'http://localhost:8000'),
 
     // Auth Configuration
     TOKEN_REFRESH_INTERVAL: 14 * 60 * 1000, // 14 minutes (access token expires in 15)
