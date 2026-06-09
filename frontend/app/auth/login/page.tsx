@@ -96,8 +96,8 @@ export default function LoginPage() {
                 context: "signin",
             })
 
-            // Render the real Google button into a hidden div.
-            // Our custom styled button will click this to open the popup.
+            // Render the real Google button into an invisible (but NOT display:none) div.
+            // display:none prevents GSI from rendering; opacity-0 + absolute works correctly.
             if (googleButtonRef.current) {
                 window.google.accounts.id.renderButton(googleButtonRef.current, {
                     theme: "outline",
@@ -115,6 +115,29 @@ export default function LoginPage() {
             console.error("GSI Init Error:", err)
         }
     }, [handleGoogleCallback])
+
+    const handleGoogleButtonClick = useCallback(() => {
+        if (!config.GOOGLE_CLIENT_ID) {
+            setError("Google Sign-In is not configured.")
+            return
+        }
+        if (!window.google) {
+            setError("Google Sign-In script failed to load. Please refresh the page.")
+            return
+        }
+        // Try clicking the GSI-rendered button first (most reliable popup approach)
+        const realBtn = googleButtonRef.current?.querySelector('div[role="button"]') as HTMLElement | null
+        if (realBtn) {
+            realBtn.click()
+        } else {
+            // Fallback: use prompt() — works when button isn't rendered yet
+            window.google.accounts.id.prompt((notification: any) => {
+                if (notification.isNotDisplayed() || notification.isSkippedMoment()) {
+                    setError("Google Sign-In was blocked by browser. Please allow popups for this site and try again.")
+                }
+            })
+        }
+    }, [])
 
     useEffect(() => {
         // Proactive wake-up call for the backend (handles Render cold-starts)
@@ -220,26 +243,30 @@ export default function LoginPage() {
                             )}
 
                             {/* Google Sign-In Button */}
-                            <div className="space-y-3">
-                                {/* Hidden real Google button — clicked programmatically to bypass FedCM */}
-                                <div ref={googleButtonRef} className="hidden" />
+                            <div className="space-y-3 relative">
+                                {/*
+                                  Real Google button — must NOT be display:none (hidden class).
+                                  Google GSI refuses to render inside a display:none element.
+                                  We use opacity-0 + absolute positioning so it's invisible but rendered.
+                                */}
+                                <div
+                                    ref={googleButtonRef}
+                                    aria-hidden="true"
+                                    style={{
+                                        position: 'absolute',
+                                        opacity: 0,
+                                        pointerEvents: 'none',
+                                        overflow: 'hidden',
+                                        width: '300px',
+                                        height: '50px',
+                                        zIndex: -1,
+                                    }}
+                                />
 
                                 <button
                                     type="button"
                                     disabled={isGoogleLoading}
-                                    onClick={() => {
-                                        if (!config.GOOGLE_CLIENT_ID) {
-                                            setError("Google Sign-In is not configured.")
-                                            return
-                                        }
-                                        // Click the hidden real Google button — opens standard popup
-                                        const realBtn = googleButtonRef.current?.querySelector('div[role="button"]') as HTMLElement | null
-                                        if (realBtn) {
-                                            realBtn.click()
-                                        } else {
-                                            setError("Google Sign-In failed to load. Please refresh the page.")
-                                        }
-                                    }}
+                                    onClick={handleGoogleButtonClick}
                                     className="w-full h-12 rounded-xl border border-border/50 bg-secondary/30 backdrop-blur-sm font-semibold text-foreground/80 hover:bg-secondary/50 transition-all flex items-center px-4 gap-3 active:scale-[0.98] focus:outline-none focus:ring-2 focus:ring-primary/20"
                                 >
                                     {isGoogleLoading ? (
