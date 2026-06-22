@@ -215,7 +215,7 @@ export default function SignupPage() {
                                 <span className="bg-gradient-to-r from-[#60A5FA] to-[#2563EB] bg-clip-text text-transparent italic">Build Wealth</span>
                             </h1>
                             <p className="text-lg text-[#94A3B8] font-medium leading-relaxed">
-                                Join 10,000+ Indians achieving financial freedom with AI-powered investing.
+                                Join <span className="text-white font-bold">10,000+</span> Indians achieving financial freedom with AI-powered investing.
                             </p>
 
                             {/* Feature badges */}

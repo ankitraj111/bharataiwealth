@@ -241,7 +241,7 @@ export default function LoginPage() {
                                         }} />
                                     ))}
                                 </div>
-                                <span className="text-sm font-semibold text-[#64748B] tracking-wide">Joined by <span className="text-[#3B82F6]">10k+</span> investors this month</span>
+                                <span className="text-sm font-semibold text-[#64748B] tracking-wide">Joined by <span className="text-white">10,000+</span> investors this month</span>
                             </div>
 
                             {/* Live stats tickers */}
